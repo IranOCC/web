@@ -1,0 +1,17 @@
+.header_layout {
+    min-height: auto;
+}
+
+.main_header {
+    position: sticky;
+    top: 0;
+    right: 0;
+    background: #fff;
+    height: 70px;
+    transition: all 200ms linear;
+    z-index: 50;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.07);
+    display: flex;
+    align-items: center;
+}

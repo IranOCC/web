@@ -1,0 +1,8 @@
+.logo_holder {
+    float: right;
+    position: relative;
+}
+
+.logo_holder a {
+    display: flex;
+}
