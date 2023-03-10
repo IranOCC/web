@@ -12,15 +12,14 @@ const { Header, Content, Footer } = Layout;
 const Toolbar = ({ style }: any) => {
   return (
     <ThemeProvider {...{ style }}>
-      <div>Toolbar</div>
-      {/* <Layout className={styles.header_layout}>
+      <Layout className={styles.header_layout}>
         <Header className={styles.main_header}>
           <Logo />
           <Search />
           <MainMenu />
           <UserCenter />
         </Header>
-      </Layout> */}
+      </Layout>
     </ThemeProvider>
   );
 };
