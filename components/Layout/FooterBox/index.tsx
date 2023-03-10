@@ -14,7 +14,7 @@ const FooterBox = ({ style }: any) => {
     <ThemeProvider {...{ style }}>
       <Footer className={styles.main_footer}>
         <div className={styles.footer_inner}>
-          {/* <Container>
+          <Container>
             <Row gutter={[24, 24]}>
               <Col lg={6} md={24}>
                 <div className={styles.footer_widget}>
@@ -103,7 +103,7 @@ const FooterBox = ({ style }: any) => {
                 </div>
               </Col>
             </Row>
-          </Container> */}
+          </Container>
         </div>
         <div className={styles.sub_footer}>
           <Container>
