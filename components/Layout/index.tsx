@@ -1,16 +1,16 @@
-"use client";
+// "use client";
 
 import styles from "./style.module.css";
-import FooterBox from "@/components/Layout/FooterBox";
-// import Toolbar from "@/components/Layout/Toolbar";
+import Footer from "@/components/Layout/Footer";
+import Header from "@/components/Layout/Header";
 
 const Layout = ({ style, children }: any) => {
   return (
-    <section id="main">
+    <main>
       {/* <Toolbar {...{ style }} /> */}
       <section className={styles.main_content}>{children}</section>
-      <FooterBox {...{ style }} />
-    </section>
+      {/* <FooterBox {...{ style }} /> */}
+    </main>
   );
 };
 

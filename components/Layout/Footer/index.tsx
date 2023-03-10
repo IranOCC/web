@@ -1,7 +1,7 @@
-"use client";
+// "use client";
 
 import styles from "./style.module.css";
-import { Footer } from "antd/es/layout/layout";
+import { Footer as FooterAnt } from "antd/es/layout/layout";
 import ThemeProvider from "@/components/ConfigProvider";
 import Container from "@/components/Layout/Container";
 import { Button, Col, Divider, Row } from "antd";
@@ -9,10 +9,10 @@ import Logo from "../Logo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAppleWhole, faEnvelope, faMapLocation, faPhone } from "@fortawesome/free-solid-svg-icons";
 
-const FooterBox = ({ style }: any) => {
+const Footer = ({ style }: any) => {
   return (
     <ThemeProvider {...{ style }}>
-      <Footer className={styles.main_footer}>
+      <FooterAnt className={styles.main_footer}>
         <div className={styles.footer_inner}>
           <Container>
             <Row gutter={[24, 24]}>
@@ -105,6 +105,7 @@ const FooterBox = ({ style }: any) => {
             </Row>
           </Container>
         </div>
+
         <div className={styles.sub_footer}>
           <Container>
             <div className={styles.copyright}> © تمامی حقوق محفوظ است</div>
@@ -123,8 +124,8 @@ const FooterBox = ({ style }: any) => {
             </div>
           </Container>
         </div>
-      </Footer>
+      </FooterAnt>
     </ThemeProvider>
   );
 };
-export default FooterBox;
+export default Footer;

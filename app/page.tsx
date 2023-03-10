@@ -10,8 +10,8 @@ export default async function Home() {
   };
   await fff();
   return (
-    <div className="App">
-      <h1>antd version: </h1>
-    </div>
+    <>
+      <h2>Main Content</h2>
+    </>
   );
 }
