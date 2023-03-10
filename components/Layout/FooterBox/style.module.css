@@ -101,9 +101,9 @@
 
 
 .sub_footer section {
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: flex-start; */
 }
 
 .sub_footer section div {

@@ -4,6 +4,7 @@ specifiers:
   '@fortawesome/fontawesome-svg-core': ^6.3.0
   '@fortawesome/free-regular-svg-icons': ^6.3.0
   '@fortawesome/free-solid-svg-icons': ^6.3.0
+  '@fortawesome/react-fontawesome': ^0.2.0
   '@types/node': 18.14.6
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -20,6 +21,7 @@ dependencies:
   '@fortawesome/fontawesome-svg-core': 6.3.0
   '@fortawesome/free-regular-svg-icons': 6.3.0
   '@fortawesome/free-solid-svg-icons': 6.3.0
+  '@fortawesome/react-fontawesome': 0.2.0_d5rbrisxfyemehbvmdbryvgjte
   '@types/node': 18.14.6
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -161,6 +163,17 @@ packages:
     requiresBuild: true
     dependencies:
       '@fortawesome/fontawesome-common-types': 6.3.0
+    dev: false
+
+  /@fortawesome/react-fontawesome/0.2.0_d5rbrisxfyemehbvmdbryvgjte:
+    resolution: {integrity: sha512-uHg75Rb/XORTtVt7OS9WoK8uM276Ufi7gCzshVWkUJbHhh3svsUUeqXerrM96Wm7fRiDzfKRwSoahhMIkGAYHw==}
+    peerDependencies:
+      '@fortawesome/fontawesome-svg-core': ~1 || ~6
+      react: '>=16.3'
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 6.3.0
+      prop-types: 15.8.1
+      react: 18.2.0
     dev: false
 
   /@humanwhocodes/config-array/0.11.8:
