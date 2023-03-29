@@ -1,5 +1,9 @@
 import { Suspense } from "react";
 
+import { store } from "@/store";
+import { setToken } from "@/store/auth";
+import Preloader from "@/store/preloader";
+
 import { cookies, headers } from "next/headers";
 import Loading from "@/components/Layout/Loading";
 import "antd/dist/reset.css";
@@ -11,6 +15,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import "./globals.css";
+import Providers from "@/store/provider";
 
 config.autoAddCss = false;
 
@@ -78,12 +83,23 @@ export async function generateMetadata() {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { title } = await getWebInitialData();
+  const cookieStore = cookies();
+  const authToken = cookieStore.get("authToken");
+  store.dispatch(setToken(authToken?.value ?? "--"));
+  const { title, time, token } = await getWebInitialData();
+
   return (
     <html lang="fa" className={IRANSansX.className}>
       <body>
         <Suspense fallback={<Loading label={title} />}>
-          <Layout style={IRANSansX.style}>{children}</Layout>
+          <Preloader token={authToken?.value ?? null} />
+          <Providers>
+            <Layout style={IRANSansX.style}>
+              Pp {store.getState().auth.token}
+              <br />
+              {children}
+            </Layout>
+          </Providers>
         </Suspense>
       </body>
     </html>
@@ -91,8 +107,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 }
 
 async function getWebInitialData() {
-  const cookieStore = cookies();
-  const authToken = cookieStore.get("authToken");
+  const token = store.getState().auth.token;
   const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/setting/webInitialData", {});
-  return res.json();
+  const data = await res.json();
+  return { ...data, token };
 }

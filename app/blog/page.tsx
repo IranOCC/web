@@ -1,7 +1,6 @@
 // "use client";
 
 import { useState } from "react";
-import { useThemeContext } from "../../providers/theme";
 
 // export const metadata = {
 //   title: "Create Next App",

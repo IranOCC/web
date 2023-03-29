@@ -9,7 +9,7 @@ const Layout = ({ style, children }: any) => {
     <main>
       {/* <Toolbar {...{ style }} /> */}
       <section className={styles.main_content}>{children}</section>
-      {/* <FooterBox {...{ style }} /> */}
+      {/* <Footer {...{ style }} /> */}
     </main>
   );
 };

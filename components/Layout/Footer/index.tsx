@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import styles from "./style.module.css";
 import { Footer as FooterAnt } from "antd/es/layout/layout";

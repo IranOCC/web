@@ -1,0 +1,6 @@
+{
+    "app": "irocc-web",
+    "next": {
+        "modifyConfig": false
+    }
+}
