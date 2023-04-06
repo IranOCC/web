@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type FooterButton = {
   title?: string;
@@ -30,8 +31,9 @@ export default function Modal({ path, title, children, footerButton, closeButton
 
   const [open, _setOpen] = useState(false);
   const setOpen = (status: boolean) => {
-    if (status) router.push("?modal=" + path);
-    else {
+    if (status) {
+      router.push("?modal=" + path);
+    } else {
       router.back();
     }
   };
@@ -93,3 +95,24 @@ export default function Modal({ path, title, children, footerButton, closeButton
     </Transition.Root>
   );
 }
+
+type OpenModalLinkProps = {
+  children: ReactNode;
+  path: string;
+  className: any;
+};
+
+export const OpenModalLink = ({ children, path }: OpenModalLinkProps) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  let restParams: any = {};
+  searchParams?.forEach((value, key) => {
+    if (!restParams[key]) restParams[key] = [];
+    restParams[key].push(value);
+  });
+  return (
+    <Link href={{ pathname, query: { ...restParams, modal: path } }} prefetch={false}>
+      {children}
+    </Link>
+  );
+};

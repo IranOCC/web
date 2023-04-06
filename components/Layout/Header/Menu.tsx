@@ -11,6 +11,7 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import Link from "next/link";
 // import PersonAdd from "@mui/icons-material/PersonAdd";
 // import Settings from "@mui/icons-material/Settings";
 // import Logout from "@mui/icons-material/Logout";
@@ -147,24 +148,24 @@ const MainMenu = () => {
       <div className="float-left h-full hidden md:block md:w-auto" id="navbar-multi-level">
         <ul className="h-full flex flex-col items-center font-light p-4 md:p-0 mt-4 border  rounded-lg md:flex-row  md:mt-0 md:border-0  ">
           <li className="md:mx-4">
-            <a href="#" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:px-0" aria-current="page">
+            <Link href="/" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:px-0" prefetch={false}>
               Home
-            </a>
+            </Link>
           </li>
           <li className="md:mx-4" onClick={handleClick}>
-            <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:px-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+            <Link href="/blog" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:px-0" prefetch={false}>
               Services
-            </a>
+            </Link>
           </li>
           <li className="md:mx-4">
-            <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:px-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+            <Link href="/admin" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:px-0" prefetch={false}>
               Pricing
-            </a>
+            </Link>
           </li>
           <li className="md:mx-4">
-            <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:px-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-              Contact
-            </a>
+            <Link href="/blog" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:px-0" prefetch={false}>
+              Blog
+            </Link>
           </li>
         </ul>
       </div>

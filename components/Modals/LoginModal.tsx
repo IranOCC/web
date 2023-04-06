@@ -3,39 +3,76 @@ import { Button } from "@/components/Button";
 import { Input, PhoneInput } from "@/components/Input";
 import LoginBackImage from "@/assets/images/city-bg.png";
 import { PhoneOtpFormData } from "@/types/formsData";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { resolve } from "path";
 import axios from "@/lib/axios";
 import { toast } from "@/lib/toast";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
+import PhoneIcon from "@/components/Icons/Phone";
+import QrcodeIcon from "../Icons/Qrcode";
 
 const LoginModal = () => {
   const {
     register,
+    unregister,
+    resetField,
     setValue,
     control,
     handleSubmit,
+    reset,
     formState: { errors, isLoading, isSubmitting, isValidating },
   } = useForm<PhoneOtpFormData>();
   const loading = isLoading || isSubmitting || isValidating;
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  if (searchParams?.get("phone")) {
-  }
-  const onSubmit = async (data: PhoneOtpFormData) => {
+  const pathname = usePathname();
+  const phoneSet = searchParams?.get("phone")?.replace(" ", "+");
+  const isStep2 = phoneSet?.length !== undefined;
+
+  const sendOtp = async (data: PhoneOtpFormData) => {
     try {
       const response = await axios.post("/auth/phoneOtp", data);
       toast.success("کد با موفقیت ارسال شد");
       const { phone } = response.data;
-      router.push("?phone=" + phone);
+      const url = pathname + "?" + searchParams?.toString() + "&phone=" + phone;
+      router.replace(url);
     } catch (error) {}
+  };
+  const loginByOtp = async (data: PhoneOtpFormData) => {
+    const result = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });
+    if (result?.ok) {
+      toast.success("با موفقیت وارد شدید!");
+      const callbackUrl = searchParams?.get("callbackUrl");
+      router.replace(callbackUrl || "/");
+    } else {
+      toast.error(result?.error);
+    }
   };
 
   useEffect(() => {
     register("phone", { required: "شماره خود را وارد کنید" });
-  }, [register]);
+    if (isStep2) {
+      setValue("phone", phoneSet);
+      register("token", { required: "کد ارسالی را وارد کنید" });
+    }
+  }, [isStep2]);
+
+  useEffect(() => {
+    reset({ phone: isStep2 ? phoneSet : "" });
+  }, [searchParams]);
+
+  const editNumber = () => {
+    const se = new URLSearchParams(searchParams?.toString());
+    se.delete("phone");
+    const url = pathname + "?" + se?.toString();
+    router.replace(url);
+    reset();
+  };
+
+  const sendOtpAgain = () => {};
 
   return (
     <Modal path="auth" whiteClose>
@@ -45,14 +82,44 @@ const LoginModal = () => {
       </div>
       <div className="mt-40">
         <h2 className="text-blue-500 text-center font-bold mb-2">ورود یا عضویت</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <PhoneInput
+        <form onSubmit={handleSubmit(isStep2 ? loginByOtp : sendOtp)}>
+          <Input
             /* */
             control={control}
             name="phone"
+            label="شماره موبایل"
             error={errors.phone?.message}
-            loading={loading}
+            disabled={isStep2}
+            // loading={loading}
+            direction="ltr"
+            noSpace
+            icon={<PhoneIcon />}
           />
+          {isStep2 && (
+            <>
+              <span className="block text-center font-medium w-full text-sm text-blue-500 mt-2 mb-6 cursor-pointer" onClick={editNumber}>
+                ویرایش شماره
+              </span>
+
+              <Input
+                /* */
+                control={control}
+                name="token"
+                label="کد ارسالی"
+                error={errors.token?.message}
+                // loading={loading}
+                direction="ltr"
+                noSpace
+                icon={<QrcodeIcon />}
+                className="text-center tracking-wider"
+              />
+
+              {/* <span className="block text-center font-medium w-full text-sm text-blue-500 mt-2 cursor-pointer" onClick={sendOtpAgain}>
+                ارسال مجدد (120)
+              </span> */}
+            </>
+          )}
+          <div className="mt-6" />
           <Button
             /* */
             title="ورود"

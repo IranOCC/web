@@ -1,7 +1,10 @@
 "use client";
 
+import { OpenModalLink } from "@/components/Modals";
 import LoginModal from "@/components/Modals/LoginModal";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { MouseEventHandler, ReactNode } from "react";
 
@@ -9,20 +12,22 @@ type ToolsItemProps = {
   title?: string;
   icon?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  modalPath: string;
+  href?: string;
 };
 
 const Tools = () => {
   const router = useRouter();
+  const session = useSession();
 
   const items: ToolsItemProps[] = [
     {
-      title: "حساب من",
-      onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        router.push("?modal=auth");
-      },
-      icon: "M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z",
+      title: session.status === "authenticated" ? "من" : "حساب من",
+      modalPath: "auth",
+      icon: "M10 11V8L15 12L10 16V13H1V11H10ZM2.4578 15H4.58152C5.76829 17.9318 8.64262 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C8.64262 4 5.76829 6.06817 4.58152 9H2.4578C3.73207 4.94289 7.52236 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C7.52236 22 3.73207 19.0571 2.4578 15Z",
     },
     {
+      modalPath: "notifications",
       icon: "M22 20H2V18H3V11.0314C3 6.04348 7.02944 2 12 2C16.9706 2 21 6.04348 21 11.0314V18H22V20ZM5 18H19V11.0314C19 7.14806 15.866 4 12 4C8.13401 4 5 7.14806 5 11.0314V18ZM9.5 21H14.5C14.5 22.3807 13.3807 23.5 12 23.5C10.6193 23.5 9.5 22.3807 9.5 21Z",
     },
   ];
@@ -50,14 +55,16 @@ const Tools = () => {
   );
 };
 
-const ToolsItem = ({ title, icon, onClick }: ToolsItemProps) => {
+const ToolsItem = ({ title, icon, href, modalPath }: ToolsItemProps) => {
   return (
-    <button type="button" onClick={onClick} className="inline-flex flex-col items-center justify-center px-5 border-gray-200 border-s hover:bg-gray-50 dark:hover:bg-gray-800 group dark:border-gray-600">
-      <svg className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d={icon}></path>
-      </svg>
-      <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">{title}</span>
-    </button>
+    <OpenModalLink className="h-full w-full" path={modalPath}>
+      <button type="button" className="h-full  w-full inline-flex flex-col items-center justify-center px-5 border-gray-200 border-s hover:bg-gray-50 dark:hover:bg-gray-800 group dark:border-gray-600">
+        <svg className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d={icon}></path>
+        </svg>
+        <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">{title}</span>
+      </button>
+    </OpenModalLink>
   );
 };
 

@@ -7,6 +7,7 @@ export type LoginFormData = {
 
 export type PhoneOtpFormData = {
     phone: string;
+    token: string;
 };
 
 export type LoginByOtpFormData = {
