@@ -1,6 +1,10 @@
 // "use client";
 
-import { useState } from "react";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+
+// import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+// import { useState } from "react";
 
 // export const metadata = {
 //   title: "Create Next App",
@@ -8,23 +12,38 @@ import { useState } from "react";
 // };
 
 // dynamic metadata
-export async function generateMetadata() {
-  return {
-    title: "Hey you",
-  };
-}
+// export async function generateMetadata() {
+//   return {
+//     title: "Hey you",
+//   };
+// }
 
-export default function Home() {
+export default async function Page() {
+  const posts = await getPosts();
   //   const [score, setScore] = useState(0);
   //   const { value } = useThemeContext();
   //   const increaseScore = () => setScore(score + 1);
-
+  // const data = useAxiosAuth().get("/auth");
+  // const res = await
   return (
     <div>
       {/* {value} */}
-      Hello
+      Blog
+      <br />
+      {JSON.stringify(posts)}
       {/* <p>Your score is {score}</p> */}
       {/* <button onClick={increaseScore}>+</button> */}
     </div>
   );
+}
+
+async function getPosts() {
+  const session = await getServerSession(authOptions);
+  return {
+    session,
+  };
+  // const token = store.getState().auth.token;
+  const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/setting/webInitialData", { next: { revalidate: 5 } });
+  const data = await res.json();
+  return data;
 }

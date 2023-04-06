@@ -1,21 +1,18 @@
-import { Suspense } from "react";
-
-import { store } from "@/store";
-import { setToken } from "@/store/auth";
-import Preloader from "@/store/preloader";
-
-import { cookies, headers } from "next/headers";
-import Loading from "@/components/Layout/Loading";
-import "antd/dist/reset.css";
-
+import "./globals.css";
 import localFont from "next/font/local";
-import Layout from "@/components/Layout";
-
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-import "./globals.css";
-import Providers from "@/store/provider";
+import { Suspense } from "react";
+import Loading from "@/components/Loading";
+
+import StoreProviders from "@/components/Providers/StoreProvider";
+import AuthProvider from "@/components/Providers/AuthProvider";
+
+import Layout from "@/components/Layout";
+
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 config.autoAddCss = false;
 
@@ -71,7 +68,9 @@ const IRANSansX = localFont({
 
 // dynamic metadata
 export async function generateMetadata() {
-  const { title, description, keywords } = await getWebInitialData();
+  const {
+    data: { title, description, keywords },
+  } = await getWebInitialData();
   return {
     title: {
       default: title + " | " + description,
@@ -82,33 +81,46 @@ export async function generateMetadata() {
   };
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const cookieStore = cookies();
-  const authToken = cookieStore.get("authToken");
-  store.dispatch(setToken(authToken?.value ?? "--"));
-  const { title, time, token } = await getWebInitialData();
+interface IProps {
+  children: React.ReactNode;
+}
+
+export default async function RootLayout({ children }: IProps) {
+  const {
+    data: { title },
+    time,
+  } = await getWebInitialData();
+
+  const session = await getServerSession(authOptions);
 
   return (
-    <html lang="fa" className={IRANSansX.className}>
-      <body>
+    <html lang="fa" className={IRANSansX.className + " h-full"} dir="rtl">
+      <body className="h-full selection:bg-fuchsia-300 selection:text-fuchsia-900">
         <Suspense fallback={<Loading label={title} />}>
+          <AuthProvider>
+            <StoreProviders>
+              {/*  */}
+              <Layout>{children}</Layout>
+              {/*  */}
+            </StoreProviders>
+          </AuthProvider>
+        </Suspense>
+        {/* 
           <Preloader token={authToken?.value ?? null} />
           <Providers>
             <Layout style={IRANSansX.style}>
               Pp {store.getState().auth.token}
               <br />
-              {children}
             </Layout>
           </Providers>
-        </Suspense>
+        </Suspense> */}
       </body>
     </html>
   );
 }
 
 async function getWebInitialData() {
-  const token = store.getState().auth.token;
   const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/setting/webInitialData", {});
   const data = await res.json();
-  return { ...data, token };
+  return data;
 }

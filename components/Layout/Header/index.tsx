@@ -1,27 +1,17 @@
 "use client";
 
-import styles from "./style.module.css";
-import Logo from "../Logo";
-import Search from "./Search";
-import { Breadcrumb, ConfigProvider, Layout, Menu, theme } from "antd";
-import ThemeProvider from "@/components/ConfigProvider";
-import MainMenu from "./MainMenu";
-import UserCenter from "./UserCenter";
-const { Header, Content, Footer } = Layout;
+import Logo from "./Logo";
+import Menu from "./Menu";
+import Tools from "./Tools";
 
-const Toolbar = ({ style }: any) => {
+const Header = () => {
   return (
-    <ThemeProvider {...{ style }}>
-      <Layout className={styles.header_layout}>
-        <Header className={styles.main_header}>
-          <Logo />
-          <Search />
-          <MainMenu />
-          <UserCenter />
-        </Header>
-      </Layout>
-    </ThemeProvider>
+    <nav className="max-w-screen bg-white border-gray-200 shadow-lg	 h-20 px-10" dir="rtl">
+      <Logo />
+      <Tools />
+      <Menu />
+    </nav>
   );
 };
 
-export default Toolbar;
+export default Header;
