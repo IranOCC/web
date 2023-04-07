@@ -71,9 +71,7 @@ const IRANSansX = localFont({
 
 // dynamic metadata
 export async function generateMetadata() {
-  const {
-    data: { title, description, keywords },
-  } = await getWebInitialData();
+  const { title, description, keywords } = await getWebInitialData();
   return {
     title: {
       default: title + " | " + description,
@@ -89,12 +87,7 @@ interface IProps {
 }
 
 export default async function RootLayout({ children }: IProps) {
-  const {
-    data: { title },
-  } = await getWebInitialData();
-
-  // const session = await getServerSession(authOptions);
-  // store.dispatch(setSession(session));
+  const { title } = await getWebInitialData();
 
   return (
     <html lang="fa" className={IRANSansX.className + " h-full"} dir="rtl">
@@ -108,15 +101,6 @@ export default async function RootLayout({ children }: IProps) {
             </StoreProviders>
           </AuthProvider>
         </Suspense>
-        {/* 
-          <Preloader token={authToken?.value ?? null} />
-          <Providers>
-            <Layout style={IRANSansX.style}>
-              Pp {store.getState().auth.token}
-              <br />
-            </Layout>
-          </Providers>
-        </Suspense> */}
       </body>
     </html>
   );
@@ -126,4 +110,5 @@ async function getWebInitialData() {
   const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/setting/webInitialData", {});
   const data = await res.json();
   return data;
+  // return { title: "", description: "", keywords: [] };
 }

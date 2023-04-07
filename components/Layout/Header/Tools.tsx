@@ -37,10 +37,10 @@ const Tools = ({ session }: { session: Session | null }) => {
 
   return (
     <>
-      <div className="float-left h-full flex items-center justify-center px-5 border-gray-200 border-s">
+      <div className="md:hidden lg:flex float-left h-full flex items-center justify-center px-5 border-gray-200 border-s ">
         <Button title="افزودن به لیست" noSpace />
       </div>
-      <div className="float-left h-full">
+      <div className="sm:hidden md:block float-left h-full ">
         <div className={`h-full mx-auto font-medium flex`}>
           {items.map((props, i) => (
             <ToolsItem {...props} key={i} />

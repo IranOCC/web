@@ -145,7 +145,7 @@ const MainMenu = () => {
         </div>
       </Menu>
 
-      <div className="float-left h-full hidden md:block md:w-auto" id="navbar-multi-level">
+      <div className="float-left h-full hidden md:hidden">
         <ul className="h-full flex flex-col items-center font-light p-4 md:p-0 mt-4 border  rounded-lg md:flex-row  md:mt-0 md:border-0  ">
           <li className="md:mx-4">
             <Link href="/" className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:px-0" prefetch={false}>

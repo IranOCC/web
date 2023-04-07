@@ -2,7 +2,7 @@
 
 const Search = () => {
   return (
-    <div className="float-right h-full flex items-center">
+    <div className="hidden float-right h-full flex items-center">
       <div className="bg-gray-200 w-10 py-2"></div>
     </div>
   );
