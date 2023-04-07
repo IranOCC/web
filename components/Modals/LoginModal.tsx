@@ -12,19 +12,21 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import PhoneIcon from "@/components/Icons/Phone";
 import QrcodeIcon from "../Icons/Qrcode";
+import { Session } from "next-auth";
 
-const LoginModal = () => {
+const ModalPath = "auth";
+const LoginModal = ({ session }: { session: Session | null }) => {
   const {
     register,
     unregister,
     resetField,
     setValue,
+    setError,
     control,
     handleSubmit,
     reset,
-    formState: { errors, isLoading, isSubmitting, isValidating },
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = useForm<PhoneOtpFormData>();
-  const loading = isLoading || isSubmitting || isValidating;
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -39,30 +41,42 @@ const LoginModal = () => {
       const { phone } = response.data;
       const url = pathname + "?" + searchParams?.toString() + "&phone=" + phone;
       router.replace(url);
-    } catch (error) {}
+      return true;
+    } catch (error) {
+      setError("phone", {
+        type: "manual",
+        message: "شماره قابل قبول نیست",
+      });
+    }
   };
   const loginByOtp = async (data: PhoneOtpFormData) => {
     const result = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });
     if (result?.ok) {
       toast.success("با موفقیت وارد شدید!");
       const callbackUrl = searchParams?.get("callbackUrl");
-      router.replace(callbackUrl || "/");
+      window.location.href = callbackUrl || "/";
     } else {
-      toast.error(result?.error);
+      reset({ phone: isStep2 ? phoneSet : "" });
+      setError("token", {
+        type: "manual",
+        message: "کد وارد شده اشتباه است",
+      });
     }
   };
 
   useEffect(() => {
+    if (searchParams?.get("modal") === ModalPath) {
+      if (session) window.location.href = "/";
+    }
+    reset({ phone: isStep2 ? phoneSet : "" });
+  }, [searchParams]);
+
+  useEffect(() => {
     register("phone", { required: "شماره خود را وارد کنید" });
     if (isStep2) {
-      setValue("phone", phoneSet);
       register("token", { required: "کد ارسالی را وارد کنید" });
     }
   }, [isStep2]);
-
-  useEffect(() => {
-    reset({ phone: isStep2 ? phoneSet : "" });
-  }, [searchParams]);
 
   const editNumber = () => {
     const se = new URLSearchParams(searchParams?.toString());
@@ -74,8 +88,9 @@ const LoginModal = () => {
 
   const sendOtpAgain = () => {};
 
+  if (session) return null;
   return (
-    <Modal path="auth" whiteClose>
+    <Modal path={ModalPath} whiteClose>
       <div className={`absolute top-0 left-0 bg-blue-500 w-full h-40 overflow-hidden`}>
         <img src={LoginBackImage.src} />
         <div className="absolute top-0 left-0  w-full h-full" />
@@ -89,8 +104,8 @@ const LoginModal = () => {
             name="phone"
             label="شماره موبایل"
             error={errors.phone?.message}
-            disabled={isStep2}
-            // loading={loading}
+            disabled={isSubmitSuccessful || isStep2}
+            loading={isSubmitting}
             direction="ltr"
             noSpace
             icon={<PhoneIcon />}
@@ -107,7 +122,7 @@ const LoginModal = () => {
                 name="token"
                 label="کد ارسالی"
                 error={errors.token?.message}
-                // loading={loading}
+                loading={isSubmitting}
                 direction="ltr"
                 noSpace
                 icon={<QrcodeIcon />}
@@ -125,7 +140,7 @@ const LoginModal = () => {
             title="ورود"
             noSpace
             type="submit"
-            loading={loading}
+            loading={isSubmitSuccessful || isSubmitting || isLoading || isValidating}
           />
         </form>
       </div>

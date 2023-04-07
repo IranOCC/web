@@ -13,6 +13,9 @@ import Layout from "@/components/Layout";
 
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import { store } from "@/store";
+import { setSession } from "@/store/auth";
+import Preloader from "@/components/Providers/Preloader";
 
 config.autoAddCss = false;
 
@@ -88,10 +91,10 @@ interface IProps {
 export default async function RootLayout({ children }: IProps) {
   const {
     data: { title },
-    time,
   } = await getWebInitialData();
 
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
+  // store.dispatch(setSession(session));
 
   return (
     <html lang="fa" className={IRANSansX.className + " h-full"} dir="rtl">

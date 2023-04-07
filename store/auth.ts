@@ -1,23 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit"
-
-
-interface User {
-    id: string,
-    firstName: string,
-    lastName: string,
-}
+import { Session } from "next-auth";
 
 
 export interface stateType {
-    token: null | string,
-    user: null | User,
+    session: Session | null
 }
 
 
 const initialState: stateType = {
-    token: null,
-    user: null
+    session: null
 }
 
 
@@ -28,13 +20,13 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setToken: (state, action: PayloadAction<string | null>) => {
-            state.token = action.payload
+        setSession: (state, action: PayloadAction<Session | null>) => {
+            state.session = action.payload
         },
     }
 })
 
 
 
-export const { setToken } = authSlice.actions
+export const { setSession } = authSlice.actions
 export default authSlice.reducer
