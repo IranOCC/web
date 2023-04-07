@@ -4,7 +4,7 @@ import { Input, PhoneInput } from "@/components/Input";
 import LoginBackImage from "@/assets/images/city-bg.png";
 import { PhoneOtpFormData } from "@/types/formsData";
 import { Controller, useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { resolve } from "path";
 import axios from "@/lib/axios";
 import { toast } from "@/lib/toast";
@@ -13,6 +13,8 @@ import { signIn } from "next-auth/react";
 import PhoneIcon from "@/components/Icons/Phone";
 import QrcodeIcon from "../Icons/Qrcode";
 import { Session } from "next-auth";
+import { useCountdown } from "@/lib/hooks/useCountdown";
+import moment from "moment";
 
 const ModalPath = "auth";
 const LoginModal = ({ session }: { session: Session | null }) => {
@@ -39,8 +41,11 @@ const LoginModal = ({ session }: { session: Session | null }) => {
       const response = await axios.post("/auth/phoneOtp", data);
       toast.success("کد با موفقیت ارسال شد");
       const { phone } = response.data;
-      const url = pathname + "?" + searchParams?.toString() + "&phone=" + phone;
+      const se = new URLSearchParams(searchParams?.toString());
+      se.set("phone", phone);
+      const url = pathname + "?" + se?.toString();
       router.replace(url);
+      setSendAgainTime(moment().add(2, "minutes").toDate());
       return true;
     } catch (error) {
       setError("phone", {
@@ -78,6 +83,9 @@ const LoginModal = ({ session }: { session: Session | null }) => {
     }
   }, [isStep2]);
 
+  const [sendAgainTime, setSendAgainTime] = useState<null | Date>(null);
+  const [days, hours, minutes, seconds, countDown] = useCountdown(sendAgainTime);
+
   const editNumber = () => {
     const se = new URLSearchParams(searchParams?.toString());
     se.delete("phone");
@@ -86,7 +94,10 @@ const LoginModal = ({ session }: { session: Session | null }) => {
     reset();
   };
 
-  const sendOtpAgain = () => {};
+  const sendOtpAgain = async () => {
+    if (countDown > 0) return;
+    await sendOtp({ phone: phoneSet } as PhoneOtpFormData);
+  };
 
   if (session) return null;
   return (
@@ -115,7 +126,6 @@ const LoginModal = ({ session }: { session: Session | null }) => {
               <span className="block text-center font-medium w-full text-sm text-blue-500 mt-2 mb-6 cursor-pointer" onClick={editNumber}>
                 ویرایش شماره
               </span>
-
               <Input
                 /* */
                 control={control}
@@ -128,10 +138,9 @@ const LoginModal = ({ session }: { session: Session | null }) => {
                 icon={<QrcodeIcon />}
                 className="text-center tracking-wider"
               />
-
-              {/* <span className="block text-center font-medium w-full text-sm text-blue-500 mt-2 cursor-pointer" onClick={sendOtpAgain}>
-                ارسال مجدد (120)
-              </span> */}
+              <span className={`block text-center font-medium w-full text-sm mt-2 ${countDown > 0 ? "text-gray-500 cursor-not-allowed" : "text-blue-500 cursor-pointer"}`} onClick={sendOtpAgain}>
+                ارسال مجدد {countDown > 0 && "(" + moment.duration(countDown, "milliseconds").asSeconds().toFixed() + ")"}
+              </span>
             </>
           )}
           <div className="mt-6" />
