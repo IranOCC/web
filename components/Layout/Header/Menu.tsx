@@ -81,7 +81,7 @@ const MainMenu = () => {
   return (
     <>
       <LargeScreenMenu />
-      {/* <SmallScreenMenu items={menuItems} /> */}
+      <SmallScreenMenu />
     </>
   );
 };
