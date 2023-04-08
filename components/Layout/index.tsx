@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     <div className="min-h-full flex flex-col bg-slate-100">
       {/* @ts-expect-error Server Component */}
       <Header />
-      <main className="grow">
+      <main className="grow ">
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{children}</div>
       </main>
       <Footer />

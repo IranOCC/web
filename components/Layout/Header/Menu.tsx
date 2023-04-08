@@ -5,14 +5,12 @@ import Menu from "@mui/material/Menu";
 import Link from "next/link";
 import ArrowDownIcon from "@/components/Icons/ArrowDown";
 import ArrowLeftIcon from "@/components/Icons/ArrowLeft";
-import { ClickAwayListener, Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
+import { Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
-import { store } from "@/store";
-import { setMobileMenuOpen } from "@/store/options";
 import { Button } from "@/components/Button";
 import AddIcon from "@/components/Icons/Add";
 import BackIcon from "@/components/Icons/Back";
+import PopTop from "./PopTop";
 
 const menuItems: MenuItemType[] = [
   {
@@ -80,20 +78,15 @@ const menuItems: MenuItemType[] = [
 const MainMenu = () => {
   return (
     <>
-      <LargeScreenMenu />
-      <SmallScreenMenu />
+      <DesktopMenu />
+      {/* <MobileMenu /> */}
     </>
   );
 };
 
-export const SmallScreenMenu = () => {
-  const mobileMenuOpen = useSelector((state: any) => state?.options?.mobileMenuOpen as boolean);
-  const anchorRef = React.useRef<HTMLDivElement>(null);
+// ====================> MobileMenu
 
-  React.useEffect(() => {
-    setOpenList([]);
-  }, [mobileMenuOpen]);
-
+export const MobileMenu = () => {
   const [openList, setOpenList] = useState<number[]>([]);
   let _items = menuItems;
   for (let i = 0; i < openList.length; i++) {
@@ -102,37 +95,19 @@ export const SmallScreenMenu = () => {
 
   return (
     <>
-      <div className="absolute bg-red-500 top-[calc(100%)] left-0" ref={anchorRef} />
-      {/* <ClickAwayListener onClickAway={() => store.dispatch(setMobileMenuOpen(false))}> */}
-      <Popper open={mobileMenuOpen} anchorEl={anchorRef.current} placement="bottom-end" transition disablePortal>
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin: "left top",
-            }}
-          >
-            <Paper>
-              <div className="z-10 bg-white border divide-gray-100 shadow-lg min-w-[240px] overflow-hidden">
-                {openList.length > 0 && (
-                  <div className="inline-block text-blue-500 p-2" onClick={() => setOpenList(openList.slice(0, -1))}>
-                    <BackIcon />
-                  </div>
-                )}
-                <ul className="py-2 text-sm text-gray-700">
-                  {_items?.map((item, index) => {
-                    return <MobileMenuItem {...item} key={index} openList={() => setOpenList([...openList, index])} />;
-                  })}
-                </ul>
-                <div className="border-t p-2 flex flex-col">
-                  <Button title="افزودن لیست" noSpace icon={<AddIcon />} />
-                </div>
-              </div>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-      {/* </ClickAwayListener> */}
+      {openList.length > 0 && (
+        <div className="inline-block text-blue-500 p-2" onClick={() => setOpenList(openList.slice(0, -1))}>
+          <BackIcon />
+        </div>
+      )}
+      <ul className="py-2 text-sm text-gray-700">
+        {_items?.map((item, index) => {
+          return <MobileMenuItem {...item} key={index} openList={() => setOpenList([...openList, index])} />;
+        })}
+      </ul>
+      <div className="border-t p-2 flex flex-col">
+        <Button title="افزودن لیست" noSpace icon={<AddIcon />} />
+      </div>
     </>
   );
 };
@@ -146,7 +121,6 @@ const MobileMenuItem = ({ title, href = "#", children, openList }: MenuItemType 
         <Link href={href} prefetch={false}>
           {title}
         </Link>
-
         {hasChildren && (
           <span className={`ms-1 transition-transform`}>
             <ArrowLeftIcon />
@@ -157,9 +131,9 @@ const MobileMenuItem = ({ title, href = "#", children, openList }: MenuItemType 
   );
 };
 
-// ===================> Large Menu
+// ===================> DesktopMenu
 
-const LargeScreenMenu = () => {
+export const DesktopMenu = () => {
   return (
     <>
       <div className="float-left h-full mx-3 hidden lg:block me-7">
