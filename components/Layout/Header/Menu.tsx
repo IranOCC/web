@@ -14,78 +14,79 @@ import { Button } from "@/components/Button";
 import AddIcon from "@/components/Icons/Add";
 import BackIcon from "@/components/Icons/Back";
 
+const menuItems: MenuItemType[] = [
+  {
+    title: "خانه",
+    href: "/",
+  },
+  {
+    title: "لیست ها",
+    children: [
+      //
+      { title: "لیست اول" },
+      { title: "لیست اول" },
+      { title: "لیست اوللیست اوللیست اول", children: [{ title: "یس" }] },
+      { title: "لیست اول" },
+      { title: "لیست اول" },
+      { title: "لیست اول" },
+      {
+        title: "لیست اول",
+        children: [
+          { title: "یdgdgس" },
+          {
+            title: "یgggس",
+            children: [
+              //
+              { title: "دتس گود" },
+            ],
+          },
+          { title: "یtttس" },
+        ],
+      },
+      { title: "لیست اول" },
+    ],
+  },
+  { title: "تست" },
+  { title: "تست 1" },
+  {
+    title: "تست 2",
+    children: [
+      //
+      { title: "لیست اول" },
+      { title: "لیست اول" },
+      { title: "لیست اوللیست اوللیست اول", children: [{ title: "یس" }] },
+      { title: "لیست اول" },
+      { title: "لیست اول" },
+      { title: "لیست اول" },
+      {
+        title: "لیست اول",
+        children: [
+          { title: "یdgdgس" },
+          {
+            title: "یgggس",
+            children: [
+              //
+              { title: "دتس گود" },
+            ],
+          },
+          { title: "یtttس" },
+        ],
+      },
+      { title: "لیست اول" },
+    ],
+  },
+];
+
 const MainMenu = () => {
-  const menuItems: MenuItemType[] = [
-    {
-      title: "خانه",
-      href: "/",
-    },
-    {
-      title: "لیست ها",
-      children: [
-        //
-        { title: "لیست اول" },
-        { title: "لیست اول" },
-        { title: "لیست اوللیست اوللیست اول", children: [{ title: "یس" }] },
-        { title: "لیست اول" },
-        { title: "لیست اول" },
-        { title: "لیست اول" },
-        {
-          title: "لیست اول",
-          children: [
-            { title: "یdgdgس" },
-            {
-              title: "یgggس",
-              children: [
-                //
-                { title: "دتس گود" },
-              ],
-            },
-            { title: "یtttس" },
-          ],
-        },
-        { title: "لیست اول" },
-      ],
-    },
-    { title: "تست" },
-    { title: "تست 1" },
-    {
-      title: "تست 2",
-      children: [
-        //
-        { title: "لیست اول" },
-        { title: "لیست اول" },
-        { title: "لیست اوللیست اوللیست اول", children: [{ title: "یس" }] },
-        { title: "لیست اول" },
-        { title: "لیست اول" },
-        { title: "لیست اول" },
-        {
-          title: "لیست اول",
-          children: [
-            { title: "یdgdgس" },
-            {
-              title: "یgggس",
-              children: [
-                //
-                { title: "دتس گود" },
-              ],
-            },
-            { title: "یtttس" },
-          ],
-        },
-        { title: "لیست اول" },
-      ],
-    },
-  ];
   return (
     <>
-      <LargeScreenMenu items={menuItems} />
-      <SmallScreenMenu items={menuItems} />
+      <LargeScreenMenu />
+      {/* <SmallScreenMenu items={menuItems} /> */}
     </>
   );
 };
 
-const SmallScreenMenu = ({ items }: { items: MenuItemType[] }) => {
+export const SmallScreenMenu = () => {
   const mobileMenuOpen = useSelector((state: any) => state?.options?.mobileMenuOpen as boolean);
   const anchorRef = React.useRef<HTMLDivElement>(null);
 
@@ -94,7 +95,7 @@ const SmallScreenMenu = ({ items }: { items: MenuItemType[] }) => {
   }, [mobileMenuOpen]);
 
   const [openList, setOpenList] = useState<number[]>([]);
-  let _items = items;
+  let _items = menuItems;
   for (let i = 0; i < openList.length; i++) {
     _items = _items[openList[i]]?.children || [];
   }
@@ -102,7 +103,7 @@ const SmallScreenMenu = ({ items }: { items: MenuItemType[] }) => {
   return (
     <>
       <div className="absolute bg-red-500 top-[calc(100%)] left-0" ref={anchorRef} />
-      {/* <ClickAwayListener onClickAway={handleClose}> */}
+      {/* <ClickAwayListener onClickAway={() => store.dispatch(setMobileMenuOpen(false))}> */}
       <Popper open={mobileMenuOpen} anchorEl={anchorRef.current} placement="bottom-end" transition disablePortal>
         {({ TransitionProps, placement }) => (
           <Grow
@@ -158,12 +159,12 @@ const MobileMenuItem = ({ title, href = "#", children, openList }: MenuItemType 
 
 // ===================> Large Menu
 
-const LargeScreenMenu = ({ items }: { items: MenuItemType[] }) => {
+const LargeScreenMenu = () => {
   return (
     <>
       <div className="float-left h-full mx-3 hidden lg:block me-7">
         <ul className="h-full flex items-center font-light flex-row">
-          {items.map((item, index) => {
+          {menuItems.map((item, index) => {
             return <MenuItem {...item} key={index} />;
           })}
         </ul>
