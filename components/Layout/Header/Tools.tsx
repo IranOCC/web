@@ -11,6 +11,7 @@ import LoginModal from "@/components/Modals/LoginModal";
 import { Session } from "next-auth";
 import Link from "next/link";
 import React, { ReactNode } from "react";
+import IconButton from "@/components/Button/IconButton";
 
 type ToolsItemProps = {
   title?: string;
@@ -40,6 +41,13 @@ const Tools = ({ session }: { session: Session | null }) => {
     },
     {
       icon: <Button title="افزودن لیست" noSpace icon={<AddIcon />} />,
+      onClick: (e) => {
+        alert("hello");
+      },
+      className: "hidden lg:block",
+    },
+    {
+      icon: <IconButton icon={<AddIcon />} />,
       onClick: (e) => {
         alert("hello");
       },

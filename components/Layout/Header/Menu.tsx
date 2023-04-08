@@ -92,7 +92,7 @@ type MenuItemType = {
 };
 
 const MenuItem = ({ title, href = "#", children }: MenuItemType) => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const handleOpen = (event: any) => {
     setOpen(true);
   };
