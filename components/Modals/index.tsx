@@ -99,10 +99,10 @@ export default function Modal({ path, title, children, footerButton, closeButton
 type OpenModalLinkProps = {
   children: ReactNode;
   path: string;
-  className: any;
+  className?: string;
 };
 
-export const OpenModalLink = ({ children, path }: OpenModalLinkProps) => {
+export const OpenModalLink = ({ children, path, className = "" }: OpenModalLinkProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   let restParams: any = {};
@@ -111,7 +111,7 @@ export const OpenModalLink = ({ children, path }: OpenModalLinkProps) => {
     restParams[key].push(value);
   });
   return (
-    <Link href={{ pathname, query: { ...restParams, modal: path } }} prefetch={false}>
+    <Link href={{ pathname, query: { ...restParams, modal: path } }} prefetch={false} className={className}>
       {children}
     </Link>
   );

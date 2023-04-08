@@ -16,6 +16,8 @@ import { getServerSession } from "next-auth";
 import { store } from "@/store";
 import { setSession } from "@/store/auth";
 import Preloader from "@/components/Providers/Preloader";
+import { setSettings } from "@/store/settings";
+import { Settings } from "@/types/interfaces";
 
 config.autoAddCss = false;
 
@@ -71,7 +73,8 @@ const IRANSansX = localFont({
 
 // dynamic metadata
 export async function generateMetadata() {
-  const { title, description, keywords } = await getWebInitialData();
+  const settings = await getWebInitialData();
+  const { title, description, keywords } = settings;
   return {
     title: {
       default: title + " | " + description,
@@ -87,12 +90,14 @@ interface IProps {
 }
 
 export default async function RootLayout({ children }: IProps) {
-  const { title } = await getWebInitialData();
+  const settings = await getWebInitialData();
+  store.dispatch(setSettings(settings));
 
   return (
     <html lang="fa" className={IRANSansX.className + " h-full"} dir="rtl">
       <body className="h-full selection:bg-fuchsia-300 selection:text-fuchsia-900">
-        <Suspense fallback={<Loading label={title} />}>
+        <Suspense fallback={<Loading label={settings.title} />}>
+          <Preloader settings={settings} />
           <AuthProvider>
             <StoreProviders>
               {/*  */}
@@ -109,6 +114,5 @@ export default async function RootLayout({ children }: IProps) {
 async function getWebInitialData() {
   const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/setting/webInitialData", {});
   const data = await res.json();
-  return data;
-  // return { title: "", description: "", keywords: [] };
+  return data as Settings;
 }

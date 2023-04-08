@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 const Button = (props: PropsTypes) => {
-  const { title, onClick, icon, disabled = false, loading = false, fill = true, noSpace = false, type = "button" } = props;
+  const { title = "", onClick, icon = "", disabled = false, loading = false, fill = true, noSpace = false, type = "button", className = "" } = props;
 
   return (
     <button
@@ -9,11 +9,12 @@ const Button = (props: PropsTypes) => {
       disabled={disabled || loading}
       onClick={onClick}
       className={`
-      relative z-10
+      relative flex justify-center items-center z-10
       ${disabled ? "cursor-not-allowed bg-blue-300" : loading ? "cursor-progress bg-blue-400" : "bg-blue-500 from-blue-500 to-[#57C7FA] hover:bg-gradient-to-l"}
       text-white focus:ring-0 focus:outline-none font-medium rounded text-sm px-8 py-3 text-center
       ${noSpace ? " mb-0" : " mb-6"}
       ${fill ? " w-full" : ""}
+      ${className}
       `}
     >
       {loading ? (
@@ -29,8 +30,8 @@ const Button = (props: PropsTypes) => {
         </svg>
       ) : (
         <>
-          {title}
           {icon}
+          <span className="ms-1">{title}</span>
         </>
       )}
     </button>
@@ -40,6 +41,7 @@ const Button = (props: PropsTypes) => {
 type PropsTypes = {
   type?: "button" | "submit";
   title?: string;
+  className?: string;
   icon?: ReactNode;
   disabled?: boolean;
   loading?: boolean;

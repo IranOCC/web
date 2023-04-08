@@ -11,7 +11,7 @@ const Header = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <nav className="max-w-screen bg-white border-gray-200 shadow-lg	 h-16 px-10">
+    <nav className="max-w-screen bg-white border-gray-200 shadow-lg h-16 ps-10 pe-0">
       <Logo />
       <Search />
       <Tools {...{ session }} />

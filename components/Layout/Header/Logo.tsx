@@ -1,11 +1,16 @@
 "use client";
 
+import { Settings } from "@/types/interfaces";
+import Image from "next/image";
+import { useSelector } from "react-redux";
+import WebLogo from "@/assets/images/logo.png";
+
 const Logo = () => {
+  const settings: Settings | null = useSelector((state: any) => state.settings.settings as Settings);
   return (
     <div className="float-right h-full flex items-center">
-      <a href="#" className="flex items-center">
-        <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" />
-        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+      <a href="/" className="flex items-center">
+        <Image src={WebLogo} alt={settings.title} height={40} />
       </a>
     </div>
   );

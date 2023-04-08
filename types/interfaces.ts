@@ -29,3 +29,11 @@ export interface LoginUser {
     user: User,
     accessToken: string;
 }
+
+
+
+export interface Settings {
+    title: string;
+    description: string;
+    keywords: string[];
+}

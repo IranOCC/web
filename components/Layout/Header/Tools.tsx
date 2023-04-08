@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/Button";
 import LoginIcon from "@/components/Icons/Login";
+import MenuIcon from "@/components/Icons/Menu";
+import AddIcon from "@/components/Icons/Add";
 import NotificationIcon from "@/components/Icons/Notification";
 import UserIcon from "@/components/Icons/User";
 import { OpenModalLink } from "@/components/Modals";
@@ -13,9 +15,10 @@ import React, { ReactNode } from "react";
 type ToolsItemProps = {
   title?: string;
   icon?: ReactNode;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   modalPath?: string;
   href?: string;
+  className?: string;
 };
 
 const Tools = ({ session }: { session: Session | null }) => {
@@ -29,18 +32,31 @@ const Tools = ({ session }: { session: Session | null }) => {
     },
     {
       icon: <NotificationIcon />,
+      // onClick: (e) => {
+      //   alert("hello");
+      // },
+      href: "gg",
+      className: "hidden sm:block",
+    },
+    {
+      icon: <Button title="افزودن لیست" noSpace icon={<AddIcon />} />,
       onClick: (e) => {
         alert("hello");
       },
+      className: "hidden md:block",
+    },
+    {
+      icon: <MenuIcon />,
+      onClick: (e) => {
+        // alert("hello");
+      },
+      className: "block lg:hidden",
     },
   ];
 
   return (
     <>
-      <div className="md:hidden lg:flex float-left h-full flex items-center justify-center px-5 border-gray-200 border-s ">
-        <Button title="افزودن به لیست" noSpace />
-      </div>
-      <div className="sm:hidden md:block float-left h-full ">
+      <div className="float-left h-full ">
         <div className={`h-full mx-auto font-medium flex`}>
           {items.map((props, i) => (
             <ToolsItem {...props} key={i} />
@@ -53,7 +69,7 @@ const Tools = ({ session }: { session: Session | null }) => {
   );
 };
 
-const ToolsItem = ({ title, icon, onClick, href, modalPath }: ToolsItemProps) => {
+const ToolsItem = ({ title, icon, onClick, href, modalPath, className = "" }: ToolsItemProps) => {
   const child = (
     <div className="h-full min-w-[80px] px-4 whitespace-nowrap flex flex-col items-center justify-center text-gray-500 hover:text-blue-600 border-gray-200 border-s hover:bg-gray-50 ">
       {icon}
@@ -61,12 +77,20 @@ const ToolsItem = ({ title, icon, onClick, href, modalPath }: ToolsItemProps) =>
     </div>
   );
   if (onClick) {
-    return <button onClick={onClick}>{child}</button>;
+    return (
+      <div onClick={onClick} className={className}>
+        {child}
+      </div>
+    );
   } else if (href) {
-    return <Link href={href}>{child}</Link>;
+    return (
+      <Link href={href} className={className}>
+        {child}
+      </Link>
+    );
   } else if (modalPath) {
     return (
-      <OpenModalLink className="h-full w-full" path={modalPath}>
+      <OpenModalLink className={className} path={modalPath}>
         {child}
       </OpenModalLink>
     );
