@@ -17,7 +17,7 @@ const MainMenu = () => {
         //
         { title: "لیست اول" },
         { title: "لیست اول" },
-        { title: "لیست اول", children: [{ title: "یس" }] },
+        { title: "لیست اوللیست اوللیست اول", children: [{ title: "یس" }] },
         { title: "لیست اول" },
         { title: "لیست اول" },
         { title: "لیست اول" },
@@ -50,10 +50,10 @@ type MenuItemType = {
 };
 
 const MenuItem = ({ title, href = "#", children }: MenuItemType) => {
-  const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLElement) | null>(null);
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const open = Boolean(anchorEl);
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget.children[1]);
   };
   const handleClose = (event: any) => {
     setAnchorEl(null);
@@ -63,14 +63,17 @@ const MenuItem = ({ title, href = "#", children }: MenuItemType) => {
 
   return (
     <>
-      <li onClick={handleOpen} className="mx-2 px-2 text-blue-900 hover:text-blue-500 font-light text-sm cursor-pointer h-full flex items-center justify-center">
+      <li onClick={handleOpen} className="relative mx-2 px-2 text-blue-900 hover:text-blue-500 font-light text-sm cursor-pointer h-full flex items-center justify-center">
         <Link href={href} prefetch={false}>
           {title}
         </Link>
         {hasChildren && (
-          <span className={`ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
-            <ArrowDownIcon />
-          </span>
+          <>
+            <div className="absolute right-0 -bottom-1" />
+            <span className={`ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
+              <ArrowDownIcon />
+            </span>
+          </>
         )}
       </li>
       {hasChildren && (
@@ -117,7 +120,7 @@ const MenuChildren = ({ anchorEl, onClose, onClick, items }: MenuChildrenType) =
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+      <div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow min-w-[200px] dark:bg-gray-700">
         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
           {items.map((item) => {
             return <MenuChildrenItem {...item} />;
@@ -129,10 +132,10 @@ const MenuChildren = ({ anchorEl, onClose, onClick, items }: MenuChildrenType) =
 };
 
 const MenuChildrenItem = ({ title, href = "#", children }: MenuItemType) => {
-  const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLElement) | null>(null);
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const open = Boolean(anchorEl);
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget.children[1]);
   };
   const handleClose = (event: any) => {
     setAnchorEl(null);
@@ -142,14 +145,18 @@ const MenuChildrenItem = ({ title, href = "#", children }: MenuItemType) => {
 
   return (
     <>
-      <li onClick={handleOpen} className="flex items-center justify-between cursor-pointer px-4 py-2 hover:bg-gray-100">
+      <li onClick={handleOpen} className="relative flex items-center justify-between cursor-pointer px-4 py-2 hover:bg-gray-100">
         <Link href={href} prefetch={false} className="block  ">
           {title}
         </Link>
+
         {hasChildren && (
-          <span className={`ms-1 transition-transform`}>
-            <ArrowLeftIcon />
-          </span>
+          <>
+            <div className="absolute -left-1 top-0" />
+            <span className={`ms-1 transition-transform`}>
+              <ArrowLeftIcon />
+            </span>
+          </>
         )}
       </li>
       {hasChildren && (
