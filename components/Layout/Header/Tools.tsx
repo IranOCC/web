@@ -51,7 +51,7 @@ const Tools = ({ session }: { session: Session | null }) => {
       onClick: (e) => {
         alert("hello");
       },
-      className: "hidden md:block",
+      className: "hidden md:block lg:hidden",
     },
     {
       icon: <MenuIcon />,
