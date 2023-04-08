@@ -24,13 +24,52 @@ const MainMenu = () => {
         { title: "لیست اول" },
         { title: "لیست اول" },
         { title: "لیست اول" },
-        { title: "لیست اول", children: [{ title: "یس" }, { title: "یس" }, { title: "یس" }] },
+        {
+          title: "لیست اول",
+          children: [
+            { title: "یdgdgس" },
+            {
+              title: "یgggس",
+              children: [
+                //
+                { title: "دتس گود" },
+              ],
+            },
+            { title: "یtttس" },
+          ],
+        },
         { title: "لیست اول" },
       ],
     },
     { title: "تست" },
     { title: "تست 1" },
-    { title: "تست 2" },
+    {
+      title: "تست 2",
+      children: [
+        //
+        { title: "لیست اول" },
+        { title: "لیست اول" },
+        { title: "لیست اوللیست اوللیست اول", children: [{ title: "یس" }] },
+        { title: "لیست اول" },
+        { title: "لیست اول" },
+        { title: "لیست اول" },
+        {
+          title: "لیست اول",
+          children: [
+            { title: "یdgdgس" },
+            {
+              title: "یgggس",
+              children: [
+                //
+                { title: "دتس گود" },
+              ],
+            },
+            { title: "یtttس" },
+          ],
+        },
+        { title: "لیست اول" },
+      ],
+    },
   ];
 
   return (
@@ -53,7 +92,7 @@ type MenuItemType = {
 };
 
 const MenuItem = ({ title, href = "#", children }: MenuItemType) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const handleOpen = (event: any) => {
     setOpen(true);
   };
@@ -78,7 +117,6 @@ const MenuItem = ({ title, href = "#", children }: MenuItemType) => {
               //
               anchorRef={anchorRef}
               open={open}
-              setOpen={setOpen}
               items={children}
             />
           </>
@@ -91,11 +129,10 @@ const MenuItem = ({ title, href = "#", children }: MenuItemType) => {
 type MenuChildrenType = {
   anchorRef: React.RefObject<HTMLDivElement>;
   open: boolean;
-  setOpen: (open: boolean) => void;
   items: MenuItemType[];
 };
 
-function MenuChildren({ anchorRef, open, setOpen, items }: MenuChildrenType) {
+function MenuChildren({ anchorRef, open, items }: MenuChildrenType) {
   return (
     <>
       <Popper open={open} anchorEl={anchorRef.current} placement="bottom-end" transition disablePortal>
@@ -107,7 +144,7 @@ function MenuChildren({ anchorRef, open, setOpen, items }: MenuChildrenType) {
             }}
           >
             <Paper>
-              <div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow min-w-[200px] dark:bg-gray-700">
+              <div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-lg min-w-[200px] dark:bg-gray-700">
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                   {items.map((item) => {
                     return <MenuChildrenItem {...item} />;
@@ -150,7 +187,6 @@ const MenuChildrenItem = ({ title, href = "#", children }: MenuItemType) => {
               //
               anchorRef={anchorRef}
               open={open}
-              setOpen={setOpen}
               items={children}
             />
           </>
