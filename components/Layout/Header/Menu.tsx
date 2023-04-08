@@ -34,8 +34,8 @@ const MainMenu = () => {
     <>
       <div className="float-left h-full mx-3 hidden lg:block me-7">
         <ul className="h-full flex items-center font-light flex-row">
-          {menuItems.map((item) => {
-            return <MenuItem {...item} />;
+          {menuItems.map((item, index) => {
+            return <MenuItem {...item} key={index} />;
           })}
         </ul>
       </div>
@@ -122,8 +122,8 @@ const MenuChildren = ({ anchorEl, onClose, onClick, items }: MenuChildrenType) =
     >
       <div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow min-w-[200px] dark:bg-gray-700">
         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-          {items.map((item) => {
-            return <MenuChildrenItem {...item} />;
+          {items.map((item, index) => {
+            return <MenuChildrenItem {...item} key={index} />;
           })}
         </ul>
       </div>
