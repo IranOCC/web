@@ -12,6 +12,10 @@ import { Session } from "next-auth";
 import Link from "next/link";
 import React, { ReactNode } from "react";
 import IconButton from "@/components/Button/IconButton";
+import { useSelector } from "react-redux";
+import CloseIcon from "@/components/Icons/Close";
+import { store } from "@/store";
+import { setMobileMenuOpen } from "@/store/options";
 
 type ToolsItemProps = {
   title?: string;
@@ -24,6 +28,8 @@ type ToolsItemProps = {
 
 const Tools = ({ session }: { session: Session | null }) => {
   const haveSession = session !== null;
+
+  const mobileMenuOpen = useSelector((state: any) => state?.options?.mobileMenuOpen as boolean);
   const items: ToolsItemProps[] = [
     {
       modalPath: haveSession ? undefined : "auth",
@@ -54,9 +60,9 @@ const Tools = ({ session }: { session: Session | null }) => {
       className: "hidden md:block lg:hidden",
     },
     {
-      icon: <MenuIcon />,
+      icon: mobileMenuOpen ? <CloseIcon /> : <MenuIcon />,
       onClick: (e) => {
-        // alert("hello");
+        store.dispatch(setMobileMenuOpen(!mobileMenuOpen));
       },
       className: "block lg:hidden",
     },
