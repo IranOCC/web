@@ -87,15 +87,16 @@ const ToolsItem = ({ title, icon, onClick, href, modalPath, className = "", cont
       {content}
     </div>
   );
+
+  const anchorRef = React.useRef<HTMLDivElement>(null);
+  const [isOpenPopTop, setIsOpenPopTop] = useState(false);
+  const handleOpen = () => {
+    setIsOpenPopTop(true);
+  };
+  const handleClose = () => {
+    setIsOpenPopTop(false);
+  };
   if (popTop) {
-    const anchorRef = React.useRef<HTMLDivElement>(null);
-    const [isOpenPopTop, setIsOpenPopTop] = useState(false);
-    const handleOpen = () => {
-      setIsOpenPopTop(true);
-    };
-    const handleClose = () => {
-      setIsOpenPopTop(false);
-    };
     return (
       <>
         <ClickAwayListener onClickAway={handleClose}>
