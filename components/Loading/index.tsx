@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
 
-const Loading = ({ label }: { label: string }) => {
+const Loading = ({ label }: { label?: string }) => {
   return (
     <div className={styles.loader_wrap}>
       <div className={styles.loader_content}>
@@ -15,7 +15,7 @@ const Loading = ({ label }: { label: string }) => {
             </defs>
           </svg>
         </div>
-        <span className={styles.loader_text}>{label}</span>
+        {label && <span className={styles.loader_text}>{label}</span>}
       </div>
     </div>
   );

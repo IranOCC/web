@@ -44,7 +44,7 @@ const menuItems: MenuItemType[] = [
       { title: "لیست اول" },
     ],
   },
-  { title: "تست" },
+  { title: "داشبورد", href: "/dashboard" },
   { title: "تست 1" },
   {
     title: "تست 2",
