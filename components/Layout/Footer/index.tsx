@@ -10,12 +10,15 @@ import { Button } from "@/components/Button";
 import EmailOutlineIcon from "@/components/Icons/EmailOutline";
 import PhoneOutlineIcon from "@/components/Icons/PhoneOutline";
 import LocationOutlineIcon from "@/components/Icons/LocationOutline";
+import Subscription from "./Subscription";
 
 const Footer = () => {
   const settings: Settings | null = useSelector((state: any) => state.settings.settings as Settings);
 
   return (
     <footer className="w-full">
+      <Subscription />
+
       <MainFooter />
       <SubFooter />
     </footer>
@@ -29,7 +32,7 @@ const MainFooter = () => {
 
   return (
     <div className="bg-white py-10 px-8 pt-20">
-      <div className="mx-auto w-full max-w-screen-xl sm:flex sm:items-center sm:justify-between ">
+      <div className="mx-auto w-full max-w-screen-xl">
         <div className="w-full grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
           {/* info */}
           <div className="">
@@ -49,9 +52,9 @@ const MainFooter = () => {
           <div className="">
             <h2 className="font-extrabold text-gray-500 text-base mb-5">در اکازیون</h2>
             <ul className="font-bold text-sm space-y-3 text-slate-700 ">
-              {[1, 2, 3, 4].map(() => {
+              {[1, 2, 3, 4].map((item, index) => {
                 return (
-                  <li className="relative flex items-center hover:text-blue-500 before:transition-all hover:before:-translate-x-2 before:content-['◂'] before:text-xs before:absolute before:text-blue-600 before:start-0">
+                  <li key={index} className="relative flex items-center hover:text-blue-500 before:transition-all hover:before:-translate-x-2 before:content-['◂'] before:text-xs before:absolute before:text-blue-600 before:start-0">
                     <Link className="ps-5" href="">
                       درباره شرکت
                     </Link>

@@ -1,5 +1,5 @@
 import axiosSSR from "@/lib/axiosSSR"
-import { LoginFormData, LoginByOtpFormData } from "@/types/formsData"
+import { LoginFormData, LoginPhoneOtpFormData } from "@/types/formsData"
 import { LoginUser, User, UserRoleEnum } from "@/types/interfaces"
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
                 token: { label: "Token", type: "text" }
             },
             async authorize(credentials, req) {
-                const data = credentials as LoginByOtpFormData
+                const data = credentials as LoginPhoneOtpFormData
                 const response = await axiosSSR.post("/auth/loginByOtp", data)
                 if (response.status >= 400) return null
                 return response.data as User

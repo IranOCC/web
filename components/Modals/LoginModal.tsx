@@ -1,11 +1,10 @@
 import Modal from ".";
 import { Button } from "@/components/Button";
-import { Input, PhoneInput } from "@/components/Input";
+import { Input } from "@/components/Input";
 import LoginBackImage from "@/assets/images/city-bg.png";
-import { PhoneOtpFormData } from "@/types/formsData";
-import { Controller, useForm } from "react-hook-form";
+import { LoginPhoneOtpFormData } from "@/types/formsData";
+import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
-import { resolve } from "path";
 import axios from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -28,7 +27,7 @@ const LoginModal = ({ session }: { session: Session | null }) => {
     handleSubmit,
     reset,
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
-  } = useForm<PhoneOtpFormData>();
+  } = useForm<LoginPhoneOtpFormData>();
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -36,7 +35,7 @@ const LoginModal = ({ session }: { session: Session | null }) => {
   const phoneSet = searchParams?.get("phone")?.replace(" ", "+");
   const isStep2 = phoneSet?.length !== undefined;
 
-  const sendOtp = async (data: PhoneOtpFormData) => {
+  const sendOtp = async (data: LoginPhoneOtpFormData) => {
     try {
       const response = await axios.post("/auth/phoneOtp", data);
       toast.success("کد با موفقیت ارسال شد");
@@ -54,7 +53,7 @@ const LoginModal = ({ session }: { session: Session | null }) => {
       });
     }
   };
-  const loginByOtp = async (data: PhoneOtpFormData) => {
+  const loginByOtp = async (data: LoginPhoneOtpFormData) => {
     const result = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });
     if (result?.ok) {
       toast.success("با موفقیت وارد شدید!");
@@ -96,7 +95,7 @@ const LoginModal = ({ session }: { session: Session | null }) => {
 
   const sendOtpAgain = async () => {
     if (countDown > 0) return;
-    await sendOtp({ phone: phoneSet } as PhoneOtpFormData);
+    await sendOtp({ phone: phoneSet } as LoginPhoneOtpFormData);
   };
 
   if (session) return null;

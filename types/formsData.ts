@@ -5,12 +5,12 @@ export type LoginFormData = {
 };
 
 
-export type PhoneOtpFormData = {
+export type LoginPhoneOtpFormData = {
     phone: string;
     token: string;
 };
 
-export type LoginByOtpFormData = {
-    phone: string;
-    token: string;
+
+export type SubscriptionFormData = {
+    email: string;
 };
