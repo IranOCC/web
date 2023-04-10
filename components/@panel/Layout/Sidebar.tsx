@@ -16,7 +16,7 @@ import { ClickAwayListener } from "@mui/material";
 import { Tooltip } from "antd";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { notFound, usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
 const panelSuffix = "/panel";
@@ -157,7 +157,7 @@ const PanelSideBar = () => {
 
   return (
     <ClickAwayListener onClickAway={() => setOpenSubMenu(null)}>
-      <aside className="relative flex">
+      <aside className="relative flex z-20">
         <MainMenu setOpenSubMenu={setOpenSubMenu} />
         <SubMenu open={item !== undefined} parentPath={lastOpenedItem.href} title={lastOpenedItem.title} sub={lastOpenedItem.sub} />
       </aside>
@@ -171,7 +171,7 @@ export default PanelSideBar;
 
 const MainMenu = ({ setOpenSubMenu }: any) => {
   return (
-    <div className="relative z-10 flex flex-col items-center w-16 h-screen py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
+    <div className="relative z-10 flex flex-col items-center w-16 h-full py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
       {menuItems.map(({ sub, title, icon, href }, index) => {
         let onOpen = undefined;
         if (sub.length > 0) onOpen = () => setOpenSubMenu(href);
@@ -205,7 +205,7 @@ const MainMenuItem = ({ href = "#", onClick, icon, title = "test", highlight = f
 const SubMenu = ({ open, title, sub, parentPath }: { open: boolean; title: string; sub: SubMenuType[]; parentPath: string }) => {
   const pathname = usePathname();
   return (
-    <div className={"h-screen py-8 overflow-y-auto bg-white border-l w-64 dark:bg-gray-900 dark:border-gray-700 absolute start-16 shadow-lg xl:relative xl:!start-0" + (open ? " " : " !-start-48")}>
+    <div className={"h-screen py-8 overflow-y-auto bg-white border-l w-64 dark:bg-gray-900 dark:border-gray-700 absolute start-16 xl:relative xl:!start-0" + (open ? " " : " !-start-48")}>
       <h2 className="px-5 text-lg font-medium text-gray-800 dark:text-white">{title}</h2>
       <div className="mt-8 space-y-4">
         {sub?.map(({ title, href, subtitle }, index) => {
