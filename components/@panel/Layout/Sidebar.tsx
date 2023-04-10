@@ -37,13 +37,13 @@ type MenuItemType = {
 
 const menuItems: MenuItemType[] = [
   {
-    title: "خانه",
+    title: "داشبورد",
     href: "",
     icon: <HomeOutlineIcon />,
     sub: [
       {
-        title: "تست",
-        href: "add",
+        title: "صفحه اصلی",
+        href: "",
         subtitle: "",
       },
     ],
@@ -54,14 +54,14 @@ const menuItems: MenuItemType[] = [
     icon: <UsersOutlineIcon />,
     sub: [
       {
-        title: "افزودن کاربر",
+        title: "کاربر جدید",
         href: "add",
         subtitle: "",
       },
       {
-        title: "لیست کاربران",
+        title: "مدیریت کاربران",
         href: "",
-        subtitle: "205 کاربر",
+        subtitle: "",
       },
     ],
   },
@@ -71,8 +71,28 @@ const menuItems: MenuItemType[] = [
     icon: <BuildingOutlineIcon />,
     sub: [
       {
-        title: "تست",
+        title: "ملک جدید",
         href: "add",
+        subtitle: "",
+      },
+      {
+        title: "مدیریت املاک",
+        href: "",
+        subtitle: "",
+      },
+      {
+        title: "دسته بندی",
+        href: "categories",
+        subtitle: "",
+      },
+      {
+        title: "نوع سند",
+        href: "documentTypes",
+        subtitle: "",
+      },
+      {
+        title: "ویژگی ها",
+        href: "features",
         subtitle: "",
       },
     ],
@@ -83,8 +103,23 @@ const menuItems: MenuItemType[] = [
     icon: <DocumentOutlineIcon />,
     sub: [
       {
-        title: "تست",
+        title: "پست جدید",
         href: "add",
+        subtitle: "",
+      },
+      {
+        title: "مدیریت پست ها",
+        href: "",
+        subtitle: "",
+      },
+      {
+        title: "دسته بندی",
+        href: "categories",
+        subtitle: "",
+      },
+      {
+        title: "دیدگاه ها",
+        href: "comments",
         subtitle: "",
       },
     ],
@@ -95,8 +130,13 @@ const menuItems: MenuItemType[] = [
     icon: <LinkOutlineIcon />,
     sub: [
       {
-        title: "تست",
+        title: "صفحه جدید",
         href: "add",
+        subtitle: "",
+      },
+      {
+        title: "مدیریت صفحات",
+        href: "",
         subtitle: "",
       },
     ],
@@ -107,8 +147,13 @@ const menuItems: MenuItemType[] = [
     icon: <MediaOutlineIcon />,
     sub: [
       {
-        title: "تست",
-        href: "add",
+        title: "بارگذاری رسانه",
+        href: "upload",
+        subtitle: "",
+      },
+      {
+        title: "مدیریت فایل ها",
+        href: "",
         subtitle: "",
       },
     ],
@@ -119,8 +164,8 @@ const menuItems: MenuItemType[] = [
     icon: <ChartOutlineIcon />,
     sub: [
       {
-        title: "تست",
-        href: "add",
+        title: "کاربران",
+        href: "users",
         subtitle: "",
       },
     ],
@@ -131,8 +176,8 @@ const menuItems: MenuItemType[] = [
     icon: <SettingOutlineIcon />,
     sub: [
       {
-        title: "تست",
-        href: "add",
+        title: "تنظیمات اولیه",
+        href: "initial",
         subtitle: "",
       },
     ],

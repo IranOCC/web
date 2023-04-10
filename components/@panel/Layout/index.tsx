@@ -7,7 +7,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
     <div className="h-full flex flex-row bg-slate-100">
       <PanelSideBar />
       <main className="relative w-full h-full">
-        <div className="h-[calc(100%-3.5rem)] w-full">{children}</div>
+        <div className="h-[calc(100%-3rem)] w-full p-2">{children}</div>
         <PanelFooter />
       </main>
     </div>
