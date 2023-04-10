@@ -23,12 +23,29 @@ const panelSuffix = "/panel";
 
 type SubMenuType = { title: string; href: string; subtitle?: string };
 
-const menuItems = [
+type MenuItemType = {
+  title: string;
+  href: string;
+  icon: JSX.Element;
+  sub: {
+    title: string;
+    href: string;
+    subtitle: string;
+  }[];
+};
+
+const menuItems: MenuItemType[] = [
   {
     title: "خانه",
     href: "",
     icon: <HomeOutlineIcon />,
-    sub: [],
+    sub: [
+      {
+        title: "تست",
+        href: "add",
+        subtitle: "",
+      },
+    ],
   },
   {
     title: "کاربران",
@@ -51,49 +68,88 @@ const menuItems = [
     title: "املاک",
     href: "estates",
     icon: <BuildingOutlineIcon />,
-    sub: [],
+    sub: [
+      {
+        title: "تست",
+        href: "add",
+        subtitle: "",
+      },
+    ],
   },
   {
     title: "وبلاگ",
     href: "blog",
     icon: <DocumentOutlineIcon />,
-    sub: [],
+    sub: [
+      {
+        title: "تست",
+        href: "add",
+        subtitle: "",
+      },
+    ],
   },
   {
     title: "صفحات",
     href: "pages",
     icon: <LinkOutlineIcon />,
-    sub: [],
+    sub: [
+      {
+        title: "تست",
+        href: "add",
+        subtitle: "",
+      },
+    ],
   },
   {
     title: "رسانه",
     href: "media",
     icon: <MediaOutlineIcon />,
-    sub: [],
+    sub: [
+      {
+        title: "تست",
+        href: "add",
+        subtitle: "",
+      },
+    ],
   },
   {
     title: "گزارشات",
     href: "reports",
     icon: <ChartOutlineIcon />,
-    sub: [],
+    sub: [
+      {
+        title: "تست",
+        href: "add",
+        subtitle: "",
+      },
+    ],
   },
   {
     title: "تنظیمات",
     href: "settings",
     icon: <SettingOutlineIcon />,
-    sub: [],
+    sub: [
+      {
+        title: "تست",
+        href: "add",
+        subtitle: "",
+      },
+    ],
   },
 ];
 
 const PanelSideBar = () => {
   const pathname = usePathname();
   const [isOpenSubMenu, setOpenSubMenu] = useState(null);
+  const [lastOpenedItem, setLastOpenedItem] = useState<MenuItemType>(menuItems[0]);
 
   const item = menuItems.find(({ href }) => {
     return isOpenSubMenu && !href.length ? isOpenSubMenu === panelSuffix : isOpenSubMenu === href;
   });
 
-  const prevItem = usePrevious(item);
+  useEffect(() => {
+    if (item) setLastOpenedItem(item);
+  }, [item]);
 
   useEffect(() => {
     setOpenSubMenu(null);
@@ -103,7 +159,7 @@ const PanelSideBar = () => {
     <ClickAwayListener onClickAway={() => setOpenSubMenu(null)}>
       <aside className="relative flex">
         <MainMenu setOpenSubMenu={setOpenSubMenu} />
-        <SubMenu open={item !== undefined} parentPath={item?.href} title={item?.title} sub={item?.sub} />
+        <SubMenu open={item !== undefined} parentPath={lastOpenedItem.href} title={lastOpenedItem.title} sub={lastOpenedItem.sub} />
       </aside>
     </ClickAwayListener>
   );
@@ -146,10 +202,10 @@ const MainMenuItem = ({ href = "#", onClick, icon, title = "test", highlight = f
 
 // ===> sub menu
 
-const SubMenu = ({ open, title, sub, parentPath }: { open: boolean; title?: string; sub?: SubMenuType[]; parentPath?: string }) => {
+const SubMenu = ({ open, title, sub, parentPath }: { open: boolean; title: string; sub: SubMenuType[]; parentPath: string }) => {
   const pathname = usePathname();
   return (
-    <div className={"h-screen py-8 overflow-y-auto bg-white border-l w-64 dark:bg-gray-900 dark:border-gray-700 absolute start-16 shadow-lg xl:relative xl:!start-0 xl:shadow-none" + (open ? " " : " !-start-48")}>
+    <div className={"h-screen py-8 overflow-y-auto bg-white border-l w-64 dark:bg-gray-900 dark:border-gray-700 absolute start-16 shadow-lg xl:relative xl:!start-0" + (open ? " " : " !-start-48")}>
       <h2 className="px-5 text-lg font-medium text-gray-800 dark:text-white">{title}</h2>
       <div className="mt-8 space-y-4">
         {sub?.map(({ title, href, subtitle }, index) => {
