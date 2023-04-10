@@ -3,7 +3,7 @@ export default async function Page() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         return resolve(true);
-      }, 5000);
+      }, 500);
     });
   };
   await waiting();
