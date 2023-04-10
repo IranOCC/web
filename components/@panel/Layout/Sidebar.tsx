@@ -9,6 +9,7 @@ import LogoutOutlineIcon from "@/components/Icons/LogoutOutline";
 import MediaOutlineIcon from "@/components/Icons/MediaOutline";
 import MenuBarsIcon from "@/components/Icons/MenuBars";
 import SettingOutlineIcon from "@/components/Icons/SettingOutline";
+import UserIcon from "@/components/Icons/User";
 import UsersOutlineIcon from "@/components/Icons/UsersOutline";
 import { usePrevious } from "@/lib/hooks/usePrevious";
 import { ClickAwayListener } from "@mui/material";
@@ -16,7 +17,7 @@ import { ClickAwayListener } from "@mui/material";
 import { Tooltip } from "antd";
 
 import Link from "next/link";
-import { notFound, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
 const panelSuffix = "/panel";
@@ -140,12 +141,17 @@ const menuItems: MenuItemType[] = [
 
 const PanelSideBar = () => {
   const pathname = usePathname();
-  const [isOpenSubMenu, setOpenSubMenu] = useState(null);
+  const [isOpenSubMenu, setOpenSubMenu] = useState<string | null>(null);
   const [lastOpenedItem, setLastOpenedItem] = useState<MenuItemType>(menuItems[0]);
 
   const item = menuItems.find(({ href }) => {
     return isOpenSubMenu && !href.length ? isOpenSubMenu === panelSuffix : isOpenSubMenu === href;
   });
+
+  const handleOpenSubMenu = (name: string) => {
+    if (isOpenSubMenu === name) setOpenSubMenu(null);
+    else setOpenSubMenu(name);
+  };
 
   useEffect(() => {
     if (item) setLastOpenedItem(item);
@@ -158,7 +164,7 @@ const PanelSideBar = () => {
   return (
     <ClickAwayListener onClickAway={() => setOpenSubMenu(null)}>
       <aside className="relative flex z-20">
-        <MainMenu setOpenSubMenu={setOpenSubMenu} />
+        <MainMenu handleOpenSubMenu={handleOpenSubMenu} />
         <SubMenu open={item !== undefined} parentPath={lastOpenedItem.href} title={lastOpenedItem.title} sub={lastOpenedItem.sub} />
       </aside>
     </ClickAwayListener>
@@ -169,16 +175,16 @@ export default PanelSideBar;
 
 // ===> main menu
 
-const MainMenu = ({ setOpenSubMenu }: any) => {
+const MainMenu = ({ handleOpenSubMenu }: any) => {
   return (
-    <div className="relative flex flex-col items-center w-16 h-full py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
+    <div className="relative overflow-x-hidden z-20 flex flex-col items-center w-16 h-full py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
       {menuItems.map(({ sub, title, icon, href }, index) => {
         let onOpen = undefined;
-        if (sub.length > 0) onOpen = () => setOpenSubMenu(href);
+        if (sub.length > 0) onOpen = () => handleOpenSubMenu(href);
         return <MainMenuItem title={title} icon={icon} key={index} href={href} onClick={onOpen} />;
       })}
       <div className="h-full" />
-      <MainMenuItem title="خروج" icon={<LogoutOutlineIcon />} highlight highlightClass="text-red-600 bg-red-100 dark:text-red-300 dark:bg-gray-800" />
+      <MainMenuItem title="حساب کاربری من" href="profile" icon={<UserIcon />} highlight highlightClass="text-yellow-600 bg-yellow-100 dark:text-yellow-300 dark:bg-gray-800" />
     </div>
   );
 };
@@ -205,7 +211,7 @@ const MainMenuItem = ({ href = "#", onClick, icon, title = "test", highlight = f
 const SubMenu = ({ open, title, sub, parentPath }: { open: boolean; title: string; sub: SubMenuType[]; parentPath: string }) => {
   const pathname = usePathname();
   return (
-    <div className={"h-screen py-8 overflow-y-auto bg-white border-l w-64 dark:bg-gray-900 dark:border-gray-700 absolute start-16 xl:relative xl:!start-0" + (open ? " " : " !-start-48")}>
+    <div className={"h-full shadow-lg py-8 overflow-y-auto bg-white border-l w-64 dark:bg-gray-900 dark:border-gray-700 absolute start-16 xl:relative xl:!start-0 transition-all duration-500" + (open ? " " : " !-start-48")}>
       <h2 className="px-5 text-lg font-medium text-gray-800 dark:text-white">{title}</h2>
       <div className="mt-8 space-y-4">
         {sub?.map(({ title, href, subtitle }, index) => {

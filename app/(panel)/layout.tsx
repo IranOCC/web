@@ -70,6 +70,12 @@ export async function generateMetadata() {
       default: title,
       template: title + " | %s",
     },
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+      minimumScale: 1,
+      maximumScale: 1,
+    },
   };
 }
 
