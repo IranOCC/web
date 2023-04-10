@@ -171,7 +171,7 @@ export default PanelSideBar;
 
 const MainMenu = ({ setOpenSubMenu }: any) => {
   return (
-    <div className="relative z-10 flex flex-col items-center w-16 h-full py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
+    <div className="relative flex flex-col items-center w-16 h-full py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
       {menuItems.map(({ sub, title, icon, href }, index) => {
         let onOpen = undefined;
         if (sub.length > 0) onOpen = () => setOpenSubMenu(href);
