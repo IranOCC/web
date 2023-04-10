@@ -10,6 +10,8 @@ import MediaOutlineIcon from "@/components/Icons/MediaOutline";
 import MenuBarsIcon from "@/components/Icons/MenuBars";
 import SettingOutlineIcon from "@/components/Icons/SettingOutline";
 import UsersOutlineIcon from "@/components/Icons/UsersOutline";
+import { usePrevious } from "@/lib/hooks/usePrevious";
+import { ClickAwayListener } from "@mui/material";
 
 import { Tooltip } from "antd";
 
@@ -91,15 +93,19 @@ const PanelSideBar = () => {
     return isOpenSubMenu && !href.length ? isOpenSubMenu === panelSuffix : isOpenSubMenu === href;
   });
 
+  const prevItem = usePrevious(item);
+
   useEffect(() => {
     setOpenSubMenu(null);
   }, [pathname]);
 
   return (
-    <aside className="flex">
-      <MainMenu setOpenSubMenu={setOpenSubMenu} />
-      <SubMenu open={item !== undefined} parentPath={item?.href} title={item?.title} sub={item?.sub} />
-    </aside>
+    <ClickAwayListener onClickAway={() => setOpenSubMenu(null)}>
+      <aside className="relative flex">
+        <MainMenu setOpenSubMenu={setOpenSubMenu} />
+        <SubMenu open={item !== undefined} parentPath={item?.href} title={item?.title} sub={item?.sub} />
+      </aside>
+    </ClickAwayListener>
   );
 };
 
@@ -142,9 +148,8 @@ const MainMenuItem = ({ href = "#", onClick, icon, title = "test", highlight = f
 
 const SubMenu = ({ open, title, sub, parentPath }: { open: boolean; title?: string; sub?: SubMenuType[]; parentPath?: string }) => {
   const pathname = usePathname();
-
   return (
-    <div className={"relative h-screen py-8 overflow-y-auto bg-white border-l sm:w-64 w-60 dark:bg-gray-900 dark:border-gray-700 " + (open ? " -mr-0 sm:-mr-0" : " -mr-60 sm:-mr-64")}>
+    <div className={"h-screen py-8 overflow-y-auto bg-white border-l w-64 dark:bg-gray-900 dark:border-gray-700 absolute start-16 shadow-lg xl:relative xl:!start-0 xl:shadow-none" + (open ? " " : " !-start-48")}>
       <h2 className="px-5 text-lg font-medium text-gray-800 dark:text-white">{title}</h2>
       <div className="mt-8 space-y-4">
         {sub?.map(({ title, href, subtitle }, index) => {
