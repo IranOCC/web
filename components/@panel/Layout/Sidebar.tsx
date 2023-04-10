@@ -85,22 +85,20 @@ const menuItems = [
 
 const PanelSideBar = () => {
   const pathname = usePathname();
-  // const [isOpenSubMenu, setOpenSubMenu] = useState(false);
-
-  // const handleToggleSub = () => {
-  //   setOpenSubMenu((prevOpen) => !prevOpen);
-  // };
+  const [isOpenSubMenu, setOpenSubMenu] = useState(null);
 
   const item = menuItems.find(({ href }) => {
-    const mainHref = panelSuffix + (href.length ? "/" + href : "");
-    return !href.length ? pathname === panelSuffix : pathname?.startsWith(mainHref);
+    return isOpenSubMenu && !href.length ? isOpenSubMenu === panelSuffix : isOpenSubMenu === href;
   });
-  const isOpenSubMenu = item !== undefined && item.sub.length > 0;
+
+  useEffect(() => {
+    setOpenSubMenu(null);
+  }, [pathname]);
 
   return (
     <aside className="flex">
-      <MainMenu />
-      <SubMenu open={isOpenSubMenu} parentPath={item?.href} title={item?.title} sub={item?.sub} />
+      <MainMenu setOpenSubMenu={setOpenSubMenu} />
+      <SubMenu open={item !== undefined} parentPath={item?.href} title={item?.title} sub={item?.sub} />
     </aside>
   );
 };
@@ -109,12 +107,13 @@ export default PanelSideBar;
 
 // ===> main menu
 
-const MainMenu = () => {
+const MainMenu = ({ setOpenSubMenu }: any) => {
   return (
     <div className="relative z-10 flex flex-col items-center w-16 h-screen py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
-      {/* <MainMenuItem title="منو" onClick={toggleSub} icon={<MenuBarsIcon />} highlight highlightClass="text-yellow-400 bg-yellow-100 dark:text-yellow-300 dark:bg-gray-800" /> */}
       {menuItems.map(({ sub, title, icon, href }, index) => {
-        return <MainMenuItem title={title} icon={icon} href={href} key={index} />;
+        let onOpen = undefined;
+        if (sub.length > 0) onOpen = () => setOpenSubMenu(href);
+        return <MainMenuItem title={title} icon={icon} key={index} href={href} onClick={onOpen} />;
       })}
       <div className="h-full" />
       <MainMenuItem title="خروج" icon={<LogoutOutlineIcon />} highlight highlightClass="text-red-600 bg-red-100 dark:text-red-300 dark:bg-gray-800" />
@@ -145,15 +144,15 @@ const SubMenu = ({ open, title, sub, parentPath }: { open: boolean; title?: stri
   const pathname = usePathname();
 
   return (
-    <div className={"relative h-screen py-8 overflow-y-auto bg-white border-l sm:w-64 w-60 dark:bg-gray-900 dark:border-gray-700 transition-all duration-500" + (open ? " -mr-0 sm:-mr-0" : " -mr-60 sm:-mr-64")}>
+    <div className={"relative h-screen py-8 overflow-y-auto bg-white border-l sm:w-64 w-60 dark:bg-gray-900 dark:border-gray-700 " + (open ? " -mr-0 sm:-mr-0" : " -mr-60 sm:-mr-64")}>
       <h2 className="px-5 text-lg font-medium text-gray-800 dark:text-white">{title}</h2>
       <div className="mt-8 space-y-4">
         {sub?.map(({ title, href, subtitle }, index) => {
           const mainHref = panelSuffix + "/" + parentPath + (href.length ? "/" + href : "");
           const isActive = !href.length ? pathname === panelSuffix + "/" + parentPath : pathname?.startsWith(mainHref);
           return (
-            <Link href={mainHref}>
-              <button key={index} className={"flex items-center w-full px-5 py-2 transition-colors duration-200  gap-x-2 focus:outline-none" + (isActive ? " bg-blue-100 dark:bg-gray-800" : " dark:hover:bg-gray-800 hover:bg-gray-100")}>
+            <Link key={index} href={mainHref}>
+              <button className={"flex items-center w-full px-5 py-2 transition-colors duration-200  gap-x-2 focus:outline-none" + (isActive ? " bg-blue-100 dark:bg-gray-800" : " dark:hover:bg-gray-800 hover:bg-gray-100")}>
                 <div className="text-left rtl:text-right">
                   <h1 className="text-sm font-medium text-gray-700 capitalize dark:text-white">{title}</h1>
                   <p className="text-xs text-gray-500 dark:text-gray-400">{subtitle}</p>
