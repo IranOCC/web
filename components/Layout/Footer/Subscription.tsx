@@ -6,6 +6,7 @@ import LoginBackImage from "@/assets/images/city-bg.png";
 import { axiosAuth } from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import Image from "next/image";
+import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 
 const Subscription = () => {
   const {
@@ -20,13 +21,15 @@ const Subscription = () => {
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = useForm<SubscriptionFormData>();
 
+  const api = useAxiosAuth();
+
   useEffect(() => {
     register("email", { required: "ایمیل را وارد کنید" });
   }, []);
 
   const onSubmit = async (data: SubscriptionFormData) => {
     try {
-      const response = await axiosAuth.post("/subscription", data);
+      const response = await api.post("/subscription", data);
       toast.success("با موفقیت ثبت شد");
       return true;
     } catch (error) {
