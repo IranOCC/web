@@ -15,6 +15,7 @@ import { store } from "@/store";
 import Preloader from "@/components/Providers/Preloader";
 import { setSettings } from "@/store/settings";
 import { Settings } from "@/types/interfaces";
+import AntdProvider from "@/components/Providers/AntdProvider";
 
 config.autoAddCss = false;
 
@@ -100,14 +101,16 @@ export default async function RootLayout({ children }: IProps) {
     <html lang="fa" className={IRANSansX.className + " h-full"} dir="rtl">
       <body className="h-full selection:bg-fuchsia-300 selection:text-fuchsia-900">
         <Suspense fallback={<Loading label={settings.title} />}>
-          <Preloader settings={settings} />
-          <AuthProvider>
-            <StoreProviders>
-              {/*  */}
-              <Layout>{children}</Layout>
-              {/*  */}
-            </StoreProviders>
-          </AuthProvider>
+          <AntdProvider style={{ fontFamily: IRANSansX.style }}>
+            <Preloader settings={settings} />
+            <AuthProvider>
+              <StoreProviders>
+                {/*  */}
+                <Layout>{children}</Layout>
+                {/*  */}
+              </StoreProviders>
+            </AuthProvider>
+          </AntdProvider>
         </Suspense>
       </body>
     </html>

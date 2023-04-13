@@ -1,6 +1,7 @@
-import { Breadcrumb, ConfigProvider, Layout, Menu, theme } from "antd";
+"use client";
+
+import { ConfigProvider, Layout } from "antd";
 import { ReactNode } from "react";
-const { Header, Content, Footer } = Layout;
 
 const AntdProvider = ({ children, style }: { children: ReactNode; style: {} }) => {
   return (

@@ -9,6 +9,7 @@ import Loading from "@/components/Loading";
 import StoreProviders from "@/components/Providers/StoreProvider";
 import AuthProvider from "@/components/Providers/AuthProvider";
 import PanelLayout from "@/components/@panel/Layout";
+import AntdProvider from "@/components/Providers/AntdProvider";
 
 config.autoAddCss = false;
 
@@ -85,16 +86,18 @@ interface IProps {
 
 export default async function RootLayout({ children }: IProps) {
   return (
-    <html lang="fa" className={IRANSansX.className + " h-full"} dir="rtl">
-      <body className="h-full selection:bg-fuchsia-300 selection:text-fuchsia-900">
+    <html lang="fa" className={IRANSansX.className} dir="rtl">
+      <body className="selection:bg-fuchsia-300 selection:text-fuchsia-900 bg-slate-100">
         <Suspense fallback={<Loading />}>
-          <AuthProvider>
-            <StoreProviders>
-              {/*  */}
-              <PanelLayout>{children}</PanelLayout>
-              {/*  */}
-            </StoreProviders>
-          </AuthProvider>
+          <AntdProvider style={{ fontFamily: IRANSansX.style }}>
+            <AuthProvider>
+              <StoreProviders>
+                {/*  */}
+                <PanelLayout>{children}</PanelLayout>
+                {/*  */}
+              </StoreProviders>
+            </AuthProvider>
+          </AntdProvider>
         </Suspense>
       </body>
     </html>

@@ -208,7 +208,7 @@ const PanelSideBar = () => {
 
   return (
     <ClickAwayListener onClickAway={() => setOpenSubMenu(null)}>
-      <aside className="relative flex z-20">
+      <aside className="fixed h-full flex z-20">
         <MainMenu handleOpenSubMenu={handleOpenSubMenu} />
         <SubMenu open={item !== undefined} parentPath={lastOpenedItem.href} title={lastOpenedItem.title} sub={lastOpenedItem.sub} />
       </aside>
@@ -222,7 +222,7 @@ export default PanelSideBar;
 
 const MainMenu = ({ handleOpenSubMenu }: any) => {
   return (
-    <div className="relative overflow-x-hidden z-20 flex flex-col items-center w-16 h-full py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
+    <div className="relative z-10 overflow-x-hidden flex flex-col items-center w-16 h-full py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
       {menuItems.map(({ sub, title, icon, href }, index) => {
         let onOpen = undefined;
         if (sub.length > 0) onOpen = () => handleOpenSubMenu(href);
