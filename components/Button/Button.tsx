@@ -51,7 +51,7 @@ type PropsTypes = {
   loading?: boolean;
   fill?: boolean;
   noSpace?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: any;
   size?: "small" | "default" | "large";
 };
 

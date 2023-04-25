@@ -2,7 +2,7 @@ import { ChangeEventHandler, ReactNode } from "react";
 import { Controller } from "react-hook-form";
 import { Button } from "../Button";
 
-const Input = (props: IProps) => {
+const Select = (props: IProps) => {
   const { name, multiline, lines, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, type = "text", error, warning, success, direction, noSpace, maxLength, innerSubmitBtn, size = "default" } = props;
   let { status, helperText } = props;
 
@@ -131,4 +131,4 @@ export type IProps = {
   size?: "small" | "default" | "large";
 };
 
-export default Input;
+export default Select;

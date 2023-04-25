@@ -1,17 +1,17 @@
 import { withAuth } from "next-auth/middleware"
+import { NextResponse } from "next/server"
+import { Session, UserRoleEnum } from "./types/interfaces"
 
 
 export default withAuth(
     function middleware(req) {
-        // const _token = req.nextauth.token as any as User
-        // return NextResponse.rewrite(new URL("/", req.url))
-        // if (req.nextUrl.pathname.startsWith("/admin") && _token?.roles?.includes(UserRoleEnum.User)) {
-        //     return NextResponse.rewrite(new URL("/auth/login?message=You have not access", req.url))
-        // }
-
-        // // if (req.nextUrl.pathname.startsWith("/auth")) {
-        // return NextResponse.rewrite(new URL("/", req.url))
-        // // }
+        const _token = req.nextauth.token as any as Session
+        const p = req.nextUrl.pathname
+        const r = _token.user?.roles
+        const panelAccess = r?.includes(UserRoleEnum.SuperAdmin) || r?.includes(UserRoleEnum.Admin) || r?.includes(UserRoleEnum.Agent) || r?.includes(UserRoleEnum.Author)
+        if ((p.startsWith("/admin") || p.startsWith("/panel")) && !panelAccess) {
+            return NextResponse.rewrite(new URL("/?message=You have not access", req.url))
+        }
     },
     {
         callbacks: {
@@ -21,6 +21,6 @@ export default withAuth(
 )
 
 export const config = {
-    matcher: []
-    // matcher: ["/admin/:path*", "/dashboard/:path*", "/panel/:path*", "/user/:path*",]
+    // matcher: []
+    matcher: ["/admin/:path*", "/dashboard/:path*", "/panel/:path*", "/user/:path*",]
 }

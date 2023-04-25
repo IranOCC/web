@@ -1,8 +1,16 @@
-import { ReactNode, useState } from "react";
+"use client";
+
+import Loading from "@/components/Loading";
+import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import { useSession } from "next-auth/react";
+import { ReactNode, useEffect, useState } from "react";
 import PanelFooter from "./Footer";
 import PanelSideBar from "./Sidebar";
 
 const PanelLayout = ({ children }: { children: ReactNode }) => {
+  const { status } = useSession();
+  if (status === "loading") return <Loading />;
+
   return (
     <div className="h-full flex flex-row ">
       <PanelSideBar />

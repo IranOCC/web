@@ -118,9 +118,7 @@ const MobileMenuItem = ({ title, href = "#", children, openList }: MenuItemType 
   return (
     <>
       <li onClick={hasChildren ? openList : undefined} className="relative flex items-center justify-between cursor-pointer px-4 py-2 hover:bg-gray-100">
-        <Link href={href} prefetch={false}>
-          {title}
-        </Link>
+        <Link href={href}>{title}</Link>
         {hasChildren && (
           <span className={`ms-1 transition-transform`}>
             <ArrowLeftIcon />
@@ -166,9 +164,7 @@ const MenuItem = ({ title, href = "#", children }: MenuItemType) => {
   return (
     <>
       <li onMouseEnter={handleOpen} onMouseLeave={handleClose} className={(open ? "text-blue-500 " : "text-blue-900 ") + "relative mx-2 px-2  hover:text-blue-500  font-light text-sm cursor-pointer h-full flex items-center justify-center"}>
-        <Link href={hasChildren ? "#" : href} prefetch={false}>
-          {title}
-        </Link>
+        <Link href={hasChildren ? "#" : href}>{title}</Link>
         {hasChildren && (
           <>
             <div ref={anchorRef} className="absolute right-0 -bottom-1" />
@@ -238,7 +234,7 @@ const MenuChildrenItem = ({ title, href = "#", children }: MenuItemType) => {
   return (
     <>
       <li onMouseEnter={handleOpen} onMouseLeave={handleClose} className="relative flex items-center justify-between cursor-pointer px-4 py-2 hover:bg-gray-100">
-        <Link href={href} prefetch={false} className="block  ">
+        <Link href={href} className="block  ">
           {title}
         </Link>
 

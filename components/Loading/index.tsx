@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
 
-const Loading = ({ label }: { label?: string }) => {
+const Loading = ({ label = "در حال بارگذاری ..." }: { label?: string }) => {
   return (
     <div className={styles.loader_wrap}>
       <div className={styles.loader_content}>

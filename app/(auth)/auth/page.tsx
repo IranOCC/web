@@ -1,4 +1,5 @@
-import Modal from ".";
+"use client";
+
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import LoginBackImage from "@/assets/images/city-bg.png";
@@ -8,15 +9,14 @@ import { useEffect, useRef, useState } from "react";
 import axios from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import PhoneIcon from "@/components/Icons/Phone";
 import QrcodeIcon from "@/components/Icons/Qrcode";
 import { Session } from "next-auth";
 import { useCountdown } from "@/lib/hooks/useCountdown";
 import moment from "moment";
 
-const ModalPath = "auth";
-const LoginModal = ({ session }: { session: Session | null }) => {
+export default function Page() {
   const {
     register,
     unregister,
@@ -69,9 +69,6 @@ const LoginModal = ({ session }: { session: Session | null }) => {
   };
 
   useEffect(() => {
-    if (searchParams?.get("modal") === ModalPath) {
-      if (session) window.location.href = "/";
-    }
     reset({ phone: isStep2 ? phoneSet : "" });
   }, [searchParams]);
 
@@ -98,14 +95,9 @@ const LoginModal = ({ session }: { session: Session | null }) => {
     await sendOtp({ phone: phoneSet } as LoginPhoneOtpFormData);
   };
 
-  if (session) return null;
   return (
-    <Modal path={ModalPath} whiteClose>
-      <div className={`absolute top-0 left-0 bg-blue-500 w-full h-40 overflow-hidden`}>
-        <img src={LoginBackImage.src} />
-        <div className="absolute top-0 left-0  w-full h-full" />
-      </div>
-      <div className="mt-40">
+    <>
+      <div className="h-full flex flex-col justify-center items-center">
         <h2 className="text-blue-500 text-center font-bold mb-2">ورود یا عضویت</h2>
         <form onSubmit={handleSubmit(isStep2 ? loginByOtp : sendOtp)}>
           <Input
@@ -152,8 +144,6 @@ const LoginModal = ({ session }: { session: Session | null }) => {
           />
         </form>
       </div>
-    </Modal>
+    </>
   );
-};
-
-export default LoginModal;
+}

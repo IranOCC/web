@@ -1,8 +1,8 @@
 // "use client";
 
 import styles from "./style.module.css";
-import Footer from "@/components/Layout/Footer";
-import Header from "@/components/Layout/Header";
+import Footer from "@/components/@web/Layout/Footer";
+import Header from "@/components/@web/Layout/Header";
 import { ReactNode, useState } from "react";
 import { Session } from "next-auth";
 

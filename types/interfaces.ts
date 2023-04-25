@@ -8,24 +8,38 @@ export enum UserRoleEnum {
 
 export enum UserStatusEum {
     Active = 'Active',
-    NewUser = 'NewUser',
     NotActive = 'NotActive',
     Delete = 'Delete',
 }
 
 
+export interface Email {
+    value: string;
+    verified: boolean;
+}
+
+export interface Phone {
+    value: string;
+    verified: boolean;
+}
+
 export interface User {
     id: string;
     firstName: string | null | undefined;
     lastName: string | null | undefined;
-    email: string | null | undefined;
-    phone: string;
+    fullName: string | null | undefined;
+    emailAddress: string | null | undefined;
+    email: Email | string | null | undefined;
+    phoneNumber: string | null | undefined;
+    phone: Phone | string | null | undefined;
+    avatar: string | null | undefined;
     roles: UserRoleEnum[];
     status: UserStatusEum
 }
 
 
-export interface LoginUser {
+
+export interface Session {
     user: User,
     accessToken: string;
 }

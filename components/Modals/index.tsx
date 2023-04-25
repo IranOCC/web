@@ -111,7 +111,7 @@ export const OpenModalLink = ({ children, path, className = "" }: OpenModalLinkP
     restParams[key].push(value);
   });
   return (
-    <Link href={{ pathname, query: { ...restParams, modal: path } }} prefetch={false} className={className}>
+    <Link href={{ pathname, query: { ...restParams, modal: path } }} className={className}>
       {children}
     </Link>
   );

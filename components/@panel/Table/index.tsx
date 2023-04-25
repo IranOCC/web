@@ -71,7 +71,7 @@ function PanelTable<T>({ headerTitle, footerTitle, endpoint, data, columns, load
 
     try {
       const response = await api.get(`/${endpoint}`, { params });
-      setDataSource(response.data?.users);
+      setDataSource(response.data);
     } catch (error) {}
   };
 
@@ -135,7 +135,7 @@ function PanelTable<T>({ headerTitle, footerTitle, endpoint, data, columns, load
         <DndContext onDragEnd={onDragEnd}>
           <SortableContext
             // rowKey array
-            items={dataSource.map((i) => i.key)}
+            items={dataSource.map((i) => i._id)}
             strategy={verticalListSortingStrategy}
           >
             <Table

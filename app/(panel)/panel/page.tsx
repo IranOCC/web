@@ -1,11 +1,23 @@
-export default async function Page() {
-  const waiting = async () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        return resolve(true);
-      }, 500);
-    });
+"use client";
+
+import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+
+export default function Page() {
+  const { data: session, update } = useSession();
+  const api = useAxiosAuth();
+  const getMe = async () => {
+    const me = await api.get("/auth").catch();
+    await update({ user: me.data });
   };
-  await waiting();
-  return <h1 className="m-2 text-4xl font-bold text-red-500 text-center">Panel HomePage</h1>;
+
+  return (
+    <>
+      <pre dir="ltr" className="break-words whitespace-normal">
+        {JSON.stringify(session)}
+      </pre>
+      <button onClick={getMe}>Update ME</button>
+    </>
+  );
 }

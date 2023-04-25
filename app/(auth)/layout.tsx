@@ -8,14 +8,11 @@ import Loading from "@/components/Loading";
 
 import StoreProviders from "@/components/Providers/StoreProvider";
 import AuthProvider from "@/components/Providers/AuthProvider";
-
-import Layout from "@/components/@web/Layout";
-
-import { store } from "@/store";
-import Preloader from "@/components/Providers/Preloader";
-import { setSettings } from "@/store/settings";
-import { Settings } from "@/types/interfaces";
 import AntdProvider from "@/components/Providers/AntdProvider";
+import AuthLayout from "@/components/@auth/Layout";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 config.autoAddCss = false;
 
@@ -71,15 +68,12 @@ const IRANSansX = localFont({
 
 // dynamic metadata
 export async function generateMetadata() {
-  const settings = await getWebInitialData();
-  const { title, description, keywords } = settings;
+  const title = "احراز هویت";
   return {
     title: {
-      default: title + " | " + description,
+      default: title,
       template: title + " | %s",
     },
-    description,
-    keywords,
     viewport: {
       width: "device-width",
       initialScale: 1,
@@ -94,19 +88,18 @@ interface IProps {
 }
 
 export default async function RootLayout({ children }: IProps) {
-  const settings = await getWebInitialData();
-  store.dispatch(setSettings(settings));
+  const session = await getServerSession(authOptions);
+  if (session) return redirect("/");
 
   return (
-    <html lang="fa" className={IRANSansX.className + " h-full"} dir="rtl">
-      <body className="h-full selection:bg-fuchsia-300 selection:text-fuchsia-900">
-        <Suspense fallback={<Loading label={settings.title} />}>
+    <html lang="fa" className={IRANSansX.className} dir="rtl">
+      <body className="selection:bg-blue-300 selection:text-blue-600 bg-blue-100">
+        <Suspense fallback={<Loading />}>
           <AntdProvider style={{ fontFamily: IRANSansX.style }}>
-            <Preloader settings={settings} />
             <AuthProvider>
               <StoreProviders>
                 {/*  */}
-                <Layout>{children}</Layout>
+                <AuthLayout>{children}</AuthLayout>
                 {/*  */}
               </StoreProviders>
             </AuthProvider>
@@ -115,10 +108,4 @@ export default async function RootLayout({ children }: IProps) {
       </body>
     </html>
   );
-}
-
-async function getWebInitialData() {
-  const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/setting/webInitialData");
-  const data = await res.json();
-  return data as Settings;
 }
