@@ -11,9 +11,9 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import PhoneIcon from "@/components/Icons/Phone";
 import QrcodeIcon from "@/components/Icons/Qrcode";
-import { Session } from "next-auth";
 import { useCountdown } from "@/lib/hooks/useCountdown";
 import moment from "moment";
+import { Session } from "@/types/interfaces";
 
 const ModalPath = "auth";
 const LoginModal = ({ session }: { session: Session | null }) => {
