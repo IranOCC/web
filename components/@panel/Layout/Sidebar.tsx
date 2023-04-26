@@ -66,6 +66,23 @@ const menuItems: MenuItemType[] = [
     ],
   },
   {
+    title: "دفاتر",
+    href: "offices",
+    icon: <UsersOutlineIcon />,
+    sub: [
+      {
+        title: "شعبه جدید",
+        href: "add",
+        subtitle: "",
+      },
+      {
+        title: "مدیریت شعبه ها",
+        href: "",
+        subtitle: "",
+      },
+    ],
+  },
+  {
     title: "املاک",
     href: "estates",
     icon: <BuildingOutlineIcon />,
