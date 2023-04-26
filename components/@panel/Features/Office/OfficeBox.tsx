@@ -2,14 +2,14 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
-import { SendSmsBoxFormData, UserFormData, UserPhoneFormData } from "@/types/formsData";
+import { OfficeFormData, SendSmsBoxFormData, UserFormData, UserPhoneFormData } from "@/types/formsData";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
 
-export default function UserInfoBox({ form, onSubmit }: any) {
+export default function OfficeBox({ form, onSubmit }: { form: UseFormReturn<OfficeFormData, any>; onSubmit: any }) {
   const {
     register,
     unregister,
@@ -23,10 +23,15 @@ export default function UserInfoBox({ form, onSubmit }: any) {
   } = form;
 
   useEffect(() => {
-    register("firstName", { required: "نام را وارد کنید" });
-    register("lastName", { required: "نام خانوادگی را وارد کنید" });
-    register("status", { required: "وضعیت را وارد کنید" });
-    register("roles", { required: "نقش ها را وارد کنید" });
+    register("name", { required: "نام را وارد کنید" });
+    register("description", {
+      minLength: {
+        value: 10,
+        message: "حداقل ده کاراکتر نیاز است",
+      },
+    });
+    register("management", { required: "مدیریت را مشخص کنید" });
+    register("logo", {});
   }, []);
 
   return (
@@ -38,37 +43,38 @@ export default function UserInfoBox({ form, onSubmit }: any) {
             <Input
               //
               control={control}
-              name="firstName"
+              name="name"
               label="نام"
-              error={errors.firstName?.message}
+              error={errors.name?.message}
+              loading={isSubmitting}
+              noSpace
+            />
+            <Select
+              //
+              control={control}
+              name="management"
+              label="مدیریت"
+              error={errors.management?.message}
               loading={isSubmitting}
               noSpace
             />
             <Input
               //
               control={control}
-              name="lastName"
-              label="نام خانوادگی"
-              error={errors.lastName?.message}
+              name="description"
+              label="توضیحات"
+              error={errors.description?.message}
               loading={isSubmitting}
               noSpace
+              multiline
             />
 
             <Select
               //
               control={control}
-              name="status"
-              label="وضعیت"
-              error={errors.status?.message}
-              loading={isSubmitting}
-              noSpace
-            />
-            <Select
-              //
-              control={control}
-              name="roles"
-              label="نقش ها"
-              error={errors.roles?.message}
+              name="logo"
+              label="لوگو"
+              error={errors.logo?.message}
               loading={isSubmitting}
               noSpace
             />

@@ -6,21 +6,6 @@ import CredentialsProvider from "next-auth/providers/credentials"
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
-            id: "general",
-            name: "",
-            credentials: {
-                username: { label: "Username", type: "text" },
-                password: { label: "Password", type: "password" }
-            },
-            async authorize(credentials, req) {
-                const data = credentials as LoginFormData
-                const response = await axiosSSR.post("/auth/login", data)
-                const user = response.data as User
-                if (!user) return null
-                return user
-            }
-        }),
-        CredentialsProvider({
             id: "otp",
             name: "",
             credentials: {

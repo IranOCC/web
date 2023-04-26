@@ -1,9 +1,4 @@
-
-export type LoginFormData = {
-    username: string;
-    password: string;
-};
-
+import { Email, Phone, UserRoleEnum, UserStatusEum } from "./interfaces";
 
 export type LoginPhoneOtpFormData = {
     phone: string;
@@ -17,10 +12,49 @@ export type SubscriptionFormData = {
 
 // user info
 
-export type UserInfoFormData = {
+export type UserFormData = {
     firstName: string;
     lastName: string;
-    status: string;
+    status: UserStatusEum;
+    roles: UserRoleEnum[];
+    // 
+    phoneNumber: string;
+    emailAddress: string;
+    // 
+    province: string;
+    city: string;
+    address: string;
+};
+
+
+
+export type OfficeFormData = {
+    name: string;
+    description: string;
+    management: string;
+    logo: string;
+    // 
+    phone: Phone | string;
+    email: Email | string;
+    // 
+    province: string;
+    city: string;
+    address: string;
+    location: [number, number]
+    // 
+    verified: boolean;
+};
+
+
+
+export type UserPhoneFormData = {
+    phoneNumber: string;
+    token: string;
+};
+
+export type UserEmailFormData = {
+    phoneNumber: string;
+    token: string;
 };
 
 

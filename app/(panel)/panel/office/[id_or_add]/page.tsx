@@ -6,7 +6,7 @@ import PanelCard from "@/components/@panel/Card";
 
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
-import { UserFormData } from "@/types/formsData";
+import { OfficeFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 
@@ -17,6 +17,8 @@ import SendEmailBox from "@/components/@panel/Features/@common/SendEmailBox";
 import PhoneNumberBox from "@/components/@panel/Features/@common/PhoneNumberBox";
 import SendSmsBox from "@/components/@panel/Features/@common/SendSmsBox";
 import LocationBox from "@/components/@panel/Features/@common/LocationBox";
+import { Email, Phone } from "@/types/interfaces";
+import OfficeBox from "@/components/@panel/Features/Office/OfficeBox";
 
 export default function Page() {
   const params = useParams();
@@ -24,7 +26,7 @@ export default function Page() {
   const isNew = id_or_add === "add";
   const ID = isNew ? undefined : id_or_add;
 
-  const form = useForm<UserFormData>();
+  const form = useForm<OfficeFormData>();
   const {
     register,
     unregister,
@@ -34,6 +36,7 @@ export default function Page() {
     control,
     handleSubmit,
     reset,
+
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = form;
 
@@ -44,13 +47,13 @@ export default function Page() {
   // submit
   const onSubmit =
     (redirect: boolean = true) =>
-    async (data: UserFormData) => {
+    async (data: OfficeFormData) => {
       try {
         if (isNew) {
-          await api.post("/user", data);
+          await api.post("/office", data);
           toast.success("با موفقیت ایجاد شد");
         } else {
-          await api.patch("/user/" + ID, data);
+          await api.patch("/office/" + ID, data);
           toast.success("با موفقیت ویرایش شد");
         }
         if (redirect) router.replace("/panel/users");
@@ -63,15 +66,40 @@ export default function Page() {
     try {
       const response = await api.get("/user/" + ID);
 
-      const { firstName, lastName, status, roles, phoneNumber, phone, emailAddress, email } = response.data;
-      setValue("firstName", firstName);
-      setValue("lastName", lastName);
-      setValue("status", status);
-      setValue("roles", roles);
-      setValue("phoneNumber", phoneNumber);
-      // setValue("phoneVerify", !!phone?.verify);
-      setValue("emailAddress", emailAddress);
-      // setValue("emailVerify", !!email?.verify);
+      const {
+        //
+        name,
+        description,
+        management,
+        logo,
+        //
+        phone,
+        email,
+        //
+        province,
+        city,
+        address,
+        location,
+        //
+        verified,
+      } = response.data as OfficeFormData;
+      //
+      setValue("name", name);
+      setValue("description", description);
+      setValue("management", management);
+      setValue("logo", logo);
+      //
+      setValue("phone.value", (phone as Phone).value);
+      setValue("phone.verified", (phone as Phone).verified);
+      setValue("email.value", (email as Email).value);
+      setValue("email.verified", (email as Email).verified);
+      //
+      setValue("province", province);
+      setValue("city", city);
+      setValue("address", address);
+      setValue("location", location);
+      //
+      setValue("verified", verified);
     } catch (error) {
       router.back();
     }
@@ -88,7 +116,7 @@ export default function Page() {
           <div className="col-span-full	lg:col-span-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-full">
-                <UserInfoBox form={form} onSubmit={onSubmit()} />
+                <OfficeBox form={form} onSubmit={onSubmit()} />
               </div>
               <div className="col-span-full md:col-span-1">
                 <PhoneNumberBox form={form} onSubmit={onSubmit()} />

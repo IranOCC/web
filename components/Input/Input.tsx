@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 import { Button } from "../Button";
 
 const Input = (props: IProps) => {
-  const { name, multiline, lines, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, type = "text", error, warning, success, direction, noSpace, maxLength, innerSubmitBtn, size = "default" } = props;
+  const { name, multiline, lines, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, type = "text", error, warning, success, direction, noSpace, maxLength, innerSubmitBtn, size = "default", containerClassName = "" } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -47,7 +47,7 @@ const Input = (props: IProps) => {
     inputClass += " ltr:pl-32 rtl:pl-32";
   }
   return (
-    <div className={"w-full relative z-10" + (noSpace ? " mb-0" : " mb-6")}>
+    <div className={"w-full relative z-10" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
       {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
       <div className="w-full relative">
         <Controller
@@ -112,6 +112,8 @@ export type IProps = {
   placeholder?: string;
   type?: string;
   className?: string;
+  containerClassName?: string;
+
   icon?: ReactNode;
   multiline?: boolean;
   lines?: number;

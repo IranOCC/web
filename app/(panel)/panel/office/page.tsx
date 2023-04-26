@@ -20,90 +20,53 @@ interface DataType {
 const columns: ColumnsType<DataType> = [
   {
     title: "نام",
-    dataIndex: "fullName",
+    dataIndex: "name",
     // sorter: (a, b) => a.fullName - b.fullName,
   },
   {
-    title: "شماره موبایل",
-    dataIndex: "phoneNumber",
-    render: (phoneNumber: string) => {
+    title: "مدیریت",
+    dataIndex: ["management", "fullName"],
+  },
+  {
+    title: "شماره",
+    dataIndex: ["phone", "value"],
+    render: (phone: string) => {
       return (
         <div dir="ltr" className="float-right">
-          {phoneNumber}
+          {phone}
         </div>
       );
     },
   },
   {
     title: "ایمیل",
-    dataIndex: "emailAddress",
-    render: (emailAddress: string) => {
+    dataIndex: "email",
+    render: (email: string) => {
       return (
         <div dir="ltr" className="float-right">
-          {emailAddress}
+          {email}
         </div>
       );
     },
   },
   {
+    title: "کارکنان",
+    dataIndex: "personnelCount",
+  },
+  {
+    title: "املاک",
+    dataIndex: "estateCount",
+  },
+  {
+    title: "پست ها",
+    dataIndex: "postCount",
+  },
+  {
     title: "وضعیت",
-    dataIndex: "status",
-    // filters: [
-    //   {
-    //     text: "Active",
-    //     value: "Active",
-    //   },
-    //   {
-    //     text: "Not Active",
-    //     value: "NotActive",
-    //   },
-    //   {
-    //     text: "Deleted",
-    //     value: "Deleted",
-    //   },
-    // ],
-    render: (status: string[]) => {
-      return <Tag color="default">{status}</Tag>;
-    },
+    dataIndex: "active",
   },
   {
-    title: "نقش ها",
-    dataIndex: "roles",
-    // filters: [
-    //   {
-    //     text: "Super Admin",
-    //     value: "SuperAdmin",
-    //   },
-    //   {
-    //     text: "Admin",
-    //     value: "Admin",
-    //   },
-    //   {
-    //     text: "Agent",
-    //     value: "Agent",
-    //   },
-    //   {
-    //     text: "Author",
-    //     value: "Author",
-    //   },
-    //   {
-    //     text: "User",
-    //     value: "User",
-    //   },
-    // ],
-    // onFilter: (value, record) => record.address.indexOf(value as string) === 0,
-    render: (roles: string[]) => {
-      return roles.map((tag) => {
-        return (
-          <Tag color="blue" key={tag}>
-            {tag}
-          </Tag>
-        );
-      });
-    },
-  },
-  {
-    title: "مدیریت",
+    title: "",
     key: "action",
     dataIndex: "_id",
     render: (id) => (
@@ -145,8 +108,8 @@ export default function Page() {
       <div className="p-4">
         <PanelTable<DataType>
           //
-          endpoint="user"
-          headerTitle={() => <h1 className="font-medium text-lg">لیست کاربران</h1>}
+          endpoint="office"
+          headerTitle={() => <h1 className="font-medium text-lg">لیست دفاتر</h1>}
           columns={columns}
         />
       </div>
