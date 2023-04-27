@@ -1,4 +1,4 @@
-import { Email, Phone, UserRoleEnum, UserStatusEum } from "./interfaces";
+import { Email, Phone, User, UserRoleEnum, UserStatusEum, StorageFile } from "./interfaces";
 
 export type LoginPhoneOtpFormData = {
     phone: string;
@@ -31,8 +31,8 @@ export type UserFormData = {
 export type OfficeFormData = {
     name: string;
     description?: string;
-    management: string;
-    logo?: string;
+    management: User | string;
+    logo?: StorageFile | string;
     // 
     phone?: Phone | string;
     email?: Email | string;
@@ -43,6 +43,7 @@ export type OfficeFormData = {
     location?: [number, number]
     // 
     verified?: boolean;
+    active?: boolean;
 };
 
 

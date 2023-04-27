@@ -17,8 +17,10 @@ import SendEmailBox from "@/components/@panel/Features/@common/SendEmailBox";
 import PhoneNumberBox from "@/components/@panel/Features/@common/PhoneNumberBox";
 import SendSmsBox from "@/components/@panel/Features/@common/SendSmsBox";
 import LocationBox from "@/components/@panel/Features/@common/LocationBox";
-import { Email, Phone } from "@/types/interfaces";
+import { Email, Phone, StorageFile, User } from "@/types/interfaces";
 import OfficeBox from "@/components/@panel/Features/Office/OfficeBox";
+import { AxiosError } from "axios";
+import { handleFieldsError } from "@/lib/axios";
 
 export default function Page() {
   const params = useParams();
@@ -48,8 +50,7 @@ export default function Page() {
   const onSubmit =
     (redirect: boolean = true) =>
     async (data: OfficeFormData) => {
-      const _dirtyFields = Object.fromEntries(Object.keys(dirtyFields).map((key) => [key, data[key]]));
-
+      const _dirtyFields = Object.fromEntries(Object.keys(dirtyFields).map((key) => [key, data[key as keyof OfficeFormData]]));
       try {
         if (isNew) {
           await api.post("/office", _dirtyFields);
@@ -60,19 +61,8 @@ export default function Page() {
         }
         if (redirect) router.replace("/panel/offices");
         else router.refresh();
-      } catch (error) {
-        if (error?.response?.status === 400) {
-          const { errors } = error?.response?.data;
-          for (let i = 0; i < errors.length; i++) {
-            const c = Object.keys(errors[i].constraints);
-            for (let j = 0; j < c.length; j++) {
-              setError(errors[i].property, {
-                type: "manual",
-                message: errors[i].constraints[c[j]],
-              });
-            }
-          }
-        }
+      } catch (error: unknown) {
+        handleFieldsError(error, setError);
       }
     };
 
@@ -97,17 +87,18 @@ export default function Page() {
         location,
         //
         verified,
+        active,
       } = response.data as OfficeFormData;
       //
       setValue("name", name);
       setValue("description", description);
-      // setValue("management", management);
-      // setValue("logo", logo);
+      setValue("management", (management as User)?._id);
+      setValue("logo", (logo as StorageFile)?._id);
       //
-      setValue("phone.value", (phone as Phone).value);
-      setValue("phone.verified", (phone as Phone).verified);
-      setValue("email.value", (email as Email).value);
-      setValue("email.verified", (email as Email).verified);
+      setValue("phone.value", (phone as Phone)?.value);
+      setValue("phone.verified", (phone as Phone)?.verified);
+      setValue("email.value", (email as Email)?.value);
+      setValue("email.verified", (email as Email)?.verified);
       //
       setValue("province", province);
       setValue("city", city);
@@ -115,7 +106,9 @@ export default function Page() {
       setValue("location", location);
       //
       setValue("verified", verified);
+      setValue("active", active);
     } catch (error) {
+      console.log(error);
       router.back();
     }
   };
@@ -127,47 +120,49 @@ export default function Page() {
   return (
     <>
       <div className="p-4">
-        <div className="grid grid-cols-6 gap-4">
-          <div className="col-span-full	lg:col-span-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="col-span-full">
-                <OfficeBox form={form} onSubmit={onSubmit()} />
+        <form onSubmit={handleSubmit(onSubmit())}>
+          <div className="grid grid-cols-6 gap-4">
+            <div className="col-span-full	lg:col-span-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-full">
+                  <OfficeBox form={form} onSubmit={onSubmit()} />
+                </div>
+                <div className="col-span-full md:col-span-1">
+                  <PhoneNumberBox form={form} onSubmit={onSubmit()} />
+                </div>
+                <div className="col-span-full md:col-span-1">
+                  <EmailAddressBox form={form} onSubmit={onSubmit()} />
+                </div>
+                <div className="col-span-full">
+                  <LocationBox form={form} onSubmit={onSubmit()} />
+                </div>
               </div>
-              <div className="col-span-full md:col-span-1">
-                <PhoneNumberBox form={form} onSubmit={onSubmit()} />
-              </div>
-              <div className="col-span-full md:col-span-1">
-                <EmailAddressBox form={form} onSubmit={onSubmit()} />
-              </div>
-              <div className="col-span-full">
-                <LocationBox form={form} onSubmit={onSubmit()} />
+            </div>
+            <div className="col-span-full lg:col-span-2">
+              <div className="grid grid-cols-1 gap-4">
+                <PanelCard>
+                  <Button
+                    //
+                    title="ثبت و برگشت به لیست"
+                    type="submit"
+                    loading={isSubmitting || isLoading || isValidating}
+                    onClick={handleSubmit(onSubmit())}
+                  />
+                  <Button
+                    //
+                    title="ثبت"
+                    type="submit"
+                    loading={isSubmitting || isLoading || isValidating}
+                    onClick={handleSubmit(onSubmit(false))}
+                    noSpace
+                  />
+                </PanelCard>
+                <SendEmailBox userID={ID} />
+                <SendSmsBox userID={ID} />
               </div>
             </div>
           </div>
-          <div className="col-span-full lg:col-span-2">
-            <div className="grid grid-cols-1 gap-4">
-              <PanelCard>
-                <Button
-                  //
-                  title="ثبت و برگشت به لیست"
-                  type="submit"
-                  loading={isSubmitting || isLoading || isValidating}
-                  onClick={handleSubmit(onSubmit())}
-                />
-                <Button
-                  //
-                  title="ثبت"
-                  type="submit"
-                  loading={isSubmitting || isLoading || isValidating}
-                  onClick={handleSubmit(onSubmit(false))}
-                  noSpace
-                />
-              </PanelCard>
-              <SendEmailBox userID={ID} />
-              <SendSmsBox userID={ID} />
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     </>
   );

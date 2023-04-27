@@ -13,6 +13,10 @@ export enum UserStatusEum {
 }
 
 
+export interface ObjectID {
+    _id: string;
+}
+
 export interface Email {
     value: string;
     verified: boolean;
@@ -24,6 +28,7 @@ export interface Phone {
 }
 
 export interface User {
+    _id: string;
     id: string;
     firstName: string | null | undefined;
     lastName: string | null | undefined;
@@ -50,4 +55,10 @@ export interface Settings {
     title: string;
     description: string;
     keywords: string[];
+}
+
+
+export interface StorageFile {
+    _id: string;
+
 }

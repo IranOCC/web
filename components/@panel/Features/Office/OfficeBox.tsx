@@ -36,51 +36,49 @@ export default function OfficeBox({ form, onSubmit }: { form: UseFormReturn<Offi
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <PanelCard title="اطلاعات شعبه">
-          <button type="submit" className="hidden" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
-            <Input
-              //
-              control={control}
-              name="name"
-              label="نام"
-              error={errors.name?.message}
-              loading={isSubmitting}
-              noSpace
-            />
-            <Select
-              //
-              control={control}
-              name="management"
-              label="مدیریت"
-              error={errors.management?.message}
-              loading={isSubmitting}
-              noSpace
-            />
-            <Input
-              //
-              control={control}
-              name="description"
-              label="توضیحات"
-              error={errors.description?.message}
-              loading={isSubmitting}
-              noSpace
-              multiline
-            />
+      <PanelCard title="اطلاعات شعبه">
+        <button type="submit" className="hidden" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+          <Input
+            //
+            control={control}
+            name="name"
+            label="نام"
+            error={errors.name?.message}
+            loading={isSubmitting}
+            noSpace
+          />
+          <Select
+            //
+            control={control}
+            name="management"
+            label="مدیریت"
+            error={errors.management?.message}
+            loading={isSubmitting}
+            noSpace
+          />
+          <Input
+            //
+            control={control}
+            name="description"
+            label="توضیحات"
+            error={errors.description?.message}
+            loading={isSubmitting}
+            noSpace
+            multiline
+          />
 
-            <Select
-              //
-              control={control}
-              name="logo"
-              label="لوگو"
-              error={errors.logo?.message}
-              loading={isSubmitting}
-              noSpace
-            />
-          </div>
-        </PanelCard>
-      </form>
+          <Select
+            //
+            control={control}
+            name="logo"
+            label="لوگو"
+            error={errors.logo?.message}
+            loading={isSubmitting}
+            noSpace
+          />
+        </div>
+      </PanelCard>
     </>
   );
 }

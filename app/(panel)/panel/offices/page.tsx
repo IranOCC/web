@@ -1,27 +1,37 @@
 "use client";
 
 import PanelTable from "@/components/@panel/Table";
-import Loading from "@/components/Loading";
-import { axiosAuth } from "@/lib/axios";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { ReactNode, useEffect } from "react";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import { User, Phone, Email } from "@/types/interfaces";
 
 interface DataType {
   _id: string;
-  fullName: string;
-  phone: number;
-  email: string;
+  name: string;
+  management: User;
+  phone: Phone;
+  email: Email;
+  personnelCount: number;
+  estateCount: number;
+  postCount: number;
+  active: boolean;
+  verified: boolean;
 }
 
 const columns: ColumnsType<DataType> = [
   {
     title: "نام",
     dataIndex: "name",
-    // sorter: (a, b) => a.fullName - b.fullName,
+    render: (name: string, record) => {
+      return (
+        <div className="flex items-center">
+          {record.verified && <VerifiedIcon />}
+          <span className="ms-1">{name}</span>
+        </div>
+      );
+    },
   },
   {
     title: "مدیریت",
@@ -40,7 +50,7 @@ const columns: ColumnsType<DataType> = [
   },
   {
     title: "ایمیل",
-    dataIndex: "email",
+    dataIndex: ["email", "value"],
     render: (email: string) => {
       return (
         <div dir="ltr" className="float-right">
@@ -64,6 +74,7 @@ const columns: ColumnsType<DataType> = [
   {
     title: "وضعیت",
     dataIndex: "active",
+    render: (active: boolean) => <span className={"font-bold" + (!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
   },
   {
     title: "",
@@ -76,30 +87,6 @@ const columns: ColumnsType<DataType> = [
       </Space>
     ),
   },
-  // {
-  //   title: "نام",
-  //   dataIndex: "name",
-  // },
-  // {
-  //   title: "Age",
-  //   dataIndex: "age",
-  //   sorter: (a, b) => a.age - b.age,
-  // },
-  // {
-  //   title: "Address",
-  //   dataIndex: "address",
-  // filters: [
-  //   {
-  //     text: "London",
-  //     value: "London",
-  //   },
-  //   {
-  //     text: "New York",
-  //     value: "New York",
-  //   },
-  // ],
-  //   onFilter: (value, record) => record.address.indexOf(value as string) === 0,
-  // },
 ];
 
 export default function Page() {

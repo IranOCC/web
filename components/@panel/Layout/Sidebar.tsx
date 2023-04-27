@@ -69,7 +69,7 @@ const menuItems: MenuItemType[] = [
   {
     title: "شعب ها",
     href: "offices",
-    icon: <BuildingOutlineIcon />,
+    icon: <OfficesOutlineIcon />,
     sub: [
       {
         title: "شعبه جدید",

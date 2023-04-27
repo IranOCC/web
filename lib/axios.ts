@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "@/lib/toast";
 
 const config = {
@@ -77,3 +77,28 @@ axiosNoAuth.interceptors.response.use(
     },
 );
 export default axiosNoAuth
+
+
+
+
+
+
+
+
+
+export const handleFieldsError = (error: unknown, setError: any) => {
+    if (error instanceof AxiosError) {
+        if (error?.response?.status === 400) {
+            const { errors } = error?.response?.data;
+            for (let i = 0; i < errors.length; i++) {
+                const c = Object.keys(errors[i].constraints);
+                for (let j = 0; j < c.length; j++) {
+                    setError(errors[i].property, {
+                        type: "manual",
+                        message: errors[i].constraints[c[j]],
+                    });
+                }
+            }
+        }
+    }
+}
