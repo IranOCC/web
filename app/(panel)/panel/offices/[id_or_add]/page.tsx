@@ -37,7 +37,7 @@ export default function Page() {
     handleSubmit,
     reset,
 
-    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful, dirtyFields },
   } = form;
 
   const router = useRouter();
@@ -48,23 +48,38 @@ export default function Page() {
   const onSubmit =
     (redirect: boolean = true) =>
     async (data: OfficeFormData) => {
+      const _dirtyFields = Object.fromEntries(Object.keys(dirtyFields).map((key) => [key, data[key]]));
+
       try {
         if (isNew) {
-          await api.post("/office", data);
+          await api.post("/office", _dirtyFields);
           toast.success("با موفقیت ایجاد شد");
         } else {
-          await api.patch("/office/" + ID, data);
+          await api.patch("/office/" + ID, _dirtyFields);
           toast.success("با موفقیت ویرایش شد");
         }
-        if (redirect) router.replace("/panel/users");
+        if (redirect) router.replace("/panel/offices");
         else router.refresh();
-      } catch (error) {}
+      } catch (error) {
+        if (error?.response?.status === 400) {
+          const { errors } = error?.response?.data;
+          for (let i = 0; i < errors.length; i++) {
+            const c = Object.keys(errors[i].constraints);
+            for (let j = 0; j < c.length; j++) {
+              setError(errors[i].property, {
+                type: "manual",
+                message: errors[i].constraints[c[j]],
+              });
+            }
+          }
+        }
+      }
     };
 
   // get data
   const getData = async () => {
     try {
-      const response = await api.get("/user/" + ID);
+      const response = await api.get("/office/" + ID);
 
       const {
         //
@@ -86,8 +101,8 @@ export default function Page() {
       //
       setValue("name", name);
       setValue("description", description);
-      setValue("management", management);
-      setValue("logo", logo);
+      // setValue("management", management);
+      // setValue("logo", logo);
       //
       setValue("phone.value", (phone as Phone).value);
       setValue("phone.verified", (phone as Phone).verified);

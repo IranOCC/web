@@ -114,7 +114,7 @@ function PanelTable<T>({ headerTitle, footerTitle, endpoint, data, columns, load
       cursor: "move",
       ...(isDragging ? { position: "relative", zIndex: 9999 } : {}),
     };
-    return <tr {...props} ref={setNodeRef} style={style} {...attributes} {...listeners} />;
+    return <tr key={props["data-row-key"]} {...props} ref={setNodeRef} style={style} {...attributes} {...listeners} />;
   };
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {

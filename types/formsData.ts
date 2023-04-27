@@ -30,19 +30,19 @@ export type UserFormData = {
 
 export type OfficeFormData = {
     name: string;
-    description: string;
+    description?: string;
     management: string;
-    logo: string;
+    logo?: string;
     // 
-    phone: Phone | string;
-    email: Email | string;
+    phone?: Phone | string;
+    email?: Email | string;
     // 
-    province: string;
-    city: string;
-    address: string;
-    location: [number, number]
+    province?: string;
+    city?: string;
+    address?: string;
+    location?: [number, number]
     // 
-    verified: boolean;
+    verified?: boolean;
 };
 
 

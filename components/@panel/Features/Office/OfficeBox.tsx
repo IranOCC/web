@@ -37,7 +37,7 @@ export default function OfficeBox({ form, onSubmit }: { form: UseFormReturn<Offi
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <PanelCard title="اطلاعات کاربر">
+        <PanelCard title="اطلاعات شعبه">
           <button type="submit" className="hidden" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
             <Input

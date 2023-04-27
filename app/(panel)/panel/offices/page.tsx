@@ -72,7 +72,7 @@ const columns: ColumnsType<DataType> = [
     render: (id) => (
       <Space size="middle">
         <a>حذف</a>
-        <Link href={`/panel/users/${id}`}>ویرایش</Link>
+        <Link href={`/panel/offices/${id}`}>ویرایش</Link>
       </Space>
     ),
   },
@@ -109,7 +109,7 @@ export default function Page() {
         <PanelTable<DataType>
           //
           endpoint="office"
-          headerTitle={() => <h1 className="font-medium text-lg">لیست دفاتر</h1>}
+          headerTitle={() => <h1 className="font-medium text-lg">لیست شعبه ها</h1>}
           columns={columns}
         />
       </div>

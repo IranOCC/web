@@ -8,6 +8,7 @@ import LinkOutlineIcon from "@/components/Icons/LinkOutline";
 import LogoutOutlineIcon from "@/components/Icons/LogoutOutline";
 import MediaOutlineIcon from "@/components/Icons/MediaOutline";
 import MenuBarsIcon from "@/components/Icons/MenuBars";
+import OfficesOutlineIcon from "@/components/Icons/OfficesOutline";
 import SettingOutlineIcon from "@/components/Icons/SettingOutline";
 import UserIcon from "@/components/Icons/User";
 import UsersOutlineIcon from "@/components/Icons/UsersOutline";
@@ -66,9 +67,9 @@ const menuItems: MenuItemType[] = [
     ],
   },
   {
-    title: "دفاتر",
+    title: "شعب ها",
     href: "offices",
-    icon: <UsersOutlineIcon />,
+    icon: <BuildingOutlineIcon />,
     sub: [
       {
         title: "شعبه جدید",
