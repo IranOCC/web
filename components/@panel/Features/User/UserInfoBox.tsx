@@ -52,6 +52,7 @@ export default function UserInfoBox({ form, onSubmit }: any) {
               error={errors.lastName?.message}
               loading={isSubmitting}
               noSpace
+              
             />
 
             <Select
@@ -62,6 +63,7 @@ export default function UserInfoBox({ form, onSubmit }: any) {
               error={errors.status?.message}
               loading={isSubmitting}
               noSpace
+              items={[]}
             />
             <Select
               //
@@ -71,6 +73,7 @@ export default function UserInfoBox({ form, onSubmit }: any) {
               error={errors.roles?.message}
               loading={isSubmitting}
               noSpace
+              items={[]}
             />
           </div>
         </PanelCard>
