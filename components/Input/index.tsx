@@ -1,4 +1,4 @@
 import Input from "./Input";
-import PhoneInput from "./PhoneInput";
+import CheckBox from "./CheckBox";
 
-export { Input, PhoneInput };
+export { Input, CheckBox };

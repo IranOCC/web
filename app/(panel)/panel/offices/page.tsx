@@ -27,14 +27,14 @@ const columns: ColumnsType<DataType> = [
     render: (name: string, record) => {
       return (
         <div className="flex items-center">
-          {record.verified && <VerifiedIcon />}
+          {record.verified && <VerifiedIcon className="text-blue-600" fontSize="small" />}
           <span className="ms-1">{name}</span>
         </div>
       );
     },
   },
   {
-    title: "مدیریت",
+    title: "مدیر",
     dataIndex: ["management", "fullName"],
   },
   {
@@ -74,7 +74,7 @@ const columns: ColumnsType<DataType> = [
   {
     title: "وضعیت",
     dataIndex: "active",
-    render: (active: boolean) => <span className={"font-bold" + (!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
+    render: (active: boolean) => <span className={"font-bold " + (!!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
   },
   {
     title: "",

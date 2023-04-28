@@ -1,5 +1,5 @@
 import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
+import { CheckBox, Input } from "@/components/Input";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { OfficeFormData, SendSmsBoxFormData, UserFormData, UserPhoneFormData } from "@/types/formsData";
@@ -8,6 +8,8 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
+import Uploader from "@/components/Uploader";
+// import Uploader from "@/components/Uploader";
 
 export default function OfficeBox({ form, onSubmit }: { form: UseFormReturn<OfficeFormData, any>; onSubmit: any }) {
   const {
@@ -19,6 +21,7 @@ export default function OfficeBox({ form, onSubmit }: { form: UseFormReturn<Offi
     control,
     handleSubmit,
     reset,
+
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = form;
 
@@ -32,6 +35,8 @@ export default function OfficeBox({ form, onSubmit }: { form: UseFormReturn<Offi
     });
     register("management", { required: "مدیریت را مشخص کنید" });
     register("logo", {});
+
+    register("verified", {});
   }, []);
 
   return (
@@ -55,6 +60,17 @@ export default function OfficeBox({ form, onSubmit }: { form: UseFormReturn<Offi
             label="مدیریت"
             error={errors.management?.message}
             loading={isSubmitting}
+            items={[
+              {
+                title: "رسول",
+                value: "1",
+              },
+              {
+                title: "زهرا",
+                value: "2",
+              },
+            ]}
+            placeholder="انتخاب کنید"
             noSpace
           />
           <Input
@@ -68,12 +84,26 @@ export default function OfficeBox({ form, onSubmit }: { form: UseFormReturn<Offi
             multiline
           />
 
-          <Select
+          <Uploader
+            //
+            label="لوگو"
+            // error={errors.logo?.message}
+          />
+
+          {/* <Input
             //
             control={control}
             name="logo"
             label="لوگو"
             error={errors.logo?.message}
+            loading={isSubmitting}
+            noSpace
+          /> */}
+
+          <CheckBox //
+            control={control}
+            name="verified"
+            label="وریفای"
             loading={isSubmitting}
             noSpace
           />

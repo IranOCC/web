@@ -1,9 +1,11 @@
-import { ChangeEventHandler, ReactNode } from "react";
+import { Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
+import { ChangeEventHandler, ReactNode, useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import { Button } from "../Button";
+import ArrowDownIcon from "../Icons/ArrowDown";
 
 const Select = (props: IProps) => {
-  const { name, multiline, lines, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, type = "text", error, warning, success, direction, noSpace, maxLength, innerSubmitBtn, size = "default" } = props;
+  const { name, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", items = [] } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -43,60 +45,83 @@ const Select = (props: IProps) => {
   if (size === "small") sizeClass = " py-1.5";
   else if (size === "large") sizeClass = " py-4";
 
-  if (innerSubmitBtn) {
-    inputClass += " ltr:pl-32 rtl:pl-32";
-  }
+  // ===>
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div className={"w-full relative z-10" + (noSpace ? " mb-0" : " mb-6")}>
+    <div className={"w-full relative z-20" + (noSpace ? " mb-0" : " mb-6")}>
       {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
-      <div className="w-full relative">
+      <div className="w-full relative" ref={anchorRef}>
         <Controller
           render={({ field }) => {
-            if (multiline)
-              return (
-                <textarea
-                  rows={lines || 4}
+            return (
+              <>
+                <input
+                  type="text"
                   disabled={disabled || loading}
                   placeholder={placeholder}
-                  readOnly={readOnly || loading}
-                  maxLength={maxLength}
+                  // readOnly={readOnly || loading}
+                  readOnly={true}
                   className={`placeholder:text-left
-              ${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-100"}
+              ${disabled ? "cursor-not-allowed bg-gray-200" : "cursor-default bg-slate-100"}
               rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg
               placeholder:text-start
               border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className}
               `}
                   dir={direction}
-                  {...field}
+                  // {...field}
+                  name={field.name}
+                  value={items.filter((e) => e.value === field.value)[0]?.title}
+                  onFocus={(e) => setOpen(true)}
+                  onBlur={(e) => {
+                    setOpen(false);
+                    field.onBlur();
+                  }}
                 />
-              );
-            return (
-              <input
-                type={type}
-                disabled={disabled || loading}
-                placeholder={placeholder}
-                readOnly={readOnly || loading}
-                maxLength={maxLength}
-                className={`placeholder:text-left
-              ${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-100"}
-              rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg
-              placeholder:text-start
-              border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className}
-              `}
-                dir={direction}
-                {...field}
-              />
+                <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }}>
+                  {({ TransitionProps, placement }) => (
+                    <Grow
+                      {...TransitionProps}
+                      style={{
+                        transformOrigin: "right top",
+                      }}
+                    >
+                      <Paper style={{ boxShadow: "none" }}>
+                        <div className="z-10 bg-white w-full border mt-1">
+                          <ul className="text-sm text-gray-700 dark:text-gray-200 ">
+                            {items.map(({ title, value }, index) => {
+                              return (
+                                <li
+                                  key={value}
+                                  //
+                                  onClick={() => {
+                                    field.onChange({ target: { value: value } });
+                                  }}
+                                  className={`relative flex items-center justify-between cursor-pointer px-4 py-2 ${field.value === value ? "bg-blue-500 text-white" : "hover:bg-gray-100"}`}
+                                >
+                                  {title}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              </>
             );
           }}
           defaultValue={defaultValue}
           name={name}
           control={control}
+
+          // onFocus={handleFocus}
         />
-        {innerSubmitBtn && (
-          <div className={`end-0 h-full absolute top-0 flex items-center justify-center p-2`}>
-            <Button type="submit" title={innerSubmitBtn} noSpace size={"small"} className="h-full" loading={loading} disabled={disabled} />
-          </div>
-        )}
+        <span className={`absolute top-0 end-0 text-blue-600  flex items-center justify-center h-full w-12 text-md ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
+          <ArrowDownIcon />
+        </span>
         {icon && <span className={`absolute top-0 flex items-center justify-center h-full w-12 text-sm${iconClass} border-e${bordersClass}`}>{icon}</span>}
       </div>
       {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
@@ -110,11 +135,8 @@ export type IProps = {
   defaultValue?: string;
   label?: string;
   placeholder?: string;
-  type?: string;
   className?: string;
   icon?: ReactNode;
-  multiline?: boolean;
-  lines?: number;
   disabled?: boolean;
   readOnly?: boolean;
   loading?: boolean;
@@ -122,13 +144,13 @@ export type IProps = {
   helperText?: ReactNode;
   direction?: "ltr" | "rtl";
   noSpace?: boolean;
-  maxLength?: number;
 
   error?: ReactNode;
   warning?: ReactNode;
   success?: ReactNode;
-  innerSubmitBtn?: string;
   size?: "small" | "default" | "large";
+
+  items: { title: string; value: string }[];
 };
 
 export default Select;
