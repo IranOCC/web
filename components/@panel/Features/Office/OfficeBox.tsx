@@ -6,13 +6,10 @@ import { OfficeFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
-import Uploader from "@/components/Uploader";
 import LogoUploader from "@/components/Uploader/LogoUploader";
-// import Uploader from "@/components/Uploader";
 
-export default function OfficeBox({ form }: any) {
+export default function OfficeBox({ form, loading }: { form: any; loading?: boolean }) {
   const {
     register,
     unregister,
@@ -42,7 +39,7 @@ export default function OfficeBox({ form }: any) {
 
   return (
     <>
-      <PanelCard title="اطلاعات شعبه">
+      <PanelCard title="اطلاعات شعبه" loading={loading}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
           <LogoUploader
             //
@@ -73,6 +70,7 @@ export default function OfficeBox({ form }: any) {
             loading={isSubmitting}
             placeholder="انتخاب کنید"
             apiPath="/user/assignList"
+            searchable
             noSpace
           />
           <Input

@@ -13,9 +13,9 @@ interface DataType {
   management: User;
   phone: Phone;
   email: Email;
-  personnelCount: number;
-  estateCount: number;
-  postCount: number;
+  membersCount: number;
+  estatesCount: number;
+  postsCount: number;
   active: boolean;
   verified: boolean;
 }
@@ -60,19 +60,19 @@ const columns: ColumnsType<DataType> = [
     },
   },
   {
-    title: "کارکنان",
-    dataIndex: "personnelCount",
+    title: "اعضا",
+    dataIndex: "membersCount",
   },
   {
     title: "املاک",
-    dataIndex: "estateCount",
+    dataIndex: "estatesCount",
   },
   {
     title: "پست ها",
-    dataIndex: "postCount",
+    dataIndex: "postsCount",
   },
   {
-    title: "وضعیت",
+    title: "فعالسازی",
     dataIndex: "active",
     render: (active: boolean) => <span className={"font-bold " + (!!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
   },

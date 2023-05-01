@@ -50,6 +50,8 @@ export type OfficeFormData = {
     // 
     verified?: boolean;
     active?: boolean;
+    // 
+    members?: User[]
 };
 
 

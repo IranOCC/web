@@ -82,7 +82,7 @@ const CheckBox = (props: IProps) => {
 export type IProps = {
   name: string;
   control: any;
-  defaultValue?: string;
+  defaultValue?: boolean;
   label?: string;
   className?: string;
   containerClassName?: string;

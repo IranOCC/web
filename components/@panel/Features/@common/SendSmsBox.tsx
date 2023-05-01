@@ -54,10 +54,9 @@ export default function SendSmsBox({ phoneNumber, phoneID, officeID, userID, to 
     await getLogs();
   };
 
-  if (!to) return null;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <PanelCard title="ارسال پیامک" extra={<a onClick={seeLogs}>تاریخچه</a>}>
+      <PanelCard title="ارسال پیامک" disabled={!to} extra={<a onClick={seeLogs}>تاریخچه</a>}>
         <Input
           //
           control={control}

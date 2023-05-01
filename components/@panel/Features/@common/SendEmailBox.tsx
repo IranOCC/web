@@ -54,10 +54,9 @@ export default function SendEmailBox({ emailAddress, emailID, officeID, userID, 
     await getLogs();
   };
 
-  if (!to) return null;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <PanelCard title="ارسال ایمیل" extra={<a onClick={seeLogs}>تاریخچه</a>}>
+      <PanelCard title="ارسال ایمیل" disabled={!to} extra={<a onClick={seeLogs}>تاریخچه</a>}>
         <Input
           //
           control={control}

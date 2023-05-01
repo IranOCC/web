@@ -74,7 +74,9 @@ export default function Page() {
   // get data
   const [sendSmsTo, setSendSmsTo] = useState<string>();
   const [sendMailTo, setSendMailTo] = useState<string>();
+  const [dataLoading, setDataLoading] = useState<boolean>(false);
   const getData = async () => {
+    setDataLoading(true);
     try {
       const response = await api.get("/office/" + ID);
 
@@ -118,8 +120,9 @@ export default function Page() {
       //
       setSendSmsTo((phone as Phone)?.value);
       setSendMailTo((email as Email)?.value);
+
+      setDataLoading(false);
     } catch (error) {
-      console.log(error);
       router.back();
     }
   };
@@ -136,16 +139,16 @@ export default function Page() {
           <div className="col-span-full	lg:col-span-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-full">
-                <OfficeBox form={form} />
+                <OfficeBox form={form} loading={dataLoading} />
               </div>
               <div className="col-span-full md:col-span-1">
-                <PhoneNumberBox form={form} />
+                <PhoneNumberBox form={form} loading={dataLoading} />
               </div>
               <div className="col-span-full md:col-span-1">
-                <EmailAddressBox form={form} />
+                <EmailAddressBox form={form} loading={dataLoading} />
               </div>
               <div className="col-span-full">
-                <LocationBox form={form} />
+                <LocationBox form={form} loading={dataLoading} />
               </div>
             </div>
           </div>
@@ -156,14 +159,14 @@ export default function Page() {
                   //
                   title="ثبت و برگشت به لیست"
                   type="submit"
-                  loading={isSubmitting || isLoading || isValidating}
+                  loading={isSubmitting || isLoading || isValidating || dataLoading}
                   onClick={handleSubmit(onSubmit())}
                 />
                 <Button
                   //
                   title="ثبت"
                   type="submit"
-                  loading={isSubmitting || isLoading || isValidating}
+                  loading={isSubmitting || isLoading || isValidating || dataLoading}
                   onClick={handleSubmit(onSubmit(false))}
                   noSpace
                 />

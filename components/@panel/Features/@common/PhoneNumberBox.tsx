@@ -9,7 +9,7 @@ import PanelCard from "@/components/@panel/Card";
 import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
 
-export default function PhoneNumberBox({ form }: any) {
+export default function PhoneNumberBox({ form, loading }: { form: any; loading?: boolean }) {
   const {
     register,
     unregister,
@@ -32,7 +32,7 @@ export default function PhoneNumberBox({ form }: any) {
   }, []);
 
   return (
-    <PanelCard title="شماره">
+    <PanelCard title="شماره" loading={loading}>
       <div className="grid grid-cols-1 gap-4 ">
         <Input
           //

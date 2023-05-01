@@ -4,43 +4,54 @@ import PanelTable from "@/components/@panel/Table";
 import Loading from "@/components/Loading";
 import { axiosAuth } from "@/lib/axios";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import { Phone, Email } from "@/types/interfaces";
 import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { ReactNode, useEffect } from "react";
+import VerifiedIcon from "@mui/icons-material/Verified";
 
 interface DataType {
   _id: string;
   fullName: string;
-  phone: number;
-  email: string;
+  phone: Phone;
+  email: Email;
+  active: boolean;
+  verified: boolean;
 }
 
 const columns: ColumnsType<DataType> = [
   {
     title: "نام",
     dataIndex: "fullName",
-    // sorter: (a, b) => a.fullName - b.fullName,
+    render: (fullName: string, record) => {
+      return (
+        <div className="flex items-center">
+          {record.verified && <VerifiedIcon className="text-blue-600" fontSize="small" />}
+          <span className="ms-1">{fullName}</span>
+        </div>
+      );
+    },
   },
   {
-    title: "شماره موبایل",
-    dataIndex: "phoneNumber",
-    render: (phoneNumber: string) => {
+    title: "شماره",
+    dataIndex: ["phone", "value"],
+    render: (phone: string) => {
       return (
         <div dir="ltr" className="float-right">
-          {phoneNumber}
+          {phone}
         </div>
       );
     },
   },
   {
     title: "ایمیل",
-    dataIndex: "emailAddress",
-    render: (emailAddress: string) => {
+    dataIndex: ["email", "value"],
+    render: (email: string) => {
       return (
         <div dir="ltr" className="float-right">
-          {emailAddress}
+          {email}
         </div>
       );
     },
@@ -48,20 +59,6 @@ const columns: ColumnsType<DataType> = [
   {
     title: "وضعیت",
     dataIndex: "status",
-    // filters: [
-    //   {
-    //     text: "Active",
-    //     value: "Active",
-    //   },
-    //   {
-    //     text: "Not Active",
-    //     value: "NotActive",
-    //   },
-    //   {
-    //     text: "Deleted",
-    //     value: "Deleted",
-    //   },
-    // ],
     render: (status: string[]) => {
       return <Tag color="default">{status}</Tag>;
     },
@@ -69,29 +66,6 @@ const columns: ColumnsType<DataType> = [
   {
     title: "نقش ها",
     dataIndex: "roles",
-    // filters: [
-    //   {
-    //     text: "Super Admin",
-    //     value: "SuperAdmin",
-    //   },
-    //   {
-    //     text: "Admin",
-    //     value: "Admin",
-    //   },
-    //   {
-    //     text: "Agent",
-    //     value: "Agent",
-    //   },
-    //   {
-    //     text: "Author",
-    //     value: "Author",
-    //   },
-    //   {
-    //     text: "User",
-    //     value: "User",
-    //   },
-    // ],
-    // onFilter: (value, record) => record.address.indexOf(value as string) === 0,
     render: (roles: string[]) => {
       return roles.map((tag) => {
         return (
@@ -103,7 +77,12 @@ const columns: ColumnsType<DataType> = [
     },
   },
   {
-    title: "مدیریت",
+    title: "فعالسازی",
+    dataIndex: "active",
+    render: (active: boolean) => <span className={"font-bold " + (!!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
+  },
+  {
+    title: "",
     key: "action",
     dataIndex: "_id",
     render: (id) => (
@@ -113,30 +92,6 @@ const columns: ColumnsType<DataType> = [
       </Space>
     ),
   },
-  // {
-  //   title: "نام",
-  //   dataIndex: "name",
-  // },
-  // {
-  //   title: "Age",
-  //   dataIndex: "age",
-  //   sorter: (a, b) => a.age - b.age,
-  // },
-  // {
-  //   title: "Address",
-  //   dataIndex: "address",
-  // filters: [
-  //   {
-  //     text: "London",
-  //     value: "London",
-  //   },
-  //   {
-  //     text: "New York",
-  //     value: "New York",
-  //   },
-  // ],
-  //   onFilter: (value, record) => record.address.indexOf(value as string) === 0,
-  // },
 ];
 
 export default function Page() {

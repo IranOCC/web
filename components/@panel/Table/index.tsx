@@ -50,7 +50,7 @@ function PanelTable<T>({ headerTitle, footerTitle, endpoint, data, columns, load
   const _search = searchParams?.get("search");
   const _sort = searchParams?.get("sort");
   const _page = parseInt(searchParams?.get("page") || "1");
-  const _count = parseInt(searchParams?.get("count") || "25");
+  const _count = parseInt(searchParams?.get("count") || "10");
 
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const handlePaginationChange = (page: number, page_size: number) => {
@@ -62,6 +62,7 @@ function PanelTable<T>({ headerTitle, footerTitle, endpoint, data, columns, load
 
   const api = useAxiosAuth();
   const getData = async () => {
+    setFetchLoading(true);
     const params = {
       page: _page,
       page_size: _count,
@@ -72,7 +73,10 @@ function PanelTable<T>({ headerTitle, footerTitle, endpoint, data, columns, load
     try {
       const response = await api.get(`/${endpoint}`, { params });
       setDataSource(response.data);
-    } catch (error) {}
+      setFetchLoading(false);
+    } catch (error) {
+      setFetchLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -161,7 +165,7 @@ function PanelTable<T>({ headerTitle, footerTitle, endpoint, data, columns, load
                 onChange: handlePaginationChange,
                 pageSize: _count,
                 current: _page,
-                defaultPageSize: 25,
+                defaultPageSize: 10,
                 defaultCurrent: 1,
                 pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
               }}

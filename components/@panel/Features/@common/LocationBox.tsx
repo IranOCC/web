@@ -5,7 +5,7 @@ import { FieldValues, UseFormReturn } from "react-hook-form";
 import { OfficeFormData, UserFormData } from "@/types/formsData";
 import LocationChooser from "./LocationChooser";
 
-export default function LocationBox({ form }: any) {
+export default function LocationBox({ form, loading }: { form: any; loading?: boolean }) {
   const {
     register,
     unregister,
@@ -26,7 +26,7 @@ export default function LocationBox({ form }: any) {
   }, []);
 
   return (
-    <PanelCard title="موقعیت مکانی">
+    <PanelCard title="موقعیت مکانی" loading={loading}>
       <div className="grid grid-cols-2 gap-4 ">
         <Input
           //
