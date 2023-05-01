@@ -85,13 +85,6 @@ export default function Page() {
               <PanelCard>
                 <Button
                   //
-                  title="ثبت و برگشت به لیست"
-                  type="submit"
-                  loading={isSubmitting || isLoading || isValidating}
-                  onClick={handleSubmit(onSubmit())}
-                />
-                <Button
-                  //
                   title="ثبت"
                   type="submit"
                   loading={isSubmitting || isLoading || isValidating}
