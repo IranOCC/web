@@ -37,7 +37,7 @@ export default function Page() {
       })
     );
     try {
-      await api.patch("/settings/initial", _dirtyFields);
+      await api.patch("/setting/initial", _dirtyFields);
       toast.success("با موفقیت ویرایش شد");
       window.location.reload();
     } catch (error) {
@@ -48,7 +48,7 @@ export default function Page() {
   // get data
   const getData = async () => {
     try {
-      const response = await api.get("/settings/initial");
+      const response = await api.get("/setting/initial");
 
       const {
         //
