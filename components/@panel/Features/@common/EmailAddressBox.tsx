@@ -1,10 +1,10 @@
 import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
+import { CheckBox, Input } from "@/components/Input";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
-import { SendSmsBoxFormData, UserFormData, UserPhoneFormData } from "@/types/formsData";
+import { OfficeFormData, UserFormData } from "@/types/formsData";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
@@ -20,10 +20,10 @@ export default function EmailAddressBox({ form }: any) {
     handleSubmit,
     reset,
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
-  } = form;
+  } = form as UseFormReturn<OfficeFormData | UserFormData>;
 
   useEffect(() => {
-    register("emailAddress", {
+    register("email.value", {
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
         message: "ایمیل معتبر نیست",
@@ -32,19 +32,25 @@ export default function EmailAddressBox({ form }: any) {
   }, []);
 
   return (
-    <PanelCard title="آدرس ایمیل">
-      <button type="submit" className="hidden" />
+    <PanelCard title="ایمیل">
       <div className="grid grid-cols-1 gap-4 ">
         <Input
           //
           control={control}
-          name="emailAddress"
+          name="email.value"
           label="آدرس ایمیل"
-          error={errors.emailAddress?.message}
+          error={errors?.email?.value?.message}
           loading={isSubmitting}
           direction="ltr"
           noSpace
-          // innerSubmitBtn="تاییــد"
+        />
+        <CheckBox //
+          control={control}
+          name="email.verified"
+          label="تایید شده"
+          error={errors?.email?.verified?.message}
+          loading={isSubmitting}
+          noSpace
         />
       </div>
     </PanelCard>

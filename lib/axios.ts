@@ -84,19 +84,30 @@ export default axiosNoAuth
 
 
 
-
+const handleErrorHelper = (property: string, constraints: any, setError: any) => {
+    const c = Object.keys(constraints);
+    for (let j = 0; j < c.length; j++) {
+        setError(property, {
+            type: "manual",
+            message: constraints[c[j]],
+        });
+    }
+}
 
 export const handleFieldsError = (error: unknown, setError: any) => {
     if (error instanceof AxiosError) {
         if (error?.response?.status === 400) {
-            const { errors } = error?.response?.data;
-            for (let i = 0; i < errors.length; i++) {
-                const c = Object.keys(errors[i].constraints);
-                for (let j = 0; j < c.length; j++) {
-                    setError(errors[i].property, {
-                        type: "manual",
-                        message: errors[i].constraints[c[j]],
-                    });
+            const { detail, errors } = error?.response?.data;
+            let _err = detail
+            if (!detail) _err = errors
+            for (let i = 0; i < _err.length; i++) {
+                handleErrorHelper(_err[i].property, _err[i].constraints, setError)
+                for (let s = 0; s < _err[i]?.children?.length; s++) {
+                    handleErrorHelper(
+                        _err[i].property + "." + _err[i].children[s].property,
+                        _err[i].children[s].constraints,
+                        setError
+                    )
                 }
             }
         }

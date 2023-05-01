@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.logo-uploader {
+    width: fit-content !important;
+}
+
+.logo-uploader .ant-upload-select {
+    margin: 0 !important;
+    background-color: rgb(241 245 249) !important;
+    border: 1px dashed rgb(209 213 219) !important;
+}

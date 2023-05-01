@@ -8,15 +8,17 @@ import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { UserFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import UserInfoBox from "@/components/@panel/Features/User/UserInfoBox";
+import UserBox from "@/components/@panel/Features/User/UserBox";
 
 import EmailAddressBox from "@/components/@panel/Features/@common/EmailAddressBox";
 import SendEmailBox from "@/components/@panel/Features/@common/SendEmailBox";
 import PhoneNumberBox from "@/components/@panel/Features/@common/PhoneNumberBox";
 import SendSmsBox from "@/components/@panel/Features/@common/SendSmsBox";
 import LocationBox from "@/components/@panel/Features/@common/LocationBox";
+import { handleFieldsError } from "@/lib/axios";
+import { Email, Phone, StorageFile } from "@/types/interfaces";
 
 export default function Page() {
   const params = useParams();
@@ -34,7 +36,7 @@ export default function Page() {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful, dirtyFields },
   } = form;
 
   const router = useRouter();
@@ -45,33 +47,73 @@ export default function Page() {
   const onSubmit =
     (redirect: boolean = true) =>
     async (data: UserFormData) => {
+      const _dirtyFields = Object.fromEntries(
+        Object.keys(dirtyFields).map((key) => {
+          return [key, data[key as keyof UserFormData]];
+        })
+      );
       try {
         if (isNew) {
-          await api.post("/user", data);
+          await api.post("/user", _dirtyFields);
           toast.success("با موفقیت ایجاد شد");
         } else {
-          await api.patch("/user/" + ID, data);
+          await api.patch("/user/" + ID, _dirtyFields);
           toast.success("با موفقیت ویرایش شد");
         }
-        if (redirect) router.replace("/panel/users");
-        else router.refresh();
-      } catch (error) {}
+        // if (redirect) router.replace("/panel/users");
+        // else window.location.reload();
+      } catch (error) {
+        handleFieldsError(error, setError);
+      }
     };
 
   // get data
+  const [sendSmsTo, setSendSmsTo] = useState<string>();
+  const [sendMailTo, setSendMailTo] = useState<string>();
   const getData = async () => {
     try {
       const response = await api.get("/user/" + ID);
 
-      const { firstName, lastName, status, roles, phoneNumber, phone, emailAddress, email } = response.data;
+      const {
+        //
+        firstName,
+        lastName,
+        status,
+        roles,
+        avatar,
+        //
+        phone,
+        email,
+        //
+        province,
+        city,
+        address,
+        location,
+        //
+        verified,
+        active,
+      } = response.data;
       setValue("firstName", firstName);
       setValue("lastName", lastName);
       setValue("status", status);
       setValue("roles", roles);
-      setValue("phoneNumber", phoneNumber);
-      // setValue("phoneVerify", !!phone?.verify);
-      setValue("emailAddress", emailAddress);
-      // setValue("emailVerify", !!email?.verify);
+      setValue("avatar", avatar as StorageFile);
+      //
+      setValue("phone.value", (phone as Phone)?.value);
+      setValue("phone.verified", (phone as Phone)?.verified);
+      setValue("email.value", (email as Email)?.value);
+      setValue("email.verified", (email as Email)?.verified);
+      //
+      setValue("province", province);
+      setValue("city", city);
+      setValue("address", address);
+      setValue("location", location);
+      //
+      setValue("verified", verified);
+      setValue("active", active);
+      //
+      setSendSmsTo((phone as Phone)?.value);
+      setSendMailTo((email as Email)?.value);
     } catch (error) {
       router.back();
     }
@@ -84,20 +126,21 @@ export default function Page() {
   return (
     <>
       <div className="p-4">
+        <form onSubmit={handleSubmit(onSubmit())} />
         <div className="grid grid-cols-6 gap-4">
           <div className="col-span-full	lg:col-span-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-full">
-                <UserInfoBox form={form} onSubmit={onSubmit()} />
+                <UserBox form={form} />
               </div>
               <div className="col-span-full md:col-span-1">
-                <PhoneNumberBox form={form} onSubmit={onSubmit()} />
+                <PhoneNumberBox form={form} />
               </div>
               <div className="col-span-full md:col-span-1">
-                <EmailAddressBox form={form} onSubmit={onSubmit()} />
+                <EmailAddressBox form={form} />
               </div>
               <div className="col-span-full">
-                <LocationBox form={form} onSubmit={onSubmit()} />
+                <LocationBox form={form} />
               </div>
             </div>
           </div>
@@ -120,8 +163,8 @@ export default function Page() {
                   noSpace
                 />
               </PanelCard>
-              <SendEmailBox userID={ID} />
-              <SendSmsBox userID={ID} />
+              <SendSmsBox userID={ID} to={sendSmsTo} />
+              <SendEmailBox userID={ID} to={sendMailTo} />
             </div>
           </div>
         </div>

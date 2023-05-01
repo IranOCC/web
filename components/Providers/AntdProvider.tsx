@@ -8,7 +8,7 @@ const AntdProvider = ({ children, style }: { children: ReactNode; style: {} }) =
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: "#FFC700",
+          colorPrimary: "rgb(63 131 248)",
           ...style,
         },
       }}

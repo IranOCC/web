@@ -60,5 +60,11 @@ export interface Settings {
 
 export interface StorageFile {
     _id: string;
-
+    title: string;
+    alt: string;
+    mimetype: string;
+    filesize: number;
+    path: string;
+    subject: string;
+    uploadedBy?: User;
 }

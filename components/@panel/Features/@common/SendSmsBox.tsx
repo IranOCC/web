@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 
-export default function SendSmsBox({ phoneNumber, phoneID, officeID, userID }: { phoneNumber?: string; phoneID?: string; officeID?: string; userID?: string }) {
+export default function SendSmsBox({ phoneNumber, phoneID, officeID, userID, to }: { phoneNumber?: string; phoneID?: string; officeID?: string; userID?: string; to?: string }) {
   const {
     register,
     unregister,
@@ -54,6 +54,7 @@ export default function SendSmsBox({ phoneNumber, phoneID, officeID, userID }: {
     await getLogs();
   };
 
+  if (!to) return null;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <PanelCard title="ارسال پیامک" extra={<a onClick={seeLogs}>تاریخچه</a>}>
@@ -62,7 +63,15 @@ export default function SendSmsBox({ phoneNumber, phoneID, officeID, userID }: {
           control={control}
           name="text"
           multiline
-          label="متن"
+          label={
+            <>
+              ارسال پیامک به{" "}
+              <b dir="ltr" className="font-extrabold text-blue-600">
+                {to}
+              </b>
+            </>
+          }
+          placeholder="متن پیام"
           error={errors.text?.message}
           loading={isSubmitting}
         />

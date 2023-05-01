@@ -108,7 +108,7 @@ export type IProps = {
   name: string;
   control: any;
   defaultValue?: string;
-  label?: string;
+  label?: ReactNode;
   placeholder?: string;
   type?: string;
   className?: string;
@@ -117,15 +117,17 @@ export type IProps = {
   icon?: ReactNode;
   multiline?: boolean;
   lines?: number;
+
   disabled?: boolean;
   readOnly?: boolean;
   loading?: boolean;
-  status?: "success" | "error" | "warning";
-  helperText?: ReactNode;
+
   direction?: "ltr" | "rtl";
   noSpace?: boolean;
   maxLength?: number;
 
+  status?: "success" | "error" | "warning";
+  helperText?: ReactNode;
   error?: ReactNode;
   warning?: ReactNode;
   success?: ReactNode;

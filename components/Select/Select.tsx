@@ -1,3 +1,4 @@
+import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
 import { ChangeEventHandler, ReactNode, useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
@@ -5,7 +6,7 @@ import { Button } from "../Button";
 import ArrowDownIcon from "../Icons/ArrowDown";
 
 const Select = (props: IProps) => {
-  const { name, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", items = [] } = props;
+  const { name, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", items, apiPath, multiple } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -49,6 +50,23 @@ const Select = (props: IProps) => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLDivElement>(null);
 
+  const [dataList, setDataList] = useState<DataType[]>([]);
+
+  const api = useAxiosAuth();
+  const getItems = async () => {
+    try {
+      const data = await api.get(apiPath!);
+      const _items = data.data;
+      if (Array.isArray(_items)) setDataList(_items);
+      else setDataList(Object.keys(_items).map((value) => ({ value: value, title: _items[value] } as DataType)));
+    } catch (error) {}
+  };
+  useEffect(() => {
+    if (!items && apiPath) getItems();
+    else if (items) setDataList(items);
+    else setDataList([]);
+  }, []);
+
   return (
     <div className={"w-full relative z-20" + (noSpace ? " mb-0" : " mb-6")}>
       {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
@@ -70,9 +88,15 @@ const Select = (props: IProps) => {
               border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className}
               `}
                   dir={direction}
-                  // {...field}
                   name={field.name}
-                  value={items.filter((e) => e.value === field.value)[0]?.title}
+                  value={
+                    multiple
+                      ? dataList
+                          .filter((e) => field.value.includes(e.value))
+                          .map((m) => m.title)
+                          .join(", ")
+                      : dataList.filter((e) => e.value === field.value)[0]?.title
+                  }
                   onFocus={(e) => setOpen(true)}
                   onBlur={(e) => {
                     setOpen(false);
@@ -90,20 +114,24 @@ const Select = (props: IProps) => {
                       <Paper style={{ boxShadow: "none" }}>
                         <div className="z-10 bg-white w-full border mt-1">
                           <ul className="text-sm text-gray-700 dark:text-gray-200 ">
-                            {items.map(({ title, value }, index) => {
+                            {dataList.map(({ title, value }, index) => {
                               return (
-                                <li
-                                  key={value}
+                                <SelectOption
                                   //
+                                  title={title}
+                                  key={index}
+                                  selected={multiple ? field.value.includes(value) : value === field.value}
                                   onClick={() => {
-                                    field.onChange({ target: { value: value } });
+                                    if (multiple) {
+                                      if (field.value.includes(value)) {
+                                        field.onChange(field.value.filter((item: any) => item !== value));
+                                      } else field.onChange([...field.value, value]);
+                                    } else field.onChange(value);
                                   }}
-                                  className={`relative flex items-center justify-between cursor-pointer px-4 py-2 ${field.value === value ? "bg-blue-500 text-white" : "hover:bg-gray-100"}`}
-                                >
-                                  {title}
-                                </li>
+                                />
                               );
                             })}
+                            {dataList.length === 0 && <SelectOption title="دیتا یافت نشد" key={-1} selected={false} />}
                           </ul>
                         </div>
                       </Paper>
@@ -129,6 +157,24 @@ const Select = (props: IProps) => {
   );
 };
 
+const SelectOption = ({ key, onClick, title, selected }: { key: any; onClick?: any; title: string; selected: boolean }) => {
+  return (
+    <li
+      //
+      key={key}
+      onClick={onClick}
+      className={`relative flex items-center justify-between cursor-pointer px-4 py-2 ${selected ? "bg-blue-500 text-white" : "hover:bg-gray-100"}`}
+    >
+      {title}
+    </li>
+  );
+};
+
+interface DataType {
+  title: string;
+  value: string;
+}
+
 export type IProps = {
   name: string;
   control: any;
@@ -145,12 +191,15 @@ export type IProps = {
   direction?: "ltr" | "rtl";
   noSpace?: boolean;
 
+  multiple?: boolean;
+
   error?: ReactNode;
   warning?: ReactNode;
   success?: ReactNode;
   size?: "small" | "default" | "large";
 
-  items: { title: string; value: string }[];
+  items?: DataType[];
+  apiPath?: string;
 };
 
 export default Select;

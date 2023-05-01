@@ -2,17 +2,15 @@ import { Button } from "@/components/Button";
 import { CheckBox, Input } from "@/components/Input";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
-import { OfficeFormData } from "@/types/formsData";
+import { UserFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
-import Uploader from "@/components/Uploader";
 import LogoUploader from "@/components/Uploader/LogoUploader";
-// import Uploader from "@/components/Uploader";
 
-export default function OfficeBox({ form }: any) {
+export default function UserBox({ form }: any) {
   const {
     register,
     unregister,
@@ -23,34 +21,29 @@ export default function OfficeBox({ form }: any) {
     handleSubmit,
     reset,
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
-  } = form as UseFormReturn<OfficeFormData>;
+  } = form as UseFormReturn<UserFormData>;
 
   useEffect(() => {
-    register("name", { required: "نام را وارد کنید" });
-    register("description", {
-      minLength: {
-        value: 10,
-        message: "حداقل ده کاراکتر نیاز است",
-      },
-    });
-    register("management", { required: "مدیریت را مشخص کنید" });
-    register("logo");
-
+    register("firstName", { required: "نام را وارد کنید" });
+    register("lastName", { required: "نام خانوادگی را وارد کنید" });
+    register("status", { required: "وضعیت را وارد کنید" });
+    register("roles", { required: "نقش ها را وارد کنید" });
+    register("avatar");
     register("verified");
     register("active");
   }, []);
 
   return (
     <>
-      <PanelCard title="اطلاعات شعبه">
+      <PanelCard title="اطلاعات کاربر">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
           <LogoUploader
             //
             control={control}
-            name="logo"
-            uploadPath="offices"
-            label="آپلود لوگو"
-            error={errors.logo?.message}
+            name="avatar"
+            uploadPath="users"
+            label="آپلود آواتار"
+            error={errors.avatar?.message}
             loading={isSubmitting}
             containerClassName="col-span-full"
             noSpace
@@ -58,35 +51,45 @@ export default function OfficeBox({ form }: any) {
           <Input
             //
             control={control}
-            name="name"
+            name="firstName"
             label="نام"
-            error={errors.name?.message}
+            error={errors.firstName?.message}
             loading={isSubmitting}
             noSpace
+          />
+          <Input
+            //
+            control={control}
+            name="lastName"
+            label="نام خانوادگی"
+            error={errors.lastName?.message}
+            loading={isSubmitting}
+            noSpace
+          />
+
+          <Select
+            //
+            control={control}
+            name="status"
+            label="وضعیت"
+            error={errors.status?.message}
+            loading={isSubmitting}
+            placeholder="انتخاب کنید"
+            noSpace
+            apiPath="/user/statics/statuses"
           />
           <Select
             //
             control={control}
-            name="management"
-            label="مدیریت"
-            error={errors.management?.message}
+            name="roles"
+            label="نقش ها"
+            error={errors.roles?.message}
             loading={isSubmitting}
             placeholder="انتخاب کنید"
-            apiPath="/user/assignList"
+            multiple
             noSpace
+            apiPath="/user/statics/roles"
           />
-          <Input
-            //
-            control={control}
-            name="description"
-            label="توضیحات"
-            error={errors.description?.message}
-            loading={isSubmitting}
-            noSpace
-            multiline
-            containerClassName="col-span-full"
-          />
-
           <CheckBox //
             control={control}
             name="verified"

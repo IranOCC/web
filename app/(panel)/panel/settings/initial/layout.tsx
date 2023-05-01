@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 export const metadata = {
-  title: "کاربر",
+  title: "تنظیمات اولیه",
 };
 
 const Layout = ({ children }: { children: ReactNode }) => {

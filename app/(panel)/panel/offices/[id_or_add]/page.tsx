@@ -8,9 +8,9 @@ import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { OfficeFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import UserInfoBox from "@/components/@panel/Features/User/UserInfoBox";
+import UserBox from "@/components/@panel/Features/User/UserBox";
 
 import EmailAddressBox from "@/components/@panel/Features/@common/EmailAddressBox";
 import SendEmailBox from "@/components/@panel/Features/@common/SendEmailBox";
@@ -21,6 +21,7 @@ import { Email, Phone, StorageFile, User } from "@/types/interfaces";
 import OfficeBox from "@/components/@panel/Features/Office/OfficeBox";
 import { AxiosError } from "axios";
 import { handleFieldsError } from "@/lib/axios";
+import { UploadFile } from "antd";
 
 export default function Page() {
   const params = useParams();
@@ -50,7 +51,11 @@ export default function Page() {
   const onSubmit =
     (redirect: boolean = true) =>
     async (data: OfficeFormData) => {
-      const _dirtyFields = Object.fromEntries(Object.keys(dirtyFields).map((key) => [key, data[key as keyof OfficeFormData]]));
+      const _dirtyFields = Object.fromEntries(
+        Object.keys(dirtyFields).map((key) => {
+          return [key, data[key as keyof OfficeFormData]];
+        })
+      );
       try {
         if (isNew) {
           await api.post("/office", _dirtyFields);
@@ -60,13 +65,15 @@ export default function Page() {
           toast.success("با موفقیت ویرایش شد");
         }
         if (redirect) router.replace("/panel/offices");
-        else router.refresh();
+        else window.location.reload();
       } catch (error: unknown) {
         handleFieldsError(error, setError);
       }
     };
 
   // get data
+  const [sendSmsTo, setSendSmsTo] = useState<string>();
+  const [sendMailTo, setSendMailTo] = useState<string>();
   const getData = async () => {
     try {
       const response = await api.get("/office/" + ID);
@@ -93,7 +100,7 @@ export default function Page() {
       setValue("name", name);
       setValue("description", description);
       setValue("management", (management as User)?._id);
-      setValue("logo", (logo as StorageFile)?._id);
+      setValue("logo", logo as StorageFile);
       //
       setValue("phone.value", (phone as Phone)?.value);
       setValue("phone.verified", (phone as Phone)?.verified);
@@ -107,6 +114,10 @@ export default function Page() {
       //
       setValue("verified", verified);
       setValue("active", active);
+
+      //
+      setSendSmsTo((phone as Phone)?.value);
+      setSendMailTo((email as Email)?.value);
     } catch (error) {
       console.log(error);
       router.back();
@@ -120,49 +131,48 @@ export default function Page() {
   return (
     <>
       <div className="p-4">
-        <form onSubmit={handleSubmit(onSubmit())}>
-          <div className="grid grid-cols-6 gap-4">
-            <div className="col-span-full	lg:col-span-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="col-span-full">
-                  <OfficeBox form={form} onSubmit={onSubmit()} />
-                </div>
-                <div className="col-span-full md:col-span-1">
-                  <PhoneNumberBox form={form} onSubmit={onSubmit()} />
-                </div>
-                <div className="col-span-full md:col-span-1">
-                  <EmailAddressBox form={form} onSubmit={onSubmit()} />
-                </div>
-                <div className="col-span-full">
-                  <LocationBox form={form} onSubmit={onSubmit()} />
-                </div>
+        <form onSubmit={handleSubmit(onSubmit())} />
+        <div className="grid grid-cols-6 gap-4">
+          <div className="col-span-full	lg:col-span-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="col-span-full">
+                <OfficeBox form={form} />
               </div>
-            </div>
-            <div className="col-span-full lg:col-span-2">
-              <div className="grid grid-cols-1 gap-4">
-                <PanelCard>
-                  <Button
-                    //
-                    title="ثبت و برگشت به لیست"
-                    type="submit"
-                    loading={isSubmitting || isLoading || isValidating}
-                    onClick={handleSubmit(onSubmit())}
-                  />
-                  <Button
-                    //
-                    title="ثبت"
-                    type="submit"
-                    loading={isSubmitting || isLoading || isValidating}
-                    onClick={handleSubmit(onSubmit(false))}
-                    noSpace
-                  />
-                </PanelCard>
-                <SendEmailBox userID={ID} />
-                <SendSmsBox userID={ID} />
+              <div className="col-span-full md:col-span-1">
+                <PhoneNumberBox form={form} />
+              </div>
+              <div className="col-span-full md:col-span-1">
+                <EmailAddressBox form={form} />
+              </div>
+              <div className="col-span-full">
+                <LocationBox form={form} />
               </div>
             </div>
           </div>
-        </form>
+          <div className="col-span-full lg:col-span-2">
+            <div className="grid grid-cols-1 gap-4">
+              <PanelCard>
+                <Button
+                  //
+                  title="ثبت و برگشت به لیست"
+                  type="submit"
+                  loading={isSubmitting || isLoading || isValidating}
+                  onClick={handleSubmit(onSubmit())}
+                />
+                <Button
+                  //
+                  title="ثبت"
+                  type="submit"
+                  loading={isSubmitting || isLoading || isValidating}
+                  onClick={handleSubmit(onSubmit(false))}
+                  noSpace
+                />
+              </PanelCard>
+              <SendSmsBox officeID={ID} to={sendSmsTo} />
+              <SendEmailBox officeID={ID} to={sendMailTo} />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

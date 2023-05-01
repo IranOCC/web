@@ -1,13 +1,9 @@
-import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { toast } from "@/lib/toast";
-import { SendSmsBoxFormData, UserFormData, UserPhoneFormData } from "@/types/formsData";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { useRouter } from "next/navigation";
-import { Select } from "@/components/Select";
+import { FieldValues, UseFormReturn } from "react-hook-form";
+import { OfficeFormData, UserFormData } from "@/types/formsData";
+import LocationChooser from "./LocationChooser";
 
 export default function LocationBox({ form }: any) {
   const {
@@ -20,15 +16,17 @@ export default function LocationBox({ form }: any) {
     handleSubmit,
     reset,
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
-  } = form;
+  } = form as UseFormReturn<OfficeFormData | UserFormData>;
 
   useEffect(() => {
-    register("phoneNumber", {});
+    register("province", {});
+    register("city", {});
+    register("address", {});
+    register("location", {});
   }, []);
 
   return (
     <PanelCard title="موقعیت مکانی">
-      <button type="submit" className="hidden" />
       <div className="grid grid-cols-2 gap-4 ">
         <Input
           //
@@ -54,6 +52,15 @@ export default function LocationBox({ form }: any) {
           name="address"
           label="آدرس"
           error={errors.address?.message}
+          loading={isSubmitting}
+          noSpace
+          containerClassName="col-span-full"
+        />
+        <LocationChooser
+          //
+          name="location"
+          control={control}
+          error={errors.location?.message}
           loading={isSubmitting}
           noSpace
           containerClassName="col-span-full"

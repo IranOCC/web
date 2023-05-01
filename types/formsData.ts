@@ -1,3 +1,4 @@
+import { UploadFile } from "antd";
 import { Email, Phone, User, UserRoleEnum, UserStatusEum, StorageFile } from "./interfaces";
 
 export type LoginPhoneOtpFormData = {
@@ -15,15 +16,20 @@ export type SubscriptionFormData = {
 export type UserFormData = {
     firstName: string;
     lastName: string;
-    status: UserStatusEum;
-    roles: UserRoleEnum[];
+    status: string;
+    roles: string[];
+    avatar?: StorageFile | string;
     // 
-    phoneNumber: string;
-    emailAddress: string;
+    phone?: Phone | string;
+    email?: Email | string;
     // 
-    province: string;
-    city: string;
-    address: string;
+    province?: string;
+    city?: string;
+    address?: string;
+    location?: [number, number, number];
+    // 
+    verified?: boolean;
+    active?: boolean;
 };
 
 
@@ -40,22 +46,10 @@ export type OfficeFormData = {
     province?: string;
     city?: string;
     address?: string;
-    location?: [number, number]
+    location?: [number, number, number];
     // 
     verified?: boolean;
     active?: boolean;
-};
-
-
-
-export type UserPhoneFormData = {
-    phoneNumber: string;
-    token: string;
-};
-
-export type UserEmailFormData = {
-    phoneNumber: string;
-    token: string;
 };
 
 
@@ -73,4 +67,16 @@ export type SendEmailBoxFormData = {
     emailID?: string;
     officeID?: string;
     userID?: string;
+};
+
+
+
+// =============
+
+
+export type InitialSettingsFormData = {
+    title: string;
+    description: string;
+    keywords: string[];
+
 };
