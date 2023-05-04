@@ -6,12 +6,6 @@ export enum UserRoleEnum {
     User = 'User',
 }
 
-export enum UserStatusEum {
-    Active = 'Active',
-    NotActive = 'NotActive',
-    Delete = 'Delete',
-}
-
 
 export interface ObjectID {
     _id: string;
@@ -29,17 +23,50 @@ export interface Phone {
 
 export interface User {
     _id: string;
-    id: string;
-    firstName: string | null | undefined;
-    lastName: string | null | undefined;
-    fullName: string | null | undefined;
-    emailAddress: string | null | undefined;
-    email: Email | string | null | undefined;
-    phoneNumber: string | null | undefined;
-    phone: Phone | string | null | undefined;
-    avatar: string | null | undefined;
+
+    firstName?: string | null;
+    lastName?: string | null;
+    fullName?: string | null;
+
+    email?: Email | string | null;
+    phone?: Phone | string | null;
+
+    province?: string;
+    city?: string;
+    address?: string;
+    location?: [number, number, number];
+
+    avatar?: StorageFile | string | null;
+
     roles: UserRoleEnum[];
-    status: UserStatusEum
+
+    active: boolean;
+    verified: boolean;
+}
+
+
+export interface Office {
+    _id: string;
+    name: string;
+    management: User;
+    logo?: StorageFile | string;
+
+    phone?: Phone | string | null;
+    email?: Email | string | null;
+
+    province?: string;
+    city?: string;
+    address?: string;
+    location?: [number, number, number];
+
+    membersCount: number;
+    estatesCount: number;
+    postsCount: number;
+
+    verified?: boolean;
+    active?: boolean;
+    // 
+    members?: User[] | string[];
 }
 
 

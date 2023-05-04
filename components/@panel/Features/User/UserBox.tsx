@@ -1,12 +1,8 @@
-import { Button } from "@/components/Button";
 import { CheckBox, Input } from "@/components/Input";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { toast } from "@/lib/toast";
 import { UserFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
 import LogoUploader from "@/components/Uploader/LogoUploader";
 
@@ -26,7 +22,6 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
   useEffect(() => {
     register("firstName", { required: "نام را وارد کنید" });
     register("lastName", { required: "نام خانوادگی را وارد کنید" });
-    register("status", { required: "وضعیت را وارد کنید" });
     register("roles", { required: "نقش ها را وارد کنید" });
     register("avatar");
     register("verified");
@@ -70,17 +65,6 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
           <Select
             //
             control={control}
-            name="status"
-            label="وضعیت"
-            error={errors.status?.message}
-            loading={isSubmitting}
-            placeholder="انتخاب کنید"
-            noSpace
-            apiPath="/user/statics/statuses"
-          />
-          <Select
-            //
-            control={control}
             name="roles"
             label="نقش ها"
             error={errors.roles?.message}
@@ -88,7 +72,9 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
             placeholder="انتخاب کنید"
             multiple
             noSpace
+            showTitle
             apiPath="/user/statics/roles"
+            containerClassName="col-span-full"
           />
           <CheckBox //
             control={control}

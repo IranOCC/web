@@ -1,5 +1,4 @@
-import { UploadFile } from "antd";
-import { Email, Phone, User, UserRoleEnum, UserStatusEum, StorageFile } from "./interfaces";
+import { Email, Phone, User, UserRoleEnum, StorageFile, Office } from "./interfaces";
 
 export type LoginPhoneOtpFormData = {
     phone: string;
@@ -14,10 +13,11 @@ export type SubscriptionFormData = {
 // user info
 
 export type UserFormData = {
+    _id?: string;
+
     firstName: string;
     lastName: string;
-    status: string;
-    roles: string[];
+    roles: UserRoleEnum[];
     avatar?: StorageFile | string;
     // 
     phone?: Phone | string;
@@ -34,25 +34,7 @@ export type UserFormData = {
 
 
 
-export type OfficeFormData = {
-    name: string;
-    description?: string;
-    management: User | string;
-    logo?: StorageFile | string;
-    // 
-    phone?: Phone | string;
-    email?: Email | string;
-    // 
-    province?: string;
-    city?: string;
-    address?: string;
-    location?: [number, number, number];
-    // 
-    verified?: boolean;
-    active?: boolean;
-    // 
-    members?: User[]
-};
+
 
 
 export type SendSmsBoxFormData = {
@@ -76,9 +58,37 @@ export type SendEmailBoxFormData = {
 // =============
 
 
+export type OfficeFormData = {
+    _id?: string;
+
+    name: string;
+    description?: string;
+    management: User | string;
+    logo?: StorageFile | string;
+    // 
+    phone?: Phone | string;
+    email?: Email | string;
+    // 
+    province?: string;
+    city?: string;
+    address?: string;
+    location?: [number, number, number];
+    // 
+    verified?: boolean;
+    active?: boolean;
+
+};
+
+export type OfficeAddMemberFormData = {
+    users: User[] | string[];
+    office: Office | string;
+};
+
+
+// 
+
 export type InitialSettingsFormData = {
     title: string;
     description: string;
     keywords: string[];
-
 };

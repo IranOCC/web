@@ -5,22 +5,9 @@ import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import { User, Phone, Email } from "@/types/interfaces";
+import { User, Phone, Email, Office } from "@/types/interfaces";
 
-interface DataType {
-  _id: string;
-  name: string;
-  management: User;
-  phone: Phone;
-  email: Email;
-  membersCount: number;
-  estatesCount: number;
-  postsCount: number;
-  active: boolean;
-  verified: boolean;
-}
-
-const columns: ColumnsType<DataType> = [
+const columns: ColumnsType<Office> = [
   {
     title: "نام",
     dataIndex: "name",
@@ -76,28 +63,20 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "active",
     render: (active: boolean) => <span className={"font-bold " + (!!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
   },
-  {
-    title: "",
-    key: "action",
-    dataIndex: "_id",
-    render: (id) => (
-      <Space size="middle">
-        <a>حذف</a>
-        <Link href={`/panel/offices/${id}`}>ویرایش</Link>
-      </Space>
-    ),
-  },
 ];
 
 export default function Page() {
   return (
     <>
       <div className="p-4">
-        <PanelTable<DataType>
+        <PanelTable<Office>
           //
           endpoint="office"
           headerTitle={() => <h1 className="font-medium text-lg">لیست شعبه ها</h1>}
           columns={columns}
+          deletable
+          editable
+          extraOperations={(id: string) => []}
         />
       </div>
     </>

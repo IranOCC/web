@@ -51,7 +51,7 @@ const menuItems: MenuItemType[] = [
   },
   {
     title: "کاربران",
-    href: "users",
+    href: "user",
     icon: <UsersOutlineIcon />,
     sub: [
       {
@@ -68,7 +68,7 @@ const menuItems: MenuItemType[] = [
   },
   {
     title: "شعب ها",
-    href: "offices",
+    href: "office",
     icon: <OfficesOutlineIcon />,
     sub: [
       {
@@ -85,7 +85,7 @@ const menuItems: MenuItemType[] = [
   },
   {
     title: "املاک",
-    href: "estates",
+    href: "estate",
     icon: <BuildingOutlineIcon />,
     sub: [
       {
@@ -100,17 +100,17 @@ const menuItems: MenuItemType[] = [
       },
       {
         title: "دسته بندی",
-        href: "categories",
+        href: "category",
         subtitle: "",
       },
       {
         title: "نوع سند",
-        href: "documentTypes",
+        href: "document",
         subtitle: "",
       },
       {
         title: "ویژگی ها",
-        href: "features",
+        href: "feature",
         subtitle: "",
       },
     ],
@@ -132,19 +132,19 @@ const menuItems: MenuItemType[] = [
       },
       {
         title: "دسته بندی",
-        href: "categories",
+        href: "category",
         subtitle: "",
       },
       {
         title: "دیدگاه ها",
-        href: "comments",
+        href: "comment",
         subtitle: "",
       },
     ],
   },
   {
     title: "صفحات",
-    href: "pages",
+    href: "page",
     icon: <LinkOutlineIcon />,
     sub: [
       {
@@ -178,19 +178,19 @@ const menuItems: MenuItemType[] = [
   },
   {
     title: "گزارشات",
-    href: "reports",
+    href: "report",
     icon: <ChartOutlineIcon />,
     sub: [
       {
         title: "کاربران",
-        href: "users",
+        href: "user",
         subtitle: "",
       },
     ],
   },
   {
     title: "تنظیمات",
-    href: "settings",
+    href: "setting",
     icon: <SettingOutlineIcon />,
     sub: [
       {

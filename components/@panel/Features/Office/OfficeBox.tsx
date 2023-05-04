@@ -98,6 +98,7 @@ export default function OfficeBox({ form, loading }: { form: any; loading?: bool
             control={control}
             name="active"
             label="فعال"
+            defaultValue={true}
             error={errors.active?.message}
             loading={isSubmitting}
             noSpace

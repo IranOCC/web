@@ -1,5 +1,6 @@
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { ClickAwayListener, Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
+import { Chip, ClickAwayListener, Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
+import { Spin } from "antd";
 import { ChangeEventHandler, ReactNode, useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import { Button } from "../Button";
@@ -7,7 +8,31 @@ import ArrowDownIcon from "../Icons/ArrowDown";
 import SearchIcon from "../Icons/Search";
 
 const Select = (props: IProps) => {
-  const { name, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", items, apiPath, searchable, multiple } = props;
+  const {
+    name,
+    control,
+    defaultValue = "",
+    className = "",
+    label,
+    placeholder,
+    icon,
+    disabled = false,
+    loading = false,
+    readOnly = false,
+    error,
+    warning,
+    success,
+    direction,
+    noSpace,
+    size = "default",
+    items,
+    apiPath,
+    searchable,
+    multiple,
+    showTitle = false,
+    containerClassName = "",
+    tagsMode = false,
+  } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -51,7 +76,7 @@ const Select = (props: IProps) => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLDivElement>(null);
 
-  const [dataList, setDataList] = useState<DataType[]>([]);
+  const [dataList, setDataList] = useState<DataType[] | null>(null);
   const [search, setSearch] = useState("");
   const [dataLoading, setDataLoading] = useState(false);
 
@@ -81,62 +106,81 @@ const Select = (props: IProps) => {
     else setDataList([]);
   }, [search]);
 
+  useEffect(() => {
+    setSearch("");
+    setDataLoading(false);
+  }, [open]);
+
+  const DataInput = ({ type, ...props }: any) => {
+    if (type === "textarea") return <textarea {...props} />;
+    return <input {...props} />;
+  };
   return (
-    <div className={"w-full relative z-20" + (noSpace ? " mb-0" : " mb-6")}>
+    <div className={"w-full relative z-20" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
       {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
       <div className="w-full relative" ref={anchorRef}>
-        <Controller
-          render={({ field }) => {
-            return (
-              <ClickAwayListener
-                onClickAway={() => {
-                  setOpen(false);
-                }}
-              >
-                <div>
-                  <input
-                    type="text"
-                    disabled={disabled || loading || dataLoading}
-                    placeholder={placeholder}
-                    readOnly={true}
-                    className={`placeholder:text-left
+        {!!dataList && (
+          <Controller
+            render={({ field }) => {
+              const [objectValue, setObjectValue] = useState<DataType[] | DataType>(
+                //
+                multiple ? dataList.filter((item) => field.value.includes(item.value)) : dataList.filter((item) => item.value === field.value)[0]
+                //
+              );
+              return (
+                <ClickAwayListener
+                  onClickAway={() => {
+                    setOpen(false);
+                  }}
+                >
+                  <div>
+                    <DataInput
+                      type={tagsMode ? "textarea" : "input"}
+                      disabled={disabled || loading || dataLoading}
+                      placeholder={placeholder}
+                      readOnly={true}
+                      className={`placeholder:text-left
               ${disabled ? "cursor-not-allowed bg-gray-200" : "cursor-default bg-slate-100"}
               rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg
               placeholder:text-start
+              pe-8
               border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className}
               `}
-                    dir={direction}
-                    name={field.name}
-                    value={
-                      multiple
-                        ? dataList
-                            .filter((e) => field.value.includes(e.value))
-                            .map((m) => m.title)
-                            .join(", ")
-                        : dataList.filter((e) => e.value === field.value)[0]?.title
-                    }
-                    onFocus={(e) => setOpen(true)}
-                    // onBlur={(e) => {
-                    //   if (!multiple) setOpen(false);
-                    // }}
-                  />
-                  <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg">
-                    {({ TransitionProps, placement }) => (
-                      <Grow
-                        {...TransitionProps}
-                        style={{
-                          transformOrigin: "right top",
-                        }}
-                      >
-                        <Paper style={{ boxShadow: "none" }}>
-                          <div className="z-10  bg-white w-full border border-gray-300  mt-1">
-                            <ul className="text-sm text-gray-700 dark:text-gray-200 ">
+                      dir={direction}
+                      name={field.name}
+                      value={
+                        multiple
+                          ? //
+                            showTitle
+                            ? (objectValue as DataType[]).map((item: DataType) => item.title).join(", ")
+                            : //
+                            !!(objectValue as DataType[]).length
+                            ? (objectValue as DataType[]).length + " مورد انتخاب شده"
+                            : ""
+                          : //
+                            (objectValue as DataType)?.title
+                      }
+                      onFocus={(e: any) => setOpen(true)}
+                      // onBlur={(e) => {
+                      //   if (!multiple) setOpen(false);
+                      // }}
+                    />
+                    <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg">
+                      {({ TransitionProps, placement }) => (
+                        <Grow
+                          {...TransitionProps}
+                          style={{
+                            transformOrigin: "right top",
+                          }}
+                        >
+                          <Paper style={{ boxShadow: "none" }}>
+                            <div className="z-10 relative bg-white w-full border border-gray-300  mt-1">
                               {searchable ? (
                                 <div className="w-full relative flex items-center">
                                   <input
                                     //
                                     type="text"
-                                    disabled={disabled || loading || dataLoading}
+                                    disabled={disabled || loading}
                                     placeholder="جستجو ..."
                                     className={`w-full placeholder:text-gray-400 bg-white focus:bg-white p-2.5 text-gray-900 focus:ring-0 block text-sm border-b focus:border-gray-300 border-gray-300 border-0`}
                                     dir={direction}
@@ -148,41 +192,55 @@ const Select = (props: IProps) => {
                                   </div>
                                 </div>
                               ) : null}
-                              {dataList.map(({ title, value }, index) => {
-                                return (
-                                  <SelectOption
-                                    //
-                                    title={title}
-                                    key={index}
-                                    selected={multiple ? field.value.includes(value) : value === field.value}
-                                    onClick={() => {
-                                      if (multiple) {
-                                        if (field.value.includes(value)) {
-                                          field.onChange(field.value.filter((item: any) => item !== value));
-                                        } else field.onChange([...field.value, value]);
-                                      } else {
-                                        field.onChange(value);
-                                        setOpen(false);
-                                      }
-                                    }}
-                                  />
-                                );
-                              })}
-                              {dataList.length === 0 && <SelectOption title="موردی پیدا نشد" key={-1} selected={false} />}
-                            </ul>
-                          </div>
-                        </Paper>
-                      </Grow>
-                    )}
-                  </Popper>
-                </div>
-              </ClickAwayListener>
-            );
-          }}
-          defaultValue={defaultValue}
-          name={name}
-          control={control}
-        />
+                              <ul className="text-sm text-gray-700 dark:text-gray-200 max-h-60 overflow-x-hidden">
+                                {dataList.map(({ title, value }, index) => {
+                                  return (
+                                    <SelectOption
+                                      //
+                                      title={title}
+                                      key={index}
+                                      selected={multiple ? field.value.includes(value) : value === field.value}
+                                      onClick={() => {
+                                        if (multiple) {
+                                          let a = [];
+                                          let b = [];
+                                          if (field.value.includes(value)) {
+                                            a = field.value.filter((item: any) => item !== value);
+                                            b = (objectValue as DataType[]).filter((item: any) => item.value !== value);
+                                          } else {
+                                            a = [...field.value, value];
+                                            b = [...(objectValue as DataType[]), { title, value }];
+                                          }
+                                          setObjectValue(b);
+                                          field.onChange(a);
+                                        } else {
+                                          field.onChange(value);
+                                          setObjectValue({ title, value });
+                                          setOpen(false);
+                                        }
+                                      }}
+                                    />
+                                  );
+                                })}
+                                {dataList.length === 0 && <SelectOption title="موردی پیدا نشد" key={-1} selected={false} />}
+                              </ul>
+                              <div className={"absolute bg-slate-50 opacity-70 w-full bottom-0 items-center justify-center" + (searchable ? " top-10" : "") + (dataLoading ? " flex" : " hidden")}>
+                                <Spin />
+                              </div>
+                            </div>
+                          </Paper>
+                        </Grow>
+                      )}
+                    </Popper>
+                  </div>
+                </ClickAwayListener>
+              );
+            }}
+            defaultValue={defaultValue}
+            name={name}
+            control={control}
+          />
+        )}
         <span className={`absolute top-0 end-0 text-blue-600  flex items-center justify-center h-full me-2.5 text-md ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
           <ArrowDownIcon />
         </span>
@@ -218,6 +276,8 @@ export type IProps = {
   label?: string;
   placeholder?: string;
   className?: string;
+  containerClassName?: string;
+
   icon?: ReactNode;
   disabled?: boolean;
   readOnly?: boolean;
@@ -227,7 +287,9 @@ export type IProps = {
   direction?: "ltr" | "rtl";
   noSpace?: boolean;
 
+  tagsMode?: boolean;
   multiple?: boolean;
+  showTitle?: boolean;
   searchable?: boolean;
 
   error?: ReactNode;

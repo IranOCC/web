@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, ReactNode, useEffect } from "react";
-import type { RadioChangeEvent } from "antd";
+import { Dropdown, Popconfirm, RadioChangeEvent } from "antd";
 import { Form, Radio, Space, Switch, Table } from "antd";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import type { ColumnsType, TableProps } from "antd/es/table";
@@ -12,6 +12,9 @@ import { DndContext } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import { IconButton, Link } from "@mui/material";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import { toast } from "@/lib/toast";
 
 type TablePaginationPosition = "topLeft" | "topCenter" | "topRight" | "bottomLeft" | "bottomCenter" | "bottomRight";
 
@@ -27,9 +30,12 @@ type IProps = {
   minWidth?: string | number;
   expandable?: boolean;
   detail?: ReactNode;
+  deletable?: boolean;
+  editable?: boolean;
+  extraOperations?: (id: string) => any[];
 };
 
-function PanelTable<T>({ headerTitle, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail }: IProps) {
+function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail }: IProps) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [dataSource, setDataSource] = useState(data?.length !== undefined ? data : []);
 
@@ -77,6 +83,14 @@ function PanelTable<T>({ headerTitle, footerTitle, endpoint, data, columns, load
     } catch (error) {
       setFetchLoading(false);
     }
+  };
+
+  const deleteRow = async (id: string) => {
+    try {
+      await api.delete(`/${endpoint}/${id}`);
+      toast.success("با موفقیت حذف گردید");
+      await getData();
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -177,6 +191,55 @@ function PanelTable<T>({ headerTitle, footerTitle, endpoint, data, columns, load
       </>
     );
   }
+
+  const hasOperations = deletable || editable || extraOperations("");
+  const generateOperations = (id: string) => {
+    let operationsItem: any[] = [];
+    if (deletable) {
+      operationsItem.push({
+        key: "delete",
+        label: (
+          <Popconfirm title="حذف شود؟" okText="بله" cancelText="خیر" okType="link" onConfirm={() => deleteRow(id)}>
+            <a>حذف</a>
+          </Popconfirm>
+        ),
+      });
+    }
+    if (editable) {
+      operationsItem.push({
+        key: 2,
+        label: <Link href={`/panel/${endpoint}/${id}`}>ویرایش</Link>,
+      });
+    }
+
+    return [...operationsItem, ...extraOperations(id)];
+  };
+
+  if (hasOperations) {
+    tableColumns.push({
+      title: "",
+      key: "operation",
+      dataIndex: "_id",
+      width: "75px",
+      render: (id: string) => (
+        <Space size="middle">
+          <Dropdown
+            menu={{
+              items: generateOperations(id),
+            }}
+          >
+            <a>
+              <IconButton color="primary" aria-label="upload picture" component="label">
+                <MoreVertOutlinedIcon />
+              </IconButton>
+            </a>
+          </Dropdown>
+        </Space>
+      ),
+      ellipsis: false,
+    });
+  }
+
   return (
     <Table
       //
