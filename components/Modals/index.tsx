@@ -18,10 +18,14 @@ type IProps = {
 
   closeButton?: boolean;
   whiteClose?: boolean;
-  path: string;
+  path?: string;
+
+  open?: boolean;
+  setOpen?: any;
+  setClose?: any;
 };
 
-export default function Modal({ path, title, children, footerButton, closeButton = true, whiteClose = false }: IProps) {
+export default function Modal({ path, open, setOpen, title, children, footerButton, closeButton = true, whiteClose = false }: IProps) {
   const cancelButtonRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -29,21 +33,26 @@ export default function Modal({ path, title, children, footerButton, closeButton
 
   const modal = searchParams?.get("modal");
 
-  const [open, _setOpen] = useState(false);
-  const setOpen = (status: boolean) => {
-    if (status) {
-      router.push("?modal=" + path);
+  const [_open, _setOpen] = useState(false);
+  const openHandler = (status: boolean) => {
+    if (path) {
+      if (status) {
+        router.push("?modal=" + path);
+      } else {
+        router.back();
+      }
     } else {
-      router.back();
+      setOpen(status);
     }
   };
   useEffect(() => {
-    _setOpen(modal === path);
-  }, [pathname, searchParams]);
+    if (path) _setOpen(modal === path);
+    else _setOpen(!!open);
+  }, [pathname, searchParams, open]);
 
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
+    <Transition.Root show={_open} as={Fragment}>
+      <Dialog as="div" className="relative z-20" initialFocus={cancelButtonRef} onClose={openHandler}>
         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
@@ -67,7 +76,7 @@ export default function Modal({ path, title, children, footerButton, closeButton
                     </div>
                   )}
                   <div className="mt-8 sm:flex sm:items-start">
-                    <div className="w-full text-center sm:text-left block">
+                    <div className="w-full text-center sm:text-start block">
                       {title && (
                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
                           {title}

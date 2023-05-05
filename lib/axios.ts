@@ -26,14 +26,8 @@ export const showError = ({ response }: { response: any }) => {
                 let text = Object.values(response.data.errors);
                 messages.push(...text);
                 break;
-            case 404:
-                messages.push("404 Not Found");
-                break;
-            case 500:
-                messages.push(response?.data?.message || "500 Server Error");
-                break;
             default:
-                messages.push(`Error ${response.status}`);
+                messages.push(response?.data?.message || `Error ${response.status}`);
                 break;
         }
     }

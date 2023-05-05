@@ -33,9 +33,10 @@ type IProps = {
   deletable?: boolean;
   editable?: boolean;
   extraOperations?: (id: string) => any[];
+  update?: boolean;
 };
 
-function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail }: IProps) {
+function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: IProps) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [dataSource, setDataSource] = useState(data?.length !== undefined ? data : []);
 
@@ -65,7 +66,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
     $s?.set("count", page_size.toString());
     router.push(pathname + "?" + $s.toString());
   };
-
+  //
   const api = useAxiosAuth();
   const getData = async () => {
     setFetchLoading(true);
@@ -75,13 +76,13 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
       search: _search,
       order_by: "created_at",
     };
-
     try {
       const response = await api.get(`/${endpoint}`, { params });
       setDataSource(response.data);
       setFetchLoading(false);
     } catch (error) {
       setFetchLoading(false);
+      router.replace("/panel");
     }
   };
 
@@ -97,7 +98,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
     // get table data
     if (endpoint) getData();
     // setFirstTry(false);
-  }, [_page, _count, _search, _sort]);
+  }, [_page, _count, _search, _sort, update]);
 
   // ##############################################
   // ====> row Selection
@@ -146,7 +147,6 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
   };
 
   // ##############################################
-
   if (sortable) {
     return (
       <>
@@ -207,11 +207,10 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
     }
     if (editable) {
       operationsItem.push({
-        key: 2,
+        key: "edit",
         label: <Link href={`/panel/${endpoint}/${id}`}>ویرایش</Link>,
       });
     }
-
     return [...operationsItem, ...extraOperations(id)];
   };
 

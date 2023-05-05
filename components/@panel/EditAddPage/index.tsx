@@ -66,9 +66,6 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side, en
       }
     };
 
-  // get data
-  // const [sendSmsTo, setSendSmsTo] = useState<string>();
-  // const [sendMailTo, setSendMailTo] = useState<string>();
   const [dataLoading, setDataLoading] = useState<boolean>(false);
   const getData = async () => {
     setDataLoading(true);
@@ -76,10 +73,6 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side, en
       const response = await api.get(`/${endpoint}/` + ID);
       const data = response.data as F;
       setInitialData(data);
-
-      // setSendSmsTo((phone as Phone)?.value);
-      // setSendMailTo((email as Email)?.value);
-
       setDataLoading(false);
     } catch (error) {
       router.replace(`/panel/${endpoint}`);

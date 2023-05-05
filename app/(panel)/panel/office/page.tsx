@@ -76,7 +76,12 @@ export default function Page() {
           columns={columns}
           deletable
           editable
-          extraOperations={(id: string) => []}
+          extraOperations={(id: string) => [
+            {
+              key: "members",
+              label: <Link href={`/panel/office/${id}/members`}>مدیریت اعضا</Link>,
+            },
+          ]}
         />
       </div>
     </>
