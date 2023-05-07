@@ -1,6 +1,5 @@
 import axiosSSR from "@/lib/axiosSSR"
 import { LoginPhoneOtpFormData } from "@/types/formsData"
-import { UserRoleEnum } from "@/types/interfaces"
 import NextAuth, { NextAuthOptions, Session, User, } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 export const authOptions: NextAuthOptions = {

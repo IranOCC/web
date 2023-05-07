@@ -1,4 +1,4 @@
-import { Email, Phone, User, UserRoleEnum, StorageFile, Office } from "./interfaces";
+import { Email, Phone, User, StorageFile, Office } from "./interfaces";
 
 export type LoginPhoneOtpFormData = {
     phone: string;
@@ -17,7 +17,7 @@ export type UserFormData = {
 
     firstName: string;
     lastName: string;
-    roles: UserRoleEnum[];
+    roles: string[];
     avatar?: StorageFile | string;
     // 
     phone?: Phone | string;
@@ -26,7 +26,7 @@ export type UserFormData = {
     province?: string;
     city?: string;
     address?: string;
-    location?: [number, number, number];
+    location?: [number, number];
     // 
     verified?: boolean;
     active?: boolean;
@@ -72,11 +72,10 @@ export type OfficeFormData = {
     province?: string;
     city?: string;
     address?: string;
-    location?: [number, number, number];
+    location?: [number, number];
     // 
     verified?: boolean;
     active?: boolean;
-
 };
 
 export type OfficeAddMemberFormData = {
@@ -84,7 +83,72 @@ export type OfficeAddMemberFormData = {
 };
 
 
-// 
+// ============== estate
+
+export type EstateFormData = {
+    _id?: string;
+
+    title: string;
+    content?: string;
+    excerpt?: string;
+    slug: string;
+
+    image?: StorageFile | string;
+    gallery?: StorageFile | string;
+
+
+    status: string;
+    visibility: string;
+    password: string;
+    pinned: boolean;
+    publishedAt: Date;
+
+    tags: string[];
+    categories: string[];
+
+
+
+    province?: string;
+    city?: string;
+    district?: string;
+    quarter?: string;
+    alley?: string;
+    address?: string;
+    location?: [number, number];
+
+    code: string;
+
+    price: number;
+    totalPrice: number;
+    canBarter: boolean;
+
+
+    description: string;
+
+
+    area: number;
+    documentType: string[];
+    features: string[];
+    constructionYear: number;
+
+    roomsCount: number;
+    mastersCount: number;
+    buildingArea: number;
+    floorsCount: number;
+    unitsCount: number;
+    floor: number;
+
+    withOldBuilding: boolean;
+};
+
+
+
+// =============
+
+
+
+
+
 
 export type InitialSettingsFormData = {
     title: string;

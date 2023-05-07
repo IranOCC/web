@@ -94,7 +94,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
           </div>
           <div className="col-span-full lg:col-span-2">
             <div className="grid grid-cols-1 gap-4">
-              <PanelCard>
+              <PanelCard className="order-last lg:order-first">
                 {!SECTION && (
                   <Button
                     //

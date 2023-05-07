@@ -1,10 +1,4 @@
-export enum UserRoleEnum {
-    SuperAdmin = 'SuperAdmin',
-    Admin = 'Admin',
-    Agent = 'Agent',
-    Author = 'Author',
-    User = 'User',
-}
+
 
 
 export interface ObjectID {
@@ -38,7 +32,7 @@ export interface User {
 
     avatar?: StorageFile | string | null;
 
-    roles: UserRoleEnum[];
+    roles: string[];
 
     active: boolean;
     verified: boolean;
@@ -73,6 +67,64 @@ export interface Office {
     // 
     members?: User[] | string[];
 }
+
+
+
+
+export interface Estate {
+    _id?: string;
+
+    title: string;
+    content?: string;
+    excerpt?: string;
+    slug: string;
+
+    image?: StorageFile | string;
+
+    status: string;
+    visibility: string;
+    password: string;
+    pinned: boolean;
+
+    publishedAt: Date;
+
+    tags: string[];
+    categories: string[];
+
+
+    code: string;
+
+    province?: string;
+    city?: string;
+    district?: string;
+    quarter?: string;
+    alley?: string;
+    address?: string;
+    location?: [number, number];
+
+    price: number;
+    totalPrice: number;
+
+    description: string;
+
+    gallery?: StorageFile | string;
+
+    canBarter: boolean;
+
+    area: number;
+    documentType: string[];
+    features: string[];
+    constructionYear: number;
+
+    roomsCount: number;
+    mastersCount: number;
+    buildingArea: number;
+    floorsCount: number;
+    unitsCount: number;
+    floor: number;
+
+    withOldBuilding: boolean;
+};
 
 
 

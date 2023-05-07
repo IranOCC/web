@@ -231,7 +231,7 @@ const PanelSideBar = () => {
 
   return (
     <ClickAwayListener onClickAway={() => setOpenSubMenu(null)}>
-      <aside className="fixed h-full flex z-20">
+      <aside className="fixed h-full flex z-30">
         <MainMenu
           //
           itemOpen={isOpenSubMenu}
