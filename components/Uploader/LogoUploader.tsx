@@ -3,10 +3,11 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { message, Modal, Spin, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
-import { Controller } from "react-hook-form";
+import { Controller, ControllerRenderProps, FieldValues } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { StorageFile } from "@/types/interfaces";
 import Loading from "../Loading";
+import { Session } from "next-auth";
 
 const beforeUpload = (file: RcFile) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -21,7 +22,7 @@ const beforeUpload = (file: RcFile) => {
 };
 
 const LogoUploader = (props: IProps) => {
-  const { name, control, defaultValue, disabled, loading, label, noSpace, containerClassName = "", error, warning, success, uploadPath } = props;
+  const { name, control, defaultValue, disabled = false, loading = false, label, noSpace, containerClassName = "", error, warning, success, uploadPath } = props;
   let { status, helperText } = props;
 
   const { data: session } = useSession();
@@ -49,62 +50,92 @@ const LogoUploader = (props: IProps) => {
     <>
       <div className={"w-full relative z-10 flex flex-col items-center justify-center" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
         <Controller
-          render={({ field }) => {
-            const [fileListState, setFileListState] = useState<UploadFile[]>([]);
-
-            useEffect(() => {
-              if (!field.value) {
-                setFileListState([]);
-                return;
-              }
-              const item = field.value as StorageFile;
-              const gg = {
-                uid: item._id,
-                name: item.alt,
-                url: process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + item.path,
-                status: "done",
-              } as UploadFile;
-              setFileListState([gg]);
-            }, [field.value]);
-
-            return (
-              <>
-                <Upload
-                  //
-                  accept="image/*"
-                  name="file"
-                  headers={{ Authorization: `Bearer ${session?.accessToken}` }}
-                  action={process.env.NEXT_PUBLIC_BASE_URL + "/storage/" + uploadPath}
-                  listType="picture-circle"
-                  className="logo-uploader"
-                  multiple={false}
-                  showUploadList={{ showRemoveIcon: true, showPreviewIcon: false }}
-                  fileList={fileListState}
-                  onChange={({ fileList, file, event }) => {
-                    setFileListState(fileList);
-                    if (file.status === "removed") {
-                      field.onChange(undefined);
-                    } else if (file.status === "done") {
-                      setTimeout(() => {
-                        field.onChange(file.response);
-                      }, 1000);
-                    }
-                  }}
-                  beforeUpload={beforeUpload}
-                  maxCount={1}
-                  disabled={disabled || loading}
-                >
-                  {!!fileListState?.length ? null : <div>{label}</div>}
-                </Upload>
-              </>
-            );
-          }}
+          render={({ field }) => (
+            <FieldComponent
+              //
+              field={field}
+              disabled={disabled}
+              loading={loading}
+              session={session}
+              label={label}
+              uploadPath={uploadPath}
+            />
+          )}
           defaultValue={defaultValue}
           name={name}
           control={control}
         />
         {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
       </div>
+    </>
+  );
+};
+
+type FieldComponentType = {
+  field: ControllerRenderProps<FieldValues, string>;
+  disabled: boolean;
+  loading: boolean;
+  label?: string;
+  session: Session | null;
+  uploadPath: string;
+};
+
+const FieldComponent = (props: FieldComponentType) => {
+  const {
+    //
+    label,
+    field,
+    session,
+    uploadPath,
+    disabled,
+    loading,
+  } = props;
+
+  const [fileListState, setFileListState] = useState<UploadFile[]>([]);
+  useEffect(() => {
+    if (!field.value) {
+      setFileListState([]);
+      return;
+    }
+    const item = field.value as StorageFile;
+    const gg = {
+      uid: item._id,
+      name: item.alt,
+      url: process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + item.path,
+      status: "done",
+    } as UploadFile;
+    setFileListState([gg]);
+  }, [field.value]);
+
+  return (
+    <>
+      <Upload
+        //
+        accept="image/*"
+        name="file"
+        headers={{ Authorization: `Bearer ${session?.accessToken}` }}
+        action={process.env.NEXT_PUBLIC_BASE_URL + "/storage/" + uploadPath}
+        listType="picture-circle"
+        className="logo-uploader"
+        multiple={false}
+        showUploadList={{ showRemoveIcon: true, showPreviewIcon: false }}
+        fileList={fileListState}
+        onChange={({ fileList, file, event }) => {
+          setFileListState(fileList);
+          if (file.status === "removed") {
+            field.onChange(undefined);
+          } else if (file.status === "done") {
+            setTimeout(() => {
+              field.onChange(file.response);
+            }, 1000);
+          }
+        }}
+        beforeUpload={beforeUpload}
+        maxCount={1}
+        disabled={disabled || loading}
+      >
+        {!!fileListState?.length ? null : <div>{label}</div>}
+      </Upload>
     </>
   );
 };
