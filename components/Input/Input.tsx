@@ -93,7 +93,7 @@ const Input = (props: IProps) => {
                         Array.isArray(field.value)
                           ? field.value?.map((label: string, index: number) => {
                               return (
-                                <span className="cursor-default bg-blue-500 text-white px-2 rounded flex justify-center items-center">
+                                <span key={index} className="cursor-default bg-blue-500 text-white px-2 rounded flex justify-center items-center">
                                   {label}
                                   <div className="text-slate-100 hover:text-slate-300 ps-3 cursor-pointer" onClick={() => removeItem(index)}>
                                     ×
