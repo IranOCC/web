@@ -36,8 +36,8 @@ const Side = ({ form, loading }: AddEditComponentProps) => {
   const { getValues } = form;
   return (
     <>
-      <SendSmsBox officeID={getValues("_id")} to={getValues("phone.value")} />
-      <SendEmailBox officeID={getValues("_id")} to={getValues("email.value")} />
+      <SendSmsBox officeID={getValues("_id")} to={getValues("_id") && getValues("phone.value")} />
+      <SendEmailBox officeID={getValues("_id")} to={getValues("_id") && getValues("email.value")} />
     </>
   );
 };

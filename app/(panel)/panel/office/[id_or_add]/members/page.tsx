@@ -4,7 +4,7 @@ import PanelTable from "@/components/@panel/Table";
 import Loading from "@/components/Loading";
 import { axiosAuth } from "@/lib/axios";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { Phone, Email, User, Office } from "@/types/interfaces";
+import { OfficeMember } from "@/types/interfaces";
 import { Popconfirm, Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useSession } from "next-auth/react";
@@ -16,8 +16,9 @@ import { toast } from "@/lib/toast";
 import Modal from "@/components/Modals";
 import { Button } from "@/components/Button";
 import { Select } from "@/components/Select";
+import OfficeAddMembersModal from "@/components/@panel/Features/Office/OfficeAddMembersModal";
 
-const columns: ColumnsType<User> = [
+const columns: ColumnsType<OfficeMember> = [
   {
     title: "نام",
     dataIndex: "fullName",
@@ -25,10 +26,15 @@ const columns: ColumnsType<User> = [
       return (
         <div className="flex items-center">
           {record.verified && <VerifiedIcon className="text-blue-600" fontSize="small" />}
-          <span className="ms-1">{fullName}</span>
+          <span className="mx-1">{fullName}</span>
+          {record.isManagement && <Tag color="#389e0d">مدیر</Tag>}
         </div>
       );
     },
+    sorter: {
+      compare: (a, b) => (a.isManagement ? 1 : 0),
+    },
+    defaultSortOrder: "descend",
   },
   {
     title: "شماره",
@@ -73,7 +79,7 @@ export default function Page() {
   const ID = id_or_add;
 
   const api = useAxiosAuth();
-  const kickFromOffice = async (members: User[] | string[] | User | string) => {
+  const removeMember = async (members: string[] | string) => {
     try {
       await api.delete(`office/${ID}/member`, { params: { members } });
       toast.success("با موفقیت حذف گردید");
@@ -84,17 +90,18 @@ export default function Page() {
   };
 
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const addToOffice = async (members: User[] | string[] | User | string) => {
+  const addMember = async (members: string[]) => {
     try {
       await api.post(`/office/${ID}/member`, members);
       toast.success("با موفقیت اضافه گردید");
+      window.location.href = window.location.pathname;
     } catch (error) {}
   };
 
   return (
     <>
       <div className="p-4">
-        <PanelTable<User>
+        <PanelTable<OfficeMember>
           //
           endpoint={`office/${ID}/member`}
           headerTitle={() => (
@@ -108,35 +115,20 @@ export default function Page() {
             {
               key: "kick",
               label: (
-                <Popconfirm title="حذف شود؟" okText="بله" cancelText="خیر" okType="link" onConfirm={() => kickFromOffice(id)}>
+                <Popconfirm title="حذف شود؟" okText="بله" cancelText="خیر" okType="link" onConfirm={() => removeMember(id)}>
                   <a>حذف از آفیس</a>
                 </Popconfirm>
               ),
             },
           ]}
         />
-        <Modal
-          //
-          title="افزودن عضو"
-          open={addModalOpen}
-          setOpen={setAddModalOpen}
-        >
-          <Select
-            //
-            control={null}
-            name="members"
-            // error={errors.users?.message}
-            // loading={isSubmitting}
-            placeholder="انتخاب کنید"
-            apiPath="/user/assignList"
-            searchable
-            noSpace
-            multiple
-            // tagsMode
-            containerClassName="col-span-full"
-          />
-        </Modal>
       </div>
+      <OfficeAddMembersModal
+        //
+        open={addModalOpen}
+        setOpen={setAddModalOpen}
+        addMember={addMember}
+      />
     </>
   );
 }

@@ -13,17 +13,18 @@ import { handleFieldsError } from "@/lib/axios";
 
 type IProps = {
   Center: any;
-  Side: any;
+  Side?: any;
   endpoint: string;
   form: any;
   setInitialData: (data: any) => void;
 };
 
-export default function EditAddPage<F extends FieldValues, T>({ Center, Side, endpoint, form, setInitialData }: IProps) {
+export default function EditAddPage<F extends FieldValues, T>({ Center, Side = null, endpoint, form, setInitialData }: IProps) {
   const params = useParams();
-  const id_or_add = params?.id_or_add as string;
-  const isNew = id_or_add === "add";
-  const ID = isNew ? undefined : id_or_add;
+
+  const SECTION = !!params?.section ? (params.section as string) : undefined;
+  const isNew = !!params?.id_or_add && (params?.id_or_add as string) === "add";
+  const ID = isNew ? undefined : (params?.id_or_add as string);
 
   const {
     register,
@@ -42,7 +43,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side, en
 
   // submit
   const onSubmit =
-    (redirect: boolean = true) =>
+    (redirect: boolean = SECTION ? false : true) =>
     async (data: F) => {
       const _dirtyFields = Object.fromEntries(
         Object.keys(dirtyFields).map((key) => {
@@ -56,7 +57,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side, en
           if (redirect) router.replace(`/panel/${endpoint}`);
           else router.replace(`/panel/${endpoint}/` + result._id);
         } else {
-          await api.patch(`/${endpoint}/` + ID, _dirtyFields);
+          await api.patch(`/${endpoint}/` + (SECTION || ID), _dirtyFields);
           toast.success("با موفقیت ویرایش شد");
           if (redirect) router.replace(`/panel/${endpoint}`);
           else window.location.reload();
@@ -70,7 +71,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side, en
   const getData = async () => {
     setDataLoading(true);
     try {
-      const response = await api.get(`/${endpoint}/` + ID);
+      const response = await api.get(`/${endpoint}/` + (SECTION || ID));
       const data = response.data as F;
       setInitialData(data);
       setDataLoading(false);
@@ -89,18 +90,20 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side, en
         <form onSubmit={handleSubmit(onSubmit())} />
         <div className="grid grid-cols-6 gap-4">
           <div className="col-span-full	lg:col-span-4">
-            <Center form={form} loading={dataLoading} />
+            <Center form={form} loading={dataLoading} section={SECTION} />
           </div>
           <div className="col-span-full lg:col-span-2">
             <div className="grid grid-cols-1 gap-4">
               <PanelCard>
-                <Button
-                  //
-                  title="ثبت و برگشت به لیست"
-                  type="submit"
-                  loading={isSubmitting || isLoading || isValidating || dataLoading}
-                  onClick={handleSubmit(onSubmit())}
-                />
+                {!SECTION && (
+                  <Button
+                    //
+                    title="ثبت و برگشت به لیست"
+                    type="submit"
+                    loading={isSubmitting || isLoading || isValidating || dataLoading}
+                    onClick={handleSubmit(onSubmit())}
+                  />
+                )}
                 <Button
                   //
                   title="ثبت"
@@ -110,7 +113,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side, en
                   noSpace
                 />
               </PanelCard>
-              <Side form={form} loading={dataLoading} />
+              {Side && <Side form={form} loading={dataLoading} />}
             </div>
           </div>
         </div>
@@ -122,4 +125,5 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side, en
 export type AddEditComponentProps = {
   form: any;
   loading: boolean;
+  section?: string;
 };

@@ -80,8 +80,7 @@ export type OfficeFormData = {
 };
 
 export type OfficeAddMemberFormData = {
-    users: User[] | string[];
-    office: Office | string;
+    members: string[];
 };
 
 

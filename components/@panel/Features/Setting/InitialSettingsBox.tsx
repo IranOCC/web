@@ -1,16 +1,11 @@
-import { Button } from "@/components/Button";
-import { CheckBox, Input } from "@/components/Input";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { toast } from "@/lib/toast";
-import { InitialSettingsFormData, UserFormData } from "@/types/formsData";
+import { Input } from "@/components/Input";
+import { InitialSettingsFormData } from "@/types/formsData";
 import { useEffect } from "react";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
-import LogoUploader from "@/components/Uploader/LogoUploader";
 
-export default function InitialSettings({ form }: any) {
+export default function InitialSettingsBox({ form, loading }: { form: any; loading?: boolean }) {
   const {
     register,
     unregister,
@@ -26,12 +21,12 @@ export default function InitialSettings({ form }: any) {
   useEffect(() => {
     register("title", { required: "عنوان را وارد کنید" });
     register("description", { required: "توضیحات را وارد کنید" });
-    register("keywords", { required: "کلمات کلیدی را وارد کنید" });
+    register("keywords");
   }, []);
 
   return (
     <>
-      <PanelCard title="تنظیمات اولیه">
+      <PanelCard title="تنظیمات اولیه" loading={loading}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
           <Input
             //
@@ -51,19 +46,22 @@ export default function InitialSettings({ form }: any) {
             error={errors.description?.message}
             loading={isSubmitting}
             multiline
+            noResize
             lines={3}
             noSpace
+            // containerClassName="col-span-full"
           />
           <Input
             //
             control={control}
             name="keywords"
             label="کلمات کلیدی"
+            placeholder="تایپ + اینتر"
             error={errors.keywords?.message}
             loading={isSubmitting}
-            multiline
-            lines={3}
+            tagsMode
             noSpace
+            // containerClassName="col-span-full"
           />
         </div>
       </PanelCard>

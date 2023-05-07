@@ -8,31 +8,7 @@ import ArrowDownIcon from "../Icons/ArrowDown";
 import SearchIcon from "../Icons/Search";
 
 const Select = (props: IProps) => {
-  const {
-    name,
-    control,
-    defaultValue = "",
-    className = "",
-    label,
-    placeholder,
-    icon,
-    disabled = false,
-    loading = false,
-    readOnly = false,
-    error,
-    warning,
-    success,
-    direction,
-    noSpace,
-    size = "default",
-    items,
-    apiPath,
-    searchable,
-    multiple,
-    showTitle = false,
-    containerClassName = "",
-    tagsMode = false,
-  } = props;
+  const { name, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", items, apiPath, searchable, multiple, showTitle = false, containerClassName = "" } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -111,10 +87,6 @@ const Select = (props: IProps) => {
     setDataLoading(false);
   }, [open]);
 
-  const DataInput = ({ type, ...props }: any) => {
-    if (type === "textarea") return <textarea {...props} />;
-    return <input {...props} />;
-  };
   return (
     <div className={"w-full relative z-20" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
       {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
@@ -127,6 +99,7 @@ const Select = (props: IProps) => {
                 multiple ? dataList.filter((item) => field.value.includes(item.value)) : dataList.filter((item) => item.value === field.value)[0]
                 //
               );
+
               return (
                 <ClickAwayListener
                   onClickAway={() => {
@@ -134,8 +107,8 @@ const Select = (props: IProps) => {
                   }}
                 >
                   <div>
-                    <DataInput
-                      type={tagsMode ? "textarea" : "input"}
+                    <input
+                      type="text"
                       disabled={disabled || loading || dataLoading}
                       placeholder={placeholder}
                       readOnly={true}
@@ -161,10 +134,14 @@ const Select = (props: IProps) => {
                             (objectValue as DataType)?.title
                       }
                       onFocus={(e: any) => setOpen(true)}
+                      onClick={() => {
+                        setOpen(!open);
+                      }}
                       // onBlur={(e) => {
                       //   if (!multiple) setOpen(false);
                       // }}
                     />
+
                     <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg">
                       {({ TransitionProps, placement }) => (
                         <Grow
@@ -287,7 +264,6 @@ export type IProps = {
   direction?: "ltr" | "rtl";
   noSpace?: boolean;
 
-  tagsMode?: boolean;
   multiple?: boolean;
   showTitle?: boolean;
   searchable?: boolean;

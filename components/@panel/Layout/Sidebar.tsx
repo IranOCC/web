@@ -198,13 +198,18 @@ const menuItems: MenuItemType[] = [
         href: "initial",
         subtitle: "",
       },
+      {
+        title: "تنظیمات فوتر",
+        href: "footer",
+        subtitle: "",
+      },
     ],
   },
 ];
 
 const PanelSideBar = () => {
   const pathname = usePathname();
-  const [isOpenSubMenu, setOpenSubMenu] = useState<string | null>(null);
+  const [isOpenSubMenu, setOpenSubMenu] = useState<string | null>(pathname?.split("/")?.[2] || null);
   const [lastOpenedItem, setLastOpenedItem] = useState<MenuItemType>(menuItems[0]);
 
   const item = menuItems.find(({ href }) => {
@@ -227,8 +232,18 @@ const PanelSideBar = () => {
   return (
     <ClickAwayListener onClickAway={() => setOpenSubMenu(null)}>
       <aside className="fixed h-full flex z-20">
-        <MainMenu handleOpenSubMenu={handleOpenSubMenu} />
-        <SubMenu open={item !== undefined} parentPath={lastOpenedItem.href} title={lastOpenedItem.title} sub={lastOpenedItem.sub} />
+        <MainMenu
+          //
+          itemOpen={isOpenSubMenu}
+          handleOpenSubMenu={handleOpenSubMenu}
+        />
+        <SubMenu
+          //
+          open={item !== undefined}
+          parentPath={lastOpenedItem.href}
+          title={lastOpenedItem.title}
+          sub={lastOpenedItem.sub}
+        />
       </aside>
     </ClickAwayListener>
   );
@@ -238,16 +253,34 @@ export default PanelSideBar;
 
 // ===> main menu
 
-const MainMenu = ({ handleOpenSubMenu }: any) => {
+const MainMenu = ({ handleOpenSubMenu, itemOpen }: any) => {
   return (
     <div className="relative z-10 overflow-x-hidden flex flex-col items-center w-16 h-full py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
       {menuItems.map(({ sub, title, icon, href }, index) => {
         let onOpen = undefined;
         if (sub.length > 0) onOpen = () => handleOpenSubMenu(href);
-        return <MainMenuItem title={title} icon={icon} key={index} href={href} onClick={onOpen} />;
+        return (
+          <MainMenuItem
+            //
+            title={title}
+            icon={icon}
+            key={index}
+            href={href}
+            onClick={onOpen}
+            highlight={itemOpen === href}
+            highlightClass="text-gray-500 bg-gray-100"
+          />
+        );
       })}
       <div className="h-full" />
-      <MainMenuItem title="حساب کاربری من" href="profile" icon={<UserIcon />} highlight highlightClass="text-yellow-600 bg-yellow-100 dark:text-yellow-300 dark:bg-gray-800" />
+      <MainMenuItem
+        //
+        title="حساب کاربری من"
+        href="profile"
+        icon={<UserIcon />}
+        highlight
+        highlightClass="text-yellow-600 bg-yellow-100 dark:text-yellow-300 dark:bg-gray-800"
+      />
     </div>
   );
 };

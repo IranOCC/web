@@ -3,7 +3,32 @@ import { Controller } from "react-hook-form";
 import { Button } from "../Button";
 
 const Input = (props: IProps) => {
-  const { name, multiline, lines, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, type = "text", error, warning, success, direction, noSpace, maxLength, innerSubmitBtn, size = "default", containerClassName = "" } = props;
+  const {
+    name,
+    multiline,
+    lines,
+    control,
+    defaultValue = "",
+    className = "",
+    label,
+    placeholder,
+    icon,
+    disabled = false,
+    loading = false,
+    readOnly = false,
+    type = "text",
+    error,
+    warning,
+    success,
+    direction,
+    noSpace,
+    maxLength,
+    innerSubmitBtn,
+    size = "default",
+    containerClassName = "",
+    tagsMode,
+    noResize = false,
+  } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -46,52 +71,65 @@ const Input = (props: IProps) => {
   if (innerSubmitBtn) {
     inputClass += " ltr:pl-32 rtl:pl-32";
   }
+
+  const _className = `${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-100"} rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className} `;
   return (
     <div className={"w-full relative z-10" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
       {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
       <div className="w-full relative">
         <Controller
           render={({ field }) => {
+            if (tagsMode)
+              return (
+                <>
+                  <div className={_className} dir={direction}>
+                    <div className="flex flex-wrap gap-1">
+                      <input
+                        //
+                        className={`bg-transparent ${disabled ? "cursor-not-allowed" : ""} text-gray-900 outline-none focus:outline-none block flex-1 min-w-0 w-full text-sm border-none`}
+                        disabled={disabled || loading}
+                        placeholder={placeholder}
+                        readOnly={readOnly || loading}
+                      />
+                    </div>
+                  </div>
+                </>
+              );
             if (multiline)
               return (
                 <textarea
+                  //
                   rows={lines || 4}
                   disabled={disabled || loading}
                   placeholder={placeholder}
                   readOnly={readOnly || loading}
                   maxLength={maxLength}
-                  className={`placeholder:text-left
-              ${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-100"}
-              rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg
-              placeholder:text-start
-              border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className}
-              `}
+                  className={_className}
+                  style={{ resize: noResize ? "none" : "vertical", minHeight: "42px" }}
                   dir={direction}
                   {...field}
                 />
               );
-            return (
-              <input
-                type={type}
-                disabled={disabled || loading}
-                placeholder={placeholder}
-                readOnly={readOnly || loading}
-                maxLength={maxLength}
-                className={`placeholder:text-left
-              ${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-100"}
-              rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg
-              placeholder:text-start
-              border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className}
-              `}
-                dir={direction}
-                {...field}
-              />
-            );
+            else
+              return (
+                <input
+                  //
+                  type={type}
+                  disabled={disabled || loading}
+                  placeholder={placeholder}
+                  readOnly={readOnly || loading}
+                  maxLength={maxLength}
+                  className={_className}
+                  dir={direction}
+                  {...field}
+                />
+              );
           }}
           defaultValue={defaultValue}
           name={name}
           control={control}
         />
+
         {innerSubmitBtn && (
           <div className={`end-0 h-full absolute top-0 flex items-center justify-center p-2`}>
             <Button type="submit" title={innerSubmitBtn} noSpace size={"small"} className="h-full" loading={loading} disabled={disabled} />
@@ -117,10 +155,12 @@ export type IProps = {
   icon?: ReactNode;
   multiline?: boolean;
   lines?: number;
+  noResize?: boolean;
 
   disabled?: boolean;
   readOnly?: boolean;
   loading?: boolean;
+  tagsMode?: boolean;
 
   direction?: "ltr" | "rtl";
   noSpace?: boolean;

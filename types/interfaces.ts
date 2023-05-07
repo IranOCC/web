@@ -45,6 +45,11 @@ export interface User {
 }
 
 
+export interface OfficeMember extends User {
+    isManagement?: boolean;
+}
+
+
 export interface Office {
     _id: string;
     name: string;
