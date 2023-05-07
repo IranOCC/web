@@ -26,7 +26,7 @@ export default function Page() {
   const setInitialData = (data: InitialSettingsFormData) => {
     setValue("title", data.title);
     setValue("description", data.description);
-    setValue("keywords", data.keywords);
+    setValue("keywords", data.keywords || []);
   };
   return (
     <>

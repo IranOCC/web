@@ -79,17 +79,53 @@ const Input = (props: IProps) => {
       <div className="w-full relative">
         <Controller
           render={({ field }) => {
+            const removeItem = (index: number) => {
+              field.value.splice(index, 1);
+              field.onChange([...field.value]);
+            };
             if (tagsMode)
               return (
                 <>
                   <div className={_className} dir={direction}>
                     <div className="flex flex-wrap gap-1">
+                      {
+                        //
+                        Array.isArray(field.value)
+                          ? field.value?.map((label: string, index: number) => {
+                              return (
+                                <span className="cursor-default bg-blue-500 text-white px-2 rounded flex justify-center items-center">
+                                  {label}
+                                  <div className="text-slate-100 hover:text-slate-300 ps-3 cursor-pointer" onClick={() => removeItem(index)}>
+                                    ×
+                                  </div>
+                                </span>
+                              );
+                            })
+                          : null
+                        //
+                      }
                       <input
                         //
-                        className={`bg-transparent ${disabled ? "cursor-not-allowed" : ""} text-gray-900 outline-none focus:outline-none block flex-1 min-w-0 w-full text-sm border-none`}
+                        className={`bg-transparent ${disabled ? "cursor-not-allowed" : ""} text-gray-900 outline-none focus:outline-none block flex-1 w-full text-sm border-none min-w-[100px]`}
                         disabled={disabled || loading}
                         placeholder={placeholder}
                         readOnly={readOnly || loading}
+                        // onChange={(e) => {
+                        //   if(e.key === "Enter")
+                        // }}
+                        onKeyDown={(e) => {
+                          // @ts-ignore
+                          if (e.key === "Enter" && e.target?.value) {
+                            // @ts-ignore
+                            field.onChange([...field.value, e.target.value]);
+                            // @ts-ignore
+                            e.target.value = "";
+                          }
+                          // @ts-ignore
+                          if ((e.key === "Backspace" || e.key === "Delete") && !e.target?.value) {
+                            removeItem(field.value.length - 1);
+                          }
+                        }}
                       />
                     </div>
                   </div>
