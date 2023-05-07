@@ -39,6 +39,7 @@ export default function PhoneNumberBox({ form, loading }: { form: any; loading?:
           control={control}
           name="phone.value"
           label="شماره"
+          // @ts-ignore
           error={errors?.phone?.value?.message}
           loading={isSubmitting}
           direction="ltr"
@@ -49,6 +50,7 @@ export default function PhoneNumberBox({ form, loading }: { form: any; loading?:
           control={control}
           name="phone.verified"
           label="تایید شده"
+          // @ts-ignore
           error={errors?.phone?.verified?.message}
           loading={isSubmitting}
           noSpace

@@ -39,6 +39,7 @@ export default function EmailAddressBox({ form, loading }: { form: any; loading?
           control={control}
           name="email.value"
           label="آدرس ایمیل"
+          // @ts-ignore
           error={errors?.email?.value?.message}
           loading={isSubmitting}
           direction="ltr"
@@ -48,6 +49,7 @@ export default function EmailAddressBox({ form, loading }: { form: any; loading?
           control={control}
           name="email.verified"
           label="تایید شده"
+          // @ts-ignore
           error={errors?.email?.verified?.message}
           loading={isSubmitting}
           noSpace
