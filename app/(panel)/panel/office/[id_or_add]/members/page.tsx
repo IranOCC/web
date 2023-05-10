@@ -106,7 +106,7 @@ export default function Page() {
           endpoint={`office/${ID}/member`}
           headerTitle={() => (
             <div className="flex justify-between items-center w-full">
-              <h1 className="font-medium text-lg">لیست اعضای شعبه</h1>
+              <div className="text-base font-semibold">لیست اعضای شعبه</div>
               <Button onClick={() => setAddModalOpen(true)} title="افزودن عضو" fill={false} noSpace />
             </div>
           )}

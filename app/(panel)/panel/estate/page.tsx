@@ -72,16 +72,10 @@ export default function Page() {
         <PanelTable<Office>
           //
           endpoint="estate"
-          headerTitle={() => <h1 className="font-medium text-lg">لیست املاک</h1>}
+          headerTitle={() => <div className="text-base font-semibold">لیست املاک</div>}
           columns={columns}
           deletable
           editable
-          // extraOperations={(id: string) => [
-          //   {
-          //     key: "members",
-          //     label: <Link href={`/panel/office/${id}/members`}>مدیریت اعضا</Link>,
-          //   },
-          // ]}
         />
       </div>
     </>

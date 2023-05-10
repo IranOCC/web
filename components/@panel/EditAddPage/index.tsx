@@ -45,19 +45,14 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
   const onSubmit =
     (redirect: boolean = SECTION ? false : true) =>
     async (data: F) => {
-      const _dirtyFields = Object.fromEntries(
-        Object.keys(dirtyFields).map((key) => {
-          return [key, data[key as keyof F]];
-        })
-      );
       try {
         if (isNew) {
-          const { data: result } = await api.post(`/${endpoint}`, _dirtyFields);
+          const { data: result } = await api.post(`/${endpoint}`, data);
           toast.success("با موفقیت ایجاد شد");
           if (redirect) router.replace(`/panel/${endpoint}`);
           else router.replace(`/panel/${endpoint}/` + result._id);
         } else {
-          await api.patch(`/${endpoint}/` + (SECTION || ID), _dirtyFields);
+          await api.patch(`/${endpoint}/` + (SECTION || ID), data);
           toast.success("با موفقیت ویرایش شد");
           if (redirect) router.replace(`/panel/${endpoint}`);
           else window.location.reload();
@@ -81,7 +76,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
   };
 
   useEffect(() => {
-    if (!isNew) getData();
+    if (ID) getData();
   }, []);
 
   return (
@@ -126,4 +121,5 @@ export type AddEditComponentProps = {
   form: any;
   loading: boolean;
   section?: string;
+  cancelForm?: any;
 };

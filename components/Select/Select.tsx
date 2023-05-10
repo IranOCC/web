@@ -8,7 +8,7 @@ import ArrowDownIcon from "../Icons/ArrowDown";
 import SearchIcon from "../Icons/Search";
 
 const Select = (props: IProps) => {
-  const { name, control, defaultValue = "", className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", items, apiPath, searchable, multiple, showTitle = false, containerClassName = "" } = props;
+  const { name, control, defaultValue, className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", items, apiPath, searchable, multiple, showTitle = false, containerClassName = "" } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -91,22 +91,23 @@ const Select = (props: IProps) => {
     disabled ? "cursor-not-allowed bg-gray-200" : "cursor-default bg-slate-100"
   } rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start pe-8 border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className}`;
 
+  if (!dataList) return null;
   return (
-    <ClickAwayListener
-      onClickAway={() => {
-        setOpen(false);
-      }}
-    >
-      <div className={"w-full relative z-20" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-        {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
+    <div className={"w-full relative" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+      {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
+
+      <ClickAwayListener
+        onClickAway={() => {
+          setOpen(false);
+        }}
+      >
         <div className="w-full relative" ref={anchorRef}>
-          {!!dataList && (
-            <Controller
-              //
-              render={({ field }) => (
+          <Controller
+            //
+            render={({ field }) => {
+              return (
                 <FieldComponent
                   //
-                  // {...{ dataList, setOpen, open, dataLoading, anchorRef, field, placeholder, disabled, loading, direction, searchable, multiple, showTitle, search, setSearch }}
                   dataList={dataList}
                   setOpen={setOpen}
                   open={open}
@@ -124,21 +125,22 @@ const Select = (props: IProps) => {
                   setSearch={setSearch}
                   className={_className}
                 />
-              )}
-              defaultValue={defaultValue}
-              name={name}
-              control={control}
-            />
-          )}
+              );
+            }}
+            defaultValue={defaultValue}
+            name={name}
+            control={control}
+          />
 
           <span className={`absolute top-0 end-0 text-blue-600  flex items-center justify-center h-full me-2.5 text-md ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
             <ArrowDownIcon />
           </span>
           {icon && <span className={`absolute top-0 flex items-center justify-center h-full w-12 text-sm${iconClass} border-e${bordersClass}`}>{icon}</span>}
         </div>
-        {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
-      </div>
-    </ClickAwayListener>
+      </ClickAwayListener>
+
+      {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
+    </div>
   );
 };
 
@@ -183,12 +185,36 @@ const FieldComponent = (props: FieldComponentType) => {
     setSearch,
   } = props;
 
-  const [objectValue, setObjectValue] = useState<DataType[] | DataType>(
-    //
-    multiple ? dataList.filter((item) => field.value.includes(item.value)) : dataList.filter((item) => item.value === field.value)[0]
-    //
+  const [objectValue, setObjectValue] = useState<DataType[] | DataType | undefined>(
+    multiple
+      ? //
+        dataList.filter((item) => field.value.includes(item.value)) || ([] as DataType[])
+      : //
+        dataList.filter((item) => item.value === field.value)[0] || undefined
   );
 
+  useEffect(() => {
+    setObjectValue(
+      multiple
+        ? //
+          dataList.filter((item) => field.value.includes(item.value)) || ([] as DataType[])
+        : //
+          dataList.filter((item) => item.value === field.value)[0] || undefined
+    );
+  }, [field.value]);
+
+  const _value = multiple
+    ? //
+      showTitle
+      ? (objectValue as DataType[]).map((item: DataType) => item.title).join(", ")
+      : //
+      !!(objectValue as DataType[])?.length
+      ? (objectValue as DataType[]).length + " مورد انتخاب شده"
+      : ""
+    : //
+    objectValue
+    ? (objectValue as DataType)?.title
+    : "";
   return (
     <div>
       <input
@@ -199,93 +225,84 @@ const FieldComponent = (props: FieldComponentType) => {
         className={className}
         dir={direction}
         name={field.name}
-        value={
-          multiple
-            ? //
-              showTitle
-              ? (objectValue as DataType[]).map((item: DataType) => item.title).join(", ")
-              : //
-              !!(objectValue as DataType[]).length
-              ? (objectValue as DataType[]).length + " مورد انتخاب شده"
-              : ""
-            : //
-              (objectValue as DataType)?.title
-        }
-        // onFocus={(e: any) => setOpen(true)}
+        value={_value}
         onClick={() => {
           setOpen(!open);
         }}
+        // onFocus={(e: any) => setOpen(true)}
         // onBlur={(e) => {
         //   if (!multiple) setOpen(false);
         // }}
       />
-      <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg">
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin: "right top",
-            }}
-          >
-            <Paper style={{ boxShadow: "none" }}>
-              <div className="z-10 relative bg-white w-full border border-gray-300  mt-1">
-                {searchable ? (
-                  <div className="w-full relative flex items-center">
-                    <input
-                      //
-                      type="text"
-                      disabled={disabled || loading}
-                      placeholder="جستجو ..."
-                      className={`w-full placeholder:text-gray-400 bg-white focus:bg-white p-2.5 text-gray-900 focus:ring-0 block text-sm border-b focus:border-gray-300 border-gray-300 border-0`}
-                      dir={direction}
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <div className="absolute left-2.5 cursor-pointer text-blue-600">
-                      <SearchIcon />
-                    </div>
-                  </div>
-                ) : null}
-                <ul className="text-sm text-gray-700 dark:text-gray-200 max-h-60 overflow-x-hidden">
-                  {dataList.map(({ title, value }, _index) => {
-                    return (
-                      <SelectOption
+      {!!dataList && (
+        <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg z-20">
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin: "right top",
+              }}
+            >
+              <Paper style={{ boxShadow: "none" }}>
+                <div className="relative bg-white w-full border border-gray-300  mt-1">
+                  {searchable ? (
+                    <div className="w-full relative flex items-center">
+                      <input
                         //
-                        title={title}
-                        key={_index}
-                        selected={multiple ? field.value.includes(value) : value === field.value}
-                        onClick={() => {
-                          if (multiple) {
-                            let a = [];
-                            let b = [];
-                            if (field.value.includes(value)) {
-                              a = field.value.filter((item: any) => item !== value);
-                              b = (objectValue as DataType[]).filter((item: any) => item.value !== value);
-                            } else {
-                              a = [...field.value, value];
-                              b = [...(objectValue as DataType[]), { title, value }];
-                            }
-                            setObjectValue(b);
-                            field.onChange(a);
-                          } else {
-                            field.onChange(value);
-                            setObjectValue({ title, value });
-                            setOpen(false);
-                          }
-                        }}
+                        type="text"
+                        disabled={disabled || loading}
+                        placeholder="جستجو ..."
+                        className={`w-full placeholder:text-gray-400 bg-white focus:bg-white p-2.5 text-gray-900 focus:ring-0 block text-sm border-b focus:border-gray-300 border-gray-300 border-0`}
+                        dir={direction}
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                       />
-                    );
-                  })}
-                  {dataList.length === 0 && <SelectOption title="موردی پیدا نشد" key={-1} selected={false} />}
-                </ul>
-                <div className={"absolute bg-slate-50 opacity-70 w-full bottom-0 items-center justify-center" + (searchable ? " top-10" : "") + (dataLoading ? " flex" : " hidden")}>
-                  <Spin />
+                      <div className="absolute left-2.5 cursor-pointer text-blue-600">
+                        <SearchIcon />
+                      </div>
+                    </div>
+                  ) : null}
+                  <ul className="text-sm text-gray-700 dark:text-gray-200 max-h-60 overflow-x-hidden">
+                    {dataList.map(({ title, value }, _index) => {
+                      return (
+                        <SelectOption
+                          //
+                          title={title}
+                          key={_index}
+                          selected={multiple ? field.value.includes(value) : value === field.value}
+                          onClick={() => {
+                            if (multiple) {
+                              let a = [];
+                              let b = [];
+                              if (field.value.includes(value)) {
+                                a = field.value.filter((item: any) => item !== value);
+                                b = (objectValue as DataType[]).filter((item: any) => item.value !== value);
+                              } else {
+                                a = [...field.value, value];
+                                b = [...(objectValue as DataType[]), { title, value }];
+                              }
+                              // setObjectValue(b);
+                              field.onChange(a);
+                            } else {
+                              field.onChange(value);
+                              // setObjectValue({ title, value });
+                              setOpen(false);
+                            }
+                          }}
+                        />
+                      );
+                    })}
+                    {dataList.length === 0 && <SelectOption title="موردی پیدا نشد" key={-1} selected={false} />}
+                  </ul>
+                  <div className={"absolute bg-slate-50 opacity-70 w-full bottom-0 items-center justify-center" + (searchable ? " top-10" : "") + (dataLoading ? " flex" : " hidden")}>
+                    <Spin />
+                  </div>
                 </div>
-              </div>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+      )}
     </div>
   );
 };

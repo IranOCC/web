@@ -174,6 +174,11 @@ const menuItems: MenuItemType[] = [
         href: "",
         subtitle: "",
       },
+      {
+        title: "مدیریت آیکون ها",
+        href: "icon",
+        subtitle: "افزودن و مدیریت آیکون ها",
+      },
     ],
   },
   {

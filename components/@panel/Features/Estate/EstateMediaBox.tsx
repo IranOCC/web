@@ -28,39 +28,10 @@ export default function EstateMediaBox({ form, loading }: { form: any; loading?:
 
   return (
     <>
-      <PanelCard title="اطلاعات ملک" loading={loading}>
+      <PanelCard title="رسانه" loading={loading}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
-          <Input
-            //
-            control={control}
-            name="title"
-            label="عنوان ملک"
-            error={errors.title?.message}
-            loading={isSubmitting}
-            noSpace
-            containerClassName="col-span-full"
-          />
-          <Input
-            //
-            control={control}
-            name="excerpt"
-            label="چکیده"
-            error={errors.excerpt?.message}
-            loading={isSubmitting}
-            multiline
-            lines={4}
-            containerClassName="col-span-full"
-            noSpace
-          />
-          <TextEditor
-            //
-            control={control}
-            name="content"
-            label="توضیحات"
-            error={errors.content?.message}
-            loading={isSubmitting}
-            containerClassName="col-span-full"
-          />
+          {/*  */}
+          {/*  */}
         </div>
       </PanelCard>
     </>

@@ -15,6 +15,7 @@ import EstateTagsBox from "@/components/@panel/Features/Estate/EstateTagsBox";
 import EstateCategoriesBox from "@/components/@panel/Features/Estate/EstateCategoriesBox";
 import EstateFeaturesBox from "@/components/@panel/Features/Estate/EstateFeaturesBox";
 import EstateOwnerBox from "@/components/@panel/Features/Estate/EstateOwnerBox";
+import ListEditPage from "@/components/@panel/ListEditPage";
 
 const Center = ({ form, loading }: AddEditComponentProps) => {
   return (
@@ -76,13 +77,13 @@ export default function Page() {
   };
   return (
     <>
-      <EditAddPage<UserFormData, User>
+      <ListEditPage<UserFormData, User>
         //
         Center={Center}
         Side={Side}
         form={form}
         setInitialData={setInitialData}
-        endpoint="user"
+        endpoint="estate/document"
       />
     </>
   );

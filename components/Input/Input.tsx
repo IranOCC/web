@@ -8,7 +8,7 @@ const Input = (props: IProps) => {
     multiline,
     lines,
     control,
-    defaultValue = "",
+    defaultValue,
     className = "",
     label,
     placeholder,
@@ -86,7 +86,7 @@ const Input = (props: IProps) => {
             if (tagsMode)
               return (
                 <>
-                  <div className={_className} dir={direction}>
+                  <div className={_className} style={{ height: multiline ? (lines || 4) * 25.5 + "px" : "" }} dir={direction}>
                     <div className="flex flex-wrap gap-1">
                       {
                         //
@@ -106,18 +106,16 @@ const Input = (props: IProps) => {
                       }
                       <input
                         //
-                        className={`bg-transparent ${disabled ? "cursor-not-allowed" : ""} text-gray-900 outline-none focus:outline-none block flex-1 w-full text-sm border-none min-w-[100px]`}
+                        className={`bg-transparent ${disabled ? "cursor-not-allowed" : ""} text-gray-900 outline-none focus:outline-none block flex-1 w-full text-sm border-none min-w-[100px] ${inputClass}`}
                         disabled={disabled || loading}
                         placeholder={placeholder}
                         readOnly={readOnly || loading}
-                        // onChange={(e) => {
-                        //   if(e.key === "Enter")
-                        // }}
                         onKeyDown={(e) => {
                           // @ts-ignore
                           if (e.key === "Enter" && e.target?.value) {
+                            e.preventDefault();
                             // @ts-ignore
-                            field.onChange([...field.value, e.target.value]);
+                            field.onChange(field.value ? [...field.value, e.target.value] : [e.target.value]);
                             // @ts-ignore
                             e.target.value = "";
                           }
@@ -144,6 +142,7 @@ const Input = (props: IProps) => {
                   style={{ resize: noResize ? "none" : "vertical", minHeight: "42px" }}
                   dir={direction}
                   {...field}
+                  value={field.value || ""}
                 />
               );
             else
@@ -158,6 +157,7 @@ const Input = (props: IProps) => {
                   className={_className}
                   dir={direction}
                   {...field}
+                  value={field.value || ""}
                 />
               );
           }}

@@ -28,7 +28,7 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
 
   return (
     <>
-      <PanelCard title="ویژگی های عمومی ملک" loading={loading}>
+      <PanelCard title="ویژگی های عمومی" loading={loading}>
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 ">
           <Input
             //
@@ -38,7 +38,7 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             error={errors.area?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-2"
+            containerClassName="col-span-3"
           />
           <Input
             //
@@ -49,7 +49,7 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             error={errors.constructionYear?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-2"
+            containerClassName="col-span-3"
           />
           <Select
             //
@@ -62,19 +62,19 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             apiPath="/estate/documentType"
             searchable
             noSpace
-            containerClassName="col-span-2"
+            containerClassName="col-span-3"
           />
 
           <Input
             //
             control={control}
             name="area"
-            label="متراژ"
+            label="متراژ کل"
             type="number"
             error={errors.area?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-2"
+            containerClassName="col-span-3"
           />
           <Input
             //
@@ -84,7 +84,7 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             error={errors.area?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-2"
+            containerClassName="col-span-3"
           />
           <Input
             //
@@ -94,7 +94,19 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             error={errors.area?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-2"
+            containerClassName="col-span-3"
+          />
+          <Input
+            //
+            control={control}
+            name="description"
+            label="توضیحات اضافی"
+            error={errors.description?.message}
+            loading={isSubmitting}
+            noSpace
+            multiline
+            lines={4}
+            containerClassName="col-span-6"
           />
           <CheckBox //
             control={control}
@@ -103,7 +115,7 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             error={errors.canBarter?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-2"
+            containerClassName="col-span-3"
           />
         </div>
       </PanelCard>

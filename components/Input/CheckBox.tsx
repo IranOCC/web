@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const CheckBox = (props: IProps) => {
-  const { name, control, defaultValue = false, className = "", label, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", containerClassName = "" } = props;
+  const { name, control, defaultValue, className = "", label, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", containerClassName = "" } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -32,13 +32,8 @@ const CheckBox = (props: IProps) => {
     inputClass = " text-orange-500";
   }
 
-  // if (icon) inputClass += " ltr:pl-14 rtl:pr-14";
-  let sizeClass = " ";
-  // if (size === "small") sizeClass = " py-1.5";
-  // else if (size === "large") sizeClass = " py-4";
-
   return (
-    <div className={"w-full relative z-10" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+    <div className={"w-full relative z-10 flex items-end flex-col" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
       <div className={"w-full relative flex items-center "}>
         <Controller
           render={({ field }) => {
@@ -60,7 +55,7 @@ const CheckBox = (props: IProps) => {
                       if (disabled || readOnly) return;
                       field.onChange(!field.value);
                     }}
-                    className={`block ms-2 text-sm text-start font-medium text-gray-500 dark:text-white ${disabled ? "cursor-not-allowed" : "cursor-pointer"}${labelClass}`}
+                    className={`w-full block ms-2 text-sm text-start font-medium text-gray-500 dark:text-white ${disabled ? "cursor-not-allowed" : "cursor-pointer"}${labelClass}`}
                   >
                     {label}
                   </label>
@@ -74,7 +69,7 @@ const CheckBox = (props: IProps) => {
         />
       </div>
 
-      {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
+      {helperText && <p className={"w-full mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
     </div>
   );
 };

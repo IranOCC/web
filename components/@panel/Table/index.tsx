@@ -6,19 +6,20 @@ import { Form, Radio, Space, Switch, Table } from "antd";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import type { ExpandableConfig, TableRowSelection } from "antd/es/table/interface";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { DragEndEvent } from "@dnd-kit/core";
 import { DndContext } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { IconButton, Link } from "@mui/material";
+import { IconButton } from "@mui/material";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import { toast } from "@/lib/toast";
+import Link from "next/link";
 
 type TablePaginationPosition = "topLeft" | "topCenter" | "topRight" | "bottomLeft" | "bottomCenter" | "bottomRight";
 
-type IProps = {
+export type PanelTableProps = {
   headerTitle?: () => ReactNode;
   footerTitle?: () => ReactNode;
   data?: any[];
@@ -33,10 +34,10 @@ type IProps = {
   deletable?: boolean;
   editable?: boolean;
   extraOperations?: (id: string) => any[];
-  update?: boolean;
+  update?: any;
 };
 
-function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: IProps) {
+function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: PanelTableProps) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [dataSource, setDataSource] = useState(data?.length !== undefined ? data : []);
 
@@ -52,6 +53,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
   // ##############################################
   // ====> get data
   const pathname = usePathname();
+  const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
   const _search = searchParams?.get("search");
@@ -70,19 +72,18 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
   const api = useAxiosAuth();
   const getData = async () => {
     setFetchLoading(true);
-    const params = {
+    const _params = {
       page: _page,
       page_size: _count,
       search: _search,
       order_by: "created_at",
     };
     try {
-      const response = await api.get(`/${endpoint}`, { params });
+      const response = await api.get(`/${endpoint}`, { params: _params });
       setDataSource(response.data);
       setFetchLoading(false);
     } catch (error) {
       setFetchLoading(false);
-      router.replace("/panel");
     }
   };
 
@@ -192,6 +193,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
     );
   }
 
+  const baseRoute = (params?.id ? pathname?.replace(params.id as string, "") : pathname) || "/";
   const hasOperations = deletable || editable || extraOperations("");
   const generateOperations = (id: string) => {
     let operationsItem: any[] = [];
@@ -208,7 +210,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
     if (editable) {
       operationsItem.push({
         key: "edit",
-        label: <Link href={`/panel/${endpoint}/${id}`}>ویرایش</Link>,
+        label: <Link href={`${baseRoute}/${id}`}>ویرایش</Link>,
       });
     }
     return [...operationsItem, ...extraOperations(id)];

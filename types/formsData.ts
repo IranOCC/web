@@ -1,4 +1,4 @@
-import { Email, Phone, User, StorageFile, Office } from "./interfaces";
+import { Email, Phone, User, StorageFile, Office, Icon, Tag, EstateCategory } from "./interfaces";
 
 export type LoginPhoneOtpFormData = {
     phone: string;
@@ -83,6 +83,13 @@ export type OfficeAddMemberFormData = {
 };
 
 
+export type IconFormData = {
+    _id: string;
+
+    name: string;
+    content: string;
+};
+
 // ============== estate
 
 export type EstateFormData = {
@@ -139,9 +146,32 @@ export type EstateFormData = {
     floor: number;
 
     withOldBuilding: boolean;
+
+    owner?: User | string;
 };
 
 
+export type EstateCategoryFormData = {
+    _id?: string;
+
+    title: string;
+    slug: string;
+    description: string;
+    icon: Icon | string;
+    tags: Tag[] | string[];
+    parent: EstateCategory | string;
+}
+
+export type EstateDocumentTypeFormData = {
+    _id?: string;
+
+    title: string;
+    slug: string;
+    description: string;
+    icon: Icon | string;
+    tags: Tag[] | string[];
+    categories: EstateCategory[] | string[];
+}
 
 // =============
 

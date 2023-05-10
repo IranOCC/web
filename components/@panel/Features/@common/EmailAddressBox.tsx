@@ -8,8 +8,9 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function EmailAddressBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function EmailAddressBox({ form, loading }: AddEditComponentProps) {
   const {
     register,
     unregister,

@@ -29,37 +29,19 @@ export default function EstateTagsBox({ form, loading }: { form: any; loading?: 
   return (
     <>
       <PanelCard title="برچسب ها" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 gap-4 ">
           <Input
             //
             control={control}
-            name="title"
-            label="عنوان ملک"
-            error={errors.title?.message}
-            loading={isSubmitting}
-            noSpace
-            containerClassName="col-span-full"
-          />
-          <Input
-            //
-            control={control}
-            name="excerpt"
-            label="چکیده"
-            error={errors.excerpt?.message}
+            name="tags"
+            // label="برچسب"
+            placeholder="تایپ + اینتر"
+            error={errors.tags?.message}
             loading={isSubmitting}
             multiline
-            lines={4}
-            containerClassName="col-span-full"
+            lines={3}
+            tagsMode
             noSpace
-          />
-          <TextEditor
-            //
-            control={control}
-            name="content"
-            label="توضیحات"
-            error={errors.content?.message}
-            loading={isSubmitting}
-            containerClassName="col-span-full"
           />
         </div>
       </PanelCard>

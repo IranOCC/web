@@ -1,25 +1,34 @@
 import { ReactNode } from "react";
 
 const Button = (props: PropsTypes) => {
-  const { title = "", onClick, icon = "", disabled = false, loading = false, fill = true, noSpace = false, type = "button", className = "", size = "default" } = props;
+  const { title = "", variant = "fill", onClick, icon = "", disabled = false, loading = false, fill = true, noSpace = false, type = "button", className = "", size = "default" } = props;
 
   let sizeClass = " py-3";
   if (size === "small") sizeClass = " py-1.5";
   else if (size === "large") sizeClass = " py-4";
 
+  const _className = `${className} relative flex justify-center items-center z-10
+      ${
+        disabled
+          ? "cursor-not-allowed " + (variant === "fill" ? "bg-blue-300" : "bg-transparent")
+          : loading
+          ? "cursor-progress " + (variant === "fill" ? "bg-blue-400" : "bg-transparent")
+          : variant === "fill"
+          ? "text-white bg-blue-500 from-blue-500 to-[#57C7FA] hover:bg-gradient-to-l"
+          : "text-slate-600 bg-translate border border-slate-400 hover:bg-slate-100"
+      }
+      font-medium rounded text-sm px-8 ${sizeClass} text-center
+      ${noSpace ? " mb-0" : " mb-6"}
+      ${fill ? " w-full" : ""}
+  `;
+
   return (
     <button
+      //
       type={type}
       disabled={disabled || loading}
       onClick={onClick}
-      className={`
-      ${className}
-      relative flex justify-center items-center z-10
-      ${disabled ? "cursor-not-allowed bg-blue-300" : loading ? "cursor-progress bg-blue-400" : "bg-blue-500 from-blue-500 to-[#57C7FA] hover:bg-gradient-to-l"}
-      text-white font-medium rounded text-sm px-8 ${sizeClass} text-center
-      ${noSpace ? " mb-0" : " mb-6"}
-      ${fill ? " w-full" : ""}
-      `}
+      className={_className}
     >
       {loading ? (
         <svg aria-hidden="true" role="status" className="inline w-4 h-4 ms-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,6 +54,7 @@ const Button = (props: PropsTypes) => {
 type PropsTypes = {
   type?: "button" | "submit";
   title?: string;
+  variant?: "fill" | "outline";
   className?: string;
   icon?: ReactNode;
   disabled?: boolean;

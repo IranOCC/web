@@ -7,7 +7,7 @@ import { Select } from "@/components/Select";
 import LogoUploader from "@/components/Uploader/LogoUploader";
 import TextEditor from "@/components/Input/TextEditor";
 
-export default function EstateCategoriesBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function EstateOwnerBox({ form, loading }: { form: any; loading?: boolean }) {
   const {
     register,
     unregister,
@@ -28,18 +28,17 @@ export default function EstateCategoriesBox({ form, loading }: { form: any; load
 
   return (
     <>
-      <PanelCard title="دسته بندی" loading={loading}>
+      <PanelCard title="صاحب ملک" loading={loading}>
         <div className="grid grid-cols-1 gap-4 ">
           <Select
             //
             control={control}
-            name="categories"
-            error={errors.categories?.message}
+            name="owner"
+            error={errors.owner?.message}
             loading={isSubmitting}
             placeholder="انتخاب کنید"
-            apiPath="/estate/category"
+            apiPath="/user/assignList"
             searchable
-            multiple
             noSpace
           />
         </div>

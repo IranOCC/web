@@ -29,37 +29,56 @@ export default function EstateVisibilityBox({ form, loading }: { form: any; load
   return (
     <>
       <PanelCard title="وضعیت نمایش" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
-          <Input
+        <div className="grid grid-cols-1 gap-4 ">
+          <Select
             //
             control={control}
-            name="title"
-            label="عنوان ملک"
-            error={errors.title?.message}
+            name="status"
+            label="وضعیت"
+            error={errors.status?.message}
             loading={isSubmitting}
+            placeholder="انتخاب کنید"
             noSpace
-            containerClassName="col-span-full"
+            apiPath="/estate/statics/status"
+          />
+          <Select
+            //
+            control={control}
+            name="visibility"
+            label="نمایش"
+            error={errors.visibility?.message}
+            loading={isSubmitting}
+            placeholder="انتخاب کنید"
+            noSpace
+            apiPath="/estate/statics/visibility"
           />
           <Input
             //
             control={control}
-            name="excerpt"
-            label="چکیده"
-            error={errors.excerpt?.message}
+            name="password"
+            label="پسورد"
+            direction="ltr"
+            type="password"
+            error={errors.password?.message}
             loading={isSubmitting}
-            multiline
-            lines={4}
-            containerClassName="col-span-full"
             noSpace
           />
-          <TextEditor
+          <Input
             //
             control={control}
-            name="content"
-            label="توضیحات"
-            error={errors.content?.message}
+            name="publishedAt"
+            label="تاریخ انتشار"
+            error={errors.publishedAt?.message}
             loading={isSubmitting}
-            containerClassName="col-span-full"
+            noSpace
+          />
+          <CheckBox //
+            control={control}
+            name="pinned"
+            label="سنجاق شده"
+            error={errors.pinned?.message}
+            loading={isSubmitting}
+            noSpace
           />
         </div>
       </PanelCard>

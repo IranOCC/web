@@ -72,7 +72,7 @@ export interface Office {
 
 
 export interface Estate {
-    _id?: string;
+    _id: string;
 
     title: string;
     content?: string;
@@ -151,4 +151,31 @@ export interface StorageFile {
     path: string;
     subject: string;
     uploadedBy?: User;
+}
+
+
+export interface Icon {
+    _id: string;
+    name: string;
+    content: string;
+};
+
+export interface Tag {
+    _id: string;
+    name: string;
+};
+
+
+// ===
+
+
+export interface EstateCategory {
+    _id: string;
+
+    title: string;
+    slug: string;
+    description: string;
+    icon: Icon | string;
+    tags: Tag[] | string[];
+    parent: EstateCategory | string;
 }

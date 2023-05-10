@@ -29,37 +29,94 @@ export default function EstateFeaturesBox({ form, loading }: { form: any; loadin
   return (
     <>
       <PanelCard title="ویژگی های اختصاصی" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 ">
           <Input
             //
             control={control}
-            name="title"
-            label="عنوان ملک"
-            error={errors.title?.message}
+            name="roomsCount"
+            label="تعداد اتاق"
+            type="number"
+            error={errors.roomsCount?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-full"
+            containerClassName="col-span-3"
           />
           <Input
             //
             control={control}
-            name="excerpt"
-            label="چکیده"
-            error={errors.excerpt?.message}
+            name="mastersCount"
+            label="تعداد مستر"
+            type="number"
+            error={errors.mastersCount?.message}
             loading={isSubmitting}
+            noSpace
+            containerClassName="col-span-3"
+          />
+          <Input
+            //
+            control={control}
+            name="area"
+            label="تعداد طبقات"
+            type="number"
+            error={errors.floorsCount?.message}
+            loading={isSubmitting}
+            noSpace
+            containerClassName="col-span-3"
+          />
+          <Input
+            //
+            control={control}
+            name="area"
+            label="تعداد واحدها"
+            type="number"
+            error={errors.unitsCount?.message}
+            loading={isSubmitting}
+            noSpace
+            containerClassName="col-span-3"
+          />
+          <Input
+            //
+            control={control}
+            name="buildingArea"
+            label="متراژ بنا"
+            type="number"
+            error={errors.buildingArea?.message}
+            loading={isSubmitting}
+            noSpace
+            containerClassName="col-span-3"
+          />
+          <Input
+            //
+            control={control}
+            name="floor"
+            label="طبقه مورد نظر"
+            type="number"
+            error={errors.floor?.message}
+            loading={isSubmitting}
+            noSpace
+            containerClassName="col-span-3"
+          />
+          <Input
+            //
+            control={control}
+            name="features"
+            label="ویژگی ها"
+            error={errors.features?.message}
+            loading={isSubmitting}
+            tagsMode
+            noSpace
             multiline
             lines={4}
             containerClassName="col-span-full"
-            noSpace
           />
-          <TextEditor
-            //
+          <CheckBox //
             control={control}
-            name="content"
-            label="توضیحات"
-            error={errors.content?.message}
+            name="withOldBuilding"
+            label="دارای ساختمان قدیمی"
+            error={errors.withOldBuilding?.message}
             loading={isSubmitting}
-            containerClassName="col-span-full"
+            noSpace
+            containerClassName="col-span-3"
           />
         </div>
       </PanelCard>
