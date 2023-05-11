@@ -210,7 +210,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
     if (editable) {
       operationsItem.push({
         key: "edit",
-        label: <Link href={`${baseRoute}/${id}`}>ویرایش</Link>,
+        label: <Link href={`${baseRoute}/${id}` + (searchParams ? "?" + searchParams?.toString() : "")}>ویرایش</Link>,
       });
     }
     return [...operationsItem, ...extraOperations(id)];

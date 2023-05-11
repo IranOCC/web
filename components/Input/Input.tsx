@@ -1,4 +1,4 @@
-import { ChangeEventHandler, ReactNode } from "react";
+import { ChangeEventHandler, KeyboardEventHandler, ReactNode } from "react";
 import { Controller } from "react-hook-form";
 import { Button } from "../Button";
 
@@ -28,6 +28,7 @@ const Input = (props: IProps) => {
     containerClassName = "",
     tagsMode,
     noResize = false,
+    onKeyDown,
   } = props;
   let { status, helperText } = props;
 
@@ -143,6 +144,7 @@ const Input = (props: IProps) => {
                   dir={direction}
                   {...field}
                   value={field.value || ""}
+                  onKeyDown={onKeyDown as KeyboardEventHandler<HTMLTextAreaElement> | undefined}
                 />
               );
             else
@@ -158,6 +160,7 @@ const Input = (props: IProps) => {
                   dir={direction}
                   {...field}
                   value={field.value || ""}
+                  onKeyDown={onKeyDown as KeyboardEventHandler<HTMLInputElement> | undefined}
                 />
               );
           }}
@@ -209,6 +212,8 @@ export type IProps = {
   success?: ReactNode;
   innerSubmitBtn?: string;
   size?: "small" | "default" | "large";
+
+  onKeyDown?: KeyboardEventHandler<HTMLTextAreaElement> | KeyboardEventHandler<HTMLInputElement>;
 };
 
 export default Input;

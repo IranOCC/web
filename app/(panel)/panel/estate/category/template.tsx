@@ -1,9 +1,7 @@
 "use client";
 
-import { type AddEditComponentProps } from "@/components/@panel/EditAddPage";
-import EstateBox from "@/components/@panel/Features/Estate/EstateBox";
-import { EstateCategoryFormData, EstateFormData, UserFormData } from "@/types/formsData";
-import { EstateCategory, Icon, StorageFile, Tag, User } from "@/types/interfaces";
+import { EstateCategoryFormData } from "@/types/formsData";
+import { EstateCategory, Icon } from "@/types/interfaces";
 import { useForm } from "react-hook-form";
 import ListEditPage from "@/components/@panel/ListEditPage";
 import { ColumnsType } from "antd/es/table";
@@ -17,6 +15,9 @@ const columns: ColumnsType<EstateCategory> = [
   {
     title: "لینک",
     dataIndex: "slug",
+    render: (slug) => {
+      return <pre>{slug}</pre>;
+    },
   },
   {
     title: "آیکون",
@@ -32,7 +33,7 @@ const columns: ColumnsType<EstateCategory> = [
 ];
 
 export default function Template() {
-  const form = useForm<EstateCategoryFormData>({ mode: "onChange" });
+  const form = useForm<EstateCategoryFormData>();
   const { setValue } = form;
 
   const setInitialData = (data: EstateCategoryFormData) => {
@@ -40,13 +41,10 @@ export default function Template() {
 
     setValue("title", data.title);
     setValue("slug", data.slug);
-    setValue("description", data.description);
-    setValue("icon", (data.icon as Icon)._id);
-    setValue(
-      "tags",
-      (data.tags as Tag[]).map((v: Tag) => v.name)
-    );
-    setValue("parent", (data.parent as EstateCategory)._id);
+    setValue("description", data?.description);
+    setValue("icon", (data?.icon as Icon)?._id);
+    setValue("tags", data.tags);
+    setValue("parent", (data?.parent as EstateCategory)?._id);
   };
 
   return (
@@ -58,6 +56,7 @@ export default function Template() {
         setInitialData={setInitialData}
         headerTitle={() => <div className="text-base font-semibold">لیست دسته بندی ها</div>}
         formTitle="دسته"
+        onEditField="title"
         endpoint="estate/category"
         columns={columns}
         editable

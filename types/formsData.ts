@@ -1,4 +1,4 @@
-import { Email, Phone, User, StorageFile, Office, Icon, Tag, EstateCategory } from "./interfaces";
+import { Email, Phone, User, StorageFile, Office, Icon, EstateCategory } from "./interfaces";
 
 export type LoginPhoneOtpFormData = {
     phone: string;
@@ -158,7 +158,7 @@ export type EstateCategoryFormData = {
     slug: string;
     description: string;
     icon: Icon | string;
-    tags: Tag[] | string[];
+    tags: string[];
     parent: EstateCategory | string;
 }
 
@@ -169,7 +169,7 @@ export type EstateDocumentTypeFormData = {
     slug: string;
     description: string;
     icon: Icon | string;
-    tags: Tag[] | string[];
+    tags: string[];
     categories: EstateCategory[] | string[];
 }
 

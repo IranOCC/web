@@ -160,10 +160,7 @@ export interface Icon {
     content: string;
 };
 
-export interface Tag {
-    _id: string;
-    name: string;
-};
+
 
 
 // ===
@@ -176,6 +173,6 @@ export interface EstateCategory {
     slug: string;
     description: string;
     icon: Icon | string;
-    tags: Tag[] | string[];
+    tags: string[];
     parent: EstateCategory | string;
 }

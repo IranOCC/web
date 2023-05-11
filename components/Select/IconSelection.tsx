@@ -71,7 +71,7 @@ const IconSelection = (props: IProps) => {
                 <div className={_className}>
                   {/*  */}
                   <Tooltip title={"بدون آیکون"} arrow placement="bottom">
-                    <div onClick={() => field.onChange(null)} className={"rounded min-w-[2.5rem] h-10 w-10 overflow-hidden flex justify-center items-center cursor-pointer" + (!field.value ? " bg-green-200 " : " hover:bg-slate-200")}>
+                    <div onClick={() => field.onChange(null)} className={"rounded text-pink-500 fill-current min-w-[2.5rem] h-10 w-10 overflow-hidden flex justify-center items-center cursor-pointer" + (!field.value ? " bg-green-200 " : " hover:bg-slate-200")}>
                       None
                     </div>
                   </Tooltip>
@@ -79,7 +79,7 @@ const IconSelection = (props: IProps) => {
                     const isActive = icon._id === field.value;
                     return (
                       <Tooltip key={index} title={icon.name} arrow placement="bottom">
-                        <div onClick={() => field.onChange(icon._id)} className={"rounded min-w-[2.5rem] h-10 w-10 overflow-hidden flex justify-center items-center cursor-pointer" + (isActive ? " bg-green-200 " : " hover:bg-slate-200")}>
+                        <div onClick={() => field.onChange(icon._id)} className={"rounded text-pink-500 fill-current min-w-[2.5rem] h-10 w-10 overflow-hidden flex justify-center items-center cursor-pointer" + (isActive ? " bg-green-200 " : " hover:bg-slate-200")}>
                           <div className="w-6 h-6" dangerouslySetInnerHTML={{ __html: icon.content }} />
                         </div>
                       </Tooltip>

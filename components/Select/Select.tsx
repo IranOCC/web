@@ -188,7 +188,7 @@ const FieldComponent = (props: FieldComponentType) => {
   const [objectValue, setObjectValue] = useState<DataType[] | DataType | undefined>(
     multiple
       ? //
-        dataList.filter((item) => field.value.includes(item.value)) || ([] as DataType[])
+        dataList.filter((item) => field.value?.includes(item.value)) || ([] as DataType[])
       : //
         dataList.filter((item) => item.value === field.value)[0] || undefined
   );
@@ -197,7 +197,7 @@ const FieldComponent = (props: FieldComponentType) => {
     setObjectValue(
       multiple
         ? //
-          dataList.filter((item) => field.value.includes(item.value)) || ([] as DataType[])
+          dataList.filter((item) => field.value?.includes(item.value)) || ([] as DataType[])
         : //
           dataList.filter((item) => item.value === field.value)[0] || undefined
     );
@@ -210,11 +210,11 @@ const FieldComponent = (props: FieldComponentType) => {
       : //
       !!(objectValue as DataType[])?.length
       ? (objectValue as DataType[]).length + " مورد انتخاب شده"
-      : ""
+      : "انتخاب نشده"
     : //
     objectValue
     ? (objectValue as DataType)?.title
-    : "";
+    : "انتخاب نشده";
   return (
     <div>
       <input
@@ -263,6 +263,19 @@ const FieldComponent = (props: FieldComponentType) => {
                     </div>
                   ) : null}
                   <ul className="text-sm text-gray-700 dark:text-gray-200 max-h-60 overflow-x-hidden">
+                    <SelectOption
+                      //
+                      title="انتخاب نشده"
+                      selected={!field.value?.length}
+                      onClick={() => {
+                        if (multiple) {
+                          field.onChange(null);
+                        } else {
+                          field.onChange(null);
+                          setOpen(false);
+                        }
+                      }}
+                    />
                     {dataList.map(({ title, value }, _index) => {
                       return (
                         <SelectOption
@@ -281,11 +294,9 @@ const FieldComponent = (props: FieldComponentType) => {
                                 a = [...field.value, value];
                                 b = [...(objectValue as DataType[]), { title, value }];
                               }
-                              // setObjectValue(b);
                               field.onChange(a);
                             } else {
                               field.onChange(value);
-                              // setObjectValue({ title, value });
                               setOpen(false);
                             }
                           }}

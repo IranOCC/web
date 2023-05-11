@@ -1,6 +1,6 @@
 import { CheckBox, Input } from "@/components/Input";
 import { EstateCategoryFormData } from "@/types/formsData";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
@@ -24,28 +24,13 @@ export default function EstateCategoryBox({ form, loading, cancelForm }: AddEdit
   } = form as UseFormReturn<EstateCategoryFormData>;
 
   useEffect(() => {
-    register("title", { required: "عنوان را وارد کنید", minLength: { value: 5, message: "حداقل 5 کاراکتر باید باشد" } });
+    register("title", { required: "عنوان را وارد کنید" });
     register("slug");
     register("parent");
     register("description");
     register("tags");
     register("icon");
   }, []);
-
-  useEffect(() => {
-    const vv = getValues("title") || "";
-    setValue(
-      "slug",
-      slugify(vv, {
-        replacement: "_",
-        remove: undefined,
-        lower: false,
-        strict: false,
-        locale: "fa",
-        trim: true,
-      })
-    );
-  }, [getValues("title")]);
 
   return (
     <>
@@ -57,6 +42,19 @@ export default function EstateCategoryBox({ form, loading, cancelForm }: AddEdit
         error={errors.title?.message}
         loading={isSubmitting}
         noSpace
+        onKeyDown={(e: any) => {
+          setValue(
+            "slug",
+            slugify(e.target.value, {
+              replacement: "_",
+              remove: undefined,
+              lower: false,
+              strict: false,
+              locale: "fa",
+              trim: true,
+            })
+          );
+        }}
       />
       <Input
         //
@@ -75,7 +73,7 @@ export default function EstateCategoryBox({ form, loading, cancelForm }: AddEdit
         error={errors.parent?.message}
         loading={isSubmitting}
         placeholder="دسته مادر"
-        apiPath="/estate/category/parentList"
+        apiPath={"/estate/category/assignList/" + (getValues("_id") || "")}
         searchable
         noSpace
       />
@@ -102,7 +100,6 @@ export default function EstateCategoryBox({ form, loading, cancelForm }: AddEdit
       />
       <IconSelection
         //
-        label="آیکون"
         control={control}
         name="icon"
         error={errors.icon?.message}

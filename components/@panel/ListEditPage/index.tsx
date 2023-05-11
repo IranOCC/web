@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/Button";
 import PanelCard from "@/components/@panel/Card";
 
@@ -17,14 +17,16 @@ interface IProps extends PanelTableProps {
   endpoint: string;
   form: any;
   formTitle?: string;
+  onEditField?: string;
   setInitialData: (data: any) => void;
 }
 
-export default function ListEditPage<F extends FieldValues, T>({ FormComponent, endpoint, form, formTitle, setInitialData, ...otherProps }: IProps) {
+export default function ListEditPage<F extends FieldValues, T>({ FormComponent, endpoint, form, formTitle, setInitialData, onEditField, ...otherProps }: IProps) {
   const TableProps: PanelTableProps = { ...otherProps, endpoint };
 
   const params = useParams();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const {
     register,
@@ -44,7 +46,8 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
   const router = useRouter();
   const api = useAxiosAuth();
 
-  const baseRoute = (params?.id ? pathname?.replace(params.id as string, "") : pathname) || "/";
+  let baseRoute = (params?.id ? pathname?.replace(params.id as string, "") : pathname) || "/";
+  baseRoute += baseRoute !== "/" ? "?" + searchParams?.toString() : "/";
   const [updateTable, setUpdateTable] = useState([false]);
 
   // submit
@@ -54,14 +57,14 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
         if (!getValues("_id")) {
           await api.post(`/${endpoint}`, data);
           toast.success("با موفقیت ایجاد شد");
-          router.replace(baseRoute);
         } else {
           await api.patch(`/${endpoint}/` + getValues("_id"), data);
           toast.success("با موفقیت ویرایش شد");
-          router.replace(baseRoute);
         }
         reset();
         setUpdateTable([true]);
+        router.replace(baseRoute);
+        // window.location.pathname = baseRoute;
       } catch (error: unknown) {
         handleFieldsError(error, setError);
       }
@@ -93,6 +96,7 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
   return (
     <>
       <div className="p-4">
+        {updateTable}
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-full	lg:col-span-5">
             <div className="grid grid-cols-2 gap-4">
