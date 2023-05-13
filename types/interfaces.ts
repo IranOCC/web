@@ -176,3 +176,37 @@ export interface EstateCategory {
     tags: string[];
     parent: EstateCategory | string;
 }
+
+export interface EstateDocumentType {
+    _id?: string;
+
+    title: string;
+    slug: string;
+    description: string;
+    icon: Icon | string;
+    tags: string[];
+    categories: EstateCategory[] | string[];
+}
+
+export interface EstateFeature {
+    _id?: string;
+
+    title: string;
+    slug: string;
+    description: string;
+    icon: Icon | string;
+    tags: string[];
+    categories: EstateCategory[] | string[];
+}
+
+
+export interface EstateType {
+    _id?: string;
+
+    title: string;
+    slug: string;
+    description: string;
+    icon: Icon | string;
+    tags: string[];
+    categories: EstateCategory[] | string[];
+}

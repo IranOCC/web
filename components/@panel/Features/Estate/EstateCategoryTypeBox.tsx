@@ -1,19 +1,22 @@
 import { CheckBox, Input } from "@/components/Input";
 import { EstateFormData } from "@/types/formsData";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
 import LogoUploader from "@/components/Uploader/LogoUploader";
 import TextEditor from "@/components/Input/TextEditor";
+import EstateSetCategoryModal from "./EstateSetCategoryModal";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function EstateCategoriesBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function EstateCategoryTypeBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
     resetField,
     setValue,
     setError,
+    getValues,
     control,
     handleSubmit,
     reset,
@@ -21,25 +24,35 @@ export default function EstateCategoriesBox({ form, loading }: { form: any; load
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("title", { required: "عنوان را وارد کنید", minLength: { value: 5, message: "حداقل 5 کاراکتر باید باشد" } });
-    register("excerpt");
-    register("content", { required: "توضیحات الزامی است" });
+    register("category");
+    register("type");
   }, []);
 
   return (
     <>
-      <PanelCard title="دسته بندی" loading={loading}>
+      <PanelCard title="دسته و نوع ملک" loading={loading}>
         <div className="grid grid-cols-1 gap-4 ">
           <Select
             //
             control={control}
-            name="categories"
-            error={errors.categories?.message}
+            name="category"
+            error={errors.category?.message}
             loading={isSubmitting}
             placeholder="انتخاب کنید"
-            apiPath="/estate/category"
+            apiPath="/estate/category/assignList"
             searchable
-            multiple
+            noSpace
+          />
+          <Select
+            //
+            control={control}
+            name="type"
+            error={errors.type?.message}
+            loading={isSubmitting}
+            placeholder="انتخاب کنید"
+            apiPath="/estate/type/assignList"
+            filterApi={{ cat: props?.selectedCat }}
+            searchable
             noSpace
           />
         </div>

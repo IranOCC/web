@@ -62,7 +62,7 @@ const IconSelection = (props: IProps) => {
 
   return (
     <div className={"w-full relative z-10 flex items-end flex-col" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-      {label && <label className={`w-full block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
+      {label && <label className={`w-full block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
       <div className={"w-full relative"}>
         <Controller
           render={({ field }) => {

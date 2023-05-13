@@ -7,51 +7,53 @@ import EstateBox from "@/components/@panel/Features/Estate/EstateBox";
 import EstateLocationBox from "@/components/@panel/Features/Estate/EstateLocationBox";
 import EstateGeneralBox from "@/components/@panel/Features/Estate/EstateGeneralBox";
 import { EstateFormData, UserFormData } from "@/types/formsData";
-import { StorageFile, User } from "@/types/interfaces";
+import { Estate, StorageFile, User } from "@/types/interfaces";
 import { useForm } from "react-hook-form";
 import EstateVisibilityBox from "@/components/@panel/Features/Estate/EstateVisibilityBox";
 import EstateMediaBox from "@/components/@panel/Features/Estate/EstateMediaBox";
 import EstateTagsBox from "@/components/@panel/Features/Estate/EstateTagsBox";
-import EstateCategoriesBox from "@/components/@panel/Features/Estate/EstateCategoriesBox";
 import EstateFeaturesBox from "@/components/@panel/Features/Estate/EstateFeaturesBox";
 import EstateOwnerBox from "@/components/@panel/Features/Estate/EstateOwnerBox";
+import EstateSetCategoryModal from "@/components/@panel/Features/Estate/EstateSetCategoryModal";
+import { useState } from "react";
+import EstateCategoryTypeBox from "@/components/@panel/Features/Estate/EstateCategoryTypeBox";
 
-const Center = ({ form, loading }: AddEditComponentProps) => {
+const Center = (props: AddEditComponentProps) => {
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-full">
-          <EstateBox form={form} loading={loading} />
+          <EstateBox {...props} />
         </div>
         <div className="col-span-full md:col-span-1">
-          <EstateGeneralBox form={form} loading={loading} />
+          <EstateGeneralBox {...props} />
         </div>
         <div className="col-span-full md:col-span-1">
-          <EstateFeaturesBox form={form} loading={loading} />
+          <EstateFeaturesBox {...props} />
         </div>
         <div className="col-span-full">
-          <EstateLocationBox form={form} loading={loading} />
+          <EstateLocationBox {...props} />
         </div>
       </div>
     </>
   );
 };
 
-const Side = ({ form, loading }: AddEditComponentProps) => {
+const Side = (props: AddEditComponentProps) => {
   return (
     <>
-      <EstateVisibilityBox form={form} loading={loading} />
-      <EstateOwnerBox form={form} loading={loading} />
-      <EstateMediaBox form={form} loading={loading} />
-      <EstateTagsBox form={form} loading={loading} />
-      <EstateCategoriesBox form={form} loading={loading} />
+      <EstateCategoryTypeBox {...props} />
+      <EstateTagsBox {...props} />
+      <EstateVisibilityBox {...props} />
+      <EstateOwnerBox {...props} />
+      <EstateMediaBox {...props} />
     </>
   );
 };
 
 export default function Page() {
   const form = useForm<EstateFormData>();
-  const { setValue } = form;
+  const { setValue, getValues } = form;
 
   const setInitialData = (data: EstateFormData) => {
     setValue("_id", data._id);
@@ -74,15 +76,28 @@ export default function Page() {
     // setValue("verified", data.verified);
     // setValue("active", data.active);
   };
+
+  const [selectedCat, setSelectedCat] = useState<string | undefined>(undefined);
+
   return (
     <>
-      <EditAddPage<UserFormData, User>
+      <EditAddPage<EstateFormData, Estate>
         //
         Center={Center}
         Side={Side}
         form={form}
         setInitialData={setInitialData}
-        endpoint="user"
+        endpoint="estate"
+        componentProps={{ selectedCat }}
+      />
+      {/*  */}
+      <EstateSetCategoryModal
+        //
+        open={!selectedCat}
+        setCategory={(val: string) => {
+          setValue("category", val);
+          setSelectedCat(val);
+        }}
       />
     </>
   );

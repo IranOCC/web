@@ -4,8 +4,9 @@ import PanelCard from "@/components/@panel/Card";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { EstateFormData, OfficeFormData, UserFormData } from "@/types/formsData";
 import LocationChooser from "../@common/LocationChooser";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function EstateLocationBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function EstateLocationBox({ form, loading }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -30,7 +31,7 @@ export default function EstateLocationBox({ form, loading }: { form: any; loadin
 
   return (
     <PanelCard title="موقعیت مکانی" loading={loading}>
-      <div className="grid grid-cols-6 gap-4 ">
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
         <Input
           //
           control={control}
@@ -39,7 +40,7 @@ export default function EstateLocationBox({ form, loading }: { form: any; loadin
           error={errors.province?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="col-span-3"
+          containerClassName="md:col-span-3"
         />
         <Input
           //
@@ -49,7 +50,7 @@ export default function EstateLocationBox({ form, loading }: { form: any; loadin
           error={errors.city?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="col-span-3"
+          containerClassName="md:col-span-3"
         />
         <Input
           //
@@ -59,7 +60,7 @@ export default function EstateLocationBox({ form, loading }: { form: any; loadin
           error={errors.district?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="col-span-2"
+          containerClassName="md:col-span-2"
         />
         <Input
           //
@@ -69,7 +70,7 @@ export default function EstateLocationBox({ form, loading }: { form: any; loadin
           error={errors.quarter?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="col-span-2"
+          containerClassName="md:col-span-2"
         />
         <Input
           //
@@ -79,7 +80,7 @@ export default function EstateLocationBox({ form, loading }: { form: any; loadin
           error={errors.alley?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="col-span-2"
+          containerClassName="md:col-span-2"
         />
         <Input
           //

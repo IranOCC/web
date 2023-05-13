@@ -44,7 +44,7 @@ export default function Modal({ path, open, setOpen, title, children, footerButt
         router.back();
       }
     } else {
-      setOpen(status);
+      if (setOpen) setOpen(status);
     }
   };
   useEffect(() => {
@@ -77,7 +77,7 @@ export default function Modal({ path, open, setOpen, title, children, footerButt
                       <FontAwesomeIcon icon={faXmark} size="lg" />
                     </div>
                   )}
-                  <div className="mt-8 sm:flex sm:items-start">
+                  <div className={closeButton ? "mt-8" : "mt-0" + " sm:flex sm:items-start"}>
                     <div className="w-full text-center sm:text-start block">
                       {title && (
                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">

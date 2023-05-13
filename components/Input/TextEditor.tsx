@@ -28,7 +28,7 @@ const TextEditor = (props: IProps) => {
   return (
     <>
       <div className={"w-full relative z-10" + " " + containerClassName}>
-        {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
+        {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
         <div className="w-full relative">
           <Controller
             control={control}

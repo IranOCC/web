@@ -6,8 +6,9 @@ import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
 import LogoUploader from "@/components/Uploader/LogoUploader";
 import TextEditor from "@/components/Input/TextEditor";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function EstateVisibilityBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function EstateVisibilityBox({ form, loading }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -21,9 +22,11 @@ export default function EstateVisibilityBox({ form, loading }: { form: any; load
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("title", { required: "عنوان را وارد کنید", minLength: { value: 5, message: "حداقل 5 کاراکتر باید باشد" } });
-    register("excerpt");
-    register("content", { required: "توضیحات الزامی است" });
+    register("status");
+    register("visibility");
+    register("password");
+    register("publishedAt");
+    register("pinned");
   }, []);
 
   return (
@@ -58,7 +61,7 @@ export default function EstateVisibilityBox({ form, loading }: { form: any; load
             name="password"
             label="پسورد"
             direction="ltr"
-            type="password"
+            type="text"
             error={errors.password?.message}
             loading={isSubmitting}
             noSpace

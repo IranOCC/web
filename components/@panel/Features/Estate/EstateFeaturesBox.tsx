@@ -6,8 +6,9 @@ import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
 import LogoUploader from "@/components/Uploader/LogoUploader";
 import TextEditor from "@/components/Input/TextEditor";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function EstateFeaturesBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function EstateFeaturesBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -21,25 +22,30 @@ export default function EstateFeaturesBox({ form, loading }: { form: any; loadin
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("title", { required: "عنوان را وارد کنید", minLength: { value: 5, message: "حداقل 5 کاراکتر باید باشد" } });
-    register("excerpt");
-    register("content", { required: "توضیحات الزامی است" });
+    register("roomsCount");
+    register("mastersCount");
+    register("floorsCount");
+    register("unitsCount");
+    register("buildingArea");
+    register("floor");
+    register("features");
+    register("withOldBuilding");
   }, []);
 
   return (
     <>
       <PanelCard title="ویژگی های اختصاصی" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
           <Input
             //
             control={control}
             name="roomsCount"
             label="تعداد اتاق"
             type="number"
+            direction="ltr"
             error={errors.roomsCount?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
           <Input
             //
@@ -47,32 +53,32 @@ export default function EstateFeaturesBox({ form, loading }: { form: any; loadin
             name="mastersCount"
             label="تعداد مستر"
             type="number"
+            direction="ltr"
             error={errors.mastersCount?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
           <Input
             //
             control={control}
-            name="area"
+            name="floorsCount"
             label="تعداد طبقات"
             type="number"
+            direction="ltr"
             error={errors.floorsCount?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
           <Input
             //
             control={control}
-            name="area"
+            name="unitsCount"
             label="تعداد واحدها"
             type="number"
+            direction="ltr"
             error={errors.unitsCount?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
           <Input
             //
@@ -80,10 +86,10 @@ export default function EstateFeaturesBox({ form, loading }: { form: any; loadin
             name="buildingArea"
             label="متراژ بنا"
             type="number"
+            direction="ltr"
             error={errors.buildingArea?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
           <Input
             //
@@ -91,22 +97,27 @@ export default function EstateFeaturesBox({ form, loading }: { form: any; loadin
             name="floor"
             label="طبقه مورد نظر"
             type="number"
+            direction="ltr"
             error={errors.floor?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
-          <Input
+          <Select
             //
             control={control}
             name="features"
             label="ویژگی ها"
             error={errors.features?.message}
             loading={isSubmitting}
+            placeholder="انتخاب کنید"
+            apiPath="/estate/feature/assignList"
+            filterApi={{ cat: props?.selectedCat }}
+            multiple
+            showTitle
             tagsMode
-            noSpace
             multiline
             lines={4}
+            noSpace
             containerClassName="col-span-full"
           />
           <CheckBox //
@@ -116,7 +127,7 @@ export default function EstateFeaturesBox({ form, loading }: { form: any; loadin
             error={errors.withOldBuilding?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
+            containerClassName="col-span-full"
           />
         </div>
       </PanelCard>

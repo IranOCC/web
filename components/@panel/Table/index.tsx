@@ -35,9 +35,10 @@ export type PanelTableProps = {
   editable?: boolean;
   extraOperations?: (id: string) => any[];
   update?: any;
+  defaultPageCount?: number;
 };
 
-function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: PanelTableProps) {
+function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageCount, deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: PanelTableProps) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [dataSource, setDataSource] = useState(data?.length !== undefined ? data : []);
 
@@ -59,7 +60,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
   const _search = searchParams?.get("search");
   const _sort = searchParams?.get("sort");
   const _page = parseInt(searchParams?.get("page") || "1");
-  const _count = parseInt(searchParams?.get("count") || "10");
+  const _count = parseInt(searchParams?.get("count") || defaultPageCount?.toString() || "10");
 
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const handlePaginationChange = (page: number, page_size: number) => {
@@ -180,7 +181,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], deletable, e
                 onChange: handlePaginationChange,
                 pageSize: _count,
                 current: _page,
-                defaultPageSize: 10,
+                defaultPageSize: defaultPageCount || 10,
                 defaultCurrent: 1,
                 pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
               }}

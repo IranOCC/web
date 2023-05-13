@@ -6,8 +6,9 @@ import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
 import LogoUploader from "@/components/Uploader/LogoUploader";
 import TextEditor from "@/components/Input/TextEditor";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function EstateGeneralBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function EstateGeneralBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -21,24 +22,29 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("title", { required: "عنوان را وارد کنید", minLength: { value: 5, message: "حداقل 5 کاراکتر باید باشد" } });
-    register("excerpt");
-    register("content", { required: "توضیحات الزامی است" });
+    register("code");
+    register("constructionYear");
+    register("documentType");
+    register("area");
+    register("price");
+    register("totalPrice");
+    register("description");
+    register("canBarter");
   }, []);
 
   return (
     <>
       <PanelCard title="ویژگی های عمومی" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
           <Input
             //
             control={control}
-            name="area"
+            name="code"
             label="کد ملک"
-            error={errors.area?.message}
+            direction="ltr"
+            error={errors.code?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
           <Input
             //
@@ -46,10 +52,10 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             name="constructionYear"
             label="سال ساخت"
             type="number"
+            direction="ltr"
             error={errors.constructionYear?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
           <Select
             //
@@ -59,10 +65,9 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             error={errors.documentType?.message}
             loading={isSubmitting}
             placeholder="انتخاب کنید"
-            apiPath="/estate/documentType"
-            searchable
+            apiPath="/estate/document/assignList"
+            filterApi={{ cat: props?.selectedCat }}
             noSpace
-            containerClassName="col-span-3"
           />
 
           <Input
@@ -71,30 +76,30 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             name="area"
             label="متراژ کل"
             type="number"
+            direction="ltr"
             error={errors.area?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
           <Input
             //
             control={control}
-            name="area"
+            name="price"
             label="قیمت هر متر (تومان)"
-            error={errors.area?.message}
+            direction="ltr"
+            error={errors.price?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
           <Input
             //
             control={control}
-            name="area"
+            name="totalPrice"
             label="قیمت کل (تومان)"
-            error={errors.area?.message}
+            direction="ltr"
+            error={errors.totalPrice?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
           />
           <Input
             //
@@ -106,7 +111,7 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             noSpace
             multiline
             lines={4}
-            containerClassName="col-span-6"
+            containerClassName="col-span-full"
           />
           <CheckBox //
             control={control}
@@ -115,7 +120,7 @@ export default function EstateGeneralBox({ form, loading }: { form: any; loading
             error={errors.canBarter?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-3"
+            containerClassName="col-span-full"
           />
         </div>
       </PanelCard>

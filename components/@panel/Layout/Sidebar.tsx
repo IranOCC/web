@@ -101,17 +101,22 @@ const menuItems: MenuItemType[] = [
       {
         title: "دسته بندی",
         href: "category",
-        subtitle: "",
+        subtitle: "تعریف و مدیریت دسته بندی های املاک",
+      },
+      {
+        title: "نوع ملک",
+        href: "type",
+        subtitle: "تعریف و مدیریت نوع ساختار املاک",
       },
       {
         title: "نوع سند",
         href: "document",
-        subtitle: "",
+        subtitle: "تعریف و مدیریت انواع اسناد املاک",
       },
       {
         title: "ویژگی ها",
         href: "feature",
-        subtitle: "",
+        subtitle: "تعریف و مدیریت ویژگی های املاک",
       },
     ],
   },

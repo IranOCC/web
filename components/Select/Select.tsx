@@ -1,4 +1,5 @@
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import { usePrevious } from "@/lib/hooks/usePrevious";
 import { Chip, ClickAwayListener, Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
 import { Spin } from "antd";
 import { ChangeEventHandler, ReactNode, RefObject, useEffect, useRef, useState } from "react";
@@ -8,7 +9,34 @@ import ArrowDownIcon from "../Icons/ArrowDown";
 import SearchIcon from "../Icons/Search";
 
 const Select = (props: IProps) => {
-  const { name, control, defaultValue, className = "", label, placeholder, icon, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", items, apiPath, searchable, multiple, showTitle = false, containerClassName = "" } = props;
+  const {
+    name,
+    control,
+    defaultValue,
+    className = "",
+    multiline,
+    lines,
+    filterApi,
+    label,
+    placeholder,
+    icon,
+    disabled = false,
+    loading = false,
+    error,
+    warning,
+    success,
+    direction,
+    noSpace,
+    size = "default",
+    items,
+    apiPath,
+    searchable,
+    tagsMode,
+    multiple,
+    showTitle = false,
+    containerClassName = "",
+    onChange,
+  } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -55,12 +83,17 @@ const Select = (props: IProps) => {
   const [dataList, setDataList] = useState<DataType[] | null>(null);
   const [search, setSearch] = useState("");
   const [dataLoading, setDataLoading] = useState(false);
+  const [resetValue, setResetValue] = useState([false]);
+
+  const isFirstRenderResetApply = useRef(true);
 
   const api = useAxiosAuth();
-  const getItems = async () => {
+  const getItems = async (reset = false) => {
+    if (reset) setResetValue([true]);
+
     setDataLoading(true);
     try {
-      const data = await api.get(apiPath! + (!!search.length ? "?search=" + search : ""));
+      const data = await api.get(apiPath!, { params: { search, ...filterApi } });
       const _items = data.data;
       if (Array.isArray(_items)) setDataList(_items);
       else setDataList(Object.keys(_items).map((value) => ({ value: value, title: _items[value] } as DataType)));
@@ -83,6 +116,13 @@ const Select = (props: IProps) => {
   }, [search]);
 
   useEffect(() => {
+    if (!items && apiPath && filterApi) {
+      if (!isFirstRenderResetApply.current) getItems(true);
+      else isFirstRenderResetApply.current = false;
+    }
+  }, [filterApi?.cat]);
+
+  useEffect(() => {
     setSearch("");
     setDataLoading(false);
   }, [open]);
@@ -91,10 +131,9 @@ const Select = (props: IProps) => {
     disabled ? "cursor-not-allowed bg-gray-200" : "cursor-default bg-slate-100"
   } rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start pe-8 border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className}`;
 
-  if (!dataList) return null;
   return (
     <div className={"w-full relative" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-      {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass}`}>{label}</label>}
+      {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
 
       <ClickAwayListener
         onClickAway={() => {
@@ -102,36 +141,52 @@ const Select = (props: IProps) => {
         }}
       >
         <div className="w-full relative" ref={anchorRef}>
-          <Controller
+          <div
             //
-            render={({ field }) => {
-              return (
-                <FieldComponent
-                  //
-                  dataList={dataList}
-                  setOpen={setOpen}
-                  open={open}
-                  dataLoading={dataLoading}
-                  anchorRef={anchorRef}
-                  field={field}
-                  placeholder={placeholder}
-                  disabled={disabled}
-                  loading={loading}
-                  direction={direction}
-                  searchable={searchable}
-                  multiple={multiple}
-                  showTitle={showTitle}
-                  search={search}
-                  setSearch={setSearch}
-                  className={_className}
-                />
-              );
+            className={_className}
+            dir={direction}
+            style={{ height: multiline ? (lines || 4) * 25.5 + "px" : "" }}
+            onClick={() => {
+              if (disabled || loading) return;
+              if (!open) setOpen(true);
             }}
-            defaultValue={defaultValue}
-            name={name}
-            control={control}
-          />
-
+          >
+            <div className="h-5 w-0 float-right" />
+            {dataLoading && ""}
+            {dataList && (
+              <Controller
+                render={({ field }) => {
+                  return (
+                    <FieldComponent
+                      //
+                      resetValue={resetValue}
+                      dataList={dataList}
+                      setOpen={setOpen}
+                      open={open}
+                      dataLoading={dataLoading}
+                      anchorRef={anchorRef}
+                      field={field}
+                      placeholder={placeholder}
+                      disabled={disabled}
+                      loading={loading}
+                      direction={direction}
+                      searchable={searchable}
+                      multiple={multiple}
+                      showTitle={showTitle}
+                      search={search}
+                      setSearch={setSearch}
+                      className={_className}
+                      onChange={onChange}
+                      tagsMode={tagsMode}
+                    />
+                  );
+                }}
+                defaultValue={defaultValue}
+                name={name}
+                control={control}
+              />
+            )}
+          </div>
           <span className={`absolute top-0 end-0 text-blue-600  flex items-center justify-center h-full me-2.5 text-md ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
             <ArrowDownIcon />
           </span>
@@ -158,10 +213,14 @@ type FieldComponentType = {
   setOpen: (s: boolean) => void;
   open: boolean;
   dataLoading: boolean;
+  tagsMode?: boolean;
 
   anchorRef: RefObject<HTMLDivElement>;
   search: string;
   setSearch: (s: string) => void;
+  onChange?: (value: any) => void;
+
+  resetValue?: any;
 };
 
 const FieldComponent = (props: FieldComponentType) => {
@@ -183,6 +242,9 @@ const FieldComponent = (props: FieldComponentType) => {
     anchorRef,
     search,
     setSearch,
+    onChange,
+    resetValue,
+    tagsMode,
   } = props;
 
   const [objectValue, setObjectValue] = useState<DataType[] | DataType | undefined>(
@@ -203,21 +265,45 @@ const FieldComponent = (props: FieldComponentType) => {
     );
   }, [field.value]);
 
-  const _value = multiple
-    ? //
-      showTitle
-      ? (objectValue as DataType[]).map((item: DataType) => item.title).join(", ")
-      : //
-      !!(objectValue as DataType[])?.length
-      ? (objectValue as DataType[]).length + " مورد انتخاب شده"
-      : "انتخاب نشده"
-    : //
-    objectValue
-    ? (objectValue as DataType)?.title
-    : "انتخاب نشده";
+  useEffect(() => {
+    field.onChange(null);
+  }, [resetValue]);
+
+  const _value = multiple ? (
+    //
+    showTitle ? (
+      //
+      !!(objectValue as DataType[])?.length ? (
+        tagsMode ? (
+          <div className="flex flex-wrap gap-1">
+            {(objectValue as DataType[]).map((item: DataType, index) => (
+              <span key={index} className="cursor-default bg-blue-500 text-white px-2 rounded flex justify-center items-center">
+                {item.title}
+              </span>
+            ))}
+          </div>
+        ) : (
+          (objectValue as DataType[]).map((item: DataType) => item.title).join(", ")
+        )
+      ) : (
+        "انتخاب نشده"
+      )
+    ) : //
+    !!(objectValue as DataType[])?.length ? (
+      (objectValue as DataType[]).length + " مورد انتخاب شده"
+    ) : (
+      "انتخاب نشده"
+    )
+  ) : //
+  objectValue ? (
+    (objectValue as DataType)?.title
+  ) : (
+    "انتخاب نشده"
+  );
   return (
-    <div>
-      <input
+    <>
+      {_value}
+      {/* <input
         type="text"
         disabled={disabled || loading || dataLoading}
         placeholder={placeholder}
@@ -229,11 +315,7 @@ const FieldComponent = (props: FieldComponentType) => {
         onClick={() => {
           setOpen(!open);
         }}
-        // onFocus={(e: any) => setOpen(true)}
-        // onBlur={(e) => {
-        //   if (!multiple) setOpen(false);
-        // }}
-      />
+      /> */}
       {!!dataList && (
         <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg z-20">
           {({ TransitionProps, placement }) => (
@@ -268,10 +350,13 @@ const FieldComponent = (props: FieldComponentType) => {
                       title="انتخاب نشده"
                       selected={!field.value?.length}
                       onClick={() => {
+                        if (disabled || loading) return;
                         if (multiple) {
                           field.onChange(null);
+                          if (onChange) onChange(null);
                         } else {
                           field.onChange(null);
+                          if (onChange) onChange(null);
                           setOpen(false);
                         }
                       }}
@@ -282,21 +367,21 @@ const FieldComponent = (props: FieldComponentType) => {
                           //
                           title={title}
                           key={_index}
-                          selected={multiple ? field.value.includes(value) : value === field.value}
+                          selected={multiple ? field.value?.includes(value) : value === field.value}
                           onClick={() => {
+                            if (disabled || loading) return;
                             if (multiple) {
                               let a = [];
-                              let b = [];
-                              if (field.value.includes(value)) {
+                              if (field.value?.includes(value)) {
                                 a = field.value.filter((item: any) => item !== value);
-                                b = (objectValue as DataType[]).filter((item: any) => item.value !== value);
                               } else {
-                                a = [...field.value, value];
-                                b = [...(objectValue as DataType[]), { title, value }];
+                                a = [...(field.value || []), value];
                               }
                               field.onChange(a);
+                              if (onChange) onChange(a);
                             } else {
                               field.onChange(value);
+                              if (onChange) onChange(value);
                               setOpen(false);
                             }
                           }}
@@ -314,7 +399,7 @@ const FieldComponent = (props: FieldComponentType) => {
           )}
         </Popper>
       )}
-    </div>
+    </>
   );
 };
 
@@ -356,6 +441,10 @@ export type IProps = {
   multiple?: boolean;
   showTitle?: boolean;
   searchable?: boolean;
+  tagsMode?: boolean;
+
+  multiline?: boolean;
+  lines?: number;
 
   error?: ReactNode;
   warning?: ReactNode;
@@ -364,6 +453,8 @@ export type IProps = {
 
   items?: DataType[];
   apiPath?: string;
+  filterApi?: { cat?: string };
+  onChange?: (value: any) => void;
 };
 
 export default Select;

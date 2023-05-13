@@ -17,9 +17,10 @@ type IProps = {
   endpoint: string;
   form: any;
   setInitialData: (data: any) => void;
+  componentProps?: {};
 };
 
-export default function EditAddPage<F extends FieldValues, T>({ Center, Side = null, endpoint, form, setInitialData }: IProps) {
+export default function EditAddPage<F extends FieldValues, T>({ Center, Side = null, endpoint, form, setInitialData, componentProps = {} }: IProps) {
   const params = useParams();
 
   const SECTION = !!params?.section ? (params.section as string) : undefined;
@@ -85,7 +86,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
         <form onSubmit={handleSubmit(onSubmit())} />
         <div className="grid grid-cols-6 gap-4">
           <div className="col-span-full	lg:col-span-4">
-            <Center form={form} loading={dataLoading} section={SECTION} />
+            <Center form={form} loading={dataLoading} section={SECTION} props={componentProps} />
           </div>
           <div className="col-span-full lg:col-span-2">
             <div className="grid grid-cols-1 gap-4">
@@ -108,7 +109,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
                   noSpace
                 />
               </PanelCard>
-              {Side && <Side form={form} loading={dataLoading} />}
+              {Side && <Side form={form} loading={dataLoading} section={SECTION} props={componentProps} />}
             </div>
           </div>
         </div>
@@ -122,4 +123,5 @@ export type AddEditComponentProps = {
   loading: boolean;
   section?: string;
   cancelForm?: any;
+  props?: any;
 };

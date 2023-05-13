@@ -13,7 +13,7 @@ const columns: ColumnsType<EstateCategory> = [
     dataIndex: "title",
   },
   {
-    title: "لینک",
+    title: "شناسه",
     dataIndex: "slug",
     render: (slug) => {
       return <pre>{slug}</pre>;
@@ -61,6 +61,7 @@ export default function Template() {
         columns={columns}
         editable
         deletable
+        defaultPageCount={50}
       />
     </>
   );

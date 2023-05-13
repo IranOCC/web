@@ -111,7 +111,10 @@ export type EstateFormData = {
     publishedAt: Date;
 
     tags: string[];
-    categories: string[];
+    category: string;
+    type: string;
+    documentType: string[];
+    features: string[];
 
 
 
@@ -134,8 +137,7 @@ export type EstateFormData = {
 
 
     area: number;
-    documentType: string[];
-    features: string[];
+
     constructionYear: number;
 
     roomsCount: number;
@@ -163,6 +165,28 @@ export type EstateCategoryFormData = {
 }
 
 export type EstateDocumentTypeFormData = {
+    _id?: string;
+
+    title: string;
+    slug: string;
+    description: string;
+    icon: Icon | string;
+    tags: string[];
+    categories: EstateCategory[] | string[];
+}
+
+export type EstateFeatureFormData = {
+    _id?: string;
+
+    title: string;
+    slug: string;
+    description: string;
+    icon: Icon | string;
+    tags: string[];
+    categories: EstateCategory[] | string[];
+}
+
+export type EstateTypeFormData = {
     _id?: string;
 
     title: string;
