@@ -59,7 +59,7 @@ export default function EstateDocumentTypeBox({ form, loading, cancelForm }: Add
         control={control}
         name="slug"
         direction="ltr"
-        placeholder="آدرس اینترنتی"
+        placeholder="شناسه"
         error={errors.slug?.message}
         loading={isSubmitting}
         noSpace

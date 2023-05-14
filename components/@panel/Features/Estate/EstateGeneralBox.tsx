@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
-import LogoUploader from "@/components/Uploader/LogoUploader";
 import TextEditor from "@/components/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
 
@@ -22,12 +21,13 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
+    register("category", { required: "دسته را مشخص کنید" });
+    register("type");
     register("code");
-    register("constructionYear");
-    register("documentType");
-    register("area");
-    register("price");
-    register("totalPrice");
+    register("documentType", { required: "نوع سند را مشخص کنید" });
+    register("area", { required: "متراژ کل را مشخص کنید" });
+    register("price", { required: "قیمت هر متر را مشخص کنید" });
+    register("totalPrice", { required: "قیمت کل را مشخص کنید" });
     register("description");
     register("canBarter");
   }, []);
@@ -40,21 +40,35 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             //
             control={control}
             name="code"
-            label="کد ملک"
+            label="کد"
             direction="ltr"
             error={errors.code?.message}
             loading={isSubmitting}
             noSpace
+            containerClassName="col-span-full"
           />
-          <Input
+          <Select
             //
             control={control}
-            name="constructionYear"
-            label="سال ساخت"
-            type="number"
-            direction="ltr"
-            error={errors.constructionYear?.message}
+            name="category"
+            error={errors.category?.message}
             loading={isSubmitting}
+            label="دسته"
+            disabled
+            placeholder="انتخاب کنید"
+            apiPath="/estate/category/assignList"
+            noSpace
+          />
+          <Select
+            //
+            control={control}
+            name="type"
+            error={errors.type?.message}
+            loading={isSubmitting}
+            label="نوع"
+            placeholder="انتخاب کنید"
+            apiPath="/estate/type/assignList"
+            filterApi={{ cat: props?.selectedCat }}
             noSpace
           />
           <Select
@@ -69,7 +83,6 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             filterApi={{ cat: props?.selectedCat }}
             noSpace
           />
-
           <Input
             //
             control={control}

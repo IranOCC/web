@@ -1,12 +1,12 @@
-import { CheckBox, Input } from "@/components/Input";
+import { CheckBox, DateTimePicker, Input } from "@/components/Input";
 import { EstateFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
-import LogoUploader from "@/components/Uploader/LogoUploader";
 import TextEditor from "@/components/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
+import moment from "moment";
 
 export default function EstateVisibilityBox({ form, loading }: AddEditComponentProps) {
   const {
@@ -15,6 +15,7 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
     resetField,
     setValue,
     setError,
+    getValues,
     control,
     handleSubmit,
     reset,
@@ -22,10 +23,9 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("status");
-    register("visibility");
-    register("password");
-    register("publishedAt");
+    register("status", { required: "وضعیت را مشخص کنید" });
+    register("visibility", { required: "وضعیت نمایش را مشخص کنید" });
+    register("publishedAt", { required: "تاریخ انتشار را مشخص کنید" });
     register("pinned");
   }, []);
 
@@ -43,6 +43,7 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
             placeholder="انتخاب کنید"
             noSpace
             apiPath="/estate/statics/status"
+            defaultValue="Publish"
           />
           <Select
             //
@@ -54,24 +55,15 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
             placeholder="انتخاب کنید"
             noSpace
             apiPath="/estate/statics/visibility"
+            defaultValue="Public"
           />
-          <Input
-            //
-            control={control}
-            name="password"
-            label="پسورد"
-            direction="ltr"
-            type="text"
-            error={errors.password?.message}
-            loading={isSubmitting}
-            noSpace
-          />
-          <Input
+          <DateTimePicker
             //
             control={control}
             name="publishedAt"
             label="تاریخ انتشار"
             error={errors.publishedAt?.message}
+            defaultValue={new Date()}
             loading={isSubmitting}
             noSpace
           />

@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button";
 import Modal from "@/components/Modals";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import { RadioGroup } from "@headlessui/react";
 import { useEffect, useState } from "react";
 
 export default function EstateSetCategoryModal({ open, setOpen, setCategory }: any) {
@@ -33,24 +34,23 @@ export default function EstateSetCategoryModal({ open, setOpen, setCategory }: a
         title="انتخاب دسته ملک"
         closeButton={false}
       >
-        <div className="grid grid-cols-2 gap-4 py-4">
-          {categories.map(({ value, title }: { value: string; title: string }, index) => {
-            return (
-              <>
-                <div
-                  //
-                  className={(selected === value ? "bg-yellow-300 text-white" : "bg-slate-100 text-slate-800") + " py-6 cursor-pointer font-semibold transition-colors hover:bg-yellow-300 hover:text-white rounded text-center flex justify-center items-center"}
-                  onClick={() => setSelected(value)}
-                  title={title}
-                  key={value}
-                >
-                  {/*  */}
-                  {title}
-                </div>
-              </>
-            );
-          })}
-        </div>
+        <RadioGroup value={selected} onChange={(value) => setSelected(value)}>
+          <div className="grid grid-cols-2 gap-4 py-4">
+            {categories.map(({ value, title }: { value: string; title: string }, index) => {
+              return (
+                <>
+                  <RadioGroup.Option
+                    //
+                    value={value}
+                    key={index}
+                  >
+                    {({ checked }) => <div className={"bg-slate-100 text-slate-800 py-6 cursor-pointer font-semibold transition-colors hover:bg-yellow-300 hover:text-white rounded text-center flex justify-center items-center" + (checked ? " bg-yellow-300 text-white" : "")}>{title}</div>}
+                  </RadioGroup.Option>
+                </>
+              );
+            })}
+          </div>
+        </RadioGroup>
 
         <Button
           //

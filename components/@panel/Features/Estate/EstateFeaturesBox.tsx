@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
-import LogoUploader from "@/components/Uploader/LogoUploader";
-import TextEditor from "@/components/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
 
 export default function EstateFeaturesBox({ form, loading, props }: AddEditComponentProps) {
@@ -22,6 +20,7 @@ export default function EstateFeaturesBox({ form, loading, props }: AddEditCompo
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
+    register("constructionYear");
     register("roomsCount");
     register("mastersCount");
     register("floorsCount");
@@ -36,6 +35,18 @@ export default function EstateFeaturesBox({ form, loading, props }: AddEditCompo
     <>
       <PanelCard title="ویژگی های اختصاصی" loading={loading}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+          <Input
+            //
+            control={control}
+            name="constructionYear"
+            label="سال ساخت"
+            type="number"
+            direction="ltr"
+            error={errors.constructionYear?.message}
+            loading={isSubmitting}
+            noSpace
+            containerClassName="col-span-full"
+          />
           <Input
             //
             control={control}

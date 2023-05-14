@@ -72,7 +72,7 @@ export interface Office {
 
 
 export interface Estate {
-    _id: string;
+    _id?: string;
 
     title: string;
     content?: string;
@@ -80,19 +80,21 @@ export interface Estate {
     slug: string;
 
     image?: StorageFile | string;
+    gallery?: StorageFile | string;
+
 
     status: string;
     visibility: string;
-    password: string;
     pinned: boolean;
-
     publishedAt: Date;
 
     tags: string[];
-    categories: string[];
+    category: string;
+    type: string;
+    documentType: string[];
+    features: string[];
 
 
-    code: string;
 
     province?: string;
     city?: string;
@@ -102,18 +104,18 @@ export interface Estate {
     address?: string;
     location?: [number, number];
 
+    code: string;
+
     price: number;
     totalPrice: number;
+    canBarter: boolean;
+
 
     description: string;
 
-    gallery?: StorageFile | string;
-
-    canBarter: boolean;
 
     area: number;
-    documentType: string[];
-    features: string[];
+
     constructionYear: number;
 
     roomsCount: number;
@@ -124,6 +126,8 @@ export interface Estate {
     floor: number;
 
     withOldBuilding: boolean;
+
+    owner?: User | string;
 };
 
 

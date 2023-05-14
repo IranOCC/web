@@ -59,7 +59,7 @@ export default function EstateTypeBox({ form, loading, cancelForm }: AddEditComp
         control={control}
         name="slug"
         direction="ltr"
-        placeholder="آدرس اینترنتی"
+        placeholder="شناسه"
         error={errors.slug?.message}
         loading={isSubmitting}
         noSpace

@@ -42,11 +42,11 @@ const Center = (props: AddEditComponentProps) => {
 const Side = (props: AddEditComponentProps) => {
   return (
     <>
-      <EstateCategoryTypeBox {...props} />
+      <EstateMediaBox {...props} />
+
       <EstateTagsBox {...props} />
       <EstateVisibilityBox {...props} />
       <EstateOwnerBox {...props} />
-      <EstateMediaBox {...props} />
     </>
   );
 };
@@ -77,7 +77,7 @@ export default function Page() {
     // setValue("active", data.active);
   };
 
-  const [selectedCat, setSelectedCat] = useState<string | undefined>(undefined);
+  const [selectedCat, setSelectedCat] = useState<string | undefined>(getValues("category"));
 
   return (
     <>
@@ -91,14 +91,14 @@ export default function Page() {
         componentProps={{ selectedCat }}
       />
       {/*  */}
-      <EstateSetCategoryModal
+      {/* <EstateSetCategoryModal
         //
         open={!selectedCat}
         setCategory={(val: string) => {
           setValue("category", val);
           setSelectedCat(val);
         }}
-      />
+      /> */}
     </>
   );
 }

@@ -148,52 +148,6 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
     }
   };
 
-  // ##############################################
-  if (sortable) {
-    return (
-      <>
-        <DndContext onDragEnd={onDragEnd}>
-          <SortableContext
-            // rowKey array
-            items={dataSource.map((i) => i._id)}
-            strategy={verticalListSortingStrategy}
-          >
-            <Table
-              //
-              components={{
-                body: {
-                  row: Row,
-                },
-              }}
-              rowKey="key"
-              bordered={false}
-              loading={loading || fetchLoading}
-              size="large"
-              title={headerTitle}
-              showHeader={true}
-              footer={footerTitle}
-              expandable={expandable ? expandDetail : undefined}
-              rowSelection={selectable ? rowSelection : undefined}
-              scroll={scroll}
-              pagination={{
-                total: totalItemsCount,
-                position: ["bottomCenter"],
-                onChange: handlePaginationChange,
-                pageSize: _count,
-                current: _page,
-                defaultPageSize: defaultPageCount || 10,
-                defaultCurrent: 1,
-                pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
-              }}
-              columns={tableColumns}
-              dataSource={dataSource}
-            />
-          </SortableContext>
-        </DndContext>
-      </>
-    );
-  }
-
   const baseRoute = (params?.id ? pathname?.replace(params.id as string, "") : pathname) || "/";
   const hasOperations = deletable || editable || extraOperations("");
   const generateOperations = (id: string) => {
@@ -209,9 +163,12 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
       });
     }
     if (editable) {
+      const spm = new URLSearchParams(searchParams?.toString());
+      spm.delete("count");
+      spm.delete("page");
       operationsItem.push({
         key: "edit",
-        label: <Link href={`${baseRoute}/${id}` + (searchParams ? "?" + searchParams?.toString() : "")}>ویرایش</Link>,
+        label: <Link href={`${baseRoute}/${id}` + (spm ? "?" + spm?.toString() : "")}>ویرایش</Link>,
       });
     }
     return [...operationsItem, ...extraOperations(id)];
@@ -242,6 +199,53 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
     });
   }
 
+  // ##############################################
+  if (sortable) {
+    return (
+      <>
+        <DndContext onDragEnd={onDragEnd}>
+          <SortableContext
+            // rowKey array
+            items={dataSource.map((i) => i._id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <Table
+              //
+              components={{
+                body: {
+                  row: Row,
+                },
+              }}
+              rowKey="key"
+              bordered={false}
+              loading={loading || fetchLoading}
+              size="large"
+              title={headerTitle}
+              showHeader={true}
+              footer={footerTitle}
+              expandable={expandable ? expandDetail : undefined}
+              rowSelection={selectable ? rowSelection : undefined}
+              scroll={scroll}
+              pagination={{
+                // showSizeChanger: true,
+                total: totalItemsCount,
+                position: ["bottomCenter"],
+                onChange: handlePaginationChange,
+                pageSize: _count,
+                current: _page,
+                defaultPageSize: defaultPageCount || 10,
+                defaultCurrent: 1,
+                pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
+              }}
+              columns={tableColumns}
+              dataSource={dataSource}
+            />
+          </SortableContext>
+        </DndContext>
+      </>
+    );
+  }
+
   return (
     <Table
       //
@@ -256,6 +260,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
       rowSelection={selectable ? rowSelection : undefined}
       scroll={scroll}
       pagination={{
+        // showSizeChanger: true,
         total: totalItemsCount,
         position: ["bottomCenter"],
         onChange: handlePaginationChange,

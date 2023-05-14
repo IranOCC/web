@@ -4,8 +4,7 @@ import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
-import LogoUploader from "@/components/Uploader/LogoUploader";
-import TextEditor from "@/components/Input/TextEditor";
+
 import { AddEditComponentProps } from "../../EditAddPage";
 
 export default function EstateOwnerBox({ form, loading }: AddEditComponentProps) {

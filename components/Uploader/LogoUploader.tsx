@@ -161,7 +161,7 @@ export type IProps = {
   warning?: ReactNode;
   success?: ReactNode;
 
-  uploadPath: "offices" | "estates" | "users" | "posts" | "others";
+  uploadPath: "office" | "estate" | "user" | "post" | "other";
 };
 
 export default LogoUploader;

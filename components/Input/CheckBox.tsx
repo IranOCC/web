@@ -33,7 +33,7 @@ const CheckBox = (props: IProps) => {
   }
 
   return (
-    <div className={"w-full relative z-10 flex items-end flex-col" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+    <div className={"w-full relative flex items-end flex-col" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
       <div className={"w-full relative flex items-center "}>
         <Controller
           render={({ field }) => {

@@ -39,6 +39,7 @@ specifiers:
   react-dom: 18.2.0
   react-hook-form: ^7.43.8
   react-leaflet: ^4.2.1
+  react-multi-date-picker: ^4.0.0
   react-redux: ^8.0.5
   redux: ^4.2.1
   sass: ^1.58.3
@@ -47,6 +48,7 @@ specifiers:
   tailwindcss: ^3.3.1
   tailwindcss-rtl: ^0.9.0
   typescript: 4.9.5
+  zaman: ^2.0.7
 
 dependencies:
   '@dnd-kit/core': 6.0.8_biqbaboplfbrettd7655fr4n2y
@@ -81,11 +83,13 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.43.9_react@18.2.0
   react-leaflet: 4.2.1_yydtlhsdonbqao6vgvkwhv2zki
+  react-multi-date-picker: 4.0.0_biqbaboplfbrettd7655fr4n2y
   react-redux: 8.0.5_ctrls2ti7t7iutxbwkm5ipogyy
   redux: 4.2.1
   sharp: 0.32.1
   slugify: 1.6.6
   typescript: 4.9.5
+  zaman: 2.0.7_pmekkgnqduwlme35zpnqhenc34
 
 devDependencies:
   '@types/leaflet': 1.9.3
@@ -2944,7 +2948,6 @@ packages:
 
   /dayjs/1.11.7:
     resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
-    dev: true
 
   /debounce/1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
@@ -5638,6 +5641,10 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
+  /react-date-object/2.1.7:
+    resolution: {integrity: sha512-810eaGk/xvQBJNncPvhwXaKcSwPRKX48jtY/5U5T1bSUnGFqmBdMvl4EVl76cyzQ8U3KX6hpF6xZ1c0eY9vvJA==}
+    dev: false
+
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -5646,6 +5653,16 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+
+  /react-element-popper/2.1.6_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-8va7mUmrKIkUnaM2t5Dyctd8cjgVgVcrv5vVD0FRay0sN6EPBCKa0bDi1/KmVDAjfgSIn7zQnjtc4VojcGrkgQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /react-hook-form/7.43.9_react@18.2.0:
     resolution: {integrity: sha512-AUDN3Pz2NSeoxQ7Hs6OhQhDr6gtF9YRuutGDwPQqhSUAHJSgGl2VeY3qN19MG0SucpjgDiuMJ4iC5T5uB+eaNQ==}
@@ -5696,6 +5713,18 @@ packages:
       leaflet: 1.9.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /react-multi-date-picker/4.0.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-ZN5ZC/D57GkG6m9eijQXvpXFlJjM5sjJoNAmj7oPHZBxnvJuGD4YAZ9jB+7MtC1qg62Vo4xisnIWjUBbzr7fSQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-date-object: 2.1.7
+      react-dom: 18.2.0_react@18.2.0
+      react-element-popper: 2.1.6_biqbaboplfbrettd7655fr4n2y
     dev: false
 
   /react-redux/8.0.5_ctrls2ti7t7iutxbwkm5ipogyy:
@@ -6821,6 +6850,17 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: false
+
+  /zaman/2.0.7_pmekkgnqduwlme35zpnqhenc34:
+    resolution: {integrity: sha512-pr24Vpach7BBalafDXHm7q2TqbM1bhP3kzkt3EagzI3+GBaLICTS4RbSUX30viG9V86uERUPwq295bEWkfttJg==}
+    dependencies:
+      '@emotion/react': 11.10.6_pmekkgnqduwlme35zpnqhenc34
+      '@emotion/styled': 11.10.6_oouaibmszuch5k64ms7uxp2aia
+      dayjs: 1.11.7
+    transitivePeerDependencies:
+      - '@types/react'
+      - react
     dev: false
 
   /zod/3.21.4:

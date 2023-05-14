@@ -20,9 +20,9 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("province", {});
-    register("city", {});
-    register("district", {});
+    register("province", { required: "استان را مشخص کنید" });
+    register("city", { required: "شهر را مشخص کنید" });
+    register("district", { required: "منطقه را مشخص کنید" });
     register("quarter", {});
     register("alley", {});
     register("address", {});

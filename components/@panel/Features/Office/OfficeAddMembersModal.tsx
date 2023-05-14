@@ -1,25 +1,10 @@
 import { Button } from "@/components/Button";
-import { CheckBox, Input } from "@/components/Input";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { toast } from "@/lib/toast";
-import { OfficeAddMemberFormData, OfficeFormData, UserFormData } from "@/types/formsData";
+import { OfficeAddMemberFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
-import PanelCard from "@/components/@panel/Card";
-import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
-import Uploader from "@/components/Uploader";
-import LogoUploader from "@/components/Uploader/LogoUploader";
 import Modal from "@/components/Modals";
-import EmailAddressBox from "../@common/EmailAddressBox";
-import EditAddPage, { AddEditComponentProps } from "../../EditAddPage";
-import { Office } from "@/types/interfaces";
-import LocationBox from "../@common/LocationBox";
-import PhoneNumberBox from "../@common/PhoneNumberBox";
-import SendEmailBox from "../@common/SendEmailBox";
-import SendSmsBox from "../@common/SendSmsBox";
-import OfficeBox from "./OfficeBox";
-// import Uploader from "@/components/Uploader";
+import { AddEditComponentProps } from "../../EditAddPage";
 
 const Center = ({ form, loading }: AddEditComponentProps) => {};
 

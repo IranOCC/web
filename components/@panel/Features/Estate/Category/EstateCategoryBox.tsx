@@ -61,7 +61,7 @@ export default function EstateCategoryBox({ form, loading, cancelForm }: AddEdit
         control={control}
         name="slug"
         direction="ltr"
-        placeholder="آدرس اینترنتی"
+        placeholder="شناسه"
         error={errors.slug?.message}
         loading={isSubmitting}
         noSpace

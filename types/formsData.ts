@@ -106,7 +106,6 @@ export type EstateFormData = {
 
     status: string;
     visibility: string;
-    password: string;
     pinned: boolean;
     publishedAt: Date;
 

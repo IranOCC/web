@@ -3,6 +3,15 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  images: {
+    domains: ['storage.iranocc.com']
+    // remotePatterns: [
+    //   {
+    //     protocol: 'https',
+    //     hostname: 'storage.iranocc.com',
+    //   },
+    // ],
+  },
   output: 'standalone'
 }
 

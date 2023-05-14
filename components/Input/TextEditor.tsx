@@ -40,6 +40,7 @@ const TextEditor = (props: IProps) => {
                   init={{
                     height: 400,
                     menubar: false,
+                    directionality: "rtl",
                     plugins: ["advlist", "autolink", "lists", "link", "image", "charmap", "preview", "anchor", "searchreplace", "visualblocks", "code", "fullscreen", "insertdatetime", "media", "table", "code", "help", "wordcount", "directionality"],
                     toolbar: "undo redo | blocks | " + "image | " + "bold italic forecolor | alignleft aligncenter " + "alignright alignjustify | ltr rtl | bullist numlist outdent indent | " + "removeformat | help |",
                     content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px, }",
