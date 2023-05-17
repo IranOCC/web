@@ -29,6 +29,8 @@ const LocationChooser = (props: IProps) => {
     labelClass = " text-orange-500";
   }
 
+  const initialLocation: L.LatLngExpression = [35.7219, 51.3347];
+
   //
   return (
     <>
@@ -38,22 +40,20 @@ const LocationChooser = (props: IProps) => {
         <div className="w-full relative">
           <Controller
             render={({ field }) => {
-              let center: L.LatLngExpression;
+              let center: L.LatLngExpression | null = null;
               if (Array.isArray(field.value)) {
                 const m = field.value as number[];
                 center = [m[0], m[1]];
               } else if (typeof field.value === "string") {
                 const m = field.value.split(",").map((v) => +v);
                 center = [m[0], m[1]];
-              } else {
-                center = [35.7219, 51.3347];
               }
 
               return (
                 <>
                   <MapContainer
                     //
-                    center={center}
+                    center={center || initialLocation}
                     zoom={15}
                     scrollWheelZoom={false}
                     style={{ height: 300, width: "100%" }}
@@ -62,6 +62,8 @@ const LocationChooser = (props: IProps) => {
                     <div className="text-blue-500 w-12 h-12 -mt-6 z-[9999]">
                       <MarkerIcon />
                     </div>
+                    {!center && <div className="text-blue-500 font-bold rounded absolute top-3 bg-white p-2 z-[9999]">لوکیشن ثبت نشده است</div>}
+
                     <TileLayer
                       //
                       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
