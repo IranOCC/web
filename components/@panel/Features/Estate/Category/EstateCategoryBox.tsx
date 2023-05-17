@@ -42,7 +42,7 @@ export default function EstateCategoryBox({ form, loading, cancelForm }: AddEdit
         error={errors.title?.message}
         loading={isSubmitting}
         noSpace
-        onKeyDown={(e: any) => {
+        onKeyUp={(e: any) => {
           setValue(
             "slug",
             slugify(e.target.value, {
@@ -52,7 +52,8 @@ export default function EstateCategoryBox({ form, loading, cancelForm }: AddEdit
               strict: false,
               locale: "fa",
               trim: true,
-            })
+            }),
+            { shouldValidate: true }
           );
         }}
       />

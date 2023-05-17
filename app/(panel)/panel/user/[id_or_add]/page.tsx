@@ -36,8 +36,8 @@ const Side = ({ form, loading }: AddEditComponentProps) => {
   const { getValues } = form;
   return (
     <>
-      <SendSmsBox userID={getValues("_id")} to={getValues("phone.value")} />
-      <SendEmailBox userID={getValues("_id")} to={getValues("email.value")} />
+      {!!(getValues("_id") && getValues("phone._id")) && <SendSmsBox officeID={getValues("_id")} to={getValues("phone.value")} />}
+      {!!(getValues("_id") && getValues("email._id")) && <SendEmailBox officeID={getValues("_id")} to={getValues("email.value")} />}
     </>
   );
 };
@@ -54,10 +54,8 @@ export default function Page() {
     setValue("roles", data.roles);
     setValue("avatar", data.avatar as StorageFile);
     //
-    setValue("phone.value", (data.phone as Phone)?.value);
-    setValue("phone.verified", (data.phone as Phone)?.verified);
-    setValue("email.value", (data.email as Email)?.value);
-    setValue("email.verified", (data.email as Email)?.verified);
+    setValue("phone", data.phone as Phone);
+    setValue("email", data.email as Email);
     //
     setValue("province", data.province);
     setValue("city", data.city);
@@ -66,6 +64,16 @@ export default function Page() {
     //
     setValue("verified", data.verified);
     setValue("active", data.active);
+  };
+  const beforeSubmit = (data: UserFormData) => {
+    if (!(data.phone as Phone)?.value) {
+      data.phone = undefined;
+    }
+    if (!(data.email as Email)?.value) {
+      data.email = undefined;
+    }
+
+    return data;
   };
   return (
     <>
@@ -76,6 +84,7 @@ export default function Page() {
         form={form}
         setInitialData={setInitialData}
         endpoint="user"
+        beforeSubmit={beforeSubmit}
       />
     </>
   );

@@ -18,9 +18,10 @@ type IProps = {
   form: any;
   setInitialData: (data: any) => void;
   componentProps?: {};
+  beforeSubmit?: (data: any) => any;
 };
 
-export default function EditAddPage<F extends FieldValues, T>({ Center, Side = null, endpoint, form, setInitialData, componentProps = {} }: IProps) {
+export default function EditAddPage<F extends FieldValues, T>({ Center, Side = null, beforeSubmit, endpoint, form, setInitialData, componentProps = {} }: IProps) {
   const params = useParams();
 
   const SECTION = !!params?.section ? (params.section as string) : undefined;
@@ -46,6 +47,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
   const onSubmit =
     (redirect: boolean = SECTION ? false : true) =>
     async (data: F) => {
+      if (beforeSubmit) data = beforeSubmit(data);
       try {
         if (isNew) {
           const { data: result } = await api.post(`/${endpoint}`, data);

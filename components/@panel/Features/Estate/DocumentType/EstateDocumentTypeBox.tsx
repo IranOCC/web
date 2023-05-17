@@ -40,7 +40,7 @@ export default function EstateDocumentTypeBox({ form, loading, cancelForm }: Add
         error={errors.title?.message}
         loading={isSubmitting}
         noSpace
-        onKeyDown={(e: any) => {
+        onKeyUp={(e: any) => {
           setValue(
             "slug",
             slugify(e.target.value, {
@@ -50,7 +50,8 @@ export default function EstateDocumentTypeBox({ form, loading, cancelForm }: Add
               strict: false,
               locale: "fa",
               trim: true,
-            })
+            }),
+            { shouldValidate: true }
           );
         }}
       />

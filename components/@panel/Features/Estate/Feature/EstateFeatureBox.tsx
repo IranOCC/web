@@ -40,7 +40,7 @@ export default function EstateFeatureBox({ form, loading, cancelForm }: AddEditC
         error={errors.title?.message}
         loading={isSubmitting}
         noSpace
-        onKeyDown={(e: any) => {
+        onKeyUp={(e: any) => {
           setValue(
             "slug",
             slugify(e.target.value, {
@@ -50,7 +50,8 @@ export default function EstateFeatureBox({ form, loading, cancelForm }: AddEditC
               strict: false,
               locale: "fa",
               trim: true,
-            })
+            }),
+            { shouldValidate: true }
           );
         }}
       />

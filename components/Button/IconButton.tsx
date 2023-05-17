@@ -11,7 +11,7 @@ const IconButton = (props: PropsTypes) => {
       disabled={disabled}
       loading={loading}
       onClick={onClick}
-      className={`!px-3 aspect-square rounded-full ${className}`}
+      className={`!w-8 h-8 !px-3 aspect-square rounded-full ${className}`}
       icon={icon}
       noSpace
     />

@@ -44,7 +44,6 @@ export default function OfficeAddMembersModal({ open, setOpen, addMember }: any)
         open={open}
         setOpen={setOpen}
         // title="افزودن عضو"
-        className="h-[30rem]"
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <p className="py-2 text-sm">
@@ -64,13 +63,16 @@ export default function OfficeAddMembersModal({ open, setOpen, addMember }: any)
             apiPath="/user/assignList"
             containerClassName="col-span-full"
             searchable
+            noSpace
           />
+          <div className="w-full h-72" />
           <Button
             //
             title="افزودن"
             type="submit"
             loading={isSubmitting || isLoading || isValidating}
             onClick={handleSubmit(onSubmit)}
+            noSpace
           />
         </form>
       </Modal>

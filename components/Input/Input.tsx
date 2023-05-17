@@ -28,7 +28,7 @@ const Input = (props: IProps) => {
     containerClassName = "",
     tagsMode,
     noResize = false,
-    onKeyDown,
+    onKeyUp,
   } = props;
   let { status, helperText } = props;
 
@@ -111,7 +111,7 @@ const Input = (props: IProps) => {
                         disabled={disabled || loading}
                         placeholder={placeholder}
                         readOnly={readOnly || loading}
-                        onKeyDown={(e) => {
+                        onKeyUp={(e) => {
                           // @ts-ignore
                           if (e.key === "Enter" && e.target?.value) {
                             e.preventDefault();
@@ -144,7 +144,7 @@ const Input = (props: IProps) => {
                   dir={direction}
                   {...field}
                   value={field.value || ""}
-                  onKeyDown={onKeyDown as KeyboardEventHandler<HTMLTextAreaElement> | undefined}
+                  onKeyUp={onKeyUp as KeyboardEventHandler<HTMLTextAreaElement> | undefined}
                 />
               );
             else
@@ -160,7 +160,7 @@ const Input = (props: IProps) => {
                   dir={direction}
                   {...field}
                   value={field.value || ""}
-                  onKeyDown={onKeyDown as KeyboardEventHandler<HTMLInputElement> | undefined}
+                  onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
                 />
               );
           }}
@@ -213,7 +213,7 @@ export type IProps = {
   innerSubmitBtn?: string;
   size?: "small" | "default" | "large";
 
-  onKeyDown?: KeyboardEventHandler<HTMLTextAreaElement> | KeyboardEventHandler<HTMLInputElement>;
+  onKeyUp?: KeyboardEventHandler<HTMLTextAreaElement> | KeyboardEventHandler<HTMLInputElement>;
 };
 
 export default Input;

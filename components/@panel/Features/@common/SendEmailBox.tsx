@@ -3,7 +3,7 @@ import { Input } from "@/components/Input";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { SendEmailBoxFormData } from "@/types/formsData";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 
@@ -41,6 +41,7 @@ export default function SendEmailBox({ emailAddress, emailID, officeID, userID, 
     } catch (error) {}
   };
 
+  const [_to] = useState(to);
   useEffect(() => {
     if (userID) setValue("userID", userID);
     if (officeID) setValue("officeID", officeID);
@@ -56,7 +57,7 @@ export default function SendEmailBox({ emailAddress, emailID, officeID, userID, 
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <PanelCard title="ارسال ایمیل" disabled={!to} extra={<a onClick={seeLogs}>تاریخچه</a>}>
+      <PanelCard title="ارسال ایمیل" disabled={!_to} extra={<a onClick={seeLogs}>تاریخچه</a>}>
         <Input
           //
           control={control}
@@ -66,7 +67,7 @@ export default function SendEmailBox({ emailAddress, emailID, officeID, userID, 
             <>
               ارسال ایمیل به{" "}
               <b dir="ltr" className="font-extrabold text-blue-600">
-                {to}
+                {_to}
               </b>
             </>
           }

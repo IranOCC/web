@@ -26,7 +26,7 @@ export type UserFormData = {
     province?: string;
     city?: string;
     address?: string;
-    location?: [number, number];
+    location?: [number, number] | string;
     // 
     verified?: boolean;
     active?: boolean;
@@ -72,7 +72,7 @@ export type OfficeFormData = {
     province?: string;
     city?: string;
     address?: string;
-    location?: [number, number];
+    location?: [number, number] | string;
     // 
     verified?: boolean;
     active?: boolean;
@@ -101,7 +101,7 @@ export type EstateFormData = {
     slug: string;
 
     image?: StorageFile | string;
-    gallery?: StorageFile | string;
+    gallery?: StorageFile[] | string[];
 
 
     status: string;
@@ -109,13 +109,29 @@ export type EstateFormData = {
     pinned: boolean;
     publishedAt: Date;
 
-    tags: string[];
+    tags?: string[];
+
+
+    code?: string;
     category: string;
-    type: string;
-    documentType: string[];
-    features: string[];
+    type?: string;
+    documentType?: string[];
+    area?: number;
+    price?: number;
+    totalPrice?: number;
+    description?: string;
+    canBarter?: boolean;
 
 
+    constructionYear?: number;
+    roomsCount?: number;
+    mastersCount?: number;
+    buildingArea?: number;
+    floorsCount?: number;
+    unitsCount?: number;
+    floor?: number;
+    withOldBuilding?: boolean;
+    features?: string[];
 
     province?: string;
     city?: string;
@@ -123,32 +139,12 @@ export type EstateFormData = {
     quarter?: string;
     alley?: string;
     address?: string;
-    location?: [number, number];
-
-    code: string;
-
-    price: number;
-    totalPrice: number;
-    canBarter: boolean;
-
-
-    description: string;
-
-
-    area: number;
-
-    constructionYear: number;
-
-    roomsCount: number;
-    mastersCount: number;
-    buildingArea: number;
-    floorsCount: number;
-    unitsCount: number;
-    floor: number;
-
-    withOldBuilding: boolean;
+    location?: [number, number] | string;
 
     owner?: User | string;
+    createdBy?: User | string;
+    confirmedBy?: User | string;
+    office?: Office | string;
 };
 
 

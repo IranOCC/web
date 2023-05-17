@@ -17,6 +17,9 @@ import EstateOwnerBox from "@/components/@panel/Features/Estate/EstateOwnerBox";
 import EstateSetCategoryModal from "@/components/@panel/Features/Estate/EstateSetCategoryModal";
 import { useState } from "react";
 import EstateCategoryTypeBox from "@/components/@panel/Features/Estate/EstateCategoryTypeBox";
+import EstateRegistrantBox from "@/components/@panel/Features/Estate/EstateRegistrantBox";
+import PanelTab from "@/components/@panel/Tab";
+import PanelCard from "@/components/@panel/Card";
 
 const Center = (props: AddEditComponentProps) => {
   return (
@@ -25,6 +28,31 @@ const Center = (props: AddEditComponentProps) => {
         <div className="col-span-full">
           <EstateBox {...props} />
         </div>
+        {/* <div className="col-span-full">
+          <PanelCard>
+            <PanelTab
+              //
+              data={[
+                {
+                  title: "ویژگی های عمومی",
+                  content: "kkkk",
+                },
+                {
+                  title: "ویژگی های اختصاصی",
+                  content: "nnn",
+                },
+                {
+                  title: "موقعیت مکانی",
+                  content: "nnn",
+                },
+                {
+                  title: "گالری و رسانه",
+                  content: "nnn",
+                },
+              ]}
+            />
+          </PanelCard>
+        </div> */}
         <div className="col-span-full md:col-span-1">
           <EstateGeneralBox {...props} />
         </div>
@@ -43,10 +71,10 @@ const Side = (props: AddEditComponentProps) => {
   return (
     <>
       <EstateMediaBox {...props} />
-
+      <EstateOwnerBox {...props} />
       <EstateTagsBox {...props} />
       <EstateVisibilityBox {...props} />
-      <EstateOwnerBox {...props} />
+      <EstateRegistrantBox {...props} />
     </>
   );
 };
@@ -57,24 +85,6 @@ export default function Page() {
 
   const setInitialData = (data: EstateFormData) => {
     setValue("_id", data._id);
-
-    // setValue("firstName", data.firstName);
-    // setValue("lastName", data.lastName);
-    // setValue("roles", data.roles);
-    // setValue("avatar", data.avatar as StorageFile);
-    // //
-    // setValue("phone.value", (data.phone as Phone)?.value);
-    // setValue("phone.verified", (data.phone as Phone)?.verified);
-    // setValue("email.value", (data.email as Email)?.value);
-    // setValue("email.verified", (data.email as Email)?.verified);
-    // //
-    // setValue("province", data.province);
-    // setValue("city", data.city);
-    // setValue("address", data.address);
-    // setValue("location", data.location);
-    // //
-    // setValue("verified", data.verified);
-    // setValue("active", data.active);
   };
 
   const [selectedCat, setSelectedCat] = useState<string | undefined>(getValues("category"));
@@ -91,14 +101,14 @@ export default function Page() {
         componentProps={{ selectedCat }}
       />
       {/*  */}
-      {/* <EstateSetCategoryModal
+      <EstateSetCategoryModal
         //
         open={!selectedCat}
         setCategory={(val: string) => {
-          setValue("category", val);
+          setValue("category", val, { shouldValidate: true });
           setSelectedCat(val);
         }}
-      /> */}
+      />
     </>
   );
 }

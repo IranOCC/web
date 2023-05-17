@@ -9,6 +9,7 @@ import PanelCard from "@/components/@panel/Card";
 import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
+import Link from "next/link";
 
 export default function EmailAddressBox({ form, loading }: AddEditComponentProps) {
   const {
@@ -17,6 +18,7 @@ export default function EmailAddressBox({ form, loading }: AddEditComponentProps
     resetField,
     setValue,
     setError,
+    getValues,
     control,
     handleSubmit,
     reset,

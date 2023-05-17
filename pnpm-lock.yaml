@@ -40,6 +40,7 @@ specifiers:
   react-hook-form: ^7.43.8
   react-leaflet: ^4.2.1
   react-multi-date-picker: ^4.0.0
+  react-number-format: ^5.2.1
   react-redux: ^8.0.5
   redux: ^4.2.1
   sass: ^1.58.3
@@ -84,6 +85,7 @@ dependencies:
   react-hook-form: 7.43.9_react@18.2.0
   react-leaflet: 4.2.1_yydtlhsdonbqao6vgvkwhv2zki
   react-multi-date-picker: 4.0.0_biqbaboplfbrettd7655fr4n2y
+  react-number-format: 5.2.1_biqbaboplfbrettd7655fr4n2y
   react-redux: 8.0.5_ctrls2ti7t7iutxbwkm5ipogyy
   redux: 4.2.1
   sharp: 0.32.1
@@ -5725,6 +5727,17 @@ packages:
       react-date-object: 2.1.7
       react-dom: 18.2.0_react@18.2.0
       react-element-popper: 2.1.6_biqbaboplfbrettd7655fr4n2y
+    dev: false
+
+  /react-number-format/5.2.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-C9L9GQDH/hv6ZDAwk6cdF0OhWw3EGXPvoigUtig47710SRh/HvCczuksrTXecMH2PBo/jjaaOSIVmUaKGxdZ3w==}
+    peerDependencies:
+      react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-redux/8.0.5_ctrls2ti7t7iutxbwkm5ipogyy:

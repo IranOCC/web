@@ -82,8 +82,8 @@ const Select = (props: IProps) => {
 
   const [dataList, setDataList] = useState<DataType[] | null>(null);
   const [search, setSearch] = useState("");
-  const [dataLoading, setDataLoading] = useState(false);
-  const [resetValue, setResetValue] = useState([false]);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [resetValue, setResetValue] = useState<boolean[] | null>(null);
 
   const isFirstRenderResetApply = useRef(true);
 
@@ -105,14 +105,18 @@ const Select = (props: IProps) => {
 
   useEffect(() => {
     if (!items && apiPath) getItems();
-    else if (items)
+    else if (items) {
       setDataList(
         items.filter(({ title, value }) => {
           if (search.length) return title.search(search) >= 0;
           return true;
         })
       );
-    else setDataList([]);
+      setDataLoading(false);
+    } else {
+      setDataList([]);
+      setDataLoading(false);
+    }
   }, [search]);
 
   useEffect(() => {
@@ -152,42 +156,42 @@ const Select = (props: IProps) => {
             }}
           >
             <div className="h-5 w-0 float-right" />
-            {dataLoading && "انتخاب نشده"}
+            {!!dataLoading && "انتخاب نشده"}
             {!dataLoading && !dataList && "خطا در دریافت"}
 
-            {dataList && (
-              <Controller
-                render={({ field }) => {
-                  return (
-                    <FieldComponent
-                      //
-                      resetValue={resetValue}
-                      dataList={dataList}
-                      setOpen={setOpen}
-                      open={open}
-                      dataLoading={dataLoading}
-                      anchorRef={anchorRef}
-                      field={field}
-                      placeholder={placeholder}
-                      disabled={disabled}
-                      loading={loading}
-                      direction={direction}
-                      searchable={searchable}
-                      multiple={multiple}
-                      showTitle={showTitle}
-                      search={search}
-                      setSearch={setSearch}
-                      className={_className}
-                      onChange={onChange}
-                      tagsMode={tagsMode}
-                    />
-                  );
-                }}
-                defaultValue={defaultValue}
-                name={name}
-                control={control}
-              />
-            )}
+            <Controller
+              render={({ field }) => {
+                if (!dataList) return <></>;
+                return (
+                  <FieldComponent
+                    //
+                    resetValue={resetValue}
+                    dataList={dataList}
+                    setOpen={setOpen}
+                    open={open}
+                    dataLoading={dataLoading}
+                    anchorRef={anchorRef}
+                    field={field}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    loading={loading}
+                    direction={direction}
+                    searchable={searchable}
+                    multiple={multiple}
+                    showTitle={showTitle}
+                    search={search}
+                    setSearch={setSearch}
+                    className={_className}
+                    onChange={onChange}
+                    tagsMode={tagsMode}
+                    defaultValue={defaultValue}
+                  />
+                );
+              }}
+              defaultValue={defaultValue}
+              name={name}
+              control={control}
+            />
           </div>
           <span className={`absolute top-0 end-0 text-blue-600  flex items-center justify-center h-full me-2.5 text-md ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
             <ArrowDownIcon />
@@ -223,6 +227,7 @@ type FieldComponentType = {
   onChange?: (value: any) => void;
 
   resetValue?: any;
+  defaultValue?: string;
 };
 
 const FieldComponent = (props: FieldComponentType) => {
@@ -247,6 +252,7 @@ const FieldComponent = (props: FieldComponentType) => {
     onChange,
     resetValue,
     tagsMode,
+    defaultValue,
   } = props;
 
   const [objectValue, setObjectValue] = useState<DataType[] | DataType | undefined>(
@@ -268,9 +274,10 @@ const FieldComponent = (props: FieldComponentType) => {
   }, [field.value]);
 
   useEffect(() => {
-    field.onChange(null);
+    if (!!resetValue) field.onChange(defaultValue);
   }, [resetValue]);
 
+  //
   const _value = multiple ? (
     //
     showTitle ? (
@@ -305,19 +312,6 @@ const FieldComponent = (props: FieldComponentType) => {
   return (
     <>
       {_value}
-      {/* <input
-        type="text"
-        disabled={disabled || loading || dataLoading}
-        placeholder={placeholder}
-        readOnly={true}
-        className={className}
-        dir={direction}
-        name={field.name}
-        value={_value}
-        onClick={() => {
-          setOpen(!open);
-        }}
-      /> */}
       {!!dataList && (
         <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg z-20">
           {({ TransitionProps, placement }) => (

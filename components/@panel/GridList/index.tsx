@@ -7,28 +7,22 @@ import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { StorageFile } from "@/types/interfaces";
 import Image from "next/image";
-
-type GridListPaginationPosition = "topLeft" | "topCenter" | "topRight" | "bottomLeft" | "bottomCenter" | "bottomRight";
+import IconButton from "@/components/Button/IconButton";
+import { Add } from "@mui/icons-material";
 
 export type GridListProps = {
-  headerTitle?: () => ReactNode;
-  footerTitle?: () => ReactNode;
   data?: any[];
   endpoint?: string;
   loading?: boolean;
   selectable?: boolean;
-  sortable?: boolean;
-  minWidth?: string | number;
-  expandable?: boolean;
-  detail?: ReactNode;
   deletable?: boolean;
   editable?: boolean;
-  extraOperations?: (id: string) => any[];
   update?: any;
   defaultPageCount?: number;
+  ItemComponent: (value: any) => JSX.Element;
 };
 
-function GridList<T>({ headerTitle, extraOperations = (id) => [], defaultPageCount, deletable, editable, footerTitle, endpoint, data, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: GridListProps) {
+function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, endpoint, data, loading = false, selectable = true, update = false }: GridListProps) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [dataSource, setDataSource] = useState(data?.length !== undefined ? data : []);
 
@@ -83,20 +77,6 @@ function GridList<T>({ headerTitle, extraOperations = (id) => [], defaultPageCou
     // setFirstTry(false);
   }, [_page, _count, _search, _sort, update]);
 
-  // ##############################################
-  // ====> row Selection
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: (newSelectedRowKeys: any) => {
-      setSelectedRowKeys(newSelectedRowKeys);
-    },
-  };
-  const selectedCount = selectedRowKeys.length;
-  const hasSelected = selectedCount > 0;
-
-  // ##############################################
-
   const baseRoute = (params?.id ? pathname?.replace(params.id as string, "") : pathname) || "/";
 
   return (
@@ -105,19 +85,12 @@ function GridList<T>({ headerTitle, extraOperations = (id) => [], defaultPageCou
         {!dataSource.length && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
         {!!dataSource?.length && (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-2">
+            <div className="grid grid-cols-3 md:grid-cols-4 gap-4 py-2">
               {/*  */}
               {dataSource.map((value: StorageFile, index) => {
                 return (
-                  <div className="bg-red-500 aspect-square">
-                    <Image
-                      //
-                      fill
-                      src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + value.path}
-                      alt={value.alt}
-                      title={value.title}
-                    />
-                    {process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + value.path}
+                  <div key={value._id} tabIndex={index} className="relative overflow-hidden aspect-square ring-blue-600 ring-opacity-60 ring-offset-1 ring-offset-blue-400 focus:outline-none focus:ring-1" role="banner">
+                    <ItemComponent value={value} />
                   </div>
                 );
               })}

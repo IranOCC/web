@@ -73,6 +73,7 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
             multiple
             noSpace
             showTitle
+            tagsMode
             apiPath="/user/statics/roles"
             containerClassName="col-span-full"
           />

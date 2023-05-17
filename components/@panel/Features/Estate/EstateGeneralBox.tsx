@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
-import TextEditor from "@/components/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
+// import { NumericFormat } from "react-number-format";
 
 export default function EstateGeneralBox({ form, loading, props }: AddEditComponentProps) {
   const {
@@ -15,15 +15,16 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
     setValue,
     setError,
     control,
+    getValues,
     handleSubmit,
     reset,
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("category", { required: "دسته را مشخص کنید" });
-    register("type");
     register("code");
+    register("category", { required: "دسته را مشخص کنید" });
+    register("type", { required: "نوع را مشخص کنید" });
     register("documentType", { required: "نوع سند را مشخص کنید" });
     register("area", { required: "متراژ کل را مشخص کنید" });
     register("price", { required: "قیمت هر متر را مشخص کنید" });
@@ -31,6 +32,11 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
     register("description");
     register("canBarter");
   }, []);
+
+  const calculateTotalPrice = (val: number, f: "area" | "price") => {
+    const m = (f === "area" ? val * getValues("price") : val * getValues("area")).toString();
+    setValue("totalPrice", parseInt(m) || 0, { shouldValidate: true });
+  };
 
   return (
     <>
@@ -58,6 +64,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             placeholder="انتخاب کنید"
             apiPath="/estate/category/assignList"
             noSpace
+            containerClassName="col-span-full"
           />
           <Select
             //
@@ -83,6 +90,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             filterApi={{ cat: props?.selectedCat }}
             noSpace
           />
+          {/* <NumericFormat /> */}
           <Input
             //
             control={control}
@@ -93,6 +101,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             error={errors.area?.message}
             loading={isSubmitting}
             noSpace
+            onKeyUp={(e: any) => calculateTotalPrice(e.target.value, "area")}
           />
           <Input
             //
@@ -103,6 +112,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             error={errors.price?.message}
             loading={isSubmitting}
             noSpace
+            onKeyUp={(e: any) => calculateTotalPrice(e.target.value, "price")}
           />
           <Input
             //
@@ -113,6 +123,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             error={errors.totalPrice?.message}
             loading={isSubmitting}
             noSpace
+            containerClassName="col-span-full"
           />
           <Input
             //

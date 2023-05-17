@@ -6,11 +6,13 @@ export interface ObjectID {
 }
 
 export interface Email {
+    _id: string;
     value: string;
     verified: boolean;
 }
 
 export interface Phone {
+    _id: string;
     value: string;
     verified: boolean;
 }
@@ -28,7 +30,7 @@ export interface User {
     province?: string;
     city?: string;
     address?: string;
-    location?: [number, number, number];
+    location?: [number, number] | string;
 
     avatar?: StorageFile | string | null;
 
@@ -56,7 +58,7 @@ export interface Office {
     province?: string;
     city?: string;
     address?: string;
-    location?: [number, number, number];
+    location?: [number, number] | string;
 
     membersCount: number;
     estatesCount: number;
@@ -80,7 +82,7 @@ export interface Estate {
     slug: string;
 
     image?: StorageFile | string;
-    gallery?: StorageFile | string;
+    gallery?: StorageFile[] | string[];
 
 
     status: string;
@@ -88,13 +90,29 @@ export interface Estate {
     pinned: boolean;
     publishedAt: Date;
 
-    tags: string[];
+    tags?: string[];
+
+
+    code?: string;
     category: string;
-    type: string;
-    documentType: string[];
-    features: string[];
+    type?: string;
+    documentType?: string[];
+    area?: number;
+    price?: number;
+    totalPrice?: number;
+    description?: string;
+    canBarter?: boolean;
 
 
+    constructionYear?: number;
+    roomsCount?: number;
+    mastersCount?: number;
+    buildingArea?: number;
+    floorsCount?: number;
+    unitsCount?: number;
+    floor?: number;
+    withOldBuilding?: boolean;
+    features?: string[];
 
     province?: string;
     city?: string;
@@ -102,32 +120,12 @@ export interface Estate {
     quarter?: string;
     alley?: string;
     address?: string;
-    location?: [number, number];
-
-    code: string;
-
-    price: number;
-    totalPrice: number;
-    canBarter: boolean;
-
-
-    description: string;
-
-
-    area: number;
-
-    constructionYear: number;
-
-    roomsCount: number;
-    mastersCount: number;
-    buildingArea: number;
-    floorsCount: number;
-    unitsCount: number;
-    floor: number;
-
-    withOldBuilding: boolean;
+    location?: [number, number] | string;
 
     owner?: User | string;
+    createdBy?: User | string;
+    confirmedBy?: User | string;
+    office?: Office | string;
 };
 
 

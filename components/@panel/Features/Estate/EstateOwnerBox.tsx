@@ -21,7 +21,7 @@ export default function EstateOwnerBox({ form, loading }: AddEditComponentProps)
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("owner");
+    register("owner", { required: "صاحب ملک نامشخص است" });
   }, []);
 
   return (

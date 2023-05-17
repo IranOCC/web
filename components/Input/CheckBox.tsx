@@ -52,7 +52,7 @@ const CheckBox = (props: IProps) => {
                   <label
                     //
                     onClick={() => {
-                      if (disabled || readOnly) return;
+                      if (disabled || readOnly || loading) return;
                       field.onChange(!field.value);
                     }}
                     className={`w-full block ms-2 text-sm text-start font-medium text-gray-500 dark:text-white whitespace-nowrap ${disabled ? "cursor-not-allowed" : "cursor-pointer"}${labelClass}`}
