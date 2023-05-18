@@ -114,7 +114,7 @@ export default function Page() {
           />
           {isStep2 && (
             <>
-              <span className="block text-center font-medium w-full text-sm text-blue-500 mt-2 mb-6 cursor-pointer" onClick={editNumber}>
+              <span className="block select-none text-center font-medium w-full text-sm text-blue-500 mt-2 mb-6 cursor-pointer" onClick={editNumber}>
                 ویرایش شماره
               </span>
               <Input
@@ -129,7 +129,7 @@ export default function Page() {
                 icon={<QrcodeIcon />}
                 className="text-center tracking-wider"
               />
-              <span className={`block text-center font-medium w-full text-sm mt-2 ${countDown > 0 ? "text-gray-500 cursor-not-allowed" : "text-blue-500 cursor-pointer"}`} onClick={sendOtpAgain}>
+              <span className={`block select-none text-center font-medium w-full text-sm mt-2 ${countDown > 0 ? "text-gray-500 cursor-not-allowed" : "text-blue-500 cursor-pointer"}`} onClick={sendOtpAgain}>
                 ارسال مجدد {countDown > 0 && "(" + moment.duration(countDown, "milliseconds").asSeconds().toFixed() + ")"}
               </span>
             </>

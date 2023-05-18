@@ -5,6 +5,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Spin } from "antd";
 
 type FooterButton = {
   title?: string;
@@ -25,9 +26,10 @@ type IProps = {
 
   className?: string;
   paddingChildren?: boolean;
+  loading?: boolean;
 };
 
-export default function Modal({ path, paddingChildren = true, open, setOpen, title, children, footerButton, closeButton = true, whiteClose = false, className = "" }: IProps) {
+export default function Modal({ path, paddingChildren = true, open, setOpen, title, children, footerButton, closeButton = true, whiteClose = false, className = "", loading }: IProps) {
   const cancelButtonRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -84,7 +86,17 @@ export default function Modal({ path, paddingChildren = true, open, setOpen, tit
                           {title}
                         </Dialog.Title>
                       )}
-                      <div className={"relative overflow-x-hidden max-h-[calc(100vh-8rem)] " + (paddingChildren ? "p-2" : "")}>{children}</div>
+                      <div className={"relative overflow-x-hidden max-h-[calc(100vh-8rem)] " + (paddingChildren ? "p-2" : "")}>
+                        {/*  */}
+                        {!!loading && (
+                          <div className="flex justify-center items-center py-10">
+                            <Spin />
+                          </div>
+                        )}
+                        {children}
+
+                        {/*  */}
+                      </div>
                     </div>
                   </div>
                 </div>

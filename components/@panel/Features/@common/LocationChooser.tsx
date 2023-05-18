@@ -55,7 +55,9 @@ const LocationChooser = (props: IProps) => {
                     //
                     center={center || initialLocation}
                     zoom={15}
-                    scrollWheelZoom={false}
+                    scrollWheelZoom={true}
+                    zoomControl
+                    attributionControl
                     style={{ height: 300, width: "100%" }}
                     className={"rounded " + className + " flex justify-center items-center"}
                   >
@@ -112,9 +114,20 @@ export type IProps = {
 };
 
 function LocationEvent({ location, setLocation }: { location: [number, number]; setLocation: any }) {
-  useEffect(() => {
-    map.locate();
-  }, []);
+  //
+  //
+  const map = useMap();
+
+  useMapEvents({
+    locationfound(e) {
+      const c = map.getCenter();
+      setLocation([c.lat, c.lng]);
+    },
+    moveend(e) {
+      const c = map.getCenter();
+      setLocation([c.lat, c.lng]);
+    },
+  });
 
   // useEffect(() => {
   //   map.addHandler().forEach(function (handler: any) {
@@ -129,14 +142,17 @@ function LocationEvent({ location, setLocation }: { location: [number, number]; 
   //   }
   // }, [location]);
 
-  const map = useMapEvents({
-    locationfound(e) {
-      setLocation([e.latlng?.lat, e.latlng?.lng]);
-    },
-    moveend(e) {
-      const c = map.getCenter();
-      setLocation([c.lat, c.lng]);
-    },
-  });
-  return null;
+  return (
+    <>
+      <div
+        onClick={() => {
+          alert("location");
+          map.locate();
+        }}
+        className="text-white font-bold absolute rounded left-1 bottom-1 bg-orange-500 p-2 z-[9999]"
+      >
+        موقعیت من
+      </div>
+    </>
+  );
 }

@@ -278,37 +278,38 @@ const FieldComponent = (props: FieldComponentType) => {
   }, [resetValue]);
 
   //
-  const _value = multiple ? (
-    //
-    showTitle ? (
+  const _value =
+    !dataLoading && multiple ? (
       //
-      !!(objectValue as DataType[])?.length ? (
-        tagsMode ? (
-          <div className="flex flex-wrap gap-1">
-            {(objectValue as DataType[]).map((item: DataType, index) => (
-              <span key={index} className="cursor-default bg-blue-500 text-white px-2 rounded flex justify-center items-center">
-                {item.title}
-              </span>
-            ))}
-          </div>
+      showTitle ? (
+        //
+        !!(objectValue as DataType[])?.length ? (
+          tagsMode ? (
+            <div className="flex flex-wrap gap-1">
+              {(objectValue as DataType[]).map((item: DataType, index) => (
+                <span key={index} className="cursor-default bg-blue-500 text-white px-2 rounded flex justify-center items-center">
+                  {item.title}
+                </span>
+              ))}
+            </div>
+          ) : (
+            (objectValue as DataType[]).map((item: DataType) => item.title).join(", ")
+          )
         ) : (
-          (objectValue as DataType[]).map((item: DataType) => item.title).join(", ")
+          "انتخاب نشده"
         )
+      ) : //
+      !!(objectValue as DataType[])?.length ? (
+        (objectValue as DataType[]).length + " مورد انتخاب شده"
       ) : (
         "انتخاب نشده"
       )
     ) : //
-    !!(objectValue as DataType[])?.length ? (
-      (objectValue as DataType[]).length + " مورد انتخاب شده"
+    objectValue ? (
+      (objectValue as DataType)?.title
     ) : (
       "انتخاب نشده"
-    )
-  ) : //
-  objectValue ? (
-    (objectValue as DataType)?.title
-  ) : (
-    "انتخاب نشده"
-  );
+    );
   return (
     <>
       {_value}
