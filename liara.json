@@ -1,6 +1,3 @@
 {
-    "app": "iranocc-web",
-    "next": {
-        "modifyConfig": false
-    }
+    "app": "iranocc-web"
 }
