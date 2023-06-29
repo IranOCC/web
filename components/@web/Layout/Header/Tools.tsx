@@ -13,8 +13,6 @@ import React, { ReactNode, useState } from "react";
 import IconButton from "@/components/Button/IconButton";
 import { useSelector } from "react-redux";
 import CloseIcon from "@/components/Icons/Close";
-import { store } from "@/store";
-import { setMobileMenuOpen } from "@/store/options";
 import PopTop from "./PopTop";
 import { ClickAwayListener } from "@mui/material";
 import { MobileMenu } from "./Menu";
@@ -34,7 +32,7 @@ type ToolsItemProps = {
 const Tools = ({ session }: { session: Session | null }) => {
   const haveSession = session !== null;
 
-  const mobileMenuOpen = useSelector((state: any) => state?.options?.mobileMenuOpen as boolean);
+  const mobileMenuOpen = true;
   const items: ToolsItemProps[] = [
     {
       modalPath: haveSession ? undefined : "auth",

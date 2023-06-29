@@ -3,7 +3,7 @@
 import React, { useState, ReactNode, useEffect } from "react";
 import { Empty, Pagination, Popconfirm, Spin } from "antd";
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { StorageFile } from "@/types/interfaces";
 import Image from "next/image";

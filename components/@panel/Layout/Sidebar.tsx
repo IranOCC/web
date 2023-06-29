@@ -12,7 +12,7 @@ import OfficesOutlineIcon from "@/components/Icons/OfficesOutline";
 import SettingOutlineIcon from "@/components/Icons/SettingOutline";
 import UserIcon from "@/components/Icons/User";
 import UsersOutlineIcon from "@/components/Icons/UsersOutline";
-import { usePrevious } from "@/lib/hooks/usePrevious";
+import { usePrevious } from "@/hooks/usePrevious";
 import { ClickAwayListener } from "@mui/material";
 
 import { Tooltip } from "antd";

@@ -1,6 +1,12 @@
+"use client";
+
+import { useContext } from "react";
+import { LoadingContext, LoadingContextType } from "@/context/loading.context";
 import styles from "./style.module.css";
 
-const Loading = ({ label = "در حال بارگذاری ..." }: { label?: string }) => {
+const Loading = () => {
+  const { isLoading, label } = useContext(LoadingContext) as LoadingContextType;
+  if (!isLoading) return null;
   return (
     <div className={styles.loader_wrap}>
       <div className={styles.loader_content}>

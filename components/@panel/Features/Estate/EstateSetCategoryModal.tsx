@@ -1,6 +1,6 @@
 import { Button } from "@/components/Button";
 import Modal from "@/components/Modals";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { RadioGroup } from "@headlessui/react";
 import { useEffect, useState } from "react";
 

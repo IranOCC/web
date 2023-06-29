@@ -1,16 +1,17 @@
 "use client";
 
-import { Settings } from "@/types/interfaces";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import WebLogo from "@/assets/images/logo.png";
+import { useContext } from "react";
+import { WebInfoContext, WebInfoType } from "@/context/webInfo.context";
 
 const Logo = () => {
-  const settings: Settings | null = useSelector((state: any) => state.settings.settings as Settings);
+  const { title } = useContext(WebInfoContext) as WebInfoType;
   return (
     <div className="float-right h-full flex items-center">
       <a href="/" className="flex items-center">
-        <Image src={WebLogo} alt={settings.title} height={40} />
+        <Image src={WebLogo} alt={title} height={40} />
       </a>
     </div>
   );

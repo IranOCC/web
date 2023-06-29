@@ -5,6 +5,12 @@ export interface ObjectID {
     _id: string;
 }
 
+
+export type SelectDataType = {
+    title: string;
+    value: string;
+}
+
 export interface Email {
     _id: string;
     value: string;
@@ -137,7 +143,7 @@ export interface Session {
 
 
 
-export interface Settings {
+export interface WebInfo {
     title: string;
     description: string;
     keywords: string[];

@@ -1,6 +1,6 @@
 import { Button } from "@/components/Button";
 import { CheckBox, Input } from "@/components/Input";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { OfficeFormData, UserFormData } from "@/types/formsData";
 import { useEffect } from "react";

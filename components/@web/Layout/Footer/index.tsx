@@ -1,6 +1,6 @@
 "use client";
 
-import { Settings } from "@/types/interfaces";
+import { WebInfo } from "@/types/interfaces";
 import { useSelector } from "react-redux";
 import WebLogo from "@/assets/images/logo.png";
 import Image from "next/image";
@@ -11,10 +11,10 @@ import EmailOutlineIcon from "@/components/Icons/EmailOutline";
 import PhoneOutlineIcon from "@/components/Icons/PhoneOutline";
 import LocationOutlineIcon from "@/components/Icons/LocationOutline";
 import Subscription from "./Subscription";
+import { useContext } from "react";
+import { WebInfoContext, WebInfoType } from "@/context/webInfo.context";
 
 const Footer = () => {
-  const settings: Settings | null = useSelector((state: any) => state.settings.settings as Settings);
-
   return (
     <footer className="w-full">
       <Subscription />
@@ -28,15 +28,14 @@ export default Footer;
 
 // main footer
 const MainFooter = () => {
-  const settings: Settings | null = useSelector((state: any) => state.settings.settings as Settings);
-
+  const { title } = useContext(WebInfoContext) as WebInfoType;
   return (
     <div className="bg-white py-10 px-8 pt-20">
       <div className="mx-auto w-full max-w-screen-xl">
         <div className="w-full grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
           {/* info */}
           <div className="">
-            <Image src={WebLogo} alt={settings.title} height={40} />
+            <Image src={WebLogo} alt={title} height={40} />
             <p className="text-gray-500 text-sm font-light my-6">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است</p>
             <div className="text-sm font-medium text-slate-600 py-1">
               <span>شنبه تا چهارشنبه:</span>

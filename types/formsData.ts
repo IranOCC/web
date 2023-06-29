@@ -1,4 +1,4 @@
-import { Email, Phone, User, StorageFile, Office, Icon, EstateCategory } from "./interfaces";
+import { Email, Phone, User, StorageFile, Office, Icon, EstateCategory, SelectDataType } from "./interfaces";
 
 export type LoginPhoneOtpFormData = {
     phone: string;
@@ -63,7 +63,7 @@ export type OfficeFormData = {
 
     name: string;
     description?: string;
-    management: User | string;
+    management: SelectDataType | User | string;
     logo?: StorageFile | string;
     // 
     phone?: Phone | string;

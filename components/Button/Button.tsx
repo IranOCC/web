@@ -10,11 +10,11 @@ const Button = (props: PropsTypes) => {
   const _className = `${className} relative flex justify-center items-center z-10
       ${
         disabled
-          ? "cursor-not-allowed " + (variant === "fill" ? "bg-blue-300" : "bg-transparent")
+          ? "cursor-not-allowed " + (variant === "fill" ? "bg-primary" : "bg-transparent")
           : loading
-          ? "cursor-progress " + (variant === "fill" ? "bg-blue-400" : "bg-transparent")
+          ? "cursor-progress " + (variant === "fill" ? "bg-primary" : "bg-transparent")
           : variant === "fill"
-          ? "text-white bg-blue-500 from-blue-500 to-[#57C7FA] hover:bg-gradient-to-l"
+          ? "text-white bg-secondary from-secondary to-primary hover:bg-gradient-to-l"
           : "text-slate-600 bg-translate border border-slate-400 hover:bg-slate-100"
       }
       font-medium rounded text-sm px-8 ${sizeClass} text-center

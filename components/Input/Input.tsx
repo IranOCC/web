@@ -45,7 +45,7 @@ const Input = (props: IProps) => {
 
   let labelClass = "";
   let bordersClass = " border-gray-300 focus:border-gray-300";
-  let iconClass = " text-blue-500";
+  let iconClass = " text-secondary";
   let inputClass = " placeholder:text-gray-400 text-gray-500";
   if (status === "success") {
     labelClass = " text-green-500";
@@ -94,7 +94,7 @@ const Input = (props: IProps) => {
                         Array.isArray(field.value)
                           ? field.value?.map((label: string, index: number) => {
                               return (
-                                <span key={index} className="cursor-default bg-blue-500 text-white px-2 rounded flex justify-center items-center">
+                                <span key={index} className="cursor-default bg-secondary text-white px-2 rounded flex justify-center items-center">
                                   {label}
                                   <div className="text-slate-100 hover:text-slate-300 ps-3 cursor-pointer" onClick={() => removeItem(index)}>
                                     ×

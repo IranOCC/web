@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
 import PanelCard from "@/components/@panel/Card";
 
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { FieldValues, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";

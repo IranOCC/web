@@ -6,7 +6,6 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
 
-import StoreProviders from "@/components/Providers/StoreProvider";
 import AuthProvider from "@/components/Providers/AuthProvider";
 import PanelLayout from "@/components/@panel/Layout";
 import AntdProvider from "@/components/Providers/AntdProvider";
@@ -91,11 +90,9 @@ export default async function RootLayout({ children }: IProps) {
         <Suspense fallback={<Loading />}>
           <AntdProvider style={{ fontFamily: IRANSansX.style }}>
             <AuthProvider>
-              <StoreProviders>
-                {/*  */}
-                <PanelLayout>{children}</PanelLayout>
-                {/*  */}
-              </StoreProviders>
+              {/*  */}
+              <PanelLayout>{children}</PanelLayout>
+              {/*  */}
             </AuthProvider>
           </AntdProvider>
         </Suspense>

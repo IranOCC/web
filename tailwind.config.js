@@ -7,6 +7,11 @@ module.exports = {
     "./node_modules/flowbite-react/**/*.js",
   ],
   theme: {
+    colors: {
+      primary: '#ffe600',
+      secondary: '#ffc700',
+      // ...
+    },
     extend: {},
   },
   plugins: [

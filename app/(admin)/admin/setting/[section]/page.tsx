@@ -3,7 +3,7 @@
 import EditAddPage, { type AddEditComponentProps } from "@/components/@panel/EditAddPage";
 import InitialSettingsBox from "@/components/@panel/Features/Setting/InitialSettingsBox";
 import { InitialSettingsFormData } from "@/types/formsData";
-import { Settings } from "@/types/interfaces";
+import { WebInfo } from "@/types/interfaces";
 import { useForm } from "react-hook-form";
 
 const Center = ({ form, loading, section }: AddEditComponentProps) => {
@@ -30,7 +30,7 @@ export default function Page() {
   };
   return (
     <>
-      <EditAddPage<InitialSettingsFormData, Settings>
+      <EditAddPage<InitialSettingsFormData, WebInfo>
         //
         Center={Center}
         form={form}

@@ -1,5 +1,6 @@
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { usePrevious } from "@/lib/hooks/usePrevious";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { usePrevious } from "@/hooks/usePrevious";
+import { SelectDataType } from "@/types/interfaces";
 import { Chip, ClickAwayListener, Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
 import { Spin } from "antd";
 import { ChangeEventHandler, ReactNode, RefObject, useEffect, useRef, useState } from "react";
@@ -80,7 +81,8 @@ const Select = (props: IProps) => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLDivElement>(null);
 
-  const [dataList, setDataList] = useState<DataType[] | null>(null);
+  // const [totalDataList, setTotalDataList] = useState<SelectDataType[] | null>(null);
+  const [dataList, setDataList] = useState<SelectDataType[] | null>(null);
   const [search, setSearch] = useState("");
   const [dataLoading, setDataLoading] = useState(true);
   const [resetValue, setResetValue] = useState<boolean[] | null>(null);
@@ -96,7 +98,7 @@ const Select = (props: IProps) => {
       const data = await api.get(apiPath!, { params: { search, ...filterApi } });
       const _items = data.data;
       if (Array.isArray(_items)) setDataList(_items);
-      else setDataList(Object.keys(_items).map((value) => ({ value: value, title: _items[value] } as DataType)));
+      else setDataList(Object.keys(_items).map((value) => ({ value: value, title: _items[value] } as SelectDataType)));
       setDataLoading(false);
     } catch (error) {
       setDataLoading(false);
@@ -158,7 +160,6 @@ const Select = (props: IProps) => {
             <div className="h-5 w-0 float-right" />
             {!!dataLoading && "انتخاب نشده"}
             {!dataLoading && !dataList && "خطا در دریافت"}
-
             <Controller
               render={({ field }) => {
                 if (!dataList) return <></>;
@@ -215,7 +216,7 @@ type FieldComponentType = {
   searchable?: boolean;
   multiple?: boolean;
   showTitle: boolean;
-  dataList: DataType[];
+  dataList: SelectDataType[];
   setOpen: (s: boolean) => void;
   open: boolean;
   dataLoading: boolean;
@@ -255,21 +256,19 @@ const FieldComponent = (props: FieldComponentType) => {
     defaultValue,
   } = props;
 
-  const [objectValue, setObjectValue] = useState<DataType[] | DataType | undefined>(
-    multiple
-      ? //
-        dataList.filter((item) => field.value?.includes(item.value)) || ([] as DataType[])
-      : //
-        dataList.filter((item) => item.value === field.value)[0] || undefined
-  );
+  const [objectValue, setObjectValue] = useState<SelectDataType[] | SelectDataType | undefined>();
 
   useEffect(() => {
     setObjectValue(
       multiple
         ? //
-          dataList.filter((item) => field.value?.includes(item.value)) || ([] as DataType[])
+          field.value?.map((dtype: SelectDataType | string) => {
+            typeof dtype === "object" ? dtype : dataList.filter((item) => item.value === dtype)[0] || undefined;
+          })
         : //
-          dataList.filter((item) => item.value === field.value)[0] || undefined
+        typeof field.value === "object"
+        ? field.value
+        : dataList.filter((item) => item.value === field.value)[0] || undefined
     );
   }, [field.value]);
 
@@ -283,36 +282,38 @@ const FieldComponent = (props: FieldComponentType) => {
       //
       showTitle ? (
         //
-        !!(objectValue as DataType[])?.length ? (
+        !!(objectValue as SelectDataType[])?.length ? (
           tagsMode ? (
             <div className="flex flex-wrap gap-1">
-              {(objectValue as DataType[]).map((item: DataType, index) => (
+              {(objectValue as SelectDataType[]).map((item: SelectDataType, index) => (
                 <span key={index} className="cursor-default bg-blue-500 text-white px-2 rounded flex justify-center items-center">
                   {item.title}
                 </span>
               ))}
             </div>
           ) : (
-            (objectValue as DataType[]).map((item: DataType) => item.title).join(", ")
+            (objectValue as SelectDataType[]).map((item: SelectDataType) => item.title).join(", ")
           )
         ) : (
           "انتخاب نشده"
         )
       ) : //
-      !!(objectValue as DataType[])?.length ? (
-        (objectValue as DataType[]).length + " مورد انتخاب شده"
+      !!(objectValue as SelectDataType[])?.length ? (
+        (objectValue as SelectDataType[]).length + " مورد انتخاب شده"
       ) : (
         "انتخاب نشده"
       )
     ) : //
     objectValue ? (
-      (objectValue as DataType)?.title
+      (objectValue as SelectDataType)?.title
     ) : (
       "انتخاب نشده"
     );
+
   return (
     <>
-      {_value}
+      {JSON.stringify(objectValue)}
+      {!dataLoading && _value}
       {!!dataList && (
         <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg z-20">
           {({ TransitionProps, placement }) => (
@@ -364,7 +365,17 @@ const FieldComponent = (props: FieldComponentType) => {
                           //
                           title={title}
                           key={_index}
-                          selected={multiple ? field.value?.includes(value) : value === field.value}
+                          selected={
+                            multiple
+                              ? //
+                                field.value?.map((dtype: SelectDataType | string) => {
+                                  typeof dtype === "object" ? dtype.value === value : value === dtype;
+                                })
+                              : //
+                              typeof field.value === "object"
+                              ? field.value.value === value
+                              : value === field.value
+                          }
                           onClick={() => {
                             if (disabled || loading) return;
                             if (multiple) {
@@ -412,11 +423,6 @@ const SelectOption = ({ onClick, title, selected }: { onClick?: any; title: stri
   );
 };
 
-interface DataType {
-  title: string;
-  value: string;
-}
-
 export type IProps = {
   name: string;
   control: any;
@@ -448,7 +454,7 @@ export type IProps = {
   success?: ReactNode;
   size?: "small" | "default" | "large";
 
-  items?: DataType[];
+  items?: SelectDataType[];
   apiPath?: string;
   filterApi?: { cat?: string };
   onChange?: (value: any) => void;

@@ -6,7 +6,7 @@ import LoginBackImage from "@/assets/images/city-bg.png";
 import { axiosAuth } from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import Image from "next/image";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 
 const Subscription = () => {
   const {

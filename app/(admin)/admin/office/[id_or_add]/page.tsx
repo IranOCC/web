@@ -51,6 +51,7 @@ export default function Page() {
 
     setValue("name", data.name);
     setValue("management", (data.management as User)._id);
+    // setValue("management", { value: (data.management as User)._id, title: (data.management as User).fullName || "-" });
     setValue("description", data.description);
     setValue("logo", data.logo as StorageFile);
     //

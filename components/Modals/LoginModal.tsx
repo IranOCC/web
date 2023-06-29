@@ -11,7 +11,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import PhoneIcon from "@/components/Icons/Phone";
 import QrcodeIcon from "@/components/Icons/Qrcode";
-import { useCountdown } from "@/lib/hooks/useCountdown";
+import { useCountdown } from "@/hooks/useCountdown";
 import moment from "moment";
 import { Session } from "@/types/interfaces";
 

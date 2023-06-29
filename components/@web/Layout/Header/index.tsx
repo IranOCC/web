@@ -1,6 +1,6 @@
 // "use client";
 
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { authOptions } from "@/app/api/auth/[...nextauth]";
 import { Session } from "@/types/interfaces";
 import { getServerSession } from "next-auth";
 import Logo from "./Logo";
