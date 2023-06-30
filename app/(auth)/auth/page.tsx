@@ -112,6 +112,7 @@ export default function Page() {
             disabled={isSubmitSuccessful || isStep2}
             loading={isSubmitting}
             direction="ltr"
+            type="tel"
             noSpace
             icon={<PhoneIcon />}
           />
@@ -126,8 +127,9 @@ export default function Page() {
                 name="token"
                 label="کد ارسالی"
                 error={errors.token?.message}
-                loading={isSubmitting}
+                loading={isSubmitting || isLoading || isValidating}
                 direction="ltr"
+                type="tel"
                 noSpace
                 icon={<QrcodeIcon />}
                 className="text-center tracking-wider"
