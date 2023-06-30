@@ -103,7 +103,7 @@ export default function EstateDocumentTypeBox({ form, loading, cancelForm }: Add
           error={errors.categories?.message}
           loading={isSubmitting}
           label="دسته های معتبر"
-          apiPath={"/estate/category/assignList/"}
+          apiPath={"/tools/estate/category/autoComplete"}
           showTitle
           multiple
           searchable

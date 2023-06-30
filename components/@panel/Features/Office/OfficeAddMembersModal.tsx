@@ -60,7 +60,7 @@ export default function OfficeAddMembersModal({ open, setOpen, addMember }: any)
             placeholder="اعضا را انتخاب کنید"
             multiple
             // showTitle
-            apiPath="/user/assignList"
+            apiPath="/tools/user/autoComplete"
             containerClassName="col-span-full"
             searchable
             noSpace

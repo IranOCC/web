@@ -103,7 +103,7 @@ export default function EstateFeatureBox({ form, loading, cancelForm }: AddEditC
           error={errors.categories?.message}
           loading={isSubmitting}
           label="دسته های معتبر"
-          apiPath={"/estate/category/assignList/"}
+          apiPath={"/tools/estate/category/autoComplete"}
           showTitle
           multiple
           searchable

@@ -103,7 +103,7 @@ export default function EstateTypeBox({ form, loading, cancelForm }: AddEditComp
           error={errors.categories?.message}
           loading={isSubmitting}
           label="دسته های معتبر"
-          apiPath={"/estate/category/assignList/"}
+          apiPath={"/tools/estate/category/autoComplete"}
           showTitle
           multiple
           searchable

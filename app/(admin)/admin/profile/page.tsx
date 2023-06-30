@@ -117,7 +117,7 @@ export default function Page() {
 
             <Button
               //
-              className="col-span-2"
+              className="col-span-full"
               title="بروزرسانی پروفایل"
               type="submit"
               loading={isSubmitting || isLoading || isValidating || loading}
@@ -127,7 +127,7 @@ export default function Page() {
 
             <Button
               //
-              className="col-span-2"
+              className="col-span-full"
               variant="outline"
               title="خروج از حساب"
               type="submit"

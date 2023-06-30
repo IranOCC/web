@@ -69,7 +69,7 @@ export default function OfficeBox({ form, loading }: { form: any; loading?: bool
             error={errors.management?.message}
             loading={isSubmitting}
             placeholder="انتخاب کنید"
-            apiPath="/user/assignList"
+            apiPath="/tools/user/autoComplete"
             searchable
             noSpace
           />
