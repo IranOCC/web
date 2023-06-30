@@ -19,8 +19,9 @@ const PanelTab = ({ data }: IProps) => {
                   //
                 ].join(" ")
               }
-              children={title}
-            />
+            >
+              {title}
+            </Tab>
           ))}
         </Tab.List>
         <Tab.Panels className="mt-2">
@@ -29,8 +30,9 @@ const PanelTab = ({ data }: IProps) => {
               //
               key={idx}
               className={"ring-offset-0 focus:outline-none focus:ring-0"}
-              children={content}
-            />
+            >
+              {content}
+            </Tab.Panel>
           ))}
         </Tab.Panels>
       </Tab.Group>

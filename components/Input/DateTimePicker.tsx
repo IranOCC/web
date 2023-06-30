@@ -80,7 +80,7 @@ const DateTimePicker = (props: IProps) => {
                   locale={persian_fa}
                   weekDays={["ش", "ی", "د", "س", "چ", "پ", "ج"]}
                   shadow={false}
-                  plugins={[<TimePicker position="left" />]}
+                  plugins={[<TimePicker key="tpicker" position="left" />]}
                   mapDays={({ date }) => {
                     let props: any = {};
                     let isWeekend = date.weekDay.index === 6;
