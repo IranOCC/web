@@ -1,6 +1,7 @@
 import Layout from "@/components/@web/Layout";
 import { WebInfo } from "@/types/interfaces";
 import { fetchWebInfo } from "@/lib/ssr.fetch";
+import Link from "next/link";
 
 // dynamic metadata
 export async function generateMetadata() {
@@ -17,5 +18,20 @@ export async function generateMetadata() {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  return <Layout>{children}</Layout>;
+  return (
+    <>
+      <div className="flex flex-col justify-center items-center h-full">
+        {/*  */}
+        <Link href="/admin" className="text-blue-500">
+          ورود به پنل مدیریت
+        </Link>
+        {/*
+        <Link href="/auth" className="text-blue-500">
+          لاگین یا عضویت
+        </Link>
+        */}
+      </div>
+    </>
+  );
+  // return <Layout>{children}</Layout>;
 }
