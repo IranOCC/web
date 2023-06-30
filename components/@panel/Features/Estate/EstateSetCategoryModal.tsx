@@ -17,7 +17,7 @@ export default function EstateSetCategoryModal({ open, setOpen, setCategory }: a
   const getData = async () => {
     setLoading(true);
     try {
-      const { data } = await api.get("/estate/category/assignList");
+      const { data } = await api.get("/tools/estate/category/autoComplete");
       setCategories(data);
       setLoading(false);
     } catch (error) {

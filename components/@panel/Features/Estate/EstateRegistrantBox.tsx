@@ -38,7 +38,7 @@ export default function EstateRegistrantBox({ form, loading }: AddEditComponentP
             loading={isSubmitting}
             label="ثبت کننده"
             placeholder="انتخاب کنید"
-            apiPath="/user/assignList"
+            apiPath="/tools/user/autoComplete"
             searchable
             noSpace
           />
@@ -50,7 +50,7 @@ export default function EstateRegistrantBox({ form, loading }: AddEditComponentP
             loading={isSubmitting}
             label="تایید کننده"
             placeholder="انتخاب کنید"
-            apiPath="/user/assignList"
+            apiPath="/tools/user/autoComplete"
             searchable
             noSpace
           />
@@ -62,7 +62,7 @@ export default function EstateRegistrantBox({ form, loading }: AddEditComponentP
             loading={isSubmitting}
             label="شعبه"
             placeholder="انتخاب کنید"
-            apiPath="/office/assignList"
+            apiPath="/tools/office/autoComplete"
             searchable
             noSpace
           />

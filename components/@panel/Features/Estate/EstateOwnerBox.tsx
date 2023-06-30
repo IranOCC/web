@@ -35,7 +35,7 @@ export default function EstateOwnerBox({ form, loading }: AddEditComponentProps)
             error={errors.owner?.message}
             loading={isSubmitting}
             placeholder="انتخاب کنید"
-            apiPath="/user/assignList"
+            apiPath="/tools/user/autoComplete"
             searchable
             noSpace
           />

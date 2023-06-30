@@ -62,7 +62,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             label="دسته"
             disabled
             placeholder="انتخاب کنید"
-            apiPath="/estate/category/assignList"
+            apiPath="/tools/estate/category/autoComplete"
             noSpace
             containerClassName="col-span-full"
           />
@@ -74,7 +74,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             loading={isSubmitting}
             label="نوع"
             placeholder="انتخاب کنید"
-            apiPath="/estate/type/assignList"
+            apiPath="/tools/estate/type/autoComplete"
             filterApi={{ cat: props?.selectedCat }}
             noSpace
           />
@@ -86,7 +86,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             error={errors.documentType?.message}
             loading={isSubmitting}
             placeholder="انتخاب کنید"
-            apiPath="/estate/document/assignList"
+            apiPath="/tools/estate/documentType/autoComplete"
             filterApi={{ cat: props?.selectedCat }}
             noSpace
           />

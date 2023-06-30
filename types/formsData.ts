@@ -90,6 +90,25 @@ export type IconFormData = {
     content: string;
 };
 
+
+
+export interface SmsTemplateFormData {
+    _id: string;
+    title: string;
+    content: string;
+    serviceID: string;
+    slug: string;
+};
+
+export interface MailTemplateFormData {
+    _id: string;
+    title: string;
+    content: string;
+    serviceID: string;
+    slug: string;
+};
+
+
 // ============== estate
 
 export type EstateFormData = {

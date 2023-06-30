@@ -9,7 +9,7 @@ import UserIcon from "@/components/Icons/User";
 import { OpenModalLink } from "@/components/Modals";
 import LoginModal from "@/components/Modals/LoginModal";
 import Link from "next/link";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useContext, useState } from "react";
 import IconButton from "@/components/Button/IconButton";
 import { useSelector } from "react-redux";
 import CloseIcon from "@/components/Icons/Close";
@@ -17,6 +17,7 @@ import PopTop from "./PopTop";
 import { ClickAwayListener } from "@mui/material";
 import { MobileMenu } from "./Menu";
 import { Session } from "@/types/interfaces";
+import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 
 type ToolsItemProps = {
   title?: string;
@@ -29,8 +30,9 @@ type ToolsItemProps = {
   className?: string;
 };
 
-const Tools = ({ session }: { session: Session | null }) => {
-  const haveSession = session !== null;
+const Tools = () => {
+  const { user } = useContext(CurrentUserContext) as CurrentUserContextType;
+  const haveSession = user !== null;
 
   const mobileMenuOpen = true;
   const items: ToolsItemProps[] = [
@@ -38,7 +40,7 @@ const Tools = ({ session }: { session: Session | null }) => {
       modalPath: haveSession ? undefined : "auth",
       icon: haveSession ? <UserIcon /> : <LoginIcon />,
       // title: "ورود / عضویت",
-      popTop: haveSession ? "Hello User " + session?.user?.fullName + "!" : undefined,
+      popTop: haveSession ? "Hello User " + user?.fullName + "!" : undefined,
     },
     {
       icon: <NotificationIcon />,
@@ -72,7 +74,7 @@ const Tools = ({ session }: { session: Session | null }) => {
         </div>
       </div>
 
-      <LoginModal {...{ session }} />
+      {/* <LoginModal {...{ session }} /> */}
     </>
   );
 };

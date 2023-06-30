@@ -21,7 +21,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
-const panelSuffix = "/panel";
+const panelPrefix = "/admin";
 
 type SubMenuType = { title: string; href: string; subtitle?: string };
 
@@ -213,6 +213,16 @@ const menuItems: MenuItemType[] = [
         href: "footer",
         subtitle: "",
       },
+      {
+        title: "مدیریت قالب های پیامک",
+        href: "smsTemplate",
+        subtitle: "افزودن و مدیریت قالب های پیامک",
+      },
+      {
+        title: "مدیریت قالب های ایمیل",
+        href: "mailTemplate",
+        subtitle: "افزودن و مدیریت قالب های ایمیل",
+      },
     ],
   },
 ];
@@ -223,7 +233,7 @@ const PanelSideBar = () => {
   const [lastOpenedItem, setLastOpenedItem] = useState<MenuItemType>(menuItems[0]);
 
   const item = menuItems.find(({ href }) => {
-    return isOpenSubMenu && !href.length ? isOpenSubMenu === panelSuffix : isOpenSubMenu === href;
+    return isOpenSubMenu && !href.length ? isOpenSubMenu === panelPrefix : isOpenSubMenu === href;
   });
 
   const handleOpenSubMenu = (name: string) => {
@@ -296,9 +306,9 @@ const MainMenu = ({ handleOpenSubMenu, itemOpen }: any) => {
 };
 
 const MainMenuItem = ({ href = "#", onClick, icon, title = "test", highlight = false, highlightClass = "" }: { href?: string; onClick?: () => void; icon: ReactNode; title?: string; highlight?: boolean; highlightClass?: string }) => {
-  const mainHref = panelSuffix + (href.length ? "/" + href : "");
+  const mainHref = panelPrefix + (href.length ? "/" + href : "");
   const pathname = usePathname();
-  const isActive = !href.length ? pathname === panelSuffix : pathname?.startsWith(mainHref);
+  const isActive = !href.length ? pathname === panelPrefix : pathname?.startsWith(mainHref);
   return (
     <Tooltip title={title} arrow placement="left">
       <Link
@@ -321,8 +331,8 @@ const SubMenu = ({ open, title, sub, parentPath }: { open: boolean; title: strin
       <h2 className="px-5 text-lg font-medium text-gray-800 dark:text-white">{title}</h2>
       <div className="mt-8 space-y-4">
         {sub?.map(({ title, href, subtitle }, index) => {
-          const mainHref = panelSuffix + "/" + parentPath + (href.length ? "/" + href : "");
-          const isActive = !href.length ? pathname === panelSuffix + "/" + parentPath : pathname?.startsWith(mainHref);
+          const mainHref = panelPrefix + "/" + parentPath + (href.length ? "/" + href : "");
+          const isActive = !href.length ? pathname === panelPrefix + "/" + parentPath : pathname?.startsWith(mainHref);
           return (
             <Link key={index} href={mainHref}>
               <button className={"flex items-center w-full px-5 py-2 transition-colors duration-200  gap-x-2 focus:outline-none" + (isActive ? " bg-blue-100 dark:bg-gray-800" : " dark:hover:bg-gray-800 hover:bg-gray-100")}>

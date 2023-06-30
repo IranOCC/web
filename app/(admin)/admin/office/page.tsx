@@ -79,7 +79,7 @@ export default function Page() {
           extraOperations={(id: string) => [
             {
               key: "members",
-              label: <Link href={`/panel/office/${id}/members`}>مدیریت اعضا</Link>,
+              label: <Link href={`/admin/office/${id}/members`}>مدیریت اعضا</Link>,
             },
           ]}
         />

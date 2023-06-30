@@ -1,9 +1,16 @@
 "use client";
 
 import EditAddPage, { type AddEditComponentProps } from "@/components/@panel/EditAddPage";
-import InitialSettingsBox from "@/components/@panel/Features/Setting/InitialSettingsBox";
-import { InitialSettingsFormData } from "@/types/formsData";
+
+
 import { WebInfo } from "@/types/interfaces";
+import { InitialSettingsFormData } from "@/types/formsData";
+import InitialSettingsBox from "@/components/@panel/Features/Setting/InitialSettingsBox";
+
+
+
+
+
 import { useForm } from "react-hook-form";
 
 const Center = ({ form, loading, section }: AddEditComponentProps) => {

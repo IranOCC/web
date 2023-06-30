@@ -55,17 +55,17 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
     return async (data: F) => {
       try {
         if (!getValues("_id")) {
-          await api.post(`/${endpoint}`, data);
+          await api.post(`/admin/${endpoint}`, data);
           toast.success("با موفقیت ایجاد شد");
         } else {
-          await api.patch(`/${endpoint}/` + getValues("_id"), data);
+          await api.patch(`/admin/${endpoint}/` + getValues("_id"), data);
           toast.success("با موفقیت ویرایش شد");
         }
         reset();
         setUpdateTable([true]);
         router.replace(baseRoute);
         // window.location.pathname = baseRoute;
-      } catch (error: unknown) {
+      } catch (error) {
         handleFieldsError(error, setError);
       }
     };
@@ -80,7 +80,7 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
   const getData = async () => {
     setDataLoading(true);
     try {
-      const response = await api.get(`/${endpoint}/` + params?.id);
+      const response = await api.get(`/admin/${endpoint}/` + params?.id);
       const data = response.data as F;
       setInitialData(data);
       setDataLoading(false);

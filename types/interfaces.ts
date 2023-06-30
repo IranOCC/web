@@ -169,7 +169,21 @@ export interface Icon {
 };
 
 
+export interface SmsTemplate {
+    _id: string;
+    title: string;
+    content: string;
+    serviceID: string;
+    slug: string;
+};
 
+export interface MailTemplate {
+    _id: string;
+    title: string;
+    content: string;
+    serviceID: string;
+    slug: string;
+};
 
 // ===
 

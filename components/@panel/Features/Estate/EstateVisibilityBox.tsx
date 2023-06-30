@@ -42,7 +42,7 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
             loading={isSubmitting}
             placeholder="انتخاب کنید"
             noSpace
-            apiPath="/estate/statics/status"
+            apiPath="/tools/estate/statics/status"
             defaultValue="Publish"
           />
           <Select
@@ -54,7 +54,7 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
             loading={isSubmitting}
             placeholder="انتخاب کنید"
             noSpace
-            apiPath="/estate/statics/visibility"
+            apiPath="/tools/estate/statics/visibility"
             defaultValue="Public"
           />
           <DateTimePicker

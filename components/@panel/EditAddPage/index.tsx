@@ -44,37 +44,35 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
   const api = useAxiosAuth();
 
   // submit
-  const onSubmit =
-    (redirect: boolean = SECTION ? false : true) =>
-    async (data: F) => {
-      if (beforeSubmit) data = beforeSubmit(data);
-      try {
-        if (isNew) {
-          const { data: result } = await api.post(`/${endpoint}`, data);
-          toast.success("با موفقیت ایجاد شد");
-          if (redirect) router.replace(`/panel/${endpoint}`);
-          else router.replace(`/panel/${endpoint}/` + result._id);
-        } else {
-          await api.patch(`/${endpoint}/` + (SECTION || ID), data);
-          toast.success("با موفقیت ویرایش شد");
-          if (redirect) router.replace(`/panel/${endpoint}`);
-          else window.location.reload();
-        }
-      } catch (error: unknown) {
-        handleFieldsError(error, setError);
+  const onSubmit = (redirect: boolean = SECTION ? false : true) => async (data: F) => {
+    if (beforeSubmit) data = beforeSubmit(data);
+    try {
+      if (isNew) {
+        const { data: result } = await api.post(`/admin/${endpoint}`, data);
+        toast.success("با موفقیت ایجاد شد");
+        if (redirect) router.replace(`/admin/${endpoint}`);
+        else router.replace(`/admin/${endpoint}/` + result._id);
+      } else {
+        await api.patch(`/admin/${endpoint}/` + (SECTION || ID), data);
+        toast.success("با موفقیت ویرایش شد");
+        if (redirect) router.replace(`/admin/${endpoint}`);
+        else window.location.reload();
       }
-    };
+    } catch (error) {
+      handleFieldsError(error, setError);
+    }
+  };
 
   const [dataLoading, setDataLoading] = useState<boolean>(false);
   const getData = async () => {
     setDataLoading(true);
     try {
-      const response = await api.get(`/${endpoint}/` + (SECTION || ID));
+      const response = await api.get(`/admin/${endpoint}/` + (SECTION || ID));
       const data = response.data as F;
       setInitialData(data);
       setDataLoading(false);
     } catch (error) {
-      router.replace(`/panel/${endpoint}`);
+      router.replace(`/admin/${endpoint}`);
     }
   };
 

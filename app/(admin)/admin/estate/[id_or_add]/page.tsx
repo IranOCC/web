@@ -84,7 +84,7 @@ export default function Page() {
   const { setValue, getValues } = form;
 
   const setInitialData = (data: EstateFormData) => {
-    setValue("_id", data._id);
+    // setValue("_id", data._id);
   };
 
   const [selectedCat, setSelectedCat] = useState<string | undefined>(getValues("category"));

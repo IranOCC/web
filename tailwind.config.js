@@ -10,6 +10,7 @@ module.exports = {
     colors: {
       primary: '#ffe600',
       secondary: '#ffc700',
+      disable: '#ffe600a6',
       // ...
     },
     extend: {},

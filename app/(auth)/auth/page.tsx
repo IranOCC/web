@@ -6,7 +6,7 @@ import LoginBackImage from "@/assets/images/city-bg.png";
 import { LoginPhoneOtpFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
-import axios from "@/lib/axios";
+import axios, { axiosException } from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
@@ -47,10 +47,13 @@ export default function Page() {
       setSendAgainTime(moment().add(2, "minutes").toDate());
       return true;
     } catch (error) {
-      setError("phone", {
-        type: "manual",
-        message: "خطایی در ارسال به وحود آمده است",
-      });
+      axiosException(error, setError);
+      // handleFieldError
+      // handleFieldsError()
+      // setError("phone", {
+      //   type: "manual",
+      //   message: "خطایی در ارسال به وحود آمده است",
+      // });
     }
   };
   const loginByOtp = async (data: LoginPhoneOtpFormData) => {

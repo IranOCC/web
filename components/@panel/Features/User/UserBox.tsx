@@ -74,7 +74,7 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
             noSpace
             showTitle
             tagsMode
-            apiPath="/user/statics/roles"
+            apiPath="/tools/user/statics/roles"
             containerClassName="col-span-full"
           />
           <CheckBox //

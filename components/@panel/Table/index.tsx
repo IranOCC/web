@@ -16,11 +16,11 @@ import { IconButton } from "@mui/material";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import { toast } from "@/lib/toast";
 import Link from "next/link";
-
-type TablePaginationPosition = "topLeft" | "topCenter" | "topRight" | "bottomLeft" | "bottomCenter" | "bottomRight";
+import { Button } from "@/components/Button";
+import SearchIcon from "@/components/Icons/Search";
 
 export type PanelTableProps = {
-  headerTitle?: () => ReactNode;
+  headerTitle?: (i?: number) => ReactNode;
   footerTitle?: () => ReactNode;
   data?: any[];
   endpoint?: string;
@@ -74,14 +74,15 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
   const getData = async () => {
     setFetchLoading(true);
     const _params = {
-      page: _page,
-      page_size: _count,
+      current: _page,
+      size: _count,
       search: _search,
-      order_by: "created_at",
+      // sort: "created_at",
     };
     try {
-      const response = await api.get(`/${endpoint}`, { params: _params });
-      setDataSource(response.data);
+      const response = await api.get(`/admin/${endpoint}`, { params: _params });
+      setDataSource(response.data?.items || []);
+      setTotalItemsCount(response.data?.total);
       setFetchLoading(false);
     } catch (error) {
       setFetchLoading(false);
@@ -90,8 +91,17 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
 
   const deleteRow = async (id: string) => {
     try {
-      await api.delete(`/${endpoint}/${id}`);
+      await api.delete(`/admin/${endpoint}/${id}`);
       toast.success("با موفقیت حذف گردید");
+      await getData();
+    } catch (error) {}
+  };
+
+  const deleteSelected = async () => {
+    const params = { id: selectedRowKeys };
+    try {
+      await api.delete(`/admin/${endpoint}`, { params });
+      toast.success("با موفقیت حذف شد");
       await getData();
     } catch (error) {}
   };
@@ -174,6 +184,46 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
     return [...operationsItem, ...extraOperations(id)];
   };
 
+  const Header = () => {
+    return (
+      <>
+        <div className="flex justify-between items-center">
+          {!!headerTitle && headerTitle(totalItemsCount)}
+          <div className="flex items-center gap-x-2">
+            <div className="relative flex items-center">
+              <input
+                //
+                type="text"
+                placeholder="جستجو ..."
+                className={`placeholder:text-gray-400 bg-white focus:bg-white p-2.5 text-gray-900 focus:ring-0 block text-sm border-b focus:border-gray-300 border-gray-300 border-0`}
+                value={_search || ""}
+                onChange={(e) => {
+                  const $s = new URLSearchParams(searchParams?.toString());
+                  $s?.set("search", e.target.value);
+                  router.push(pathname + "?" + $s.toString());
+                }}
+              />
+              <div className="absolute left-2.5 cursor-pointer text-secondary">
+                <SearchIcon />
+              </div>
+            </div>
+            {hasSelected && (
+              <Popconfirm title={`${selectedCount} مورد حذف شود؟`} okText="بله" cancelText="خیر" okType="link" onConfirm={() => deleteSelected()}>
+                <Button
+                  //
+                  size="small"
+                  noSpace
+                  fill={false}
+                  title={`حذف ${selectedCount} مورد`}
+                />
+              </Popconfirm>
+            )}
+          </div>
+        </div>
+      </>
+    );
+  };
+
   if (hasOperations) {
     tableColumns.push({
       title: "",
@@ -216,11 +266,11 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
                   row: Row,
                 },
               }}
-              rowKey="key"
+              rowKey="_id"
               bordered={false}
               loading={loading || fetchLoading}
               size="large"
-              title={headerTitle}
+              title={Header}
               showHeader={true}
               footer={footerTitle}
               expandable={expandable ? expandDetail : undefined}
@@ -249,11 +299,11 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
   return (
     <Table
       //
-      rowKey="key"
+      rowKey="_id"
       bordered={false}
       loading={loading || fetchLoading}
       size="large"
-      title={headerTitle}
+      title={Header}
       showHeader={true}
       footer={footerTitle}
       expandable={expandable ? expandDetail : undefined}
@@ -266,7 +316,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
         onChange: handlePaginationChange,
         pageSize: _count,
         current: _page,
-        defaultPageSize: 25,
+        defaultPageSize: 10,
         defaultCurrent: 1,
         pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
       }}

@@ -3,11 +3,7 @@
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 
-interface IProps {
-  children: ReactNode;
-}
-
-const AuthProvider = ({ children }: IProps) => {
+const AuthProvider = ({ children }: { children: ReactNode }) => {
   return <SessionProvider>{children}</SessionProvider>;
 };
 

@@ -4,7 +4,7 @@ import { SelectDataType } from "@/types/interfaces";
 import { Chip, ClickAwayListener, Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
 import { Spin } from "antd";
 import { ChangeEventHandler, ReactNode, RefObject, useEffect, useRef, useState } from "react";
-import { Controller, ControllerRenderProps, FieldValues } from "react-hook-form";
+import { Controller, ControllerRenderProps, FieldValues, useController } from "react-hook-form";
 import { Button } from "../Button";
 import ArrowDownIcon from "../Icons/ArrowDown";
 import SearchIcon from "../Icons/Search";
@@ -35,6 +35,7 @@ const Select = (props: IProps) => {
     tagsMode,
     multiple,
     showTitle = false,
+    addNew = false,
     containerClassName = "",
     onChange,
   } = props;
@@ -53,7 +54,7 @@ const Select = (props: IProps) => {
 
   let labelClass = "";
   let bordersClass = " border-gray-300 focus:border-gray-300";
-  let iconClass = " text-blue-500";
+  let iconClass = " text-secondary";
   let inputClass = " placeholder:text-gray-400 text-gray-500";
   if (status === "success") {
     labelClass = " text-green-500";
@@ -77,6 +78,8 @@ const Select = (props: IProps) => {
   if (size === "small") sizeClass = " py-1.5";
   else if (size === "large") sizeClass = " py-4";
 
+  const _c = useController({ control, name });
+
   // ===>
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLDivElement>(null);
@@ -95,7 +98,7 @@ const Select = (props: IProps) => {
 
     setDataLoading(true);
     try {
-      const data = await api.get(apiPath!, { params: { search, ...filterApi } });
+      const data = await api.get(apiPath!, { params: { initial: _c.field.value, search, ...filterApi } });
       const _items = data.data;
       if (Array.isArray(_items)) setDataList(_items);
       else setDataList(Object.keys(_items).map((value) => ({ value: value, title: _items[value] } as SelectDataType)));
@@ -163,6 +166,7 @@ const Select = (props: IProps) => {
             <Controller
               render={({ field }) => {
                 if (!dataList) return <></>;
+
                 return (
                   <FieldComponent
                     //
@@ -194,7 +198,7 @@ const Select = (props: IProps) => {
               control={control}
             />
           </div>
-          <span className={`absolute top-0 end-0 text-blue-600  flex items-center justify-center h-full me-2.5 text-md ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
+          <span className={`absolute top-0 end-0 text-secondary  flex items-center justify-center h-full me-2.5 text-md ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
             <ArrowDownIcon />
           </span>
           {icon && <span className={`absolute top-0 flex items-center justify-center h-full w-12 text-sm${iconClass} border-e${bordersClass}`}>{icon}</span>}
@@ -259,11 +263,12 @@ const FieldComponent = (props: FieldComponentType) => {
   const [objectValue, setObjectValue] = useState<SelectDataType[] | SelectDataType | undefined>();
 
   useEffect(() => {
+    // alert(field.value);
     setObjectValue(
       multiple
         ? //
           field.value?.map((dtype: SelectDataType | string) => {
-            typeof dtype === "object" ? dtype : dataList.filter((item) => item.value === dtype)[0] || undefined;
+            return typeof dtype === "object" ? dtype : dataList.filter((item) => item.value === dtype)[0] || undefined;
           })
         : //
         typeof field.value === "object"
@@ -276,7 +281,6 @@ const FieldComponent = (props: FieldComponentType) => {
     if (!!resetValue) field.onChange(defaultValue);
   }, [resetValue]);
 
-  //
   const _value =
     !dataLoading && multiple ? (
       //
@@ -286,7 +290,7 @@ const FieldComponent = (props: FieldComponentType) => {
           tagsMode ? (
             <div className="flex flex-wrap gap-1">
               {(objectValue as SelectDataType[]).map((item: SelectDataType, index) => (
-                <span key={index} className="cursor-default bg-blue-500 text-white px-2 rounded flex justify-center items-center">
+                <span key={index} className="cursor-default bg-secondary text-white px-2 rounded flex justify-center items-center">
                   {item.title}
                 </span>
               ))}
@@ -310,9 +314,11 @@ const FieldComponent = (props: FieldComponentType) => {
       "انتخاب نشده"
     );
 
+  // const _value = "jsj";
+
   return (
     <>
-      {JSON.stringify(objectValue)}
+      {/* {JSON.stringify(objectValue)} */}
       {!dataLoading && _value}
       {!!dataList && (
         <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg z-20">
@@ -337,7 +343,7 @@ const FieldComponent = (props: FieldComponentType) => {
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                       />
-                      <div className="absolute left-2.5 cursor-pointer text-blue-600">
+                      <div className="absolute left-2.5 cursor-pointer text-secondary">
                         <SearchIcon />
                       </div>
                     </div>
@@ -353,8 +359,8 @@ const FieldComponent = (props: FieldComponentType) => {
                           field.onChange(null);
                           if (onChange) onChange(null);
                         } else {
-                          field.onChange(null);
-                          if (onChange) onChange(null);
+                          field.onChange(undefined);
+                          if (onChange) onChange(undefined);
                           setOpen(false);
                         }
                       }}
@@ -368,9 +374,9 @@ const FieldComponent = (props: FieldComponentType) => {
                           selected={
                             multiple
                               ? //
-                                field.value?.map((dtype: SelectDataType | string) => {
-                                  typeof dtype === "object" ? dtype.value === value : value === dtype;
-                                })
+                                !!field.value?.filter((dtype: SelectDataType | string) => {
+                                  return typeof dtype === "object" ? dtype.value === value : value === dtype;
+                                })?.length
                               : //
                               typeof field.value === "object"
                               ? field.value.value === value
@@ -416,7 +422,7 @@ const SelectOption = ({ onClick, title, selected }: { onClick?: any; title: stri
     <li
       //
       onClick={onClick}
-      className={`relative flex items-center justify-between cursor-pointer px-4 py-2 ${selected ? "bg-blue-300 " : onClick ? "hover:bg-gray-100" : ""}`}
+      className={`relative flex items-center justify-between cursor-pointer px-4 py-2 ${selected ? "bg-disable " : onClick ? "hover:bg-gray-100" : ""}`}
     >
       {title}
     </li>
@@ -441,6 +447,7 @@ export type IProps = {
   direction?: "ltr" | "rtl";
   noSpace?: boolean;
 
+  addNew?: boolean;
   multiple?: boolean;
   showTitle?: boolean;
   searchable?: boolean;

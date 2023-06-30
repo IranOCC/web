@@ -1,23 +1,16 @@
 "use client";
 
-import useAxiosAuth from "@/hooks/useAxiosAuth";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
+import { useContext, useEffect } from "react";
 
 export default function Page() {
-  const { data: session, update } = useSession();
-  const api = useAxiosAuth();
-  const getMe = async () => {
-    const me = await api.get("/auth").catch();
-    await update({ user: me.data });
-  };
+  const { user } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   return (
     <>
       <pre dir="ltr" className="break-words whitespace-normal">
-        {JSON.stringify(session)}
+        {JSON.stringify(user)}
       </pre>
-      <button onClick={getMe}>Update ME</button>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import AuthLayout from "@/components/@auth/Layout";
-import { authOptions } from "@/app/api/auth/[...nextauth]";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 

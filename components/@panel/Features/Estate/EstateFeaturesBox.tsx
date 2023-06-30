@@ -107,7 +107,7 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         error={errors.features?.message}
         loading={isSubmitting}
         placeholder="انتخاب کنید"
-        apiPath="/estate/feature/assignList"
+        apiPath="/tools/estate/feature/autoComplete"
         filterApi={{ cat: props?.selectedCat }}
         multiple
         showTitle
@@ -234,7 +234,7 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         error={errors.features?.message}
         loading={isSubmitting}
         placeholder="انتخاب کنید"
-        apiPath="/estate/feature/assignList"
+        apiPath="/tools/estate/feature/autoComplete"
         filterApi={{ cat: props?.selectedCat }}
         multiple
         showTitle
@@ -370,7 +370,7 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
         error={errors.features?.message}
         loading={isSubmitting}
         placeholder="انتخاب کنید"
-        apiPath="/estate/feature/assignList"
+        apiPath="/admin/estate/feature/autoComplete"
         filterApi={{ cat: props?.selectedCat }}
         multiple
         showTitle
@@ -506,7 +506,7 @@ export const EstateFeaturesLandBox = ({ form, loading, props }: AddEditComponent
         error={errors.features?.message}
         loading={isSubmitting}
         placeholder="انتخاب کنید"
-        apiPath="/estate/feature/assignList"
+        apiPath="/admin/estate/feature/autoComplete"
         filterApi={{ cat: props?.selectedCat }}
         multiple
         showTitle
@@ -642,7 +642,7 @@ export const EstateFeaturesHectareBox = ({ form, loading, props }: AddEditCompon
         error={errors.features?.message}
         loading={isSubmitting}
         placeholder="انتخاب کنید"
-        apiPath="/estate/feature/assignList"
+        apiPath="/admin/estate/feature/autoComplete"
         filterApi={{ cat: props?.selectedCat }}
         multiple
         showTitle
