@@ -295,6 +295,9 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
               }}
               columns={tableColumns}
               dataSource={dataSource}
+              locale={{
+                emptyText: "اطلاعاتی یافت نشد",
+              }}
             />
           </SortableContext>
         </DndContext>
@@ -322,12 +325,15 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
         onChange: handlePaginationChange,
         pageSize: _count,
         current: _page,
-        defaultPageSize: 10,
+        defaultPageSize: defaultPageCount || 10,
         defaultCurrent: 1,
         pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
       }}
       columns={tableColumns}
       dataSource={dataSource}
+      locale={{
+        emptyText: "اطلاعاتی یافت نشد",
+      }}
     />
   );
 }

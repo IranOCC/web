@@ -31,10 +31,11 @@ const columns: ColumnsType<User> = [
     render: (phone: string) => {
       return (
         <div dir="ltr" className="float-right">
-          {phone}
+          {phone || "-"}
         </div>
       );
     },
+    responsive: ["md"],
   },
   {
     title: "ایمیل",
@@ -42,14 +43,16 @@ const columns: ColumnsType<User> = [
     render: (email: string) => {
       return (
         <div dir="ltr" className="float-right">
-          {email}
+          {email || "-"}
         </div>
       );
     },
+    responsive: ["xxl"],
   },
   {
     title: "نقش ها",
     dataIndex: "roles",
+    responsive: ["xl"],
     render: (roles: string[]) => {
       return roles.map((tag) => {
         return (
@@ -63,6 +66,7 @@ const columns: ColumnsType<User> = [
   {
     title: "فعالسازی",
     dataIndex: "active",
+    responsive: ["lg"],
     render: (active: boolean) => <span className={"font-bold " + (!!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
   },
 ];

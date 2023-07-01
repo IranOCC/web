@@ -11,56 +11,12 @@ const columns: ColumnsType<Office> = [
   {
     title: "نام",
     dataIndex: "name",
-    render: (name: string, record) => {
-      return (
-        <div className="flex items-center">
-          {record.verified && <VerifiedIcon className="text-blue-600" fontSize="small" />}
-          <span className="ms-1">{name}</span>
-        </div>
-      );
-    },
   },
+
   {
-    title: "مدیر",
-    dataIndex: ["management", "fullName"],
-  },
-  {
-    title: "شماره",
-    dataIndex: ["phone", "value"],
-    render: (phone: string) => {
-      return (
-        <div dir="ltr" className="float-right">
-          {phone}
-        </div>
-      );
-    },
-  },
-  {
-    title: "ایمیل",
-    dataIndex: ["email", "value"],
-    render: (email: string) => {
-      return (
-        <div dir="ltr" className="float-right">
-          {email}
-        </div>
-      );
-    },
-  },
-  {
-    title: "اعضا",
-    dataIndex: "membersCount",
-  },
-  {
-    title: "املاک",
-    dataIndex: "estatesCount",
-  },
-  {
-    title: "پست ها",
-    dataIndex: "postsCount",
-  },
-  {
-    title: "فعالسازی",
-    dataIndex: "active",
+    title: "وضعیت انتشار",
+    dataIndex: "status",
+    responsive: ["lg"],
     render: (active: boolean) => <span className={"font-bold " + (!!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
   },
 ];

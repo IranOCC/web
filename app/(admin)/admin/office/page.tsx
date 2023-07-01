@@ -23,6 +23,7 @@ const columns: ColumnsType<Office> = [
   {
     title: "مدیر",
     dataIndex: ["management", "fullName"],
+    responsive: ["lg"],
   },
   {
     title: "شماره",
@@ -34,6 +35,7 @@ const columns: ColumnsType<Office> = [
         </div>
       );
     },
+    responsive: ["md"],
   },
   {
     title: "ایمیل",
@@ -45,22 +47,27 @@ const columns: ColumnsType<Office> = [
         </div>
       );
     },
+    responsive: ["xxl"],
   },
   {
     title: "اعضا",
     dataIndex: "membersCount",
+    responsive: ["xl"],
   },
   {
     title: "املاک",
     dataIndex: "estatesCount",
+    responsive: ["xl"],
   },
   {
     title: "پست ها",
     dataIndex: "postsCount",
+    responsive: ["xl"],
   },
   {
     title: "فعالسازی",
     dataIndex: "active",
+    responsive: ["lg"],
     render: (active: boolean) => <span className={"font-bold " + (!!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
   },
 ];
