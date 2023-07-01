@@ -58,10 +58,7 @@ export default function Template() {
     setValue("description", data?.description);
     setValue("icon", (data?.icon as Icon)?._id);
     setValue("tags", data.tags);
-    setValue(
-      "categories",
-      (data?.categories as EstateCategory[])?.map((v: EstateCategory) => v._id)
-    );
+    setValue("categories", data?.categories);
   };
 
   return (

@@ -166,7 +166,6 @@ const Select = (props: IProps) => {
             <Controller
               render={({ field }) => {
                 if (!dataList) return <></>;
-
                 return (
                   <FieldComponent
                     //
@@ -193,11 +192,12 @@ const Select = (props: IProps) => {
                   />
                 );
               }}
-              defaultValue={defaultValue}
+              // defaultValue={defaultValue}
               name={name}
               control={control}
             />
           </div>
+
           <span className={`absolute top-0 end-0 text-secondary  flex items-center justify-center h-full me-2.5 text-md ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
             <ArrowDownIcon />
           </span>

@@ -47,7 +47,7 @@ export default function Template() {
     setValue("description", data?.description);
     setValue("icon", (data?.icon as Icon)?._id);
     setValue("tags", data.tags);
-    setValue("parent", (data?.parent as EstateCategory)?._id);
+    setValue("parent", data?.parent);
   };
 
   return (

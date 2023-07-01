@@ -23,7 +23,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
       setUser(me.data);
       hideLoading();
     } catch (error) {
-      await signOut();
+      // await signOut();
       hideLoading();
     }
   };
