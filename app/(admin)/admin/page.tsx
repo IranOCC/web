@@ -8,9 +8,7 @@ export default function Page() {
 
   return (
     <>
-      <pre dir="ltr" className="break-words whitespace-normal">
-        {JSON.stringify(user)}
-      </pre>
+      <div className="text-center">داشبورد</div>
     </>
   );
 }

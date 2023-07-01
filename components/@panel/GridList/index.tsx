@@ -49,14 +49,15 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
   const getData = async () => {
     setFetchLoading(true);
     const _params = {
-      page: _page,
-      page_size: _count,
+      current: _page,
+      size: _count,
       search: _search,
-      order_by: "created_at",
+      // order_by: "created_at",
     };
     try {
-      const response = await api.get(`/${endpoint}`, { params: _params });
-      setDataSource(response.data);
+      const response = await api.get(`/admin/${endpoint}`, { params: _params });
+      setDataSource(response.data.items);
+      setTotalItemsCount(response.data.total);
       setFetchLoading(false);
     } catch (error) {
       setFetchLoading(false);
@@ -65,7 +66,7 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
 
   const deleteRow = async (id: string) => {
     try {
-      await api.delete(`/${endpoint}/${id}`);
+      await api.delete(`/admin/${endpoint}/${id}`);
       toast.success("با موفقیت حذف گردید");
       await getData();
     } catch (error) {}
@@ -76,8 +77,6 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
     if (endpoint) getData();
     // setFirstTry(false);
   }, [_page, _count, _search, _sort, update]);
-
-  const baseRoute = (params?.id ? pathname?.replace(params.id as string, "") : pathname) || "/";
 
   return (
     <>

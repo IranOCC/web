@@ -15,7 +15,7 @@ const PanelTab = ({ data }: IProps) => {
                   //
                   "w-full py-2.5 text-sm font-medium leading-5 border-gray-200 border",
                   "focus:outline-none focus:ring-0",
-                  selected ? "bg-blue-500 text-white" : "bg-white text-slate-800",
+                  selected ? "bg-secondary text-white" : "bg-white text-slate-800",
                   //
                 ].join(" ")
               }

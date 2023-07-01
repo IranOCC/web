@@ -75,7 +75,7 @@ export default function Modal({ path, paddingChildren = true, open, setOpen, tit
               <Dialog.Panel className={"relative transform overflow-hidden sm:rounded-lg bg-white text-left shadow-xl transition-all w-full sm:my-8 sm:w-full sm:max-w-2xl" + " " + className}>
                 <div className="bg-white px-4 pb-4 pt-4">
                   {closeButton && (
-                    <div className={"absolute end-4 z-10 flex justify-center items-center w-7 h-7 rounded-full cursor-pointer" + (whiteClose ? " text-white" : " text-blue-500")} onClick={() => setOpen(false)}>
+                    <div className={"absolute end-4 z-10 flex justify-center items-center w-7 h-7 rounded-full cursor-pointer" + (whiteClose ? " text-white" : " text-secondary")} onClick={() => setOpen(false)}>
                       <FontAwesomeIcon icon={faXmark} size="lg" />
                     </div>
                   )}

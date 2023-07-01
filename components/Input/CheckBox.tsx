@@ -20,7 +20,7 @@ const CheckBox = (props: IProps) => {
   }
 
   let labelClass = "";
-  let inputClass = " text-blue-500";
+  let inputClass = " text-secondary";
   if (status === "success") {
     labelClass = " text-green-500";
     inputClass = " text-green-500";

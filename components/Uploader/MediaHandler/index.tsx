@@ -220,7 +220,7 @@ const FieldComponent = (props: FieldComponentType) => {
         </div>
       )}
       <Dragger {..._props} className="w-full">
-        <p className="ant-upload-drag-icon flex justify-center items-center text-blue-500">
+        <p className="ant-upload-drag-icon flex justify-center items-center text-secondary">
           <Upload2Cloud />
         </p>
         <p className="ant-upload-text !text-sm font-bold">فایل ها رو به اینجا درگ کنید تا آپلود شوند یا کلیک کنید</p>
@@ -228,7 +228,7 @@ const FieldComponent = (props: FieldComponentType) => {
           <p className="ant-upload-hint">
             یا برای افزودن از کتابخانه{" "}
             <span
-              className="text-blue-500"
+              className="text-secondary"
               onClick={(e) => {
                 e.stopPropagation();
                 setOpenLibrary(true);
