@@ -72,7 +72,7 @@ export default function Page() {
     try {
       await api.patch("/auth", data);
       toast.success("با موفقیت ویرایش شد");
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       axiosException(error, setError);
     }
