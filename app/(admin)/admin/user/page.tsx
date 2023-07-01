@@ -20,7 +20,7 @@ const columns: ColumnsType<User> = [
       return (
         <div className="flex items-center">
           {record.verified && <VerifiedIcon className="text-blue-600" fontSize="small" />}
-          <span className="ms-1">{fullName}</span>
+          <span className="ms-1">{fullName || "-"}</span>
         </div>
       );
     },

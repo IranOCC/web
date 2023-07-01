@@ -192,7 +192,7 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
           {/* {!!headerTitle && headerTitle(totalItemsCount)} */}
           <div className="text-base font-semibold flex items-center gap-4 justify-between sm:justify-start">
             {/*  */}
-            {headerTitle} ({totalItemsCount})
+            {headerTitle} {!!totalItemsCount && "(" + totalItemsCount + ")"}
             {hasSelected && (
               <Popconfirm title={`${selectedCount} مورد حذف شود؟`} okText="بله" cancelText="خیر" okType="link" onConfirm={() => deleteSelected()}>
                 <Button

@@ -15,7 +15,7 @@ const columns: ColumnsType<Office> = [
       return (
         <div className="flex items-center">
           {record.verified && <VerifiedIcon className="text-blue-600" fontSize="small" />}
-          <span className="ms-1">{name}</span>
+          <span className="ms-1">{name || "-"}</span>
         </div>
       );
     },
@@ -57,12 +57,12 @@ const columns: ColumnsType<Office> = [
   {
     title: "املاک",
     dataIndex: "estatesCount",
-    responsive: ["xl"],
+    responsive: ["xxl"],
   },
   {
     title: "پست ها",
     dataIndex: "postsCount",
-    responsive: ["xl"],
+    responsive: ["xxl"],
   },
   {
     title: "فعالسازی",
