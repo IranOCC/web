@@ -36,8 +36,14 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
             //
             control={control}
             name="avatar"
-            uploadPath="user"
-            label="آپلود آواتار"
+            uploaderField="image"
+            uploadPath="storage/user/avatar"
+            body={
+              {
+                // relatedToID: user?._id,
+              }
+            }
+            label="آواتار"
             error={errors.avatar?.message}
             loading={isSubmitting}
             containerClassName="col-span-full"

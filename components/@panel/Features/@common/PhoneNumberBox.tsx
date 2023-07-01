@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { Select } from "@/components/Select";
 import Link from "next/link";
 
-export default function PhoneNumberBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function PhoneNumberBox({ form, loading, allowVerify = true }: { form: any; loading?: boolean; allowVerify?: boolean }) {
   const {
     register,
     unregister,
@@ -48,15 +48,17 @@ export default function PhoneNumberBox({ form, loading }: { form: any; loading?:
           noSpace
           maxLength={15}
         />
-        <CheckBox //
-          control={control}
-          name="phone.verified"
-          label="تایید شده"
-          // @ts-ignore
-          error={errors?.phone?.verified?.message}
-          loading={isSubmitting}
-          noSpace
-        />
+        {allowVerify && (
+          <CheckBox //
+            control={control}
+            name="phone.verified"
+            label="تایید شده"
+            // @ts-ignore
+            error={errors?.phone?.verified?.message}
+            loading={isSubmitting}
+            noSpace
+          />
+        )}
       </div>
     </PanelCard>
   );

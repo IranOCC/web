@@ -27,7 +27,7 @@ export default function LocationBox({ form, loading }: { form: any; loading?: bo
 
   return (
     <PanelCard title="موقعیت مکانی" loading={loading}>
-      <div className="grid grid-cols-2 gap-4 ">
+      <div className="grid lg:grid-cols-2 gap-4 ">
         <Input
           //
           control={control}

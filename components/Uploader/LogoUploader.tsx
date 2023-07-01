@@ -22,7 +22,7 @@ const beforeUpload = (file: RcFile) => {
 };
 
 const LogoUploader = (props: IProps) => {
-  const { name, control, defaultValue, disabled = false, loading = false, label, noSpace, containerClassName = "", error, warning, success, uploadPath } = props;
+  const { name, body, uploaderField, control, defaultValue, disabled = false, loading = false, label, noSpace, containerClassName = "", error, warning, success, uploadPath } = props;
   let { status, helperText } = props;
 
   const { data: session } = useSession();
@@ -48,7 +48,7 @@ const LogoUploader = (props: IProps) => {
 
   return (
     <>
-      <div className={"w-full relative z-10 flex flex-col items-center justify-center" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+      <div className={"w-full relative z-20 flex flex-col items-center justify-center" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
         <Controller
           render={({ field }) => (
             <FieldComponent
@@ -58,7 +58,9 @@ const LogoUploader = (props: IProps) => {
               loading={loading}
               session={session}
               label={label}
+              uploaderField={uploaderField}
               uploadPath={uploadPath}
+              body={body}
             />
           )}
           defaultValue={defaultValue}
@@ -76,8 +78,10 @@ type FieldComponentType = {
   disabled: boolean;
   loading: boolean;
   label?: string;
+  uploaderField: string;
   session: Session | null;
   uploadPath: string;
+  body?: any;
 };
 
 const FieldComponent = (props: FieldComponentType) => {
@@ -87,8 +91,10 @@ const FieldComponent = (props: FieldComponentType) => {
     field,
     session,
     uploadPath,
+    uploaderField,
     disabled,
     loading,
+    body,
   } = props;
 
   const [fileListState, setFileListState] = useState<UploadFile[]>([]);
@@ -111,10 +117,11 @@ const FieldComponent = (props: FieldComponentType) => {
     <>
       <Upload
         //
-        accept="image/*"
-        name="file"
+        accept=".jpg, .jpeg, .png"
+        name={uploaderField}
         headers={{ Authorization: `Bearer ${session?.accessToken}` }}
-        action={process.env.NEXT_PUBLIC_BASE_URL + "/storage/" + uploadPath}
+        data={body}
+        action={process.env.NEXT_PUBLIC_BASE_URL + "/" + uploadPath}
         listType="picture-circle"
         className="logo-uploader"
         multiple={false}
@@ -123,7 +130,7 @@ const FieldComponent = (props: FieldComponentType) => {
         onChange={({ fileList, file, event }) => {
           setFileListState(fileList);
           if (file.status === "removed") {
-            field.onChange(undefined);
+            field.onChange(null);
           } else if (file.status === "done") {
             setTimeout(() => {
               field.onChange(file.response);
@@ -133,6 +140,13 @@ const FieldComponent = (props: FieldComponentType) => {
         beforeUpload={beforeUpload}
         maxCount={1}
         disabled={disabled || loading}
+        locale={{
+          uploading: "در حال آپلود",
+          uploadError: "خطا در آپلود",
+          removeFile: "حذف",
+          downloadFile: "دانلود",
+          previewFile: "نمایش",
+        }}
       >
         {!!fileListState?.length ? null : <div>{label}</div>}
       </Upload>
@@ -142,6 +156,7 @@ const FieldComponent = (props: FieldComponentType) => {
 
 export type IProps = {
   name: string;
+  uploaderField: string;
   control: any;
   defaultValue?: StorageFile;
   label?: string;
@@ -161,7 +176,8 @@ export type IProps = {
   warning?: ReactNode;
   success?: ReactNode;
 
-  uploadPath: "office" | "estate" | "user" | "post" | "other";
+  uploadPath: string;
+  body?: any;
 };
 
 export default LogoUploader;

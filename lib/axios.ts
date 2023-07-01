@@ -26,7 +26,7 @@ axiosAuth.interceptors.response.use(
         return response;
     },
     (error) => {
-        // handleToastError(error);
+        handleToastError(error);
         return Promise.reject(error)
     },
 );
@@ -46,8 +46,7 @@ axiosNoAuth.interceptors.response.use(
         return response;
     },
     (error) => {
-        // handleToastError(error);
-        // handleFieldsError(error)
+        handleToastError(error);
         return Promise.reject(error)
     },
 );
@@ -104,7 +103,6 @@ export const handleToastError = (error: any) => {
 
 export const axiosException = (error: any, formHandler: any) => {
     handleFieldsError(error, formHandler)
-    handleToastError(error)
     console.log(error);
 }
 

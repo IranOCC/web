@@ -33,7 +33,19 @@ export type UserFormData = {
 };
 
 
-
+export type MyProfileFormData = {
+    firstName: string;
+    lastName: string;
+    avatar?: StorageFile | string;
+    // 
+    phone?: Phone | string;
+    email?: Email | string;
+    // 
+    province?: string;
+    city?: string;
+    address?: string;
+    location?: [number, number] | string;
+};
 
 
 

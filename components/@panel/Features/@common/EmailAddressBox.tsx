@@ -11,7 +11,7 @@ import { Select } from "@/components/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
 import Link from "next/link";
 
-export default function EmailAddressBox({ form, loading }: AddEditComponentProps) {
+export default function EmailAddressBox({ form, loading, allowVerify = true }: { form: any; loading?: boolean; allowVerify?: boolean }) {
   const {
     register,
     unregister,
@@ -48,15 +48,17 @@ export default function EmailAddressBox({ form, loading }: AddEditComponentProps
           direction="ltr"
           noSpace
         />
-        <CheckBox //
-          control={control}
-          name="email.verified"
-          label="تایید شده"
-          // @ts-ignore
-          error={errors?.email?.verified?.message}
-          loading={isSubmitting}
-          noSpace
-        />
+        {allowVerify && (
+          <CheckBox //
+            control={control}
+            name="email.verified"
+            label="تایید شده"
+            // @ts-ignore
+            error={errors?.email?.verified?.message}
+            loading={isSubmitting}
+            noSpace
+          />
+        )}
       </div>
     </PanelCard>
   );

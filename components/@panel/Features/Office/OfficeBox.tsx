@@ -45,8 +45,14 @@ export default function OfficeBox({ form, loading }: { form: any; loading?: bool
             //
             control={control}
             name="logo"
-            uploadPath="office"
-            label="آپلود لوگو"
+            uploaderField="image"
+            uploadPath="storage/office/logo"
+            body={
+              {
+                // relatedToID: user?._id,
+              }
+            }
+            label="لوگو"
             error={errors.logo?.message}
             loading={isSubmitting}
             containerClassName="col-span-full"

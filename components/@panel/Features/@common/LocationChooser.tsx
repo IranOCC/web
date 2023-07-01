@@ -4,6 +4,7 @@ import { Controller } from "react-hook-form";
 import { ReactNode, useEffect } from "react";
 import L from "leaflet";
 import MarkerIcon from "@/components/Icons/MarkerIcon";
+import { toast } from "@/lib/toast";
 
 const LocationChooser = (props: IProps) => {
   const { name, control, defaultValue, label, containerClassName = "", className = "", noSpace, loading, disabled, readOnly, error, warning, success } = props;
@@ -146,7 +147,8 @@ function LocationEvent({ location, setLocation }: { location: [number, number]; 
     <>
       <div
         onClick={() => {
-          alert("location");
+          // alert("location");
+          toast.info("در حال دریافت موقعیت مکانی ...");
           map.locate();
         }}
         className="text-white font-bold absolute rounded left-1 bottom-1 bg-orange-500 p-2 z-[9999]"

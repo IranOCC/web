@@ -1,19 +1,26 @@
 "use client";
 
 import PanelCard from "@/components/@panel/Card";
+import EmailAddressBox from "@/components/@panel/Features/@common/EmailAddressBox";
+import LocationBox from "@/components/@panel/Features/@common/LocationBox";
+import PhoneNumberBox from "@/components/@panel/Features/@common/PhoneNumberBox";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import LogoUploader from "@/components/Uploader/LogoUploader";
+import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { axiosException } from "@/lib/axios";
 import { toast } from "@/lib/toast";
-import { UserFormData } from "@/types/formsData";
+import { MyProfileFormData, UserFormData } from "@/types/formsData";
 import { StorageFile, Phone, Email } from "@/types/interfaces";
 import { signOut } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UseFormReturn, useForm } from "react-hook-form";
 
 export default function Page() {
-  const form = useForm<UserFormData>();
+  const { user } = useContext(CurrentUserContext) as CurrentUserContextType;
+
+  const form = useForm<MyProfileFormData>();
   const {
     register,
     unregister,
@@ -26,9 +33,7 @@ export default function Page() {
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = form;
 
-  const setInitialData = (data: UserFormData) => {
-    setValue("_id", data._id);
-
+  const setInitialData = (data: MyProfileFormData) => {
     setValue("firstName", data.firstName);
     setValue("lastName", data.lastName);
     setValue("avatar", data.avatar as StorageFile);
@@ -42,7 +47,7 @@ export default function Page() {
     setValue("location", data.location);
   };
 
-  const beforeSubmit = (data: UserFormData) => {
+  const beforeSubmit = (data: MyProfileFormData) => {
     if (!(data.phone as Phone)?.value) {
       data.phone = undefined;
     }
@@ -55,88 +60,103 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
 
   const api = useAxiosAuth();
-  const getMe = async () => {
-    try {
-      const me = await api.get("/auth");
-      setInitialData(me.data);
-    } catch (error) {
-      await signOut();
-    }
-  };
   useEffect(() => {
     register("firstName", { required: "نام را وارد کنید" });
     register("lastName", { required: "نام خانوادگی را وارد کنید" });
     register("avatar");
+    if (!!user) setInitialData(user as MyProfileFormData);
+  }, [user]);
 
-    getMe();
-  }, []);
-
-  const onSubmit = async (data: UserFormData) => {
+  const onSubmit = async (data: MyProfileFormData) => {
+    data = beforeSubmit(data);
     try {
       await api.patch("/auth", data);
       toast.success("با موفقیت ویرایش شد");
+      // window.location.reload();
     } catch (error) {
-      //
+      axiosException(error, setError);
     }
   };
 
   return (
     <>
       <div className="p-4">
-        <PanelCard title="پروفایل من" loading={loading}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <LogoUploader
-              //
-              control={control}
-              name="avatar"
-              uploadPath="user"
-              label="آپلود آواتار"
-              error={errors.avatar?.message}
-              loading={isSubmitting}
-              containerClassName="col-span-full"
-              noSpace
-            />
-            <Input
-              //
-              control={control}
-              name="firstName"
-              label="نام"
-              error={errors.firstName?.message}
-              loading={isSubmitting}
-              noSpace
-            />
-            <Input
-              //
-              control={control}
-              name="lastName"
-              label="نام خانوادگی"
-              error={errors.lastName?.message}
-              loading={isSubmitting}
-              noSpace
-            />
-
-            <Button
-              //
-              className="col-span-full"
-              title="بروزرسانی پروفایل"
-              type="submit"
-              loading={isSubmitting || isLoading || isValidating || loading}
-              onClick={handleSubmit(onSubmit)}
-              noSpace
-            />
-
-            <Button
-              //
-              className="col-span-full"
-              variant="outline"
-              title="خروج از حساب"
-              type="submit"
-              loading={isSubmitting || isLoading || isValidating || loading}
-              onClick={() => signOut()}
-              noSpace
-            />
+        <div className="grid grid-cols-2 gap-4">
+          <div className="col-span-full">
+            <PanelCard title="پروفایل من" loading={loading}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <LogoUploader
+                  //
+                  control={control}
+                  name="avatar"
+                  uploaderField="image"
+                  uploadPath="storage/user/avatar"
+                  body={{
+                    relatedToID: user?._id,
+                  }}
+                  label="آپلود آواتار"
+                  error={errors.avatar?.message}
+                  loading={isSubmitting}
+                  containerClassName="col-span-full"
+                  noSpace
+                />
+                <Input
+                  //
+                  control={control}
+                  name="firstName"
+                  label="نام"
+                  error={errors.firstName?.message}
+                  loading={isSubmitting}
+                  noSpace
+                />
+                <Input
+                  //
+                  control={control}
+                  name="lastName"
+                  label="نام خانوادگی"
+                  error={errors.lastName?.message}
+                  loading={isSubmitting}
+                  noSpace
+                />
+              </div>
+            </PanelCard>
           </div>
-        </PanelCard>
+          <div className="col-span-full md:col-span-1">
+            <PhoneNumberBox form={form} loading={loading} allowVerify={false} />
+          </div>
+          <div className="col-span-full md:col-span-1">
+            <EmailAddressBox form={form} loading={loading} allowVerify={false} />
+          </div>
+          <div className="col-span-full">
+            <LocationBox form={form} loading={loading} />
+          </div>
+          <div className="col-span-full">
+            <PanelCard className="order-last lg:order-first">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Button
+                  //
+                  // className="col-span-full"
+                  title="بروزرسانی پروفایل"
+                  type="submit"
+                  loading={isSubmitting || isLoading || isValidating || loading}
+                  onClick={handleSubmit(onSubmit)}
+                  noSpace
+                />
+
+                <Button
+                  //
+                  // className="col-span-full"
+                  variant="outline"
+                  title="خروج از حساب"
+                  type="submit"
+                  loading={isSubmitting || isLoading || isValidating || loading}
+                  onClick={() => signOut()}
+                  noSpace
+                />
+              </div>
+            </PanelCard>
+          </div>
+        </div>
       </div>
     </>
   );
