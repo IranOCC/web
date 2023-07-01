@@ -24,6 +24,9 @@ const columns: ColumnsType<Office> = [
     title: "مدیر",
     dataIndex: ["management", "fullName"],
     responsive: ["lg"],
+    render: (name: string, record) => {
+      return <div className="float-right">{name || "-"}</div>;
+    },
   },
   {
     title: "شماره",
@@ -31,7 +34,7 @@ const columns: ColumnsType<Office> = [
     render: (phone: string) => {
       return (
         <div dir="ltr" className="float-right">
-          {phone}
+          {phone || "-"}
         </div>
       );
     },
@@ -43,7 +46,7 @@ const columns: ColumnsType<Office> = [
     render: (email: string) => {
       return (
         <div dir="ltr" className="float-right">
-          {email}
+          {email || "-"}
         </div>
       );
     },
