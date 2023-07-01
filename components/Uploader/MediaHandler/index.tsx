@@ -40,7 +40,7 @@ const MediaHandler = (props: IProps) => {
     labelClass = " text-orange-500";
   }
 
-  const indexFileControl = control ? useController({ control, name: indexFileName || "image" }) : null;
+  const indexFileControl = useController({ control, name: indexFileName || "image" });
 
   return (
     <>
