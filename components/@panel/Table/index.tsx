@@ -187,9 +187,9 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
   const Header = () => {
     return (
       <>
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           {!!headerTitle && headerTitle(totalItemsCount)}
-          <div className="flex items-center gap-x-2">
+          <div className="flex items-center gap-x-2 self-end">
             <div className="relative flex items-center">
               <input
                 //
