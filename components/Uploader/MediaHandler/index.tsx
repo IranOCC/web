@@ -16,7 +16,7 @@ import Image from "next/image";
 import { Cancel, Star } from "@mui/icons-material";
 
 const MediaHandler = (props: IProps) => {
-  const { name, control, defaultValue, indexFileName, showUploadList = true, showFilesList = false, onChange, fromLibrary, disabled = false, loading = false, label, noSpace, containerClassName = "", error, warning, success, uploadPath } = props;
+  const { name, control, defaultValue, indexFileName, showUploadList = true, showFilesList = false, onChange, uploaderField = "images", fromLibrary, disabled = false, loading = false, label, noSpace, containerClassName = "", error, warning, success, uploadPath } = props;
   let { status, helperText } = props;
 
   const { data: session } = useSession();
@@ -40,7 +40,7 @@ const MediaHandler = (props: IProps) => {
     labelClass = " text-orange-500";
   }
 
-  const indexFileControl = useController({ control, name: indexFileName || "image" });
+  const indexFileControl = control ? useController({ control, name: indexFileName || "image" }) : null;
 
   return (
     <>
@@ -56,6 +56,7 @@ const MediaHandler = (props: IProps) => {
                 loading={loading}
                 session={session}
                 uploadPath={uploadPath}
+                uploaderField={uploaderField}
                 fromLibrary={fromLibrary}
                 showUploadList={showUploadList}
                 showFilesList={showFilesList}
@@ -73,6 +74,7 @@ const MediaHandler = (props: IProps) => {
             loading={loading}
             session={session}
             uploadPath={uploadPath}
+            uploaderField={uploaderField}
             fromLibrary={fromLibrary}
             onChange={onChange}
             showUploadList={showUploadList}
@@ -92,8 +94,10 @@ type FieldComponentType = {
   disabled: boolean;
   loading: boolean;
   session: Session | null;
-  uploadPath: "office" | "estate" | "user" | "post" | "other";
+  uploadPath: string;
   fromLibrary?: boolean;
+
+  uploaderField: string;
 
   onChange?: any;
   showUploadList?: boolean;
@@ -106,6 +110,7 @@ const FieldComponent = (props: FieldComponentType) => {
     field,
     session,
     uploadPath,
+    uploaderField,
     disabled,
     loading,
     fromLibrary = true,
@@ -131,7 +136,7 @@ const FieldComponent = (props: FieldComponentType) => {
 
   const _props: UploadProps = {
     accept: "image/*",
-    name: "file",
+    name: uploaderField,
     multiple: true,
     action: process.env.NEXT_PUBLIC_BASE_URL + "/storage/" + uploadPath,
     headers: { Authorization: `Bearer ${session?.accessToken}` },
@@ -142,8 +147,8 @@ const FieldComponent = (props: FieldComponentType) => {
       }
       if (status === "done") {
         toast.success(`${info.file.name} با موفقیت آپلود شد`);
-        if (onChange) onChange([info.file.response]);
-        if (field?.onChange) field.onChange(!!field.value?.length ? [...field.value, info.file.response] : [info.file.response]);
+        if (onChange) onChange([...info.file.response]);
+        if (field?.onChange) field.onChange(!!field.value?.length ? [...field.value, ...info.file.response] : [...info.file.response]);
       } else if (status === "error") {
         toast.error(`${info.file.name} آپلود نشد`);
       }
@@ -241,7 +246,7 @@ const FieldComponent = (props: FieldComponentType) => {
         )}
       </Dragger>
       {showUploadList && !!fileListState.length && (
-        <div className="w-full mt-1 relative flex flex-col max-h-32 gap-1 overflow-x-hidden">
+        <div className="w-full mt-1 relative flex flex-col max-h-64 gap-1 overflow-x-hidden">
           {fileListState.map((item, idx) => {
             let iconColor = "text-gray-500";
             let StatusIcon = LinkOutlineIcon;
@@ -274,7 +279,7 @@ const FieldComponent = (props: FieldComponentType) => {
                 <Tooltip title={statusText}>
                   <div className={"flex items-center cursor-pointer rounded bg-slate-100 hover:bg-slate-200 p-1 " + iconColor + uploadingClass}>
                     {/*  */}
-                    <i className="w-6 h-6">
+                    <i className={"w-6 h-6 " + (item.status === "uploading" && " animate-spin")}>
                       <StatusIcon />
                     </i>
                     <span className="text-black ms-1">{item.name}</span>
@@ -323,7 +328,8 @@ export type IProps = {
   warning?: ReactNode;
   success?: ReactNode;
 
-  uploadPath: "office" | "estate" | "user" | "post" | "other";
+  uploadPath: string;
+  uploaderField?: string;
   fromLibrary?: boolean;
 
   onChange?: any;

@@ -84,10 +84,66 @@ export default function Page() {
   const { setValue, getValues } = form;
 
   const setInitialData = (data: EstateFormData) => {
-    // setValue("_id", data._id);
+
+    setSelectedCat(data.category)
+
+
+    setValue("_id", data._id);
+
+    setValue("title", data.title);
+    setValue("content", data.content);
+    setValue("excerpt", data.excerpt);
+    setValue("slug", data.slug);
+
+    // pictures
+
+
+    setValue("status", data.status);
+    setValue("visibility", data.visibility);
+    setValue("pinned", data.pinned);
+    setValue("publishedAt", data.publishedAt);
+
+    setValue("tags", data.tags);
+    setValue("code", data.code);
+
+
+    setValue("category", data.category);
+    setValue("type", data.type);
+    setValue("documentType", data.documentType);
+    setValue("area", data.area);
+    setValue("price", data.price);
+    setValue("totalPrice", data.totalPrice);
+    setValue("description", data.description);
+    setValue("canBarter", data.canBarter);
+
+
+    setValue("constructionYear", data.constructionYear);
+    setValue("roomsCount", data.roomsCount);
+    setValue("mastersCount", data.mastersCount);
+    setValue("buildingArea", data.buildingArea);
+    setValue("unitsCount", data.unitsCount);
+    setValue("floor", data.floor);
+    setValue("withOldBuilding", data.withOldBuilding);
+    setValue("features", data.features);
+
+
+    setValue("province", data.province);
+    setValue("city", data.city);
+    setValue("district", data.district);
+    setValue("quarter", data.quarter);
+    setValue("alley", data.alley);
+    setValue("address", data.address);
+    setValue("location", data.location);
+
+    setValue("owner", data.owner);
+    setValue("createdBy", data.createdBy);
+    setValue("confirmedBy", data.confirmedBy);
+    setValue("office", data.office);
   };
 
-  const [selectedCat, setSelectedCat] = useState<string | undefined>(getValues("category"));
+  const [selectedCat, setSelectedCat] = useState<string | undefined | null>(getValues("category"));
+
+
 
   return (
     <>
@@ -103,7 +159,7 @@ export default function Page() {
       {/*  */}
       <EstateSetCategoryModal
         //
-        open={!selectedCat}
+        open={selectedCat === null}
         setCategory={(val: string) => {
           setValue("category", val, { shouldValidate: true });
           setSelectedCat(val);

@@ -5,19 +5,59 @@ import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import { User, Phone, Email, Office } from "@/types/interfaces";
+import { Estate } from "@/types/interfaces";
 
-const columns: ColumnsType<Office> = [
+const columns: ColumnsType<Estate> = [
   {
     title: "نام",
-    dataIndex: "name",
+    dataIndex: "title",
+    render: (title, record) => {
+      return (
+        <div className="flex flex-col">
+          <p>{title}</p>
+          <pre className="text-blue-400">{record.slug}</pre>
+        </div>
+      );
+    },
   },
-
+  {
+    title: "کد ملک",
+    dataIndex: "code",
+    responsive: ["sm"],
+    render: (code: string) => {
+      return (
+        <Tag color="orange" key={code}>
+          {code}
+        </Tag>
+      );
+    },
+  },
+  {
+    title: "دسته ملک",
+    dataIndex: ["category", "title"],
+    responsive: ["lg"],
+  },
+  {
+    title: "مالک",
+    dataIndex: ["owner", "fullName"],
+    responsive: ["xxl"],
+  },
+  {
+    title: "نویسنده فایل",
+    dataIndex: ["createdBy", "fullName"],
+    responsive: ["xxl"],
+  },
   {
     title: "وضعیت انتشار",
     dataIndex: "status",
-    responsive: ["lg"],
-    render: (active: boolean) => <span className={"font-bold " + (!!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
+    responsive: ["md"],
+    render: (status: string) => {
+      return (
+        <Tag color="blue" key={status}>
+          {status}
+        </Tag>
+      );
+    },
   },
 ];
 
@@ -25,7 +65,7 @@ export default function Page() {
   return (
     <>
       <div className="p-4">
-        <PanelTable<Office>
+        <PanelTable<Estate>
           //
           endpoint="estate"
           headerTitle="لیست املاک"

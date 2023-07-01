@@ -35,6 +35,7 @@ export default function EstateMediaBox({ form, loading }: AddEditComponentProps)
             name="gallery"
             control={control}
             uploadPath="estate"
+            uploaderField="images"
             indexFileName="image"
             noSpace
             fromLibrary
