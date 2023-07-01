@@ -71,7 +71,7 @@ export default function Template() {
         headerTitle={() => <div className="text-base font-semibold">لیست انواع اسناد</div>}
         formTitle="نوع سند"
         onEditField="title"
-        endpoint="estate/document"
+        endpoint="estate/documentType"
         columns={columns}
         editable
         deletable
