@@ -11,12 +11,11 @@ const columns: ColumnsType<EstateCategory> = [
   {
     title: "عنوان",
     dataIndex: "title",
-    width: "150px",
   },
   {
     title: "شناسه",
     dataIndex: "slug",
-    width: "150px",
+    responsive: ["md"],
     render: (slug) => {
       return <pre>{slug}</pre>;
     },
@@ -24,14 +23,14 @@ const columns: ColumnsType<EstateCategory> = [
   {
     title: "آیکون",
     dataIndex: ["icon", "content"],
-    width: "100px",
+    responsive: ["xxl"],
     render: (content) => {
       return <div className="w-8 h-8" dangerouslySetInnerHTML={{ __html: content }} />;
     },
   },
   {
     title: "مادر",
-    width: "150px",
+    responsive: ["lg"],
     dataIndex: ["parent", "title"],
   },
 ];

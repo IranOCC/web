@@ -48,8 +48,8 @@ const IconSelection = (props: IProps) => {
   const getItems = async () => {
     setDataLoading(true);
     try {
-      const { data } = await api.get("icon");
-      setIconsList(data);
+      const { data } = await api.get("admin/icon", { params: { size: 100 } });
+      setIconsList(data.items);
       setDataLoading(false);
     } catch (error) {
       setDataLoading(false);

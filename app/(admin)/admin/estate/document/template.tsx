@@ -16,6 +16,7 @@ const columns: ColumnsType<EstateDocumentType> = [
   {
     title: "شناسه",
     dataIndex: "slug",
+    responsive: ["md"],
     render: (slug) => {
       return <pre>{slug}</pre>;
     },
@@ -23,6 +24,7 @@ const columns: ColumnsType<EstateDocumentType> = [
   {
     title: "آیکون",
     dataIndex: ["icon", "content"],
+    responsive: ["xxl"],
     render: (content) => {
       return <div className="w-8 h-8" dangerouslySetInnerHTML={{ __html: content }} />;
     },
@@ -30,6 +32,7 @@ const columns: ColumnsType<EstateDocumentType> = [
   {
     title: "دسته ها",
     dataIndex: "categories",
+    responsive: ["lg"],
     render: (categories: EstateCategory[]) => {
       if (!categories?.length) return <Tag color="green">تمام دسته ها</Tag>;
       return categories.map((cat, index) => {

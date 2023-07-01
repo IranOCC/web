@@ -296,7 +296,7 @@ const FieldComponent = (props: FieldComponentType) => {
               ))}
             </div>
           ) : (
-            (objectValue as SelectDataType[]).map((item: SelectDataType) => item.title).join(", ")
+            (objectValue as SelectDataType[]).map((item: SelectDataType) => item?.title).join(", ")
           )
         ) : (
           "انتخاب نشده"
@@ -359,8 +359,8 @@ const FieldComponent = (props: FieldComponentType) => {
                           field.onChange(null);
                           if (onChange) onChange(null);
                         } else {
-                          field.onChange(undefined);
-                          if (onChange) onChange(undefined);
+                          field.onChange(null);
+                          if (onChange) onChange(null);
                           setOpen(false);
                         }
                       }}
@@ -378,7 +378,7 @@ const FieldComponent = (props: FieldComponentType) => {
                                   return typeof dtype === "object" ? dtype.value === value : value === dtype;
                                 })?.length
                               : //
-                              typeof field.value === "object"
+                              !!field.value && typeof field.value === "object"
                               ? field.value.value === value
                               : value === field.value
                           }
