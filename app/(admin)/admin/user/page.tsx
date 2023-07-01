@@ -74,7 +74,7 @@ export default function Page() {
         <PanelTable<User>
           //
           endpoint="user"
-          headerTitle={() => <div className="text-base font-semibold">لیست کاربران</div>}
+          headerTitle="لیست کاربران"
           columns={columns}
           deletable
           editable

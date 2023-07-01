@@ -68,7 +68,7 @@ export default function Template() {
         FormComponent={EstateDocumentTypeBox}
         form={form}
         setInitialData={setInitialData}
-        headerTitle={() => <div className="text-base font-semibold">لیست انواع اسناد</div>}
+        headerTitle="لیست انواع اسناد"
         formTitle="نوع سند"
         onEditField="title"
         endpoint="estate/documentType"

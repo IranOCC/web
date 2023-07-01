@@ -104,12 +104,13 @@ export default function Page() {
         <PanelTable<OfficeMember>
           //
           endpoint={`office/${ID}/member`}
-          headerTitle={() => (
-            <div className="flex justify-between items-center w-full">
-              <div className="text-base font-semibold">لیست اعضای شعبه</div>
-              <Button onClick={() => setAddModalOpen(true)} title="افزودن عضو" fill={false} noSpace />
-            </div>
-          )}
+          // headerTitle={() => (
+          //   <div className="flex justify-between items-center w-full">
+          //     <div className="text-base font-semibold">لیست اعضای شعبه</div>
+          //     <Button onClick={() => setAddModalOpen(true)} title="افزودن عضو" fill={false} noSpace />
+          //   </div>
+          // )}
+          headerTitle="لیست اعضای شعبه"
           columns={columns}
           extraOperations={(id: string) => [
             {

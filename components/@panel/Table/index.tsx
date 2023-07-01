@@ -20,7 +20,7 @@ import { Button } from "@/components/Button";
 import SearchIcon from "@/components/Icons/Search";
 
 export type PanelTableProps = {
-  headerTitle?: (i?: number) => ReactNode;
+  headerTitle?: ReactNode;
   footerTitle?: () => ReactNode;
   data?: any[];
   endpoint?: string;
@@ -42,14 +42,15 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
   const [fetchLoading, setFetchLoading] = useState(false);
   const [dataSource, setDataSource] = useState(data?.length !== undefined ? data : []);
 
+  const tableColumns = columns.map((item) => ({ ...item, ellipsis: false }));
+
   const scroll: { x?: number | string; y?: number | string } = {};
   scroll.y = "calc(100vh - 260px)";
 
   // fixed column
-  scroll.x = minWidth;
-  const tableColumns = columns.map((item) => ({ ...item, ellipsis: false }));
-  tableColumns[0].fixed = true;
-  tableColumns[tableColumns.length - 1].fixed = "right";
+  // scroll.x = minWidth;
+  // tableColumns[0].fixed = true;
+  // tableColumns[tableColumns.length - 1].fixed = "right";
 
   // ##############################################
   // ====> get data
@@ -188,14 +189,30 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
     return (
       <>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          {!!headerTitle && headerTitle(totalItemsCount)}
-          <div className="flex items-center gap-x-2 self-end">
-            <div className="relative flex items-center">
+          {/* {!!headerTitle && headerTitle(totalItemsCount)} */}
+          <div className="text-base font-semibold flex items-center gap-4 justify-between sm:justify-start">
+            {/*  */}
+            {headerTitle} ({totalItemsCount})
+            {hasSelected && (
+              <Popconfirm title={`${selectedCount} مورد حذف شود؟`} okText="بله" cancelText="خیر" okType="link" onConfirm={() => deleteSelected()}>
+                <Button
+                  //
+                  size="small"
+                  noSpace
+                  fill={false}
+                  title="حذف"
+                />
+              </Popconfirm>
+            )}
+          </div>
+
+          <div className="flex items-center gap-x-2 self-end w-full sm:w-auto">
+            <div className="relative flex items-center w-full">
               <input
                 //
                 type="text"
                 placeholder="جستجو ..."
-                className={`placeholder:text-gray-400 bg-white focus:bg-white p-2.5 text-gray-900 focus:ring-0 block text-sm border-b focus:border-gray-300 border-gray-300 border-0`}
+                className={`placeholder:text-gray-400 w-full bg-white focus:bg-white p-2.5 text-gray-900 focus:ring-0 block text-sm border-b focus:border-gray-300 border-gray-300 border-0`}
                 value={_search || ""}
                 onChange={(e) => {
                   const $s = new URLSearchParams(searchParams?.toString());
@@ -207,17 +224,6 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
                 <SearchIcon />
               </div>
             </div>
-            {hasSelected && (
-              <Popconfirm title={`${selectedCount} مورد حذف شود؟`} okText="بله" cancelText="خیر" okType="link" onConfirm={() => deleteSelected()}>
-                <Button
-                  //
-                  size="small"
-                  noSpace
-                  fill={false}
-                  title={`حذف ${selectedCount} مورد`}
-                />
-              </Popconfirm>
-            )}
           </div>
         </div>
       </>

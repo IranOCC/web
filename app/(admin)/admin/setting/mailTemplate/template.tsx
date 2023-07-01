@@ -18,6 +18,7 @@ const columns: ColumnsType<MailTemplate> = [
     render: (slug) => {
       return <pre>{slug}</pre>;
     },
+    responsive: ["md"],
   },
   {
     title: "شناسه سرویس",
@@ -25,6 +26,7 @@ const columns: ColumnsType<MailTemplate> = [
     render: (serviceID) => {
       return <pre>{serviceID || "-"}</pre>;
     },
+    responsive: ["xl"],
   },
 ];
 
@@ -48,7 +50,7 @@ export default function Template() {
         FormComponent={MailTemplateBox}
         form={form}
         setInitialData={setInitialData}
-        headerTitle={(i) => <div className="text-base font-semibold">قالب های ایمیل ({i})</div>}
+        headerTitle="قالب های ایمیل"
         formTitle="قالب"
         endpoint="mailTemplate"
         columns={columns}

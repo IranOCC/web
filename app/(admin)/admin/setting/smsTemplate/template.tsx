@@ -20,6 +20,7 @@ const columns: ColumnsType<SmsTemplate> = [
     render: (slug) => {
       return <pre>{slug}</pre>;
     },
+    responsive: ["md"],
   },
   {
     title: "شناسه سرویس",
@@ -27,6 +28,7 @@ const columns: ColumnsType<SmsTemplate> = [
     render: (serviceID) => {
       return <pre>{serviceID || "-"}</pre>;
     },
+    responsive: ["xl"],
   },
 ];
 
@@ -51,7 +53,7 @@ export default function Template() {
         FormComponent={SmsTemplateBox}
         form={form}
         setInitialData={setInitialData}
-        headerTitle={(i) => <div className="text-base font-semibold">قالب های پیامک ({i})</div>}
+        headerTitle="قالب های پیامک"
         formTitle="قالب"
         endpoint="smsTemplate"
         columns={columns}

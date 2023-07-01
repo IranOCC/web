@@ -72,7 +72,7 @@ export default function Page() {
         <PanelTable<Office>
           //
           endpoint="estate"
-          headerTitle={() => <div className="text-base font-semibold">لیست املاک</div>}
+          headerTitle="لیست املاک"
           columns={columns}
           deletable
           editable

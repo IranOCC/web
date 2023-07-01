@@ -40,7 +40,7 @@ export default function Template() {
         FormComponent={IconBox}
         form={form}
         setInitialData={setInitialData}
-        headerTitle={() => <div className="text-base font-semibold">لیست آیکون ها</div>}
+        headerTitle="لیست آیکون ها"
         formTitle="آیکون"
         endpoint="icon"
         columns={columns}

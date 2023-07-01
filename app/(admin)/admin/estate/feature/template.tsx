@@ -68,7 +68,7 @@ export default function Template() {
         FormComponent={EstateFeatureBox}
         form={form}
         setInitialData={setInitialData}
-        headerTitle={() => <div className="text-base font-semibold">لیست انواع ویژگی ها</div>}
+        headerTitle="لیست انواع ویژگی ها"
         formTitle="ویژگی"
         onEditField="title"
         endpoint="estate/feature"

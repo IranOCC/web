@@ -68,7 +68,7 @@ export default function Template() {
         FormComponent={EstateTypeBox}
         form={form}
         setInitialData={setInitialData}
-        headerTitle={() => <div className="text-base font-semibold">لیست نوع های املاک</div>}
+        headerTitle="لیست نوع های املاک"
         formTitle="نوع"
         onEditField="title"
         endpoint="estate/type"
