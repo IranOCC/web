@@ -195,6 +195,18 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id) => 
           {/* {!!headerTitle && headerTitle(totalItemsCount)} */}
           <div className="text-base font-semibold flex items-center gap-4 justify-between sm:justify-start">
             {/*  */}
+            {headerTitle} {!!totalItemsCount && "(" + totalItemsCount + ")"}
+            {hasSelected && (
+              <Popconfirm title={`${selectedCount} مورد حذف شود؟`} okText="بله" cancelText="خیر" okType="link" onConfirm={() => deleteSelected()}>
+                <Button
+                  //
+                  size="small"
+                  noSpace
+                  fill={false}
+                  title="حذف"
+                />
+              </Popconfirm>
+            )}
             {!!tableToolsList?.length && (
               <Dropdown
                 menu={{
@@ -207,18 +219,6 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id) => 
                   </IconButton>
                 </a>
               </Dropdown>
-            )}
-            {headerTitle} {!!totalItemsCount && "(" + totalItemsCount + ")"}
-            {hasSelected && (
-              <Popconfirm title={`${selectedCount} مورد حذف شود؟`} okText="بله" cancelText="خیر" okType="link" onConfirm={() => deleteSelected()}>
-                <Button
-                  //
-                  size="small"
-                  noSpace
-                  fill={false}
-                  title="حذف"
-                />
-              </Popconfirm>
             )}
           </div>
 

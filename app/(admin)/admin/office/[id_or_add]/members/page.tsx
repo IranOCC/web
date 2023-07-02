@@ -54,15 +54,6 @@ export default function Page() {
   const ID = id_or_add;
 
   const api = useAxiosAuth();
-  const removeMember = async (members: string[] | string) => {
-    try {
-      await api.delete(`office/${ID}/member`, { params: { members } });
-      toast.success("با موفقیت حذف گردید");
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const [addModalOpen, setAddModalOpen] = useState(false);
   const addMember = async (members: string[]) => {
@@ -91,16 +82,17 @@ export default function Page() {
           ]}
           headerTitle="لیست اعضای شعبه"
           columns={columns}
-          extraOperations={(id: string) => [
-            {
-              key: "kick",
-              label: (
-                <Popconfirm title="حذف شود؟" okText="بله" cancelText="خیر" okType="link" onConfirm={() => removeMember(id)}>
-                  <a>حذف از آفیس</a>
-                </Popconfirm>
-              ),
-            },
-          ]}
+          deletable
+          // extraOperations={(id: string) => [
+          //   {
+          //     key: "kick",
+          //     label: (
+          //       <Popconfirm title="حذف شود؟" okText="بله" cancelText="خیر" okType="link" onConfirm={() => removeMember(id)}>
+          //         <a>حذف از آفیس</a>
+          //       </Popconfirm>
+          //     ),
+          //   },
+          // ]}
         />
       </div>
       <OfficeAddMembersModal
