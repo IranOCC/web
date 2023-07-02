@@ -40,8 +40,6 @@ const MediaHandler = (props: IProps) => {
     labelClass = " text-orange-500";
   }
 
-  const indexFileControl = useController({ control, name: indexFileName || "image" });
-
   return (
     <>
       <div className={"w-full relative z-10 flex flex-col items-center justify-center" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
@@ -49,7 +47,7 @@ const MediaHandler = (props: IProps) => {
         {!!control && !!name ? (
           <Controller
             render={({ field }) => (
-              <FieldComponent
+              <FieldComponentWithController
                 //
                 field={field}
                 disabled={disabled}
@@ -60,7 +58,9 @@ const MediaHandler = (props: IProps) => {
                 fromLibrary={fromLibrary}
                 showUploadList={showUploadList}
                 showFilesList={showFilesList}
-                indexFileControl={(indexFileName && indexFileControl) || undefined}
+                control={control}
+                indexFileName={indexFileName}
+                // indexFileControl={(indexFileName && indexFileControl) || undefined}
               />
             )}
             defaultValue={defaultValue}
@@ -102,6 +102,13 @@ type FieldComponentType = {
   onChange?: any;
   showUploadList?: boolean;
   showFilesList?: boolean;
+};
+
+const FieldComponentWithController = (props: FieldComponentType & { control: any; indexFileName?: string }) => {
+  const { control, indexFileName, ...otherProps } = props;
+  const indexFileControl = useController({ control, name: indexFileName || "image" });
+
+  return <FieldComponent indexFileControl={indexFileControl} {...otherProps} />;
 };
 
 const FieldComponent = (props: FieldComponentType) => {
