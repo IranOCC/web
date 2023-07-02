@@ -14,6 +14,7 @@ import { CSS } from "@dnd-kit/utilities";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { IconButton } from "@mui/material";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import WidgetsIcon from "@mui/icons-material/Widgets";
 import { toast } from "@/lib/toast";
 import Link from "next/link";
 import { Button } from "@/components/Button";
@@ -40,7 +41,7 @@ export type PanelTableProps = {
   tableToolsList?: any[];
 };
 
-function PanelTable<T>({ headerTitle,tableToolsList, extraOperations = (id) => [], defaultPageCount, deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: PanelTableProps) {
+function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id) => [], defaultPageCount, deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: PanelTableProps) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [dataSource, setDataSource] = useState(data?.length !== undefined ? data : []);
 
@@ -194,6 +195,19 @@ function PanelTable<T>({ headerTitle,tableToolsList, extraOperations = (id) => [
           {/* {!!headerTitle && headerTitle(totalItemsCount)} */}
           <div className="text-base font-semibold flex items-center gap-4 justify-between sm:justify-start">
             {/*  */}
+            {!!tableToolsList?.length && (
+              <Dropdown
+                menu={{
+                  items: tableToolsList,
+                }}
+              >
+                <a>
+                  <IconButton color="primary" aria-label="upload picture" component="label">
+                    <WidgetsIcon />
+                  </IconButton>
+                </a>
+              </Dropdown>
+            )}
             {headerTitle} {!!totalItemsCount && "(" + totalItemsCount + ")"}
             {hasSelected && (
               <Popconfirm title={`${selectedCount} مورد حذف شود؟`} okText="بله" cancelText="خیر" okType="link" onConfirm={() => deleteSelected()}>
@@ -205,19 +219,6 @@ function PanelTable<T>({ headerTitle,tableToolsList, extraOperations = (id) => [
                   title="حذف"
                 />
               </Popconfirm>
-            )}
-            {!!tableToolsList?.length && (
-            <Dropdown
-              menu={{
-                items: tableToolsList,
-              }}
-            >
-              <a>
-                <IconButton color="primary" aria-label="upload picture" component="label">
-                  <MoreVertOutlinedIcon />
-                </IconButton>
-              </a>
-            </Dropdown>
             )}
           </div>
 
