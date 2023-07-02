@@ -233,7 +233,7 @@ type FieldComponentType = {
   onChange?: (value: any) => void;
 
   resetValue?: any;
-  defaultValue?: string;
+  defaultValue?: string | string[];
 };
 
 const FieldComponent = (props: FieldComponentType) => {
@@ -436,7 +436,7 @@ const SelectOption = ({ onClick, title, selected }: { onClick?: any; title: stri
 export type IProps = {
   name: string;
   control: any;
-  defaultValue?: string;
+  defaultValue?: string | string[];
   label?: string;
   placeholder?: string;
   className?: string;

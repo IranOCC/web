@@ -82,6 +82,7 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
             tagsMode
             apiPath="/tools/user/statics/roles"
             containerClassName="col-span-full"
+            defaultValue={["User"]}
           />
           <CheckBox //
             control={control}
