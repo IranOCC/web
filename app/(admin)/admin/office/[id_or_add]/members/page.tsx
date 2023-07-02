@@ -33,35 +33,11 @@ const columns: ColumnsType<OfficeMember> = [
     },
   },
   {
-    title: "شماره",
-    dataIndex: ["phone", "value"],
-    render: (phone: string) => {
-      return (
-        <div dir="ltr" className="float-right">
-          {phone || "-"}
-        </div>
-      );
-    },
-    responsive: ["md"],
-  },
-  {
-    title: "ایمیل",
-    dataIndex: ["email", "value"],
-    render: (email: string) => {
-      return (
-        <div dir="ltr" className="float-right">
-          {email || "-"}
-        </div>
-      );
-    },
-    responsive: ["xxl"],
-  },
-  {
     title: "نقش ها",
     dataIndex: "roles",
     responsive: ["xl"],
     render: (roles: string[]) => {
-      return roles.map((tag) => {
+      return roles?.map((tag) => {
         return (
           <Tag color="blue" key={tag}>
             {tag}
@@ -69,12 +45,6 @@ const columns: ColumnsType<OfficeMember> = [
         );
       });
     },
-  },
-  {
-    title: "فعالسازی",
-    dataIndex: "active",
-    responsive: ["lg"],
-    render: (active: boolean) => <span className={"font-bold " + (!!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
   },
 ];
 

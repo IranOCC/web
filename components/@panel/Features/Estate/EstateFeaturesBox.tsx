@@ -5,16 +5,32 @@ import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 
 export default function EstateFeaturesBox(_props: AddEditComponentProps) {
   const { form, loading, props } = _props;
 
   let ComponentBox: ({ form, loading, props }: AddEditComponentProps) => JSX.Element = () => <>{null}</>;
+
+  // const api = useAxiosAuth();
+  // const getCategory = async () => {
+  //   setDataLoading(true);
+  //   try {
+  //     const response = await api.get(`/admin/${endpoint}/` + (SECTION || ID));
+  //     const data = response.data as F;
+  //     setInitialData(data);
+  //     setDataLoading(false);
+  //   } catch (error) {
+  //     router.replace(`/admin/${endpoint}`);
+  //   }
+  // };
+
   ComponentBox = EstateFeaturesVillaBox;
 
   return (
     <>
       <PanelCard title="ویژگی های اختصاصی" loading={loading}>
+        {JSON.stringify(props)}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
           <ComponentBox {..._props} />
         </div>
@@ -370,7 +386,7 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
         error={errors.features?.message}
         loading={isSubmitting}
         placeholder="انتخاب کنید"
-        apiPath="/admin/estate/feature/autoComplete"
+        apiPath="/tools/estate/feature/autoComplete"
         filterApi={{ cat: props?.selectedCat }}
         multiple
         showTitle
@@ -506,7 +522,7 @@ export const EstateFeaturesLandBox = ({ form, loading, props }: AddEditComponent
         error={errors.features?.message}
         loading={isSubmitting}
         placeholder="انتخاب کنید"
-        apiPath="/admin/estate/feature/autoComplete"
+        apiPath="/tools/estate/feature/autoComplete"
         filterApi={{ cat: props?.selectedCat }}
         multiple
         showTitle
@@ -642,7 +658,7 @@ export const EstateFeaturesHectareBox = ({ form, loading, props }: AddEditCompon
         error={errors.features?.message}
         loading={isSubmitting}
         placeholder="انتخاب کنید"
-        apiPath="/admin/estate/feature/autoComplete"
+        apiPath="/tools/estate/feature/autoComplete"
         filterApi={{ cat: props?.selectedCat }}
         multiple
         showTitle
