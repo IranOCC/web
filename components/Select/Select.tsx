@@ -281,8 +281,13 @@ const FieldComponent = (props: FieldComponentType) => {
   // ==========================>
   useEffect(() => {
     // console.log(resetValue, defaultValue);
-    field.onChange(defaultValue);
+    if (!!resetValue) field.onChange(defaultValue);
   }, [resetValue]);
+
+  useEffect(() => {
+    // console.log(resetValue, defaultValue);
+    // field.onChange(field.value || defaultValue);
+  }, []);
 
   const _value =
     !dataLoading && multiple ? (

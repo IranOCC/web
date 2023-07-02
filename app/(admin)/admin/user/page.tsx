@@ -4,11 +4,11 @@ import PanelTable from "@/components/@panel/Table";
 import Loading from "@/components/Loading";
 import { axiosAuth } from "@/lib/axios";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
-import { Phone, Email, User } from "@/types/interfaces";
+import { Phone, Email, User, StorageFile } from "@/types/interfaces";
 import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
+import Image from "next/image";
 import { ReactNode, useEffect } from "react";
 import VerifiedIcon from "@mui/icons-material/Verified";
 
@@ -17,8 +17,10 @@ const columns: ColumnsType<User> = [
     title: "نام",
     dataIndex: "fullName",
     render: (fullName: string, record) => {
+      const avatar = record?.avatar as StorageFile;
       return (
         <div className="flex items-center">
+          {!!avatar?.path && <Image src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + avatar.path} alt={avatar.alt} />}
           {record.verified && <VerifiedIcon className="text-blue-600" fontSize="small" />}
           <span className="ms-1">{fullName || "-"}</span>
         </div>

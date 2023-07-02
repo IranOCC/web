@@ -231,7 +231,7 @@ const FieldComponent = (props: FieldComponentType) => {
           {/*  */}
         </div>
       )}
-      <Dragger {..._props} className="w-full">
+      <Dragger {..._props} className="w-full h-40">
         <p className="ant-upload-drag-icon flex justify-center items-center text-secondary">
           <Upload2Cloud />
         </p>
