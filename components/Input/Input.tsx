@@ -111,7 +111,7 @@ const Input = (props: IProps) => {
                         disabled={disabled || loading}
                         placeholder={placeholder}
                         readOnly={readOnly || loading}
-                        onKeyUp={(e) => {
+                        onKeyDown={(e) => {
                           // @ts-ignore
                           if (e.key === "Enter" && e.target?.value) {
                             e.preventDefault();
