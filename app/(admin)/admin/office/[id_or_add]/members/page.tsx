@@ -58,7 +58,7 @@ export default function Page() {
     try {
       await api.delete(`office/${ID}/member`, { params: { members } });
       toast.success("با موفقیت حذف گردید");
-      window.location.href = window.location.pathname;
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -67,9 +67,9 @@ export default function Page() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const addMember = async (members: string[]) => {
     try {
-      await api.post(`/office/${ID}/member`, members);
+      await api.post(`/admin/office/${ID}/member`, undefined, { params: { id: members } });
       toast.success("با موفقیت اضافه گردید");
-      window.location.href = window.location.pathname;
+      window.location.reload();
     } catch (error) {}
   };
 
@@ -79,12 +79,16 @@ export default function Page() {
         <PanelTable<OfficeMember>
           //
           endpoint={`office/${ID}/member`}
-          // headerTitle={() => (
-          //   <div className="flex justify-between items-center w-full">
-          //     <div className="text-base font-semibold">لیست اعضای شعبه</div>
-          //     <Button onClick={() => setAddModalOpen(true)} title="افزودن عضو" fill={false} noSpace />
-          //   </div>
-          // )}
+          tableToolsList={[
+            {
+              key: "addMember",
+              label: (
+                <Link onClick={() => setAddModalOpen(true)} href="#">
+                  افزودن عضو
+                </Link>
+              ),
+            },
+          ]}
           headerTitle="لیست اعضای شعبه"
           columns={columns}
           extraOperations={(id: string) => [

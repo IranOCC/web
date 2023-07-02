@@ -36,9 +36,11 @@ export type PanelTableProps = {
   extraOperations?: (id: string) => any[];
   update?: any;
   defaultPageCount?: number;
+
+  tableToolsList?: any[];
 };
 
-function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageCount, deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: PanelTableProps) {
+function PanelTable<T>({ headerTitle,tableToolsList, extraOperations = (id) => [], defaultPageCount, deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: PanelTableProps) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [dataSource, setDataSource] = useState(data?.length !== undefined ? data : []);
 
@@ -203,6 +205,19 @@ function PanelTable<T>({ headerTitle, extraOperations = (id) => [], defaultPageC
                   title="حذف"
                 />
               </Popconfirm>
+            )}
+            {!!tableToolsList?.length && (
+            <Dropdown
+              menu={{
+                items: tableToolsList,
+              }}
+            >
+              <a>
+                <IconButton color="primary" aria-label="upload picture" component="label">
+                  <MoreVertOutlinedIcon />
+                </IconButton>
+              </a>
+            </Dropdown>
             )}
           </div>
 
