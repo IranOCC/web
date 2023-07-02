@@ -35,7 +35,7 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
   const _search = searchParams?.get("search");
   const _sort = searchParams?.get("sort");
   const _page = parseInt(searchParams?.get("page") || "1");
-  const _count = parseInt(searchParams?.get("count") || defaultPageCount?.toString() || "10");
+  const _count = parseInt(searchParams?.get("count") || defaultPageCount?.toString() || "12");
 
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const handlePaginationChange = (page: number, page_size: number) => {
@@ -84,7 +84,7 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
         {!dataSource.length && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
         {!!dataSource?.length && (
           <>
-            <div className="grid grid-cols-3 md:grid-cols-4 gap-4 py-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 py-2">
               {/*  */}
               {dataSource.map((value: StorageFile, index) => {
                 return (
