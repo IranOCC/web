@@ -73,7 +73,7 @@ export default function EstateFeaturesBox(_props: AddEditComponentProps) {
             error={errors.category?.message}
             loading={isSubmitting}
             label="دسته"
-            // disabled
+            disabled
             placeholder="انتخاب کنید"
             apiPath="/tools/estate/category/autoComplete"
             noSpace
@@ -107,8 +107,8 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
   useEffect(() => {
     register("constructionYear", { required: "سال ساخت الزامی است" });
     register("buildingArea", { required: "متراژ بنا الزامی است" });
-    register("roomsCount");
-    register("mastersCount");
+    register("roomsCount", { required: "تعداد اتاق الزامی است" });
+    register("mastersCount", { required: "تعداد مستر الزامی است" });
     register("features");
   }, []);
 
@@ -199,11 +199,11 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("roomsCount");
-    register("mastersCount");
-    register("floorsCount");
-    register("unitsCount");
-    register("floor");
+    register("roomsCount", { required: "تعداد اتاق را وارد کنید" });
+    register("mastersCount", { required: "تعداد مستر را وارد کنید" });
+    register("floorsCount", { required: "تعداد طبقات را وارد کنید" });
+    register("unitsCount", { required: "تعداد واحدها را وارد کنید" });
+    register("floor", { required: "طبقه را وارد کنید" });
     register("features");
   }, []);
 
@@ -301,8 +301,8 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("buildingArea");
-    register("floor");
+    register("buildingArea", { required: "متراژ را وارد کنید" });
+    register("floor", { required: "طبقه ملک را وارد کنید" });
   }, []);
 
   return (
@@ -349,7 +349,7 @@ export const EstateFeaturesLandBox = ({ form, loading, props }: AddEditComponent
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("features");
+    register("features", { required: "نوع بافت الزامی است" });
     register("withOldBuilding");
   }, []);
 
@@ -396,12 +396,26 @@ export const EstateFeaturesHectareBox = ({ form, loading, props }: AddEditCompon
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("features");
+    register("features", { required: "نوع بافت الزامی است" });
     register("withOldBuilding");
   }, []);
 
   return (
     <>
+      <Select
+        //
+        control={control}
+        name="features"
+        label="نوع بافت"
+        error={errors.features?.message}
+        loading={isSubmitting}
+        placeholder="انتخاب کنید"
+        apiPath="/tools/estate/feature/autoComplete"
+        filterApi={{ categories: props?.selectedCat }}
+        showTitle
+        noSpace
+        containerClassName="col-span-full"
+      />
       <CheckBox //
         control={control}
         name="withOldBuilding"
