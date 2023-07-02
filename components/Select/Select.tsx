@@ -157,7 +157,8 @@ const Select = (props: IProps) => {
             style={{ height: multiline ? (lines || 4) * 25.5 + "px" : "" }}
             onClick={(e) => {
               if (disabled || loading) return;
-              if ((e.target as any)?.nodeName !== "LI") setOpen((o) => !o);
+              console.log((e.target as any)?.nodeName);
+              if (!["LI", "INPUT"].includes((e.target as any)?.nodeName)) setOpen((o) => !o);
             }}
           >
             <div className="h-5 w-0 float-right" />
@@ -333,7 +334,7 @@ const FieldComponent = (props: FieldComponentType) => {
               <Paper style={{ boxShadow: "none" }}>
                 <div className="relative bg-white w-full border border-gray-300  mt-1">
                   {searchable ? (
-                    <div className="w-full relative flex items-center">
+                    <li className="w-full relative flex items-center">
                       <input
                         //
                         type="text"
@@ -347,7 +348,7 @@ const FieldComponent = (props: FieldComponentType) => {
                       <div className="absolute left-2.5 cursor-pointer text-secondary">
                         <SearchIcon />
                       </div>
-                    </div>
+                    </li>
                   ) : null}
                   <ul className="text-sm text-gray-700 dark:text-gray-200 max-h-60 overflow-x-hidden">
                     <SelectOption
