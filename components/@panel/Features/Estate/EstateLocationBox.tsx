@@ -23,7 +23,7 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
     register("province", { required: "استان را مشخص کنید" });
     register("city", { required: "شهر را مشخص کنید" });
     register("district", { required: "منطقه را مشخص کنید" });
-    register("quarter", {});
+    register("quarter", { required: "محله را مشخص کنید" });
     register("alley", {});
     register("address", {});
     register("location", {});

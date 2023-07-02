@@ -96,8 +96,8 @@ export default function Page() {
     setValue("slug", data.slug);
 
     // pictures
-setValue("gallery", data.gallery);
-setValue("image", data.image);
+    setValue("gallery", data.gallery);
+    setValue("image", data.image);
 
     setValue("status", data.status);
     setValue("visibility", data.visibility);
@@ -142,7 +142,7 @@ setValue("image", data.image);
     setValue("office", data.office);
   };
 
-  const [selectedCat, setSelectedCat] = useState<string | undefined | null>(getValues("category"));
+  const [selectedCat, setSelectedCat] = useState<string | undefined | null>(null);
 
 
 
