@@ -162,7 +162,7 @@ const Select = (props: IProps) => {
           >
             <div className="h-5 w-0 float-right" />
             {!!dataLoading && "انتخاب نشده"}
-            {!dataLoading && !dataList && "خطا در دریافت"}
+            {!dataLoading && !dataList && "در حال دریافت ..."}
             <Controller
               render={({ field }) => {
                 if (!dataList) return <></>;

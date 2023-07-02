@@ -56,19 +56,6 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
           <Select
             //
             control={control}
-            name="category"
-            error={errors.category?.message}
-            loading={isSubmitting}
-            label="دسته"
-            disabled
-            placeholder="انتخاب کنید"
-            apiPath="/tools/estate/category/autoComplete"
-            noSpace
-            containerClassName="col-span-full"
-          />
-          <Select
-            //
-            control={control}
             name="type"
             error={errors.type?.message}
             loading={isSubmitting}

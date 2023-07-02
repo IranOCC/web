@@ -155,7 +155,7 @@ export default function Page() {
         form={form}
         setInitialData={setInitialData}
         endpoint="estate"
-        componentProps={{ selectedCat }}
+        componentProps={{ selectedCat, setSelectedCat }}
       />
       {/*  */}
       <EstateSetCategoryModal
