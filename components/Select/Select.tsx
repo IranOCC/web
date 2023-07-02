@@ -281,7 +281,7 @@ const FieldComponent = (props: FieldComponentType) => {
   // ==========================>
   useEffect(() => {
     // console.log(resetValue, defaultValue);
-    if (!!resetValue) field.onChange(defaultValue);
+    // if (!!resetValue) field.onChange(defaultValue);
   }, [resetValue]);
 
   useEffect(() => {
