@@ -41,9 +41,9 @@ export default function LocationBox({ form, loading }: { form: any; loading?: bo
           placeholder="انتخاب کنید"
           apiPath="/static/province"
           onChange={(value) => setProvince(value)}
-          defaultValue="مازندران"
           searchable
           noSpace
+          defaultValue="مازندران"
         />
         <Select
           //
@@ -57,6 +57,7 @@ export default function LocationBox({ form, loading }: { form: any; loading?: bo
           filterApi={{ province: province || undefined }}
           searchable
           noSpace
+          defaultValue="چالوس"
         />
         <Input
           //

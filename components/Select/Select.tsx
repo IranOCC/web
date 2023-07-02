@@ -423,6 +423,8 @@ const SelectOption = ({ onClick, title, selected }: { onClick?: any; title: stri
   return (
     <li
       //
+      role="button"
+      aria-label={"list item " + title}
       onClick={onClick}
       className={`relative flex items-center justify-between cursor-pointer px-4 py-2 ${selected ? "bg-disable " : onClick ? "hover:bg-gray-100" : ""}`}
     >
