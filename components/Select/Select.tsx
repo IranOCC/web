@@ -155,9 +155,9 @@ const Select = (props: IProps) => {
             className={_className}
             dir={direction}
             style={{ height: multiline ? (lines || 4) * 25.5 + "px" : "" }}
-            onClick={() => {
+            onClick={(e) => {
               if (disabled || loading) return;
-              if (!open) setOpen(true);
+              if ((e.target as any)?.nodeName !== "LI") setOpen((o) => !o);
             }}
           >
             <div className="h-5 w-0 float-right" />
@@ -192,7 +192,7 @@ const Select = (props: IProps) => {
                   />
                 );
               }}
-              // defaultValue={defaultValue}
+              defaultValue={defaultValue}
               name={name}
               control={control}
             />
@@ -277,8 +277,10 @@ const FieldComponent = (props: FieldComponentType) => {
     );
   }, [field.value]);
 
+  // ==========================>
   useEffect(() => {
-    if (!!resetValue) field.onChange(defaultValue);
+    // console.log(resetValue, defaultValue);
+    field.onChange(defaultValue);
   }, [resetValue]);
 
   const _value =
@@ -318,7 +320,6 @@ const FieldComponent = (props: FieldComponentType) => {
 
   return (
     <>
-      {/* {JSON.stringify(objectValue)} */}
       {!dataLoading && _value}
       {!!dataList && (
         <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg z-20">

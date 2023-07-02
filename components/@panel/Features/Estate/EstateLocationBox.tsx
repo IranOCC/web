@@ -48,6 +48,7 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
           containerClassName="md:col-span-3"
           searchable
           noSpace
+          defaultValue="مازندران"
         />
         <Select
           //
