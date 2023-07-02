@@ -96,7 +96,8 @@ export default function Page() {
     setValue("slug", data.slug);
 
     // pictures
-
+setValue("gallery", data.gallery);
+setValue("image", data.image);
 
     setValue("status", data.status);
     setValue("visibility", data.visibility);
