@@ -124,7 +124,7 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         loading={isSubmitting}
         placeholder="انتخاب کنید"
         apiPath="/tools/estate/feature/autoComplete"
-        filterApi={{ cat: props?.selectedCat }}
+        filterApi={{ categories: props?.selectedCat }}
         multiple
         showTitle
         tagsMode
@@ -251,7 +251,7 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         loading={isSubmitting}
         placeholder="انتخاب کنید"
         apiPath="/tools/estate/feature/autoComplete"
-        filterApi={{ cat: props?.selectedCat }}
+        filterApi={{ categories: props?.selectedCat }}
         multiple
         showTitle
         tagsMode
@@ -387,7 +387,7 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
         loading={isSubmitting}
         placeholder="انتخاب کنید"
         apiPath="/tools/estate/feature/autoComplete"
-        filterApi={{ cat: props?.selectedCat }}
+        filterApi={{ categories: props?.selectedCat }}
         multiple
         showTitle
         tagsMode
@@ -523,7 +523,7 @@ export const EstateFeaturesLandBox = ({ form, loading, props }: AddEditComponent
         loading={isSubmitting}
         placeholder="انتخاب کنید"
         apiPath="/tools/estate/feature/autoComplete"
-        filterApi={{ cat: props?.selectedCat }}
+        filterApi={{ categories: props?.selectedCat }}
         multiple
         showTitle
         tagsMode
@@ -659,7 +659,7 @@ export const EstateFeaturesHectareBox = ({ form, loading, props }: AddEditCompon
         loading={isSubmitting}
         placeholder="انتخاب کنید"
         apiPath="/tools/estate/feature/autoComplete"
-        filterApi={{ cat: props?.selectedCat }}
+        filterApi={{ categories: props?.selectedCat }}
         multiple
         showTitle
         tagsMode

@@ -1,9 +1,10 @@
 import { Input } from "@/components/Input";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PanelCard from "@/components/@panel/Card";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { OfficeFormData, UserFormData } from "@/types/formsData";
 import LocationChooser from "./LocationChooser";
+import { Select } from "@/components/Select";
 
 export default function LocationBox({ form, loading }: { form: any; loading?: boolean }) {
   const {
@@ -25,25 +26,36 @@ export default function LocationBox({ form, loading }: { form: any; loading?: bo
     register("location", {});
   }, []);
 
+  const [province, setProvince] = useState(null);
+
   return (
     <PanelCard title="موقعیت مکانی" loading={loading}>
       <div className="grid lg:grid-cols-2 gap-4 ">
-        <Input
+        <Select
           //
           control={control}
           name="province"
           label="استان"
           error={errors.province?.message}
           loading={isSubmitting}
+          placeholder="انتخاب کنید"
+          apiPath="/static/province"
+          onChange={(value) => setProvince(value)}
+          defaultValue="مازندران"
+          searchable
           noSpace
         />
-        <Input
+        <Select
           //
           control={control}
           name="city"
           label="شهر"
           error={errors.city?.message}
           loading={isSubmitting}
+          placeholder="انتخاب کنید"
+          apiPath="/static/city"
+          filterApi={{ province: province || undefined }}
+          searchable
           noSpace
         />
         <Input

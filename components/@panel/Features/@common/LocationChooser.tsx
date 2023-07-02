@@ -30,7 +30,7 @@ const LocationChooser = (props: IProps) => {
     labelClass = " text-orange-500";
   }
 
-  const initialLocation: L.LatLngExpression = [35.7219, 51.3347];
+  const initialLocation: L.LatLngExpression = [36.6560965, 51.4432027];
 
   //
   return (

@@ -1,10 +1,11 @@
 import { Input } from "@/components/Input";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PanelCard from "@/components/@panel/Card";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { EstateFormData, OfficeFormData, UserFormData } from "@/types/formsData";
 import LocationChooser from "../@common/LocationChooser";
 import { AddEditComponentProps } from "../../EditAddPage";
+import { Select } from "@/components/Select";
 
 export default function EstateLocationBox({ form, loading }: AddEditComponentProps) {
   const {
@@ -29,28 +30,38 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
     register("location", {});
   }, []);
 
+  const [province, setProvince] = useState(null);
+
   return (
     <PanelCard title="موقعیت مکانی" loading={loading}>
       <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
-        <Input
+        <Select
           //
           control={control}
           name="province"
           label="استان"
           error={errors.province?.message}
           loading={isSubmitting}
-          noSpace
+          placeholder="انتخاب کنید"
+          apiPath="/static/province"
+          onChange={(value) => setProvince(value)}
           containerClassName="md:col-span-3"
+          searchable
+          noSpace
         />
-        <Input
+        <Select
           //
           control={control}
           name="city"
           label="شهر"
           error={errors.city?.message}
           loading={isSubmitting}
-          noSpace
+          placeholder="انتخاب کنید"
+          apiPath="/static/city"
+          filterApi={{ province: province || undefined }}
           containerClassName="md:col-span-3"
+          searchable
+          noSpace
         />
         <Input
           //

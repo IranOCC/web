@@ -75,7 +75,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             label="نوع"
             placeholder="انتخاب کنید"
             apiPath="/tools/estate/type/autoComplete"
-            filterApi={{ cat: props?.selectedCat }}
+            filterApi={{ categories: props?.selectedCat }}
             noSpace
           />
           <Select
@@ -87,7 +87,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             loading={isSubmitting}
             placeholder="انتخاب کنید"
             apiPath="/tools/estate/documentType/autoComplete"
-            filterApi={{ cat: props?.selectedCat }}
+            filterApi={{ categories: props?.selectedCat }}
             noSpace
           />
           {/* <NumericFormat /> */}

@@ -98,7 +98,7 @@ const Select = (props: IProps) => {
 
     setDataLoading(true);
     try {
-      const data = await api.get(apiPath!, { params: { initial: _c.field.value, search, ...filterApi } });
+      const data = await api.get(apiPath!, { params: { initial: _c.field.value, search, filter: filterApi } });
       const _items = data.data;
       if (Array.isArray(_items)) setDataList(_items);
       else setDataList(Object.keys(_items).map((value) => ({ value: value, title: _items[value] } as SelectDataType)));
@@ -129,7 +129,7 @@ const Select = (props: IProps) => {
       if (!isFirstRenderResetApply.current) getItems(true);
       else isFirstRenderResetApply.current = false;
     }
-  }, [filterApi?.cat]);
+  }, [filterApi?.categories, filterApi?.province]);
 
   useEffect(() => {
     setSearch("");
@@ -463,7 +463,7 @@ export type IProps = {
 
   items?: SelectDataType[];
   apiPath?: string;
-  filterApi?: { cat?: string };
+  filterApi?: { [K: string]: string | null | undefined };
   onChange?: (value: any) => void;
 };
 
