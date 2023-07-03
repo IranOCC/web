@@ -35,7 +35,7 @@ const TextEditor = (props: IProps) => {
             render={({ field }) => {
               return (
                 <Editor
-                  apiKey="016d97aa514be82332b86cc77fdb53d77e4aad4f89adf3982c0b504f670f1ca4"
+                  apiKey="c5202p0ybgpmcrokfgwn78asoww5xabm9hxbqxxvzxwgsmhg"
                   onEditorChange={field.onChange}
                   init={{
                     height: 400,
