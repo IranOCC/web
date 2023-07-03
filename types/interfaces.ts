@@ -252,3 +252,30 @@ export interface BlogCategory {
     tags: string[];
     parent: BlogCategory | string;
 }
+
+
+export type BlogPost = {
+    _id?: string;
+
+    title: string;
+    content?: string;
+    excerpt?: string;
+    slug: string;
+
+    image?: StorageFile | string;
+
+
+    status: string;
+    visibility: string;
+    pinned: boolean;
+    publishedAt: Date;
+
+    tags?: string[];
+
+    categories: string[];
+
+
+    createdBy?: User | string;
+    confirmedBy?: User | string;
+    office?: Office | string;
+};

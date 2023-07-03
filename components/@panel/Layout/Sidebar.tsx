@@ -138,12 +138,12 @@ const menuItems: MenuItemType[] = [
       {
         title: "دسته بندی",
         href: "category",
-        subtitle: "",
+        subtitle: "تعریف و مدیریت دسته بندی های وبلاگ",
       },
       {
         title: "دیدگاه ها",
         href: "comment",
-        subtitle: "",
+        subtitle: "مدیریت دیدگاه های کاربران",
       },
     ],
   },

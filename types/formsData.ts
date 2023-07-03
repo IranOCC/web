@@ -250,3 +250,30 @@ export type BlogCategoryFormData = {
     tags: string[];
     parent: BlogCategory | string;
 }
+
+
+export type BlogPostFormData = {
+    _id?: string;
+
+    title: string;
+    content?: string;
+    excerpt?: string;
+    slug: string;
+
+    image?: StorageFile | string;
+
+
+    status: string;
+    visibility: string;
+    pinned: boolean;
+    publishedAt: Date;
+
+    tags?: string[];
+
+    categories: string[];
+
+
+    createdBy?: User | string;
+    confirmedBy?: User | string;
+    office?: Office | string;
+};
