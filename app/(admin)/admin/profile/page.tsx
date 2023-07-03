@@ -91,9 +91,11 @@ export default function Page() {
                   name="avatar"
                   uploaderField="image"
                   uploadPath="storage/user/avatar"
-                  body={{
-                    relatedToID: user?._id,
-                  }}
+                  body={
+                    {
+                      // relatedToID: user?._id,
+                    }
+                  }
                   label="آپلود آواتار"
                   error={errors.avatar?.message}
                   loading={isSubmitting}
@@ -121,6 +123,7 @@ export default function Page() {
               </div>
             </PanelCard>
           </div>
+          {/*
           <div className="col-span-full md:col-span-1">
             <PhoneNumberBox form={form} loading={loading} allowVerify={false} />
           </div>
@@ -130,6 +133,7 @@ export default function Page() {
           <div className="col-span-full">
             <LocationBox form={form} loading={loading} />
           </div>
+          */}
           <div className="col-span-full">
             <PanelCard className="order-last lg:order-first">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
