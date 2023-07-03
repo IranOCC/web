@@ -1,18 +1,12 @@
 import Modal from ".";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import LoginBackImage from "@/assets/images/city-bg.png";
-import { LoginPhoneOtpFormData, MyProfileFormData } from "@/types/formsData";
+import { MyProfileFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
 import { useContext, useEffect, useRef, useState } from "react";
-import axios, { axiosException } from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { signIn, signOut } from "next-auth/react";
-import PhoneIcon from "@/components/Icons/Phone";
-import QrcodeIcon from "@/components/Icons/Qrcode";
-import { useCountdown } from "@/hooks/useCountdown";
-import moment from "moment";
 import { Session, StorageFile } from "@/types/interfaces";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import LogoUploader from "../Uploader/LogoUploader";
@@ -46,7 +40,7 @@ const CompleteProfileModal = () => {
     setValue("avatar", data.avatar as StorageFile);
   };
 
-  const api = useAxiosAuth();
+  const api = useAxiosAuth(setError);
 
   useEffect(() => {
     register("firstName", { required: "نام را وارد کنید" });
@@ -60,9 +54,7 @@ const CompleteProfileModal = () => {
       await api.patch("/auth", data);
       toast.success("با موفقیت ویرایش شد");
       window.location.reload();
-    } catch (error) {
-      axiosException(error, setError);
-    }
+    } catch (error) {}
   };
 
   if (pathname === "auth" || !user || user?.fullName) return null;

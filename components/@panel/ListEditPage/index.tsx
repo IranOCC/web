@@ -9,7 +9,6 @@ import { toast } from "@/lib/toast";
 import { FieldValues, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 
-import { handleFieldsError } from "@/lib/axios";
 import PanelTable, { PanelTableProps } from "../Table";
 
 interface IProps extends PanelTableProps {
@@ -44,7 +43,7 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
   } = form;
 
   const router = useRouter();
-  const api = useAxiosAuth();
+  const api = useAxiosAuth(setError);
 
   let baseRoute = (params?.id ? pathname?.replace(params.id as string, "") : pathname) || "/";
   baseRoute += baseRoute !== "/" ? "?" + searchParams?.toString() : "/";
@@ -64,9 +63,7 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
         reset();
         setUpdateTable([true]);
         router.replace(baseRoute);
-      } catch (error) {
-        handleFieldsError(error, setError);
-      }
+      } catch (error) {}
     };
   };
 

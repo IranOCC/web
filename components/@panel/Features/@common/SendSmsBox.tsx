@@ -20,7 +20,7 @@ export default function SendSmsBox({ phoneNumber, phoneID, officeID, userID, to 
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = useForm<SendSmsBoxFormData>();
 
-  const api = useAxiosAuth();
+  const api = useAxiosAuth(setError);
   const onSubmit = async (data: SendSmsBoxFormData) => {
     try {
       await api.post("/sms/send", data);

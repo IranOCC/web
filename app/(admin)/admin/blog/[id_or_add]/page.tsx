@@ -5,6 +5,7 @@ import { BlogPostFormData, } from "@/types/formsData";
 import { BlogPost, } from "@/types/interfaces";
 import { useForm } from "react-hook-form";
 import BlogPostBox from "@/components/@panel/Features/Blog/PostBox";
+import BlogPostCategoryBox from "@/components/@panel/Features/Blog/PostCategoryBox";
 import BlogPostTagsBox from "@/components/@panel/Features/Blog/PostTagsBox";
 import BlogPostVisibilityBox from "@/components/@panel/Features/Blog/PostVisibilityBox";
 import BlogPostRegistrantBox from "@/components/@panel/Features/Blog/PostRegistrantBox";
@@ -27,6 +28,7 @@ const Side = (props: AddEditComponentProps) => {
   return (
     <>
       <BlogPostMediaBox {...props} />
+      <BlogPostCategoryBox {...props} />
       <BlogPostTagsBox {...props} />
       <BlogPostVisibilityBox {...props} />
       <BlogPostRegistrantBox {...props} />

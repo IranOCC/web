@@ -2,8 +2,6 @@
 
 import PanelTable from "@/components/@panel/Table";
 import Loading from "@/components/Loading";
-import { axiosAuth } from "@/lib/axios";
-import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { Phone, Email, User, StorageFile } from "@/types/interfaces";
 import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";

@@ -1,6 +1,5 @@
 "use client";
 
-import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { User } from "@/types/interfaces";
 import { useSession } from "next-auth/react";
 import React, { ReactNode, useEffect } from "react";

@@ -2,17 +2,16 @@
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import LoginBackImage from "@/assets/images/city-bg.png";
 import { LoginPhoneOtpFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
-import axios, { axiosException } from "@/lib/axios";
+import axios from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import PhoneIcon from "@/components/Icons/Phone";
 import QrcodeIcon from "@/components/Icons/Qrcode";
-import { Session } from "next-auth";
+
 import { useCountdown } from "@/hooks/useCountdown";
 import moment from "moment";
 
@@ -46,15 +45,7 @@ export default function Page() {
       router.replace(url);
       setSendAgainTime(moment().add(2, "minutes").toDate());
       return true;
-    } catch (error) {
-      axiosException(error, setError);
-      // handleFieldError
-      // handleFieldsError()
-      // setError("phone", {
-      //   type: "manual",
-      //   message: "خطایی در ارسال به وحود آمده است",
-      // });
-    }
+    } catch (error) {}
   };
   const loginByOtp = async (data: LoginPhoneOtpFormData) => {
     const result = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });

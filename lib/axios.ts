@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { toast } from "@/lib/toast";
+import { signOut } from "next-auth/react";
 
 const config = {
     baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
@@ -21,12 +22,9 @@ const config = {
 const axiosAuth = axios.create(config)
 axiosAuth.interceptors.response.use(
     (response) => {
-        // if (response?.status === 401) {
-        // }
         return response;
     },
     (error) => {
-        handleToastError(error);
         return Promise.reject(error)
     },
 );
@@ -40,13 +38,9 @@ export { axiosAuth }
 const axiosNoAuth = axios.create(config)
 axiosNoAuth.interceptors.response.use(
     (response) => {
-
-        // if (response?.status === 401) {
-        // }
         return response;
     },
     (error) => {
-        handleToastError(error);
         return Promise.reject(error)
     },
 );
@@ -100,9 +94,4 @@ export const handleToastError = (error: any) => {
 
 
 
-
-export const axiosException = (error: any, formHandler: any) => {
-    handleFieldsError(error, formHandler)
-    console.log(error);
-}
 

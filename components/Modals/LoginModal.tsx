@@ -46,12 +46,7 @@ const LoginModal = ({ session }: { session: Session | null }) => {
       router.replace(url);
       setSendAgainTime(moment().add(2, "minutes").toDate());
       return true;
-    } catch (error) {
-      setError("phone", {
-        type: "manual",
-        message: "خطایی در ارسال به وحود آمده است",
-      });
-    }
+    } catch (error) {}
   };
   const loginByOtp = async (data: LoginPhoneOtpFormData) => {
     const result = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });

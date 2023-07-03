@@ -20,7 +20,7 @@ export default function SendEmailBox({ emailAddress, emailID, officeID, userID, 
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = useForm<SendEmailBoxFormData>();
 
-  const api = useAxiosAuth();
+  const api = useAxiosAuth(setError);
   const onSubmit = async (data: SendEmailBoxFormData) => {
     try {
       await api.post("/mail/send", data);

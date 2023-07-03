@@ -13,16 +13,14 @@ export default function EstateSetCategoryModal({ open, setOpen, setCategory }: a
     setCategory(selected);
   };
 
-  const api = useAxiosAuth();
+  const api = useAxiosAuth(null);
   const getData = async () => {
     setLoading(true);
     try {
       const { data } = await api.get("/tools/estate/category/autoComplete");
       setCategories(data);
       setLoading(false);
-    } catch (error) {
-      //
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

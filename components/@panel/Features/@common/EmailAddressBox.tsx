@@ -1,15 +1,9 @@
 import { Button } from "@/components/Button";
 import { CheckBox, Input } from "@/components/Input";
-import useAxiosAuth from "@/hooks/useAxiosAuth";
-import { toast } from "@/lib/toast";
 import { OfficeFormData, UserFormData } from "@/types/formsData";
 import { useEffect } from "react";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { useRouter } from "next/navigation";
-import { Select } from "@/components/Select";
-import { AddEditComponentProps } from "../../EditAddPage";
-import Link from "next/link";
 
 export default function EmailAddressBox({ form, loading, allowVerify = true }: { form: any; loading?: boolean; allowVerify?: boolean }) {
   const {

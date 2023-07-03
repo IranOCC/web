@@ -1,7 +1,6 @@
 "use client";
 
 import Loading from "@/components/Loading";
-import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { useSession } from "next-auth/react";
 import { ReactNode, useEffect, useState } from "react";
 import PanelFooter from "./Footer";

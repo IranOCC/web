@@ -8,7 +8,7 @@ import TextEditor from "@/components/Input/TextEditor";
 import EstateSetCategoryModal from "./EstateSetCategoryModal";
 import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function EstateCategoryTypeBox({ form, loading, props }: AddEditComponentProps) {
+export default function BlogPostCategoryBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -22,12 +22,27 @@ export default function EstateCategoryTypeBox({ form, loading, props }: AddEditC
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = form as UseFormReturn<EstateFormData>;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    register("categories");
+  }, []);
 
   return (
     <>
-      <PanelCard title="دسته و نوع ملک" loading={loading}>
-        <div className="grid grid-cols-1 gap-4 "></div>
+      <PanelCard title="دسته بندی" loading={loading}>
+        <div className="grid grid-cols-1 gap-4 ">
+          <Select
+            //
+            control={control}
+            name="categories"
+            label=""
+            error={errors.status?.message}
+            loading={isSubmitting}
+            placeholder="انتخاب کنید"
+            multiple
+            noSpace
+            apiPath="/tools/blog/category/autoComplete"
+          />
+        </div>
       </PanelCard>
     </>
   );

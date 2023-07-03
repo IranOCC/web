@@ -74,7 +74,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id) => 
     router.push(pathname + "?" + $s.toString());
   };
   //
-  const api = useAxiosAuth();
+  const api = useAxiosAuth(null);
   const getData = async () => {
     setFetchLoading(true);
     const _params = {

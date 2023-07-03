@@ -1,9 +1,6 @@
 "use client";
 
 import PanelTable from "@/components/@panel/Table";
-import Loading from "@/components/Loading";
-import { axiosAuth } from "@/lib/axios";
-import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { OfficeMember } from "@/types/interfaces";
 import { Popconfirm, Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
@@ -53,16 +50,7 @@ export default function Page() {
   const id_or_add = params?.id_or_add as string;
   const ID = id_or_add;
 
-  const api = useAxiosAuth();
-
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const addMember = async (members: string[]) => {
-    try {
-      await api.post(`/admin/office/${ID}/member`, undefined, { params: { id: members } });
-      toast.success("با موفقیت اضافه گردید");
-      window.location.reload();
-    } catch (error) {}
-  };
 
   return (
     <>
@@ -99,7 +87,7 @@ export default function Page() {
         //
         open={addModalOpen}
         setOpen={setAddModalOpen}
-        addMember={addMember}
+        officeID={ID}
       />
     </>
   );

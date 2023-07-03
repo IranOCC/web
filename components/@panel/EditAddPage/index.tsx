@@ -9,8 +9,6 @@ import { toast } from "@/lib/toast";
 import { FieldValues, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 
-import { handleFieldsError } from "@/lib/axios";
-
 type IProps = {
   Center: any;
   Side?: any;
@@ -41,7 +39,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
   } = form;
 
   const router = useRouter();
-  const api = useAxiosAuth();
+  const api = useAxiosAuth(setError);
 
   // submit
   const onSubmit = (redirect: boolean = SECTION ? false : true) => async (data: F) => {
@@ -58,9 +56,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
         if (redirect) router.replace(`/admin/${endpoint}`);
         else window.location.reload();
       }
-    } catch (error) {
-      handleFieldsError(error, setError);
-    }
+    } catch (error) {}
   };
 
   const [dataLoading, setDataLoading] = useState<boolean>(false);

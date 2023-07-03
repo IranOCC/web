@@ -5,10 +5,12 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { Select } from "@/components/Select";
 import Modal from "@/components/Modals";
 import { AddEditComponentProps } from "../../EditAddPage";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { toast } from "@/lib/toast";
 
 const Center = ({ form, loading }: AddEditComponentProps) => {};
 
-export default function OfficeAddMembersModal({ open, setOpen, addMember }: any) {
+export default function OfficeAddMembersModal({ open, setOpen, officeID }: any) {
   // useEffect(() => {
   //   reset();
   // }, [open]);
@@ -31,6 +33,15 @@ export default function OfficeAddMembersModal({ open, setOpen, addMember }: any)
   useEffect(() => {
     register("members", { required: "اعضا را انتخاب کنید" });
   }, []);
+
+  const api = useAxiosAuth(setError);
+  const addMember = async (members: string[]) => {
+    try {
+      await api.post(`/admin/office/${officeID}/member`, undefined, { params: { id: members } });
+      toast.success("با موفقیت اضافه گردید");
+      window.location.reload();
+    } catch (error) {}
+  };
 
   const onSubmit = async (data: OfficeAddMemberFormData) => {
     await addMember(data.members);
