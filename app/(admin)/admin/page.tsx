@@ -10,6 +10,38 @@ export default function Page() {
     <>
       <div className="p-4">
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-12">
+          <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 lg:col-span-3">
+            کاربران امروز
+            {/*  */}
+          </div>
+          <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 lg:col-span-3">
+            کاربران دیروز
+            {/*  */}
+          </div>
+          <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 lg:col-span-3">
+            کاربران سی روز اخیر
+            {/*  */}
+          </div>
+          <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 lg:col-span-3">
+            کاربران آنلاین
+            {/*  */}
+          </div>
+
+          {/* ==== */}
+          <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 sm:col-span-2 lg:col-span-4">
+            درخواست های بازدید امروز
+            {/*  */}
+          </div>
+          <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 sm:col-span-2 lg:col-span-4">
+            درخواست های بازدید دیروز
+            {/*  */}
+          </div>
+          <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 sm:col-span-2 lg:col-span-4">
+            درخواست های بازدید سی روز گذشته
+            {/*  */}
+          </div>
+
+          {/* ==== */}
           <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 order-1 lg:col-span-3">
             تعداد شعبات فعال
             {/*  */}
