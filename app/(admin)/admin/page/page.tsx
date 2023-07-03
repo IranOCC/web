@@ -20,28 +20,6 @@ const columns: ColumnsType<Estate> = [
       );
     },
   },
-  // {
-  //   title: "کد ملک",
-  //   dataIndex: "code",
-  //   responsive: ["sm"],
-  //   render: (code: string) => {
-  //     return (
-  //       <Tag color="orange" key={code}>
-  //         {code}
-  //       </Tag>
-  //     );
-  //   },
-  // },
-  // {
-  //   title: "دسته ",
-  //   dataIndex: ["category", "title"],
-  //   responsive: ["lg"],
-  // },
-  // {
-  //   title: "مالک",
-  //   dataIndex: ["owner", "fullName"],
-  //   responsive: ["xxl"],
-  // },
   {
     title: "نویسنده",
     dataIndex: ["createdBy", "fullName"],

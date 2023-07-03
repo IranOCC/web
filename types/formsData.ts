@@ -277,3 +277,21 @@ export type BlogPostFormData = {
     confirmedBy?: User | string;
     office?: Office | string;
 };
+
+
+
+
+export type PageFormData = {
+    _id?: string;
+
+    title: string;
+    content?: string;
+    slug: string;
+
+    status: string;
+    publishedAt: Date;
+
+    tags?: string[];
+
+    createdBy?: User | string;
+};
