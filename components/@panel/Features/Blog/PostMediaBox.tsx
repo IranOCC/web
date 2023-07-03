@@ -34,7 +34,7 @@ export default function BlogPostMediaBox({ form, loading }: AddEditComponentProp
             control={control}
             uploadPath="blog"
             uploaderField="images"
-            indexFileName="image"
+            // indexFileName="image"
             noSpace
             fromLibrary
             showFilesList
