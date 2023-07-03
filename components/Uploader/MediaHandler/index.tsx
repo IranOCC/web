@@ -175,7 +175,7 @@ const FieldComponent = (props: FieldComponentType) => {
         <div className="relative w-full mb-2 max-h-96 overflow-x-hidden">
           {/*  */}
           <div className="grid grid-cols-3 gap-2">
-            {(field?.value as StorageFile[]).map((item, index) => {
+            {(field?.value as StorageFile[])?.map((item, index) => {
               const isMain =
                 !!indexFileControl?.field.value && typeof indexFileControl?.field.value === "string"
                   ? //
@@ -193,15 +193,17 @@ const FieldComponent = (props: FieldComponentType) => {
                       title={item.title}
                     />
 
-                    <div className="absolute flex justify-center items-center bg-black/40 w-full h-full transition-opacity opacity-0 hover:opacity-100">
-                      {/*  */}
-                      {!isMain && (
-                        <div onClick={() => indexFileControl?.field.onChange(item)} className="border bg-white text-yellow-300 px-1 border-yellow-300 rounded w-auto">
-                          شاخص شود؟
-                        </div>
-                      )}
-                      {/*  */}
-                    </div>
+                    {indexFileControl && (
+                      <div className="absolute flex justify-center items-center bg-black/40 w-full h-full transition-opacity opacity-0 hover:opacity-100">
+                        {/*  */}
+                        {!isMain && (
+                          <div onClick={() => indexFileControl?.field.onChange(item)} className="border bg-white text-yellow-300 px-1 border-yellow-300 rounded w-auto">
+                            شاخص شود؟
+                          </div>
+                        )}
+                        {/*  */}
+                      </div>
+                    )}
 
                     <Cancel
                       //
@@ -211,7 +213,7 @@ const FieldComponent = (props: FieldComponentType) => {
                       }}
                       className="absolute text-red-500 top-1 right-1 cursor-pointer hover:text-gray-500"
                     />
-                    {!!isMain && (
+                    {indexFileControl && !!isMain && (
                       <Tooltip title="شاخص">
                         <Star
                           //
