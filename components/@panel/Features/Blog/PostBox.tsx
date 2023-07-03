@@ -78,6 +78,7 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             multiline
             lines={4}
             noSpace
+            containerClassName="col-span-full"
           />
           <TextEditor
             //
@@ -86,6 +87,7 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             label=""
             error={errors.content?.message}
             loading={isSubmitting}
+            containerClassName="col-span-full"
           />
         </div>
       </PanelCard>
