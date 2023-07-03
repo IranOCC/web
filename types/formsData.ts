@@ -1,4 +1,4 @@
-import { Email, Phone, User, StorageFile, Office, Icon, EstateCategory, SelectDataType } from "./interfaces";
+import { Email, Phone, User, StorageFile, Office, Icon, EstateCategory, SelectDataType, BlogCategory } from "./interfaces";
 
 export type LoginPhoneOtpFormData = {
     phone: string;
@@ -235,3 +235,18 @@ export type InitialSettingsFormData = {
     description: string;
     keywords: string[];
 };
+
+
+
+// ===== blog
+
+export type BlogCategoryFormData = {
+    _id?: string;
+
+    title: string;
+    slug: string;
+    description: string;
+    icon: Icon | string;
+    tags: string[];
+    parent: BlogCategory | string;
+}

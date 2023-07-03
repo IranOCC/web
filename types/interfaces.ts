@@ -232,3 +232,23 @@ export interface EstateType {
     tags: string[];
     categories: EstateCategory[] | string[];
 }
+
+
+
+
+
+
+
+
+// ==== blog
+
+export interface BlogCategory {
+    _id: string;
+
+    title: string;
+    slug: string;
+    description: string;
+    icon: Icon | string;
+    tags: string[];
+    parent: BlogCategory | string;
+}
