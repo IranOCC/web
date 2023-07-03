@@ -74,7 +74,7 @@ export default function EstateCategoryBox({ form, loading, cancelForm }: AddEdit
         error={errors.parent?.message}
         loading={isSubmitting}
         placeholder="دسته مادر"
-        apiPath={"/tools/estate/category/autoComplete"}
+        apiPath={"/tools/blog/category/autoComplete"}
         searchable
         noSpace
       />
