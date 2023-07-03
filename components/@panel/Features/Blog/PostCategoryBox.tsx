@@ -1,11 +1,10 @@
 import { CheckBox, Input } from "@/components/Input";
-import { EstateFormData } from "@/types/formsData";
+import { BlogPostFormData, EstateFormData } from "@/types/formsData";
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
 import TextEditor from "@/components/Input/TextEditor";
-import EstateSetCategoryModal from "./EstateSetCategoryModal";
 import { AddEditComponentProps } from "../../EditAddPage";
 
 export default function BlogPostCategoryBox({ form, loading, props }: AddEditComponentProps) {
@@ -20,7 +19,7 @@ export default function BlogPostCategoryBox({ form, loading, props }: AddEditCom
     handleSubmit,
     reset,
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
-  } = form as UseFormReturn<EstateFormData>;
+  } = form as UseFormReturn<BlogPostFormData>;
 
   useEffect(() => {
     register("categories");
