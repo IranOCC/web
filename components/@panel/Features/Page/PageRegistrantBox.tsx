@@ -24,7 +24,7 @@ export default function PageRegistrantBox({ form, loading }: AddEditComponentPro
 
   return (
     <>
-      <PanelCard title="جزییات پست" loading={loading}>
+      <PanelCard title="جزییات صفحه" loading={loading}>
         <div className="grid grid-cols-1 gap-4 ">
           <Select
             //
@@ -32,7 +32,7 @@ export default function PageRegistrantBox({ form, loading }: AddEditComponentPro
             name="createdBy"
             error={errors.createdBy?.message}
             loading={isSubmitting}
-            label="ثبت کننده"
+            label="نویسنده"
             placeholder="انتخاب کنید"
             apiPath="/tools/user/autoComplete"
             searchable
