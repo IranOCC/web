@@ -32,6 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
       minimumScale: 1,
       maximumScale: 1,
     },
+    manifest: "/manifest.webmanifest",
   };
 }
 

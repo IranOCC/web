@@ -5,14 +5,14 @@ const nextConfig = {
   },
   images: {
     domains: ['storage.iranocc.com']
-    // remotePatterns: [
-    //   {
-    //     protocol: 'https',
-    //     hostname: 'storage.iranocc.com',
-    //   },
-    // ],
   },
   output: 'standalone'
 }
 
-module.exports = nextConfig
+
+// PWA
+const withPWA = require('next-pwa')({
+  dest: 'public'
+})
+
+module.exports = withPWA(nextConfig)
