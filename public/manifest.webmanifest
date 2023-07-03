@@ -34,7 +34,7 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#EEEEEE",
+  "theme_color": "#ffc700",
   "orientation": "portrait",
   "scope": ".",
   "background_color": "#ffffff",
