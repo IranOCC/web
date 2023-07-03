@@ -14,10 +14,11 @@ import EstateMediaBox from "@/components/@panel/Features/Estate/EstateMediaBox";
 import EstateTagsBox from "@/components/@panel/Features/Estate/EstateTagsBox";
 import EstateFeaturesBox from "@/components/@panel/Features/Estate/EstateFeaturesBox";
 import EstateOwnerBox from "@/components/@panel/Features/Estate/EstateOwnerBox";
-import EstateSetCategoryModal from "@/components/@panel/Features/Estate/EstateSetCategoryModal";
-import { useState } from "react";
-import EstateCategoryTypeBox from "@/components/@panel/Features/Estate/EstateCategoryTypeBox";
 import EstateRegistrantBox from "@/components/@panel/Features/Estate/EstateRegistrantBox";
+
+import EstateSetCategoryModal from "@/components/@panel/Features/Estate/EstateSetCategoryModal";
+
+import { useState } from "react";
 import PanelTab from "@/components/@panel/Tab";
 import PanelCard from "@/components/@panel/Card";
 
