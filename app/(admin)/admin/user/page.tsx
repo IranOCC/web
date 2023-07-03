@@ -18,7 +18,7 @@ const columns: ColumnsType<User> = [
       const avatar = record?.avatar as StorageFile;
       return (
         <div className="flex items-center">
-          {!!avatar?.path && <Image src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + avatar.path} alt={avatar.alt} width={40} height={40} className="rounded-full w-10 h-10 me-3" />}
+          {!!avatar?.path && <Image src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + avatar.path} alt={avatar.alt} width={40} height={40} className="rounded-full aspect-square w-10 h-10 me-3" />}
           {record.verified && <VerifiedIcon className="text-blue-600" fontSize="small" />}
           <span className="ms-1">{fullName || "-"}</span>
         </div>

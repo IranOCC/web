@@ -16,7 +16,7 @@ const columns: ColumnsType<Office> = [
       const logo = record?.logo as StorageFile;
       return (
         <div className="flex items-center">
-          {!!logo?.path && <Image src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + logo.path} alt={logo.alt} width={40} height={40} className="rounded-full w-10 h-10 me-3" />}
+          {!!logo?.path && <Image src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + logo.path} alt={logo.alt} width={40} height={40} className="rounded-full aspect-square w-10 h-10 me-3" />}
           {record.verified && <VerifiedIcon className="text-blue-600" fontSize="small" />}
           <span className="ms-1">{name || "-"}</span>
         </div>
