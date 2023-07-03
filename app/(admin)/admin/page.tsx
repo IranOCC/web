@@ -19,7 +19,7 @@ export default function Page() {
             {/*  */}
           </div>
           <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 lg:col-span-3">
-            کاربران سی روز اخیر
+            کاربران ماهانه
             {/*  */}
           </div>
           <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 lg:col-span-3">
@@ -37,7 +37,7 @@ export default function Page() {
             {/*  */}
           </div>
           <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 sm:col-span-2 lg:col-span-4">
-            درخواست های بازدید سی روز گذشته
+            درخواست های بازدید ماه
             {/*  */}
           </div>
 
