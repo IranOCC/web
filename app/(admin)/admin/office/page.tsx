@@ -5,15 +5,18 @@ import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import { User, Phone, Email, Office } from "@/types/interfaces";
+import { Phone, Email, Office, StorageFile } from "@/types/interfaces";
+import Image from "next/image";
 
 const columns: ColumnsType<Office> = [
   {
     title: "نام",
     dataIndex: "name",
     render: (name: string, record) => {
+      const logo = record?.logo as StorageFile;
       return (
         <div className="flex items-center">
+          {!!logo?.path && <Image src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + logo.path} alt={logo.alt} width={40} height={40} className="rounded-full" />}
           {record.verified && <VerifiedIcon className="text-blue-600" fontSize="small" />}
           <span className="ms-1">{name || "-"}</span>
         </div>
