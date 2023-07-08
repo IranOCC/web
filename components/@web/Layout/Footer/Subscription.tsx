@@ -6,6 +6,7 @@ import LoginBackImage from "@/assets/images/city-bg.png";
 import { toast } from "@/lib/toast";
 import Image from "next/image";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { handleFieldsError } from "@/lib/axios";
 
 const Subscription = () => {
   const {
@@ -20,7 +21,7 @@ const Subscription = () => {
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = useForm<SubscriptionFormData>();
 
-  const api = useAxiosAuth(setError);
+  const api = useAxiosAuth();
 
   useEffect(() => {
     register("email", { required: "ایمیل را وارد کنید" });
@@ -32,10 +33,7 @@ const Subscription = () => {
       toast.success("با موفقیت ثبت شد");
       return true;
     } catch (error) {
-      setError("email", {
-        type: "manual",
-        message: "مشکلی در ثبت بوجود آمد",
-      });
+      handleFieldsError(error, setError);
     }
   };
 

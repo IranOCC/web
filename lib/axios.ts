@@ -18,13 +18,18 @@ const config = {
 
 
 // **********************
-// axios with auth
+// A: axios with auth
 const axiosAuth = axios.create(config)
 axiosAuth.interceptors.response.use(
-    (response) => {
+    (response: any) => {
+        if (response.status === 401) {
+            signOut()
+            return response
+        }
         return response;
     },
-    (error) => {
+    (error: any) => {
+        handleToastError(error);
         return Promise.reject(error)
     },
 );
@@ -34,13 +39,18 @@ export { axiosAuth }
 
 
 // **********************
-// axios without auth
+// B: axios without auth
 const axiosNoAuth = axios.create(config)
 axiosNoAuth.interceptors.response.use(
-    (response) => {
+    (response: any) => {
+        if (response.status === 401) {
+            signOut()
+            return response
+        }
         return response;
     },
-    (error) => {
+    (error: any) => {
+        handleToastError(error);
         return Promise.reject(error)
     },
 );
@@ -52,27 +62,24 @@ export default axiosNoAuth
 
 
 
-// ============> error handlers
+// ======================================================> error handlers
 
 
-const handleErrorHelper = (property: string, constraints: any, setError: any) => {
-    const c = Object.keys(constraints);
-    for (let j = 0; j < c.length; j++) {
-        setError(property, {
-            type: "manual",
-            message: constraints[c[j]],
-        });
-    }
-}
-
-export const handleFieldsError = (error: unknown, setError: any) => {
+export const handleFieldsError = (error: any, setError: any) => {
     if (error instanceof AxiosError) {
         if (error?.response?.status === 400) {
-            const { errors } = error?.response?.data;
-            let _err = errors
-            let _errKeys = Object.keys(errors)
+            const errors = error?.response?.data;
+            let _err = errors?.errors
+            if (!_err) return
+            let _errKeys = Object.keys(_err)
             for (let i = 0; i < _errKeys.length; i++) {
-                handleErrorHelper(_errKeys[i], _err[_errKeys[i]], setError)
+                const c = Object.keys(_err[_errKeys[i]]);
+                for (let j = 0; j < c.length; j++) {
+                    setError(_errKeys[i], {
+                        type: "manual",
+                        message: _err[_errKeys[i]][c[j]],
+                    });
+                }
             }
         }
     }

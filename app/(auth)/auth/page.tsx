@@ -49,6 +49,7 @@ export default function Page() {
   };
   const loginByOtp = async (data: LoginPhoneOtpFormData) => {
     const result = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });
+    // @ts-ignore
     if (result?.ok) {
       toast.success("با موفقیت وارد شدید!");
       const callbackUrl = searchParams?.get("callbackUrl");

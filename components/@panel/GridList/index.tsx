@@ -45,7 +45,7 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
     router.push(pathname + "?" + $s.toString());
   };
   //
-  const api = useAxiosAuth(null);
+  const api = useAxiosAuth();
   const getData = async () => {
     setFetchLoading(true);
     const _params = {

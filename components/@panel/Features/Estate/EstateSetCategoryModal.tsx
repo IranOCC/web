@@ -13,7 +13,7 @@ export default function EstateSetCategoryModal({ open, setOpen, setCategory }: a
     setCategory(selected);
   };
 
-  const api = useAxiosAuth(null);
+  const api = useAxiosAuth();
   const getData = async () => {
     setLoading(true);
     try {

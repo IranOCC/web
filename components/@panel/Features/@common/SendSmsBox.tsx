@@ -6,6 +6,7 @@ import { SendSmsBoxFormData } from "@/types/formsData";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
+import { handleFieldsError } from "@/lib/axios";
 
 export default function SendSmsBox({ phoneNumber, phoneID, officeID, userID, to }: { phoneNumber?: string; phoneID?: string; officeID?: string; userID?: string; to?: string }) {
   const {
@@ -20,17 +21,14 @@ export default function SendSmsBox({ phoneNumber, phoneID, officeID, userID, to 
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = useForm<SendSmsBoxFormData>();
 
-  const api = useAxiosAuth(setError);
+  const api = useAxiosAuth();
   const onSubmit = async (data: SendSmsBoxFormData) => {
     try {
       await api.post("/sms/send", data);
       toast.success("با موفقیت ارسال شد");
       resetField("text");
     } catch (error) {
-      setError("root", {
-        type: "manual",
-        message: "خطایی در ارسال به وحود آمده است",
-      });
+      handleFieldsError(error, setError);
     }
   };
 

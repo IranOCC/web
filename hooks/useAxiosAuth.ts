@@ -1,14 +1,15 @@
 "use client"
 
-import { useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { useEffect } from "react";
 import { axiosAuth, handleFieldsError, handleToastError } from "../lib/axios";
 
-const useAxiosAuth = (formErrorHandler: any) => {
+
+const useAxiosAuth = () => {
     const { data: session, status: sessionStatus } = useSession();
 
     useEffect(() => {
-        const requestIntercept = axiosAuth.interceptors.request.use((config) => {
+        const requestIntercept = axiosAuth.interceptors.request.use((config: any) => {
             if (!config.headers["Authorization"]) {
                 config.headers["Authorization"] = `Bearer ${session?.accessToken}`
             }
@@ -16,16 +17,6 @@ const useAxiosAuth = (formErrorHandler: any) => {
         })
         return () => {
             axiosAuth.interceptors.request.eject(requestIntercept)
-            axiosAuth.interceptors.response.use(
-                (response) => {
-                    return response;
-                },
-                (error) => {
-                    if (formErrorHandler) handleFieldsError(error, formErrorHandler)
-                    handleToastError(error);
-                    return Promise.reject(error)
-                },
-            );
         }
     }, [session])
 

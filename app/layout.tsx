@@ -60,3 +60,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     </AntdProvider>
   );
 }
+
+export function reportWebVitals(metric: any) {
+  console.log(metric);
+}

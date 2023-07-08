@@ -92,7 +92,7 @@ const Select = (props: IProps) => {
 
   const isFirstRenderResetApply = useRef(true);
 
-  const api = useAxiosAuth(null);
+  const api = useAxiosAuth();
   const getItems = async (reset = false) => {
     if (reset) setResetValue([true]);
 

@@ -72,9 +72,9 @@ export default function Page() {
     if (!(data.email as Email)?.value) {
       data.email = undefined;
     }
-
     return data;
   };
+  if(!form.setError) return null
   return (
     <>
       <EditAddPage<UserFormData, User>

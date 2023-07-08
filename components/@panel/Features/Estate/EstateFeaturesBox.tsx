@@ -28,7 +28,7 @@ export default function EstateFeaturesBox(_props: AddEditComponentProps) {
 
   let ComponentBox: ({ form, loading, props }: AddEditComponentProps) => JSX.Element = () => <>{null}</>;
 
-  const api = useAxiosAuth(setError);
+  const api = useAxiosAuth();
   const getCategory = async () => {
     if (!props.selectedCat) return;
     _setLoading(true);

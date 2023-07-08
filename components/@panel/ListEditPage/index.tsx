@@ -10,6 +10,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 
 import PanelTable, { PanelTableProps } from "../Table";
+import { handleFieldsError } from "@/lib/axios";
 
 interface IProps extends PanelTableProps {
   FormComponent: any;
@@ -43,7 +44,7 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
   } = form;
 
   const router = useRouter();
-  const api = useAxiosAuth(setError);
+  const api = useAxiosAuth();
 
   let baseRoute = (params?.id ? pathname?.replace(params.id as string, "") : pathname) || "/";
   baseRoute += baseRoute !== "/" ? "?" + searchParams?.toString() : "/";
@@ -63,7 +64,9 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
         reset();
         setUpdateTable([true]);
         router.replace(baseRoute);
-      } catch (error) {}
+      } catch (error) {
+        handleFieldsError(error, setError);
+      }
     };
   };
 

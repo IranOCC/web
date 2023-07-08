@@ -16,7 +16,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   const { user, setUser } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const { status: sessionStatus } = useSession();
-  const api = useAxiosAuth(null);
+  const api = useAxiosAuth();
   const getMe = async () => {
     try {
       const me = await api.get("/auth");

@@ -11,6 +11,7 @@ import { Session, StorageFile } from "@/types/interfaces";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import LogoUploader from "../Uploader/LogoUploader";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
+import { handleFieldsError } from "@/lib/axios";
 
 //
 //
@@ -40,7 +41,7 @@ const CompleteProfileModal = () => {
     setValue("avatar", data.avatar as StorageFile);
   };
 
-  const api = useAxiosAuth(setError);
+  const api = useAxiosAuth();
 
   useEffect(() => {
     register("firstName", { required: "نام را وارد کنید" });
@@ -54,7 +55,9 @@ const CompleteProfileModal = () => {
       await api.patch("/auth", data);
       toast.success("با موفقیت ویرایش شد");
       window.location.reload();
-    } catch (error) {}
+    } catch (error) {
+      handleFieldsError(error, setError);
+    }
   };
 
   if (pathname === "auth" || !user || user?.fullName) return null;

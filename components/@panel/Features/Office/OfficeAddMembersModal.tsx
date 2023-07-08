@@ -7,6 +7,7 @@ import Modal from "@/components/Modals";
 import { AddEditComponentProps } from "../../EditAddPage";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
+import { handleFieldsError } from "@/lib/axios";
 
 const Center = ({ form, loading }: AddEditComponentProps) => {};
 
@@ -34,13 +35,15 @@ export default function OfficeAddMembersModal({ open, setOpen, officeID }: any) 
     register("members", { required: "اعضا را انتخاب کنید" });
   }, []);
 
-  const api = useAxiosAuth(setError);
+  const api = useAxiosAuth();
   const addMember = async (members: string[]) => {
     try {
       await api.post(`/admin/office/${officeID}/member`, undefined, { params: { id: members } });
       toast.success("با موفقیت اضافه گردید");
       window.location.reload();
-    } catch (error) {}
+    } catch (error) {
+      handleFieldsError(error, setError);
+    }
   };
 
   const onSubmit = async (data: OfficeAddMemberFormData) => {

@@ -13,6 +13,7 @@ import SettingOutlineIcon from "@/components/Icons/SettingOutline";
 import UserIcon from "@/components/Icons/User";
 import UsersOutlineIcon from "@/components/Icons/UsersOutline";
 import { usePrevious } from "@/hooks/usePrevious";
+import { UserRoles } from "@/types/enum";
 import { ClickAwayListener } from "@mui/material";
 
 import { Tooltip } from "antd";
@@ -33,6 +34,7 @@ type MenuItemType = {
     title: string;
     href: string;
     subtitle: string;
+    roles?: UserRoles[];
   }[];
 };
 
@@ -67,7 +69,7 @@ const menuItems: MenuItemType[] = [
     ],
   },
   {
-    title: "شعب ها",
+    title: "شعب",
     href: "office",
     icon: <OfficesOutlineIcon />,
     sub: [
@@ -75,11 +77,13 @@ const menuItems: MenuItemType[] = [
         title: "شعبه جدید",
         href: "add",
         subtitle: "",
+        roles: [UserRoles.SuperAdmin],
       },
       {
         title: "مدیریت شعبه ها",
         href: "",
         subtitle: "",
+        roles: [UserRoles.SuperAdmin, UserRoles.Admin],
       },
     ],
   },
@@ -192,8 +196,28 @@ const menuItems: MenuItemType[] = [
     icon: <ChartOutlineIcon />,
     sub: [
       {
+        title: "آمار کلی",
+        href: "",
+        subtitle: "گزارشات کلی سایت",
+      },
+      {
         title: "کاربران",
         href: "user",
+        subtitle: "",
+      },
+      {
+        title: "شعبات",
+        href: "office",
+        subtitle: "",
+      },
+      {
+        title: "املاک",
+        href: "estate",
+        subtitle: "",
+      },
+      {
+        title: "وبلاگ",
+        href: "blog",
         subtitle: "",
       },
     ],

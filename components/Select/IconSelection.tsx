@@ -44,7 +44,7 @@ const IconSelection = (props: IProps) => {
   const [iconsList, setIconsList] = useState<IconData[]>([]);
   const [dataLoading, setDataLoading] = useState(false);
 
-  const api = useAxiosAuth(null);
+  const api = useAxiosAuth();
   const getItems = async () => {
     setDataLoading(true);
     try {
