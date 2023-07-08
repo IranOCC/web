@@ -9,6 +9,7 @@ import { Input } from "@/components/Input";
 import LogoUploader from "@/components/Uploader/LogoUploader";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { handleFieldsError } from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { MyProfileFormData, UserFormData } from "@/types/formsData";
 import { StorageFile, Phone, Email } from "@/types/interfaces";
@@ -58,7 +59,7 @@ export default function Page() {
 
   const [loading, setLoading] = useState(false);
 
-  const api = useAxiosAuth(setError);
+  const api = useAxiosAuth();
   useEffect(() => {
     register("firstName", { required: "نام را وارد کنید" });
     register("lastName", { required: "نام خانوادگی را وارد کنید" });
@@ -72,7 +73,9 @@ export default function Page() {
       await api.patch("/auth", data);
       toast.success("با موفقیت ویرایش شد");
       window.location.reload();
-    } catch (error) {}
+    } catch (error) {
+      handleFieldsError(error, setError);
+    }
   };
 
   return (
