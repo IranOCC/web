@@ -6,6 +6,7 @@ import { SendEmailBoxFormData } from "@/types/formsData";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
+import { handleFieldsError } from "@/lib/axios";
 
 export default function SendEmailBox({ emailAddress, emailID, officeID, userID, to }: { emailAddress?: string; emailID?: string; officeID?: string; userID?: string; to?: string }) {
   const {
@@ -20,17 +21,14 @@ export default function SendEmailBox({ emailAddress, emailID, officeID, userID, 
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = useForm<SendEmailBoxFormData>();
 
-  const api = useAxiosAuth(setError);
+  const api = useAxiosAuth();
   const onSubmit = async (data: SendEmailBoxFormData) => {
     try {
       await api.post("/mail/send", data);
       toast.success("با موفقیت ارسال شد");
       resetField("text");
     } catch (error) {
-      setError("root", {
-        type: "manual",
-        message: "خطایی در ارسال به وحود آمده است",
-      });
+      handleFieldsError(error, setError);
     }
   };
 
