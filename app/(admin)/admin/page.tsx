@@ -1,14 +1,17 @@
 "use client";
 
-import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
-import { useContext, useEffect } from "react";
+import { Alert } from "@mui/material";
 
-export default function Page() {
-  const { user } = useContext(CurrentUserContext) as CurrentUserContextType;
-
+export default function Page({ searchParams }: any) {
+  const { warning, error, info } = searchParams;
   return (
     <>
       <div className="p-4">
+        <div className="pb-4 empty:hidden">
+          {!!error && <Alert severity="error">{error}</Alert>}
+          {!!warning && <Alert severity="warning">{warning}</Alert>}
+          {!!info && <Alert severity="info">{info}</Alert>}
+        </div>
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-12">
           <div className="bg-white shadow-md transition-shadow hover:shadow-lg rounded-lg p-4 lg:col-span-3">
             کاربران امروز

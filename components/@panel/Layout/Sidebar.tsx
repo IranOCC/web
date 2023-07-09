@@ -306,12 +306,9 @@ const PanelSideBar = () => {
     setOpenSubMenu(null);
   }, [pathname]);
 
-  const { roles: myRoles } = useContext(CurrentUserContext) as CurrentUserContextType;
-
   return (
     <ClickAwayListener onClickAway={() => setOpenSubMenu(null)}>
       <aside className="fixed h-full flex z-30">
-        {myRoles}
         <MainMenu
           //
           itemOpen={isOpenSubMenu}
