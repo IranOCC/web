@@ -5,7 +5,6 @@ const config = {
     headers: {
         "Content-Type": "application/json",
     },
-    // withCredentials: true,
     validateStatus: function (status: number) {
         return status >= 200 && status < 400;
     },

@@ -18,6 +18,7 @@ import { fetchWebInfo } from "@/lib/ssr.fetch";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { CurrentUserProvider } from "@/context/currentUser.context";
+import MuiProvider from "@/components/Providers/MuiProvider";
 config.autoAddCss = false;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -40,23 +41,25 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const webInfo = await fetchWebInfo();
   return (
     <AntdProvider style={{ fontFamily: IRANSansX.style }}>
-      <AuthProvider>
-        <WebInfoProvider initial={webInfo}>
-          <ThemeProvider initial={{ dark: false }}>
-            <LoadingProvider initial={{ loading: true }}>
-              <CurrentUserProvider>
-                <html className={IRANSansX.className}>
-                  <MainLayout>
-                    {children}
-                    <Loading />
-                    {/*  */}
-                  </MainLayout>
-                </html>
-              </CurrentUserProvider>
-            </LoadingProvider>
-          </ThemeProvider>
-        </WebInfoProvider>
-      </AuthProvider>
+      <MuiProvider style={{ fontFamily: IRANSansX.style }}>
+        <AuthProvider>
+          <WebInfoProvider initial={webInfo}>
+            <ThemeProvider initial={{ dark: false }}>
+              <LoadingProvider initial={{ loading: true }}>
+                <CurrentUserProvider>
+                  <html className={IRANSansX.className}>
+                    <MainLayout>
+                      {children}
+                      <Loading />
+                      {/*  */}
+                    </MainLayout>
+                  </html>
+                </CurrentUserProvider>
+              </LoadingProvider>
+            </ThemeProvider>
+          </WebInfoProvider>
+        </AuthProvider>
+      </MuiProvider>
     </AntdProvider>
   );
 }

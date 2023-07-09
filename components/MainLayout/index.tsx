@@ -9,6 +9,7 @@ import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUse
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import Modal from "../Modals";
 import CompleteProfileModal from "../Modals/CompleteProfileModal";
+import RolesConflictModal from "../Modals/RolesConflictModal";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { darkMode } = useContext(ThemeContext) as ThemeContextType;
@@ -27,6 +28,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
       hideLoading();
     }
   };
+
   useEffect(() => {
     if (sessionStatus === "authenticated") getMe();
     else if (sessionStatus === "unauthenticated") hideLoading();
@@ -36,6 +38,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
     <body lang="fa" dir="rtl" className={"select-none bg-gray-200 selection:bg-yellow-200 selection:text-yellow-900 font-rubik print:hidden scroll-smooth" + (darkMode ? " dark" : "")}>
       {children}
       <CompleteProfileModal />
+      <RolesConflictModal />
       {/*  */}
     </body>
   );

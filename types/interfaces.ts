@@ -1,3 +1,4 @@
+import { UserRoles } from "./enum";
 
 
 
@@ -40,7 +41,7 @@ export interface User {
 
     avatar?: StorageFile | string | null;
 
-    roles: string[];
+    roles: UserRoles[];
 
     active: boolean;
     verified: boolean;

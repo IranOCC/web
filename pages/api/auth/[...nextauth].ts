@@ -1,6 +1,7 @@
 import axiosSSR from "@/lib/axiosSSR"
 import { LoginPhoneOtpFormData } from "@/types/formsData"
-import NextAuth, { NextAuthOptions, Session, User, } from "next-auth"
+import { User } from "@/types/interfaces"
+import NextAuth, { NextAuthOptions, Session, } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -29,14 +30,14 @@ export const authOptions: NextAuthOptions = {
         error: "/auth/error"
     },
     callbacks: {
-        async jwt({ token, user, trigger, session }) {
+        async jwt({ token, user, trigger, session }: any) {
             if (trigger === "update" && session?.user) {
                 // const t = token as Session
                 // token.user = { ...token.email, ...session.user }
             }
             return ({ ...token, ...user })
         },
-        async session({ session, token, user }) {
+        async session({ session, token, user }: any) {
             const t = token as any as Session
             session.user = t.user;
             session.accessToken = t.accessToken;
