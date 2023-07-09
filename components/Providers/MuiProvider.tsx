@@ -13,24 +13,21 @@ const cacheRtl = createCache({
   stylisPlugins: [prefixer, rtlPlugin],
 });
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "rgb(255 230 0)",
+const MuiProvider = ({ children, style }: { children: ReactNode; style: any }) => {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "rgb(255 230 0)",
+      },
     },
-  },
-  direction: "rtl",
-});
+    direction: "rtl",
+    typography: { ...style },
+  });
 
-const MuiProvider = ({ children, style }: { children: ReactNode; style: {} }) => {
   return (
     <CacheProvider value={cacheRtl}>
-      <ThemeProvider
-        theme={{
-          ...theme,
-          typography: { ...style },
-        }}
-      >
+      <ThemeProvider theme={theme}>
+        {/*  */}
         {children}
       </ThemeProvider>
     </CacheProvider>
