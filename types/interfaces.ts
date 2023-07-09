@@ -25,6 +25,10 @@ export interface Phone {
 }
 
 export interface User {
+    // for session
+    id: any;
+
+
     _id: string;
 
     firstName?: string | null;
