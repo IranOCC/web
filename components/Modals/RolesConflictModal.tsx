@@ -17,7 +17,7 @@ const RolesConflictModal = () => {
   const { user } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   useEffect(() => {
-    if (pathname === "auth" || !user || !session) return;
+    if (pathname === "auth" || !user || !session || !session?.user) return;
     const sessionRoles = session.user.roles.sort();
     const myRoles = user.roles.sort();
     if (sessionRoles.toString() === myRoles.toString()) return;
