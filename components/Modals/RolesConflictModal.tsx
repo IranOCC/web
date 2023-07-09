@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import { Alert, AlertTitle } from "@mui/material";
+import { User } from "@/types/interfaces";
 
 //
 //
@@ -18,7 +19,7 @@ const RolesConflictModal = () => {
 
   useEffect(() => {
     if (pathname === "auth" || !user || !session || !session?.user) return;
-    const sessionRoles = session.user.roles.sort();
+    const sessionRoles = (session.user as User).roles.sort();
     const myRoles = user.roles.sort();
     if (sessionRoles.toString() === myRoles.toString()) return;
 
