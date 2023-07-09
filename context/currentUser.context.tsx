@@ -23,14 +23,15 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
   const { data: session } = useSession();
   const [currentUser, _setCurrentUser] = React.useState<User | null>(null);
 
+  const _sUser = session?.user as User;
   const value = {
     user: currentUser,
-    roles: session?.user?.roles,
-    isSuperAdmin: !!session?.user?.roles.includes(UserRoles.SuperAdmin),
-    isAdmin: !!session?.user?.roles.includes(UserRoles.Admin),
-    isAgent: !!session?.user?.roles.includes(UserRoles.Agent),
-    isAuthor: !!session?.user?.roles.includes(UserRoles.Author),
-    isUser: !!session?.user?.roles.includes(UserRoles.User),
+    roles: _sUser?.roles,
+    isSuperAdmin: !!_sUser?.roles.includes(UserRoles.SuperAdmin),
+    isAdmin: !!_sUser?.roles.includes(UserRoles.Admin),
+    isAgent: !!_sUser?.roles.includes(UserRoles.Agent),
+    isAuthor: !!_sUser?.roles.includes(UserRoles.Author),
+    isUser: !!_sUser?.roles.includes(UserRoles.User),
     setUser: _setCurrentUser,
   };
 
