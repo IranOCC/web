@@ -25,7 +25,7 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
 
   const value = {
     user: currentUser,
-    roles: session?.user.roles,
+    roles: session?.user?.roles,
     isSuperAdmin: !!session?.user?.roles.includes(UserRoles.SuperAdmin),
     isAdmin: !!session?.user?.roles.includes(UserRoles.Admin),
     isAgent: !!session?.user?.roles.includes(UserRoles.Agent),
