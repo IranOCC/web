@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
                 const data = credentials as LoginPhoneOtpFormData
                 const response = await axiosSSR.post("/auth/loginByPhoneOtp", data)
                 if (response.status >= 400) return null
-                return response.data as User
+                return response.data
             }
         })
     ],
