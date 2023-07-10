@@ -19,9 +19,9 @@ export default function BlogPostRegistrantBox({ form, loading }: AddEditComponen
   } = form as UseFormReturn<BlogPostFormData>;
 
   useEffect(() => {
-    register("createdBy", { required: "ثبت کننده نامشخص است" });
-    register("confirmedBy", { required: "تایید کننده نامشخص است" });
-    register("office", { required: "شعبه ثبت کننده نامشخص است" });
+    register("createdBy");
+    register("confirmedBy");
+    register("office");
   }, []);
 
   return (

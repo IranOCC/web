@@ -21,9 +21,9 @@ export default function BlogPostVisibilityBox({ form, loading }: AddEditComponen
   } = form as UseFormReturn<BlogPostFormData>;
 
   useEffect(() => {
-    register("status", { required: "وضعیت را مشخص کنید" });
-    register("visibility", { required: "وضعیت نمایش را مشخص کنید" });
-    register("publishedAt", { required: "تاریخ انتشار را مشخص کنید" });
+    register("status");
+    register("visibility");
+    register("publishedAt");
     register("pinned");
   }, []);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
 import PanelCard from "@/components/@panel/Card";
 
@@ -22,6 +22,7 @@ type IProps = {
 
 export default function EditAddPage<F extends FieldValues, T>({ Center, Side = null, beforeSubmit, endpoint, form, setInitialData, componentProps = {} }: IProps) {
   const params = useParams();
+  const pathname = usePathname();
 
   const SECTION = !!params?.section ? (params.section as string) : undefined;
   const isNew = !!params?.id_or_add && (params?.id_or_add as string) === "add";
@@ -42,6 +43,8 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
   const router = useRouter();
   const api = useAxiosAuth();
 
+  const baseRoute = (params?.id_or_add ? pathname?.replace(params.id_or_add as string, "") : pathname) || "/";
+
   // submit
   const onSubmit = (redirect: boolean = SECTION ? false : true) => async (data: F) => {
     if (beforeSubmit) data = beforeSubmit(data);
@@ -49,12 +52,12 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
       if (isNew) {
         const { data: result } = await api.post(`/admin/${endpoint}`, data);
         toast.success("با موفقیت ایجاد شد");
-        if (redirect) router.replace(`/admin/${endpoint}`);
-        else router.replace(`/admin/${endpoint}/` + result._id);
+        if (redirect) router.replace(baseRoute);
+        else router.replace(baseRoute + result._id);
       } else {
         await api.patch(`/admin/${endpoint}/` + (SECTION || ID), data);
         toast.success("با موفقیت ویرایش شد");
-        if (redirect) router.replace(`/admin/${endpoint}`);
+        if (redirect) router.replace(baseRoute);
         else window.location.reload();
       }
     } catch (error) {
@@ -71,7 +74,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
       setInitialData(data);
       setDataLoading(false);
     } catch (error) {
-      router.replace(`/admin/${endpoint}`);
+      router.replace(baseRoute);
     }
   };
 
