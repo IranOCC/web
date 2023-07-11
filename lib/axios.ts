@@ -22,13 +22,14 @@ const config = {
 const axiosAuth = axios.create(config)
 axiosAuth.interceptors.response.use(
     (response: any) => {
-        if (response.status === 401) {
-            signOut()
-            return response
-        }
         return response;
     },
     (error: any) => {
+        if (error.response.status === 401) {
+            // signOut()
+            return Promise.reject(error)
+        }
+
         handleToastError(error);
         return Promise.reject(error)
     },

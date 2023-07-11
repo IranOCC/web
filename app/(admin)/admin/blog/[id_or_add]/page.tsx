@@ -10,6 +10,7 @@ import BlogPostTagsBox from "@/components/@panel/Features/Blog/PostTagsBox";
 import BlogPostVisibilityBox from "@/components/@panel/Features/Blog/PostVisibilityBox";
 import BlogPostRegistrantBox from "@/components/@panel/Features/Blog/PostRegistrantBox";
 import BlogPostMediaBox from "@/components/@panel/Features/Blog/PostMediaBox";
+import AddPostCheckModal from "@/components/Modals/AddPostCheckModal";
 
 
 const Center = (props: AddEditComponentProps) => {
@@ -80,6 +81,10 @@ export default function Page() {
         setInitialData={setInitialData}
         endpoint="blog/post"
       />
+
+      <AddPostCheckModal />
+      
+      
     </>
   );
 }

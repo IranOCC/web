@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
-import Modal from "../Modals";
 import CompleteProfileModal from "../Modals/CompleteProfileModal";
 import RolesConflictModal from "../Modals/RolesConflictModal";
 
