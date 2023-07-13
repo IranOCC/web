@@ -1,11 +1,11 @@
 import { BlogPostFormData } from "@/types/formsData";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function BlogPostRegistrantBox({ form, loading }: AddEditComponentProps) {
+export default function BlogPostRegistrantBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -19,39 +19,20 @@ export default function BlogPostRegistrantBox({ form, loading }: AddEditComponen
   } = form as UseFormReturn<BlogPostFormData>;
 
   useEffect(() => {
-    register("createdBy");
+    register("office", { required: "آفیس را مشخص کنید" });
+    register("createdBy", { required: "نویسنده را مشخص کنید" });
     register("confirmedBy");
-    register("office");
   }, []);
+
+  const [selectedOffice, setSelectedOffice] = useState(null);
+
+  const { checkingData } = props;
+  if (!checkingData) return null;
 
   return (
     <>
       <PanelCard title="جزییات پست" loading={loading}>
         <div className="grid grid-cols-1 gap-4 ">
-          <Select
-            //
-            control={control}
-            name="createdBy"
-            error={errors.createdBy?.message}
-            loading={isSubmitting}
-            label="ثبت کننده"
-            placeholder="انتخاب کنید"
-            apiPath="/tools/user/autoComplete"
-            searchable
-            noSpace
-          />
-          <Select
-            //
-            control={control}
-            name="confirmedBy"
-            error={errors.confirmedBy?.message}
-            loading={isSubmitting}
-            label="تایید کننده"
-            placeholder="انتخاب کنید"
-            apiPath="/tools/user/autoComplete"
-            searchable
-            noSpace
-          />
           <Select
             //
             control={control}
@@ -63,7 +44,45 @@ export default function BlogPostRegistrantBox({ form, loading }: AddEditComponen
             apiPath="/tools/office/autoComplete"
             searchable
             noSpace
+            defaultValue={checkingData?.office?.default}
+            disabled={checkingData?.office?.disabled}
+            containerClassName={!!checkingData?.office?.hidden ? "hidden" : ""}
+            onChange={(v) => setSelectedOffice(v)}
           />
+          {!!selectedOffice && (
+            <>
+              <Select
+                //
+                control={control}
+                name="createdBy"
+                error={errors.createdBy?.message}
+                loading={isSubmitting}
+                label="نویسنده"
+                placeholder="انتخاب کنید"
+                apiPath={`/tools/office/${selectedOffice}/member/autoComplete`}
+                searchable
+                noSpace
+                defaultValue={checkingData?.createdBy?.default}
+                disabled={checkingData?.createdBy?.disabled}
+                containerClassName={!!checkingData?.createdBy?.hidden ? "hidden" : ""}
+              />
+              <Select
+                //
+                control={control}
+                name="confirmedBy"
+                error={errors.confirmedBy?.message}
+                loading={isSubmitting}
+                label="تایید کننده"
+                placeholder="انتخاب کنید"
+                apiPath={`/tools/office/${selectedOffice}/member/autoComplete`}
+                searchable
+                noSpace
+                defaultValue={checkingData?.confirmedBy?.default}
+                disabled={checkingData?.confirmedBy?.disabled}
+                containerClassName={!!checkingData?.confirmedBy?.hidden ? "hidden" : ""}
+              />
+            </>
+          )}
         </div>
       </PanelCard>
     </>

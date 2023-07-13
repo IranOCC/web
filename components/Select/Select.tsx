@@ -122,7 +122,7 @@ const Select = (props: IProps) => {
       setDataList([]);
       setDataLoading(false);
     }
-  }, [search]);
+  }, [search, apiPath]);
 
   useEffect(() => {
     if (!items && apiPath && filterApi) {
@@ -285,6 +285,7 @@ const FieldComponent = (props: FieldComponentType) => {
   }, [resetValue]);
 
   useEffect(() => {
+    if (onChange) onChange(field.value);
     // console.log(resetValue, defaultValue);
     // field.onChange(field.value || defaultValue);
   }, []);

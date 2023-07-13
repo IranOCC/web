@@ -11,6 +11,7 @@ import BlogPostVisibilityBox from "@/components/@panel/Features/Blog/PostVisibil
 import BlogPostRegistrantBox from "@/components/@panel/Features/Blog/PostRegistrantBox";
 import BlogPostMediaBox from "@/components/@panel/Features/Blog/PostMediaBox";
 import AddPostCheckModal from "@/components/Modals/AddPostCheckModal";
+import { useState } from "react";
 
 
 const Center = (props: AddEditComponentProps) => {
@@ -41,9 +42,9 @@ export default function Page() {
   const form = useForm<BlogPostFormData>();
   const { setValue, getValues } = form;
 
+  const [checkingData, setCheckingData] = useState(null)
+
   const setInitialData = (data: BlogPostFormData) => {
-
-
     setValue("_id", data._id);
 
     setValue("title", data.title);
@@ -60,8 +61,6 @@ export default function Page() {
     setValue("publishedAt", data.publishedAt);
 
     setValue("tags", data.tags);
-
-
     setValue("categories", data.categories);
 
     setValue("createdBy", data.createdBy);
@@ -78,11 +77,14 @@ export default function Page() {
         Center={Center}
         Side={Side}
         form={form}
+        componentProps={{checkingData}}
         setInitialData={setInitialData}
         endpoint="blog/post"
       />
 
-      <AddPostCheckModal />
+      <AddPostCheckModal 
+        set={setCheckingData}
+      />
       
       
     </>

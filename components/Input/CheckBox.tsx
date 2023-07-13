@@ -44,7 +44,7 @@ const CheckBox = (props: IProps) => {
                   type="checkbox"
                   disabled={disabled || loading}
                   readOnly={readOnly || loading}
-                  className={`focus:ring-0 focus:ring-offset-0 ${disabled ? "cursor-not-allowed" : "cursor-pointer"} border-gray-300 rounded ${inputClass} ${className}`}
+                  className={`focus:ring-0 focus:ring-offset-0 ${disabled ? "cursor-not-allowed bg-gray-200" : "cursor-pointer bg-slate-200"} border-gray-300 rounded ${inputClass} ${className}`}
                   {...field}
                   checked={field.value}
                 />

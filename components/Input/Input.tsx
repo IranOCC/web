@@ -121,8 +121,8 @@ const Input = (props: IProps) => {
                             e.target.value = "";
                           }
                           // @ts-ignore
-                          if ((e.key === "Backspace" || e.key === "Delete") && !e.target?.value) {
-                            removeItem(field.value.length - 1);
+                          if (field.value?.length && (e.key === "Backspace" || e.key === "Delete") && !e.target?.value) {
+                            removeItem(field.value?.length - 1);
                           }
                         }}
                       />

@@ -26,12 +26,11 @@ axiosAuth.interceptors.response.use(
     },
     (error: any) => {
         if (error.response.status === 401) {
-            // signOut()
+            signOut()
             return Promise.reject(error)
         }
-
         handleToastError(error);
-        return Promise.reject(error)
+        return Promise.reject(error.response.data)
     },
 );
 export { axiosAuth }
@@ -44,15 +43,11 @@ export { axiosAuth }
 const axiosNoAuth = axios.create(config)
 axiosNoAuth.interceptors.response.use(
     (response: any) => {
-        if (response.status === 401) {
-            signOut()
-            return response
-        }
         return response;
     },
     (error: any) => {
         handleToastError(error);
-        return Promise.reject(error)
+        return Promise.reject(error.response.data)
     },
 );
 export default axiosNoAuth

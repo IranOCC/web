@@ -20,16 +20,23 @@ import { LoadingWithoutBg } from "../Loading";
 //
 //
 
-const AddPostCheckModal = () => {
+const AddPostCheckModal = ({ set }: any) => {
   const [openModal, setOpenModal] = useState(true);
   const [checking, setChecking] = useState(true);
+  const [noOffice, setNoOffice] = useState(false);
 
   const api = useAxiosAuth();
   const check = async () => {
     //
     try {
-      await api.get("tools/blog/post/checking/create");
-    } catch (error) {}
+      const d = await api.get("tools/blog/post/checking/create");
+      set(d.data);
+      setChecking(false);
+      setOpenModal(false);
+    } catch (error) {
+      setChecking(false);
+      if ((error as any).error === "NoOffice") setNoOffice(true);
+    }
   };
   useEffect(() => {
     check();
@@ -42,20 +49,19 @@ const AddPostCheckModal = () => {
       closeButton={false}
     >
       {!!checking && <LoadingWithoutBg label="در حال دریافت اطلاعات ..." />}
-      {/* 
-      <Alert severity="warning" variant="filled">
-        <AlertTitle>
-          <strong>عدم عضویت در شعبات</strong>
-        </AlertTitle>
-        شما هنوز در هیچ یک از شعبه ها عضو نیستید. لطفا از مدیریت شعبه خود درخواست کنید تا عضویت شما را تایید و پس از آن می توانید ملک یا پست خود را درج کنید
-        
-        <br />
-        <br />
-        <Link href="/admin">
-          <strong className="underline">برگشت به داشبورد</strong>
-        </Link>
-      </Alert>
-       */}
+      {!!noOffice && (
+        <Alert severity="warning" variant="filled">
+          <AlertTitle>
+            <strong>عدم عضویت در شعبات</strong>
+          </AlertTitle>
+          شما هنوز در هیچ یک از شعبه ها عضو نیستید. لطفا از مدیریت شعبه خود درخواست کنید تا عضویت شما را تایید و پس از آن می توانید ملک یا پست خود را درج کنید
+          <br />
+          <br />
+          <Link href="/admin">
+            <strong className="underline">برگشت به داشبورد</strong>
+          </Link>
+        </Alert>
+      )}
     </Modal>
   );
 };

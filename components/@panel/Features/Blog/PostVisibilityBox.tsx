@@ -6,7 +6,7 @@ import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function BlogPostVisibilityBox({ form, loading }: AddEditComponentProps) {
+export default function BlogPostVisibilityBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -27,6 +27,8 @@ export default function BlogPostVisibilityBox({ form, loading }: AddEditComponen
     register("pinned");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
   return (
     <>
       <PanelCard title="وضعیت نمایش" loading={loading}>
@@ -41,7 +43,9 @@ export default function BlogPostVisibilityBox({ form, loading }: AddEditComponen
             placeholder="انتخاب کنید"
             noSpace
             apiPath="/tools/blog/post/statics/status"
-            defaultValue="Publish"
+            defaultValue={checkingData?.status?.default}
+            disabled={checkingData?.status?.disabled}
+            containerClassName={!!checkingData?.status?.hidden ? "hidden" : ""}
           />
           <Select
             //
@@ -53,7 +57,9 @@ export default function BlogPostVisibilityBox({ form, loading }: AddEditComponen
             placeholder="انتخاب کنید"
             noSpace
             apiPath="/tools/blog/post/statics/visibility"
-            defaultValue="Public"
+            defaultValue={checkingData?.visibility?.default}
+            disabled={checkingData?.visibility?.disabled}
+            containerClassName={!!checkingData?.visibility?.hidden ? "hidden" : ""}
           />
           <DateTimePicker
             //
@@ -61,9 +67,11 @@ export default function BlogPostVisibilityBox({ form, loading }: AddEditComponen
             name="publishedAt"
             label="تاریخ انتشار"
             error={errors.publishedAt?.message}
-            defaultValue={new Date()}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.publishedAt?.default}
+            disabled={checkingData?.publishedAt?.disabled}
+            containerClassName={!!checkingData?.publishedAt?.hidden ? "hidden" : ""}
           />
           <CheckBox //
             control={control}
@@ -72,6 +80,9 @@ export default function BlogPostVisibilityBox({ form, loading }: AddEditComponen
             error={errors.pinned?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.pinned?.default}
+            disabled={checkingData?.pinned?.disabled}
+            containerClassName={!!checkingData?.pinned?.hidden ? "hidden" : ""}
           />
         </div>
       </PanelCard>
