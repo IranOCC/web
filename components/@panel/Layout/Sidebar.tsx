@@ -355,6 +355,7 @@ const MainMenu = ({ handleOpenSubMenu, itemOpen }: any) => {
           );
         })}
       <div className="h-full" />
+      <div className="rotate-90">{myRoles}</div>
       <MainMenuItem
         //
         title="حساب کاربری من"
