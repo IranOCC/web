@@ -10,7 +10,7 @@ import BlogPostTagsBox from "@/components/@panel/Features/Blog/PostTagsBox";
 import BlogPostVisibilityBox from "@/components/@panel/Features/Blog/PostVisibilityBox";
 import BlogPostRegistrantBox from "@/components/@panel/Features/Blog/PostRegistrantBox";
 import BlogPostMediaBox from "@/components/@panel/Features/Blog/PostMediaBox";
-import AddPostCheckModal from "@/components/Modals/AddPostCheckModal";
+import AddEditPostCheckModal from "@/components/Modals/AddPostCheckModal";
 import { useState } from "react";
 
 
@@ -82,7 +82,7 @@ export default function Page() {
         endpoint="blog/post"
       />
 
-      <AddPostCheckModal 
+      <AddEditPostCheckModal 
         set={setCheckingData}
       />
       

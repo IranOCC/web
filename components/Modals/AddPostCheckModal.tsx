@@ -5,7 +5,7 @@ import { MyProfileFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
 import { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "@/lib/toast";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { signIn, signOut } from "next-auth/react";
 import { Session, StorageFile } from "@/types/interfaces";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
@@ -20,16 +20,20 @@ import { LoadingWithoutBg } from "../Loading";
 //
 //
 
-const AddPostCheckModal = ({ set }: any) => {
+const AddEditPostCheckModal = ({ set }: any) => {
   const [openModal, setOpenModal] = useState(true);
   const [checking, setChecking] = useState(true);
   const [noOffice, setNoOffice] = useState(false);
 
+  const params = useParams();
   const api = useAxiosAuth();
   const check = async () => {
     //
+
+    const isNew = !!params?.id_or_add && (params?.id_or_add as string) === "add";
+    const ID = isNew ? undefined : (params?.id_or_add as string);
     try {
-      const d = await api.get("tools/blog/post/checking/create");
+      const d = await api.get(`tools/blog/post/checking/${isNew ? "create" : "update"}`, { params: isNew ? undefined : { id: ID } });
       set(d.data);
       setChecking(false);
       setOpenModal(false);
@@ -66,4 +70,4 @@ const AddPostCheckModal = ({ set }: any) => {
   );
 };
 
-export default AddPostCheckModal;
+export default AddEditPostCheckModal;
