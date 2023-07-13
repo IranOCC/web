@@ -20,18 +20,16 @@ export async function generateMetadata() {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className="flex flex-col justify-center items-center h-full">
+      <div
+        //
+        style={{ "--image-url": `url(/assets/images/web-bg.png)` } as React.CSSProperties}
+        className="flex flex-col justify-center items-center h-full bg-gray-300/50 bg-cover bg-no-repeat bg-[image:var(--image-url)]"
+      >
         {/*  */}
         <Link href="/admin" className="text-blue-500">
           ورود به پنل مدیریت
         </Link>
-        {/*
-        <Link href="/auth" className="text-blue-500">
-          لاگین یا عضویت
-        </Link>
-        */}
       </div>
     </>
   );
-  // return <Layout>{children}</Layout>;
 }
