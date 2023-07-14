@@ -6,6 +6,7 @@ import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Estate } from "@/types/interfaces";
+import moment from "jalali-moment";
 
 const columns: ColumnsType<Estate> = [
   {
@@ -20,28 +21,6 @@ const columns: ColumnsType<Estate> = [
       );
     },
   },
-  // {
-  //   title: "کد ملک",
-  //   dataIndex: "code",
-  //   responsive: ["sm"],
-  //   render: (code: string) => {
-  //     return (
-  //       <Tag color="orange" key={code}>
-  //         {code}
-  //       </Tag>
-  //     );
-  //   },
-  // },
-  // {
-  //   title: "دسته ",
-  //   dataIndex: ["category", "title"],
-  //   responsive: ["lg"],
-  // },
-  // {
-  //   title: "مالک",
-  //   dataIndex: ["owner", "fullName"],
-  //   responsive: ["xxl"],
-  // },
   {
     title: "شعبه",
     dataIndex: ["office", "name"],
@@ -73,11 +52,17 @@ const columns: ColumnsType<Estate> = [
     title: "زمان ایجاد",
     dataIndex: "createdAt",
     responsive: ["xl"],
+    render: (value) => {
+      return value ? moment(value).locale("fa").format("DD MMM YYYY HH:mm:ss") : "-";
+    },
   },
   {
     title: "زمان تایید و انتشار",
     dataIndex: "publishedAt",
     responsive: ["xl"],
+    render: (value) => {
+      return value ? moment(value).locale("fa").format("DD MMM YYYY HH:mm:ss") : "-";
+    },
   },
 ];
 

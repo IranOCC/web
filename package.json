@@ -31,6 +31,7 @@
     "eslint-config-next": "13.2.3",
     "flowbite": "^1.6.6",
     "flowbite-react": "^0.4.7",
+    "jalali-moment": "^3.3.11",
     "leaflet": "^1.9.4",
     "moment": "^2.29.4",
     "next": "^13.4.9",
