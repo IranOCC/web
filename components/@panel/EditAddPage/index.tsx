@@ -82,6 +82,9 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
     if (ID) getData();
   }, []);
 
+  const { checkingData } = componentProps;
+  if (checkingData !== undefined && checkingData === null) return null;
+
   return (
     <>
       <div className="p-4">

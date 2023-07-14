@@ -159,7 +159,11 @@ const FieldComponent = (props: FieldComponentType) => {
       if (status === "done") {
         toast.success(`${info.file.name} با موفقیت آپلود شد`);
         if (onChange) onChange([...info.file.response]);
-        if (field?.onChange) field.onChange(!!field.value?.length ? [...field.value, ...info.file.response] : [...info.file.response]);
+        if (field?.onChange) {
+          const d = !!field.value?.length ? [...field.value, info.file.response] : [info.file.response];
+          if (maxFile && d.length > maxFile) field.onChange(d.slice(-1 * maxFile));
+          else field.onChange(d);
+        }
       } else if (status === "error") {
         toast.error(`${info.file.name} آپلود نشد`);
       }
@@ -228,14 +232,7 @@ const FieldComponent = (props: FieldComponentType) => {
                     />
                     {indexFileControl && !!isMain && (
                       <Tooltip title="شاخص">
-                        <Star
-                          //
-                          onClick={() => {
-                            field.value.splice(index, 1);
-                            field.onChange([...field.value]);
-                          }}
-                          className="absolute text-yellow-300 bottom-1 left-1"
-                        />
+                        <Star className="absolute text-yellow-300 bottom-1 left-1" />
                       </Tooltip>
                     )}
                   </div>
@@ -321,7 +318,11 @@ const FieldComponent = (props: FieldComponentType) => {
           uploadPath={uploadPath}
           setSelectFiles={(data: StorageFile[]) => {
             if (onChange) onChange(data);
-            if (field?.onChange) field.onChange(!!field.value?.length ? [...field.value, ...data] : [...data]);
+            if (field?.onChange) {
+              const d = !!field.value?.length ? [...field.value, ...data] : [...data];
+              if (maxFile && d.length > maxFile) field.onChange(d.slice(-1 * maxFile));
+              else field.onChange(d);
+            }
             setOpenLibrary(false);
           }}
           maxFile={maxFile}
