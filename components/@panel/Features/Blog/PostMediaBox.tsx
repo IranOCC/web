@@ -5,7 +5,7 @@ import PanelCard from "@/components/@panel/Card";
 import { AddEditComponentProps } from "../../EditAddPage";
 import MediaHandler from "@/components/Uploader/MediaHandler";
 
-export default function BlogPostMediaBox({ form, loading }: AddEditComponentProps) {
+export default function BlogPostMediaBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -22,13 +22,16 @@ export default function BlogPostMediaBox({ form, loading }: AddEditComponentProp
     register("image");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <PanelCard title="رسانه" loading={loading}>
         <div className="grid grid-cols-1 gap-4 ">
           {/*  */}
           {}
-          <MediaHandler
+          {/* <MediaHandler
             //
             name="image"
             control={control}
@@ -39,6 +42,23 @@ export default function BlogPostMediaBox({ form, loading }: AddEditComponentProp
             fromLibrary
             showFilesList
             showUploadList
+            disabled
+          /> */}
+          <MediaHandler
+            //
+            name="gallery"
+            control={control}
+            uploadPath="blog"
+            uploaderField="image"
+            indexFileName="image"
+            noSpace
+            fromLibrary
+            showFilesList
+            showUploadList
+            maxFile={1}
+            defaultValue={checkingData?.image?.default}
+            disabled={checkingData?.image?.disabled}
+            containerClassName={!!checkingData?.image?.hidden ? "hidden" : ""}
           />
           {/*  */}
         </div>

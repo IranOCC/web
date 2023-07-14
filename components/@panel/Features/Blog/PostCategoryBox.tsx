@@ -25,6 +25,9 @@ export default function BlogPostCategoryBox({ form, loading, props }: AddEditCom
     register("categories");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <PanelCard title="دسته بندی" loading={loading}>
@@ -34,12 +37,15 @@ export default function BlogPostCategoryBox({ form, loading, props }: AddEditCom
             control={control}
             name="categories"
             label=""
-            error={errors.status?.message}
+            error={errors.categories?.message}
             loading={isSubmitting}
             placeholder="انتخاب کنید"
             multiple
             noSpace
             apiPath="/tools/blog/category/autoComplete"
+            defaultValue={checkingData?.categories?.default}
+            disabled={checkingData?.categories?.disabled}
+            containerClassName={!!checkingData?.categories?.hidden ? "hidden" : ""}
           />
         </div>
       </PanelCard>

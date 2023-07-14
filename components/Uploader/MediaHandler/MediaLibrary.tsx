@@ -9,7 +9,7 @@ import Image from "next/image";
 import { Add, Cancel } from "@mui/icons-material";
 import { StorageFile } from "@/types/interfaces";
 
-export default function MediaLibrary({ open, setOpen, uploadPath, setSelectFiles }: any) {
+export default function MediaLibrary({ open, setOpen, uploadPath, setSelectFiles, maxFile }: any) {
   const [selected, setSelected] = useState<StorageFile[]>([]);
 
   useEffect(() => {

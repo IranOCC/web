@@ -45,6 +45,7 @@ const TextEditor = (props: IProps) => {
                     toolbar: "undo redo | blocks | " + "image | " + "bold italic forecolor | alignleft aligncenter " + "alignright alignjustify | ltr rtl | bullist numlist outdent indent | " + "removeformat | help |",
                     content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px, }",
                   }}
+                  disabled={loading || disabled || readOnly}
                 />
               );
             }}

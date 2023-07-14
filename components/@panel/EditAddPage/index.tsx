@@ -16,7 +16,7 @@ type IProps = {
   endpoint: string;
   form: any;
   setInitialData: (data: any) => void;
-  componentProps?: {};
+  componentProps?: any;
   beforeSubmit?: (data: any) => any;
 };
 
@@ -98,6 +98,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
                     //
                     title="ثبت و برگشت به لیست"
                     type="submit"
+                    disabled={componentProps?.checkingData?.allowSubmit !== undefined && componentProps.checkingData.allowSubmit === false}
                     loading={isSubmitting || isLoading || isValidating || dataLoading}
                     onClick={handleSubmit(onSubmit())}
                   />
@@ -106,6 +107,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
                   //
                   title="ثبت"
                   type="submit"
+                  disabled={componentProps?.checkingData?.allowSubmit !== undefined && componentProps.checkingData.allowSubmit === false}
                   loading={isSubmitting || isLoading || isValidating || dataLoading}
                   onClick={handleSubmit(onSubmit(false))}
                   noSpace

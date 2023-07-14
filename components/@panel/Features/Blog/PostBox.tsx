@@ -27,8 +27,8 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
     register("content", { required: "محتویات را وارد کنید" });
   }, []);
 
-  const [openContent, setOpenContent] = useState(false);
-
+  const { checkingData } = props;
+  if (!checkingData) return null;
   return (
     <>
       <PanelCard title="اطلاعات پست" loading={loading}>
@@ -41,7 +41,6 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             error={errors.title?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-full"
             onKeyUp={(e: any) => {
               setValue(
                 "slug",
@@ -56,6 +55,9 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
                 { shouldValidate: true }
               );
             }}
+            defaultValue={checkingData?.title?.default}
+            disabled={checkingData?.title?.disabled}
+            containerClassName={"col-span-full " + (!!checkingData?.title?.hidden ? "hidden" : "")}
           />
           <Input
             //
@@ -66,7 +68,9 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             error={errors.slug?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-full"
+            defaultValue={checkingData?.slug?.default}
+            disabled={checkingData?.slug?.disabled}
+            containerClassName={"col-span-full " + (!!checkingData?.slug?.hidden ? "hidden" : "")}
           />
           <Input
             //
@@ -78,7 +82,9 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             multiline
             lines={4}
             noSpace
-            containerClassName="col-span-full"
+            defaultValue={checkingData?.excerpt?.default}
+            disabled={checkingData?.excerpt?.disabled}
+            containerClassName={"col-span-full " + (!!checkingData?.excerpt?.hidden ? "hidden" : "")}
           />
           <TextEditor
             //
@@ -87,7 +93,9 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             label=""
             error={errors.content?.message}
             loading={isSubmitting}
-            containerClassName="col-span-full"
+            defaultValue={checkingData?.content?.default}
+            disabled={checkingData?.content?.disabled}
+            containerClassName={"col-span-full " + (!!checkingData?.content?.hidden ? "hidden" : "")}
           />
         </div>
       </PanelCard>

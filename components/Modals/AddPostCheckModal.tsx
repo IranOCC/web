@@ -35,11 +35,12 @@ const AddEditPostCheckModal = ({ set }: any) => {
     try {
       const d = await api.get(`tools/blog/post/checking/${isNew ? "create" : "update"}`, { params: isNew ? undefined : { id: ID } });
       set(d.data);
-      setChecking(false);
       setOpenModal(false);
     } catch (error) {
-      setChecking(false);
-      if ((error as any).error === "NoOffice") setNoOffice(true);
+      if ((error as any).error === "NoOffice") {
+        setNoOffice(true);
+        setChecking(false);
+      }
     }
   };
   useEffect(() => {

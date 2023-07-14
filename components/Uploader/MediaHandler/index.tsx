@@ -16,7 +16,7 @@ import Image from "next/image";
 import { Cancel, Star } from "@mui/icons-material";
 
 const MediaHandler = (props: IProps) => {
-  const { name, control, defaultValue, indexFileName, showUploadList = true, showFilesList = false, onChange, uploaderField = "images", fromLibrary, disabled = false, loading = false, label, noSpace, containerClassName = "", error, warning, success, uploadPath } = props;
+  const { name, control, defaultValue, maxFile, indexFileName, showUploadList = true, showFilesList = false, onChange, uploaderField = "image", fromLibrary, disabled = false, loading = false, label, noSpace, containerClassName = "", error, warning, success, uploadPath } = props;
   let { status, helperText } = props;
 
   const { data: session } = useSession();
@@ -60,7 +60,7 @@ const MediaHandler = (props: IProps) => {
                 showFilesList={showFilesList}
                 control={control}
                 indexFileName={indexFileName}
-                // indexFileControl={(indexFileName && indexFileControl) || undefined}
+                maxFile={maxFile}
               />
             )}
             defaultValue={defaultValue}
@@ -79,6 +79,7 @@ const MediaHandler = (props: IProps) => {
             onChange={onChange}
             showUploadList={showUploadList}
             showFilesList={showFilesList}
+            maxFile={maxFile}
           />
         )}
 
@@ -102,6 +103,8 @@ type FieldComponentType = {
   onChange?: any;
   showUploadList?: boolean;
   showFilesList?: boolean;
+
+  maxFile?: number;
 };
 
 const FieldComponentWithController = (props: FieldComponentType & { control: any; indexFileName?: string }) => {
@@ -125,6 +128,7 @@ const FieldComponent = (props: FieldComponentType) => {
     showUploadList,
     showFilesList,
     indexFileControl,
+    maxFile,
   } = props;
 
   useEffect(() => {
@@ -144,7 +148,7 @@ const FieldComponent = (props: FieldComponentType) => {
   const _props: UploadProps = {
     accept: "image/*",
     name: uploaderField,
-    multiple: true,
+    multiple: maxFile !== 1,
     action: process.env.NEXT_PUBLIC_BASE_URL + "/storage/" + uploadPath,
     headers: { Authorization: `Bearer ${session?.accessToken}` },
     onChange(info) {
@@ -165,6 +169,15 @@ const FieldComponent = (props: FieldComponentType) => {
       console.log("Dropped files", e.dataTransfer.files);
     },
     showUploadList: false,
+    disabled: disabled || loading,
+    maxCount: maxFile,
+    locale: {
+      uploading: "در حال آپلود",
+      uploadError: "خطا در آپلود",
+      removeFile: "حذف",
+      downloadFile: "دانلود",
+      previewFile: "نمایش",
+    },
   };
 
   const [openLibrary, setOpenLibrary] = useState(false);
@@ -172,9 +185,9 @@ const FieldComponent = (props: FieldComponentType) => {
   return (
     <>
       {showFilesList && field?.value && (
-        <div className="relative w-full mb-2 max-h-96 overflow-x-hidden">
+        <div className={"relative w-full mb-2" + (!maxFile || maxFile > 3 ? " max-h-96 overflow-x-hidden" : "")}>
           {/*  */}
-          <div className="grid grid-cols-3 gap-2">
+          <div className={"grid gap-2" + (!maxFile || maxFile >= 3 ? " grid-cols-3" : maxFile === 2 ? " grid-cols-2" : " grid-cols-1")}>
             {(field?.value as StorageFile[])?.map((item, index) => {
               const isMain =
                 !!indexFileControl?.field.value && typeof indexFileControl?.field.value === "string"
@@ -242,8 +255,9 @@ const FieldComponent = (props: FieldComponentType) => {
           <p className="ant-upload-hint">
             یا برای افزودن از کتابخانه{" "}
             <span
-              className="text-secondary"
+              className={disabled || loading ? "text-disable" : "text-secondary"}
               onClick={(e) => {
+                if (disabled || loading) return;
                 e.stopPropagation();
                 setOpenLibrary(true);
               }}
@@ -310,6 +324,7 @@ const FieldComponent = (props: FieldComponentType) => {
             if (field?.onChange) field.onChange(!!field.value?.length ? [...field.value, ...data] : [...data]);
             setOpenLibrary(false);
           }}
+          maxFile={maxFile}
         />
       )}
     </>
@@ -345,6 +360,7 @@ export type IProps = {
   showUploadList?: boolean;
   showFilesList?: boolean;
   indexFileName?: string;
+  maxFile?: number;
 };
 
 export default MediaHandler;
