@@ -158,7 +158,7 @@ const FieldComponent = (props: FieldComponentType) => {
       }
       if (status === "done") {
         toast.success(`${info.file.name} با موفقیت آپلود شد`);
-        if (onChange) onChange([...info.file.response]);
+        if (onChange) onChange([info.file.response]);
         if (field?.onChange) {
           const d = !!field.value?.length ? [...field.value, info.file.response] : [info.file.response];
           if (maxFile && d.length > maxFile) field.onChange(d.slice(-1 * maxFile));
