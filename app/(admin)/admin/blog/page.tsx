@@ -35,6 +35,9 @@ const columns: ColumnsType<Estate> = [
     title: "تایید کننده",
     dataIndex: ["confirmedBy", "fullName"],
     responsive: ["xl"],
+    render: (value) => {
+      return value || "-";
+    },
   },
   {
     title: "وضعیت انتشار",
