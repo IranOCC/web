@@ -42,6 +42,9 @@ export default function BlogPostCategoryBox({ form, loading, props }: AddEditCom
             placeholder="انتخاب کنید"
             multiple
             noSpace
+            showTitle
+            multiline
+            lines={3}
             apiPath="/tools/blog/category/autoComplete"
             defaultValue={checkingData?.categories?.default}
             disabled={checkingData?.categories?.disabled}
