@@ -30,20 +30,6 @@ export default function BlogPostMediaBox({ form, loading, props }: AddEditCompon
       <PanelCard title="رسانه" loading={loading}>
         <div className="grid grid-cols-1 gap-4 ">
           {/*  */}
-          {}
-          {/* <MediaHandler
-            //
-            name="image"
-            control={control}
-            uploadPath="blog"
-            uploaderField="images"
-            // indexFileName="image"
-            noSpace
-            fromLibrary
-            showFilesList
-            showUploadList
-            disabled
-          /> */}
           <MediaHandler
             //
             name="gallery"
