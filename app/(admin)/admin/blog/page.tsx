@@ -43,9 +43,19 @@ const columns: ColumnsType<Estate> = [
   //   responsive: ["xxl"],
   // },
   {
+    title: "شعبه",
+    dataIndex: ["office", "name"],
+    responsive: ["lg"],
+  },
+  {
     title: "نویسنده",
     dataIndex: ["createdBy", "fullName"],
     responsive: ["lg"],
+  },
+  {
+    title: "تایید کننده",
+    dataIndex: ["confirmedBy", "fullName"],
+    responsive: ["xl"],
   },
   {
     title: "وضعیت انتشار",
@@ -58,6 +68,16 @@ const columns: ColumnsType<Estate> = [
         </Tag>
       );
     },
+  },
+  {
+    title: "زمان ایجاد",
+    dataIndex: "createdAt",
+    responsive: ["xl"],
+  },
+  {
+    title: "زمان تایید و انتشار",
+    dataIndex: "publishedAt",
+    responsive: ["xl"],
   },
 ];
 
