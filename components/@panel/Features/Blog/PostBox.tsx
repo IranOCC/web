@@ -1,9 +1,9 @@
-import { Input } from "@/components/Input";
+import { Input } from "@/components/@panel/Input";
 import { BlogPostFormData } from "@/types/formsData";
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import TextEditor from "@/components/Input/TextEditor";
+import TextEditor from "@/components/@panel/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
 import slugify from "slugify";
 

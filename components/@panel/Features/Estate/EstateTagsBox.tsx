@@ -1,10 +1,10 @@
-import { CheckBox, Input } from "@/components/Input";
+import { CheckBox, Input } from "@/components/@panel/Input";
 import { EstateFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/Select";
-import TextEditor from "@/components/Input/TextEditor";
+import { Select } from "@/components/@panel/Select";
+import TextEditor from "@/components/@panel/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
 
 export default function EstateTagsBox({ form, loading }: AddEditComponentProps) {

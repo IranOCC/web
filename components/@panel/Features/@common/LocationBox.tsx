@@ -1,10 +1,10 @@
-import { Input } from "@/components/Input";
+import { Input } from "@/components/@panel/Input";
 import { useEffect, useState } from "react";
 import PanelCard from "@/components/@panel/Card";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { OfficeFormData, UserFormData } from "@/types/formsData";
 import LocationChooser from "./LocationChooser";
-import { Select } from "@/components/Select";
+import { Select } from "@/components/@panel/Select";
 
 export default function LocationBox({ form, loading }: { form: any; loading?: boolean }) {
   const {

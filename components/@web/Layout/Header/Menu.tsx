@@ -7,7 +7,7 @@ import ArrowDownIcon from "@/components/Icons/ArrowDown";
 import ArrowLeftIcon from "@/components/Icons/ArrowLeft";
 import { Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
 import React from "react";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/@panel/Button";
 import AddIcon from "@/components/Icons/Add";
 import BackIcon from "@/components/Icons/Back";
 import PopTop from "./PopTop";

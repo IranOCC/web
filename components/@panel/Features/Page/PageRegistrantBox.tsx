@@ -2,7 +2,7 @@ import { PageFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/Select";
+import { Select } from "@/components/@panel/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
 
 export default function PageRegistrantBox({ form, loading }: AddEditComponentProps) {

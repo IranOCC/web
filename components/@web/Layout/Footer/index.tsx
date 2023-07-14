@@ -6,7 +6,7 @@ import WebLogo from "@/assets/images/logo.png";
 import Image from "next/image";
 import { ReactNode } from "react";
 import Link from "next/link";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/@panel/Button";
 import EmailOutlineIcon from "@/components/Icons/EmailOutline";
 import PhoneOutlineIcon from "@/components/Icons/PhoneOutline";
 import LocationOutlineIcon from "@/components/Icons/LocationOutline";

@@ -1,9 +1,9 @@
-import { CheckBox, DateTimePicker } from "@/components/Input";
+import { CheckBox, DateTimePicker } from "@/components/@panel/Input";
 import { BlogPostFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/Select";
+import { Select } from "@/components/@panel/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
 
 export default function BlogPostVisibilityBox({ form, loading, props }: AddEditComponentProps) {

@@ -1,9 +1,9 @@
-import { Input } from "@/components/Input";
+import { Input } from "@/components/@panel/Input";
 import { InitialSettingsFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/Select";
+import { Select } from "@/components/@panel/Select";
 
 export default function InitialSettingsBox({ form, loading }: { form: any; loading?: boolean }) {
   const {

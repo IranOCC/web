@@ -1,9 +1,9 @@
-import { CheckBox, Input } from "@/components/Input";
+import { CheckBox, Input } from "@/components/@panel/Input";
 import { EstateFormData } from "@/types/formsData";
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import TextEditor from "@/components/Input/TextEditor";
+import TextEditor from "@/components/@panel/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
 import slugify from "slugify";
 import { Collapse } from "@mui/material";

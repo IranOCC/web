@@ -1,4 +1,4 @@
-import { Button } from "@/components/Button";
+import { Button } from "@/components/@panel/Button";
 import Modal from "@/components/Modals";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { RadioGroup } from "@headlessui/react";

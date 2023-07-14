@@ -7,7 +7,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { StorageFile } from "@/types/interfaces";
 import Image from "next/image";
-import IconButton from "@/components/Button/IconButton";
+import IconButton from "@/components/@panel/Button/IconButton";
 import { Add } from "@mui/icons-material";
 
 export type GridListProps = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/Button";
+import { Button } from "@/components/@panel/Button";
 import LoginIcon from "@/components/Icons/Login";
 import MenuIcon from "@/components/Icons/Menu";
 import AddIcon from "@/components/Icons/Add";
@@ -10,7 +10,7 @@ import { OpenModalLink } from "@/components/Modals";
 import LoginModal from "@/components/Modals/LoginModal";
 import Link from "next/link";
 import React, { ReactNode, useContext, useState } from "react";
-import IconButton from "@/components/Button/IconButton";
+import IconButton from "@/components/@panel/Button/IconButton";
 import { useSelector } from "react-redux";
 import CloseIcon from "@/components/Icons/Close";
 import PopTop from "./PopTop";

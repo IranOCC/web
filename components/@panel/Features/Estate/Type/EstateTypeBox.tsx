@@ -1,9 +1,9 @@
-import { Input } from "@/components/Input";
+import { Input } from "@/components/@panel/Input";
 import { EstateTypeFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { Select } from "@/components/Select";
-import IconSelection from "@/components/Select/IconSelection";
+import { Select } from "@/components/@panel/Select";
+import IconSelection from "@/components/@panel/Select/IconSelection";
 import { AddEditComponentProps } from "@/components/@panel/EditAddPage";
 import slugify from "slugify";
 

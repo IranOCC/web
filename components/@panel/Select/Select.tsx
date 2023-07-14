@@ -6,8 +6,8 @@ import { Spin } from "antd";
 import { ChangeEventHandler, ReactNode, RefObject, useEffect, useRef, useState } from "react";
 import { Controller, ControllerRenderProps, FieldValues, useController } from "react-hook-form";
 import { Button } from "../Button";
-import ArrowDownIcon from "../Icons/ArrowDown";
-import SearchIcon from "../Icons/Search";
+import ArrowDownIcon from "../../Icons/ArrowDown";
+import SearchIcon from "../../Icons/Search";
 
 const Select = (props: IProps) => {
   const {

@@ -17,7 +17,7 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import WidgetsIcon from "@mui/icons-material/Widgets";
 import { toast } from "@/lib/toast";
 import Link from "next/link";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/@panel/Button";
 import SearchIcon from "@/components/Icons/Search";
 
 export type PanelTableProps = {

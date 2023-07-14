@@ -1,4 +1,4 @@
-import { CheckBox, Input } from "@/components/Input";
+import { CheckBox, Input } from "@/components/@panel/Input";
 import { PageFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";

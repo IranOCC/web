@@ -1,4 +1,4 @@
-import { Input } from "@/components/Input";
+import { Input } from "@/components/@panel/Input";
 import { SubscriptionFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

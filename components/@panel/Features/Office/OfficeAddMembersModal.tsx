@@ -1,8 +1,8 @@
-import { Button } from "@/components/Button";
+import { Button } from "@/components/@panel/Button";
 import { OfficeAddMemberFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { Select } from "@/components/Select";
+import { Select } from "@/components/@panel/Select";
 import Modal from "@/components/Modals";
 import { AddEditComponentProps } from "../../EditAddPage";
 import useAxiosAuth from "@/hooks/useAxiosAuth";

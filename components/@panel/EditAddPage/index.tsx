@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/@panel/Button";
 import PanelCard from "@/components/@panel/Card";
 
 import useAxiosAuth from "@/hooks/useAxiosAuth";
