@@ -2,7 +2,7 @@
 
 import EditAddPage, { type AddEditComponentProps } from "@/components/@panel/EditAddPage";
 import { BlogPostFormData, } from "@/types/formsData";
-import { BlogPost, } from "@/types/interfaces";
+import { BlogPost, StorageFile, } from "@/types/interfaces";
 import { useForm } from "react-hook-form";
 import BlogPostBox from "@/components/@panel/Features/Blog/PostBox";
 import BlogPostCategoryBox from "@/components/@panel/Features/Blog/PostCategoryBox";
@@ -52,7 +52,9 @@ export default function Page() {
     setValue("excerpt", data.excerpt);
     setValue("slug", data.slug);
 
-    // picture
+    // pictures
+    if(data.image) setValue("gallery", [data.image as StorageFile]);
+    else setValue("gallery", []);
     setValue("image", data.image);
 
     setValue("status", data.status);

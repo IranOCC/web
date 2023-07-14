@@ -152,6 +152,7 @@ const FieldComponent = (props: FieldComponentType) => {
     action: process.env.NEXT_PUBLIC_BASE_URL + "/storage/" + uploadPath,
     headers: { Authorization: `Bearer ${session?.accessToken}` },
     onChange(info) {
+      if (disabled || loading) return;
       const { status } = info.file;
       if (status !== "uploading") {
         toast.warning(`${info.file.name} در حال آپلود ...`);
@@ -210,30 +211,42 @@ const FieldComponent = (props: FieldComponentType) => {
                       title={item.title}
                     />
 
-                    {indexFileControl && (
-                      <div className="absolute flex justify-center items-center bg-black/40 w-full h-full transition-opacity opacity-0 hover:opacity-100">
-                        {/*  */}
-                        {!isMain && (
-                          <div onClick={() => indexFileControl?.field.onChange(item)} className="border bg-white text-yellow-300 px-1 border-yellow-300 rounded w-auto">
-                            شاخص شود؟
+                    {!!(disabled || loading) ? (
+                      <>
+                        {!!indexFileControl && !!isMain && (
+                          <>
+                            <Star className="absolute text-yellow-300 bottom-1 left-1" />
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {!!indexFileControl && (
+                          <div className="absolute flex justify-center items-center bg-black/40 w-full h-full transition-opacity opacity-0 hover:opacity-100">
+                            {/*  */}
+                            {!isMain && (
+                              <div onClick={() => indexFileControl?.field.onChange(item)} className="border bg-white text-yellow-300 px-1 border-yellow-300 rounded w-auto">
+                                شاخص شود؟
+                              </div>
+                            )}
+                            {/*  */}
                           </div>
                         )}
-                        {/*  */}
-                      </div>
-                    )}
-
-                    <Cancel
-                      //
-                      onClick={() => {
-                        field.value.splice(index, 1);
-                        field.onChange([...field.value]);
-                      }}
-                      className="absolute text-red-500 top-1 right-1 cursor-pointer hover:text-gray-500"
-                    />
-                    {indexFileControl && !!isMain && (
-                      <Tooltip title="شاخص">
-                        <Star className="absolute text-yellow-300 bottom-1 left-1" />
-                      </Tooltip>
+                        <Cancel
+                          //
+                          onClick={() => {
+                            if (disabled || loading) return;
+                            field.value.splice(index, 1);
+                            field.onChange([...field.value]);
+                          }}
+                          className="absolute text-red-500 top-1 right-1 cursor-pointer hover:text-gray-500"
+                        />
+                        {!!indexFileControl && !!isMain && (
+                          <Tooltip title="شاخص">
+                            <Star className="absolute text-yellow-300 bottom-1 left-1" />
+                          </Tooltip>
+                        )}
+                      </>
                     )}
                   </div>
                 </>
@@ -317,6 +330,7 @@ const FieldComponent = (props: FieldComponentType) => {
           setOpen={setOpenLibrary}
           uploadPath={uploadPath}
           setSelectFiles={(data: StorageFile[]) => {
+            if (disabled || loading) return;
             if (onChange) onChange(data);
             if (field?.onChange) {
               const d = !!field.value?.length ? [...field.value, ...data] : [...data];

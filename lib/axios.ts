@@ -62,28 +62,26 @@ export default axiosNoAuth
 
 
 export const handleFieldsError = (error: any, setError: any) => {
-    if (error instanceof AxiosError) {
-        // if (error?.response?.status === 400) {
-        const errors = error?.response?.data;
-        let _err = errors?.errors
-        if (!_err) return
-        let _errKeys = Object.keys(_err)
-        for (let i = 0; i < _errKeys.length; i++) {
-            const c = Object.keys(_err[_errKeys[i]]);
-            for (let j = 0; j < c.length; j++) {
-                setError(_errKeys[i], {
-                    type: "manual",
-                    message: _err[_errKeys[i]][c[j]],
-                });
-            }
+    // if (error?.response?.status === 400) {
+    let _err = error?.errors
+    if (!_err) return
+    let _errKeys = Object.keys(_err)
+    for (let i = 0; i < _errKeys.length; i++) {
+        const c = Object.keys(_err[_errKeys[i]]);
+        for (let j = 0; j < c.length; j++) {
+            setError(_errKeys[i], {
+                type: "manual",
+                message: _err[_errKeys[i]][c[j]],
+            });
         }
-        // }
     }
+    // }
 }
 
 
 
 export const handleToastError = (error: any) => {
+    console.log("Err", error);
     const response = error.response
     const messages = [];
     if (!response) {

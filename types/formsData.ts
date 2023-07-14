@@ -261,6 +261,7 @@ export type BlogPostFormData = {
     slug: string;
 
     image?: StorageFile | string;
+    gallery?: StorageFile[] | string[];
 
 
     status: string;

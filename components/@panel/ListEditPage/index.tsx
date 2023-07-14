@@ -65,6 +65,8 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
         setUpdateTable([true]);
         router.replace(baseRoute);
       } catch (error) {
+        console.log("Error", error);
+
         handleFieldsError(error, setError);
       }
     };
