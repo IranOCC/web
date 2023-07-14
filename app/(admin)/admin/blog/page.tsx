@@ -80,6 +80,12 @@ export default function Page() {
           columns={columns}
           deletable
           editable
+          extraOperations={(id: string) => [
+            {
+              key: "confirmPublish",
+              label: <Link href="#">تایید و انتشار</Link>,
+            },
+          ]}
         />
       </div>
     </>
