@@ -45,9 +45,11 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
   const api = useAxiosAuth();
 
   const baseRoute = (params?.id_or_add ? pathname?.replace(params.id_or_add as string, "") : pathname) || "/";
+  const noSubmit = componentProps?.checkingData?.allowSubmit !== undefined && componentProps.checkingData.allowSubmit === false;
 
   // submit
   const onSubmit = (redirect: boolean = SECTION ? false : true) => async (data: F) => {
+    if (noSubmit) return;
     if (beforeSubmit) data = beforeSubmit(data);
     try {
       if (isNew) {
@@ -96,28 +98,34 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
           </div>
           <div className="col-span-full lg:col-span-2">
             <div className="grid grid-cols-1 gap-4">
-              <PanelCard className="order-last lg:order-first" loading={dataLoading}>
-                {TopSubmitCard && <TopSubmitCard form={form} loading={dataLoading} section={SECTION} props={componentProps} />}
-                {!SECTION && (
-                  <Button
-                    //
-                    title="ثبت و برگشت به لیست"
-                    type="submit"
-                    disabled={componentProps?.checkingData?.allowSubmit !== undefined && componentProps.checkingData.allowSubmit === false}
-                    loading={isSubmitting || isLoading || isValidating || dataLoading}
-                    onClick={handleSubmit(onSubmit())}
-                  />
-                )}
-                <Button
-                  //
-                  title="ثبت"
-                  type="submit"
-                  disabled={componentProps?.checkingData?.allowSubmit !== undefined && componentProps.checkingData.allowSubmit === false}
-                  loading={isSubmitting || isLoading || isValidating || dataLoading}
-                  onClick={handleSubmit(onSubmit(false))}
-                  noSpace
-                />
-              </PanelCard>
+              {(!noSubmit || TopSubmitCard) && (
+                <PanelCard className="order-last lg:order-first" loading={dataLoading}>
+                  {TopSubmitCard && <TopSubmitCard form={form} loading={dataLoading} section={SECTION} props={componentProps} />}
+                  {!noSubmit && (
+                    <>
+                      {!SECTION && (
+                        <Button
+                          //
+                          title="ثبت و برگشت به لیست"
+                          type="submit"
+                          disabled={componentProps?.checkingData?.allowSubmit !== undefined && componentProps.checkingData.allowSubmit === false}
+                          loading={isSubmitting || isLoading || isValidating || dataLoading}
+                          onClick={handleSubmit(onSubmit())}
+                        />
+                      )}
+                      <Button
+                        //
+                        title="ثبت"
+                        type="submit"
+                        disabled={componentProps?.checkingData?.allowSubmit !== undefined && componentProps.checkingData.allowSubmit === false}
+                        loading={isSubmitting || isLoading || isValidating || dataLoading}
+                        onClick={handleSubmit(onSubmit(false))}
+                        noSpace
+                      />
+                    </>
+                  )}
+                </PanelCard>
+              )}
               {Side && <Side form={form} loading={dataLoading} section={SECTION} props={componentProps} />}
             </div>
           </div>
