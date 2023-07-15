@@ -36,6 +36,8 @@ const TextEditor = (props: IProps) => {
   return (
     <>
       <div className={"w-full relative z-10" + " " + containerClassName}>
+        {loader && <LoadingWithoutBg label="بارگذاری ویرایشگر ..." />}
+
         {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
         <div className="w-full relative">
           <Controller
@@ -72,8 +74,6 @@ const TextEditor = (props: IProps) => {
           />
         </div>
 
-        <LoadingWithoutBg />
-
         <MediaLibrary
           //
           open={openLibrary}
@@ -86,7 +86,7 @@ const TextEditor = (props: IProps) => {
             const title = "hello";
             console.log("***", (mmm?.current as any).editor);
 
-            (mmm?.current as any).editor.editorManager.execCommand("mscimage", path);
+            (mmm?.current as any).editor.editorManager.execCommand("mscimage", false);
 
             // callback(data[0].path, {title:data[0].title });
             setOpenLibrary(false);
