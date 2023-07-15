@@ -31,9 +31,8 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
   const api = useAxiosAuth();
   const confirmPublish = async () => {
     setPublishLoading(true);
-
-    await api.patch(`/admin/blog/post/confirm/${detail.ID}`);
     try {
+      await api.patch(`/admin/blog/post/confirm/${detail.ID}`);
       setPublishLoading(false);
       window.location.reload();
     } catch (error) {
@@ -43,9 +42,8 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
 
   const rejectPublish = async () => {
     setPublishLoading(true);
-
-    await api.patch(`/admin/blog/post/reject/${detail.ID}`);
     try {
+      await api.patch(`/admin/blog/post/reject/${detail.ID}`);
       setPublishLoading(false);
       window.location.reload();
     } catch (error) {
@@ -81,7 +79,7 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
             <div className="grid grid-cols-2 gap-2 ">
               <Button
                 //
-                title="رد انتشار"
+                title="لغو انتشار"
                 type="button"
                 loading={isSubmitting || isLoading || isValidating || publishLoading}
                 noSpace
@@ -92,7 +90,7 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
               />
               <Button
                 //
-                title="تایید و انتشار"
+                title="تایید انتشار"
                 type="button"
                 loading={isSubmitting || isLoading || isValidating || publishLoading}
                 noSpace

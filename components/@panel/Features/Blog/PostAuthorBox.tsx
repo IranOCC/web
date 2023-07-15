@@ -21,7 +21,7 @@ export default function BlogPostAuthorBox({ form, loading, props }: AddEditCompo
   } = form as UseFormReturn<BlogPostFormData>;
 
   useEffect(() => {
-    register("author");
+    register("author", { required: "نویسنده را مشخص کنید" });
   }, []);
 
   const { checkingData } = props;

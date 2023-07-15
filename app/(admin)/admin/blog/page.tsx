@@ -7,6 +7,7 @@ import Link from "next/link";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { BlogPost, Estate, User } from "@/types/interfaces";
 import moment from "jalali-moment";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 
 const columns: ColumnsType<BlogPost> = [
   {
@@ -26,7 +27,6 @@ const columns: ColumnsType<BlogPost> = [
     dataIndex: ["office", "name"],
     responsive: ["lg"],
   },
-
   {
     title: "ثبت کننده",
     responsive: ["lg"],
@@ -60,15 +60,7 @@ const columns: ColumnsType<BlogPost> = [
   {
     title: "نویسنده",
     dataIndex: ["author", "fullName"],
-    responsive: ["lg"],
-    render: (value, { createdAt, createdBy }) => {
-      return (
-        <div className="flex flex-col">
-          {!!createdBy && <span>{(createdBy as User)?.fullName}</span>}
-          {!!createdAt && <span>{moment(createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
-        </div>
-      );
-    },
+    responsive: ["md"],
   },
   {
     title: "وضعیت انتشار",
@@ -85,6 +77,19 @@ const columns: ColumnsType<BlogPost> = [
 ];
 
 export default function Page() {
+  const api = useAxiosAuth();
+  const confirmPublish = async (id: string) => {
+    try {
+      await api.patch(`/admin/blog/post/confirm/${id}`);
+    } catch (error) {}
+  };
+
+  const rejectPublish = async (id: string) => {
+    try {
+      await api.patch(`/admin/blog/post/reject/${id}`);
+    } catch (error) {}
+  };
+
   return (
     <>
       <div className="p-4">
@@ -95,12 +100,30 @@ export default function Page() {
           columns={columns}
           deletable
           editable
-          extraOperations={(id: string) => [
-            {
-              key: "confirmPublish",
-              label: <Link href="#">تایید و انتشار</Link>,
-            },
-          ]}
+          extraOperations={(id?: string, record?: any) => {
+            if (record.isConfirmed) {
+              return [
+                {
+                  key: "rejectPublish",
+                  label: (
+                    <Link href="#" onClick={() => rejectPublish(id!)}>
+                      لغو انتشار
+                    </Link>
+                  ),
+                },
+              ];
+            }
+            return [
+              {
+                key: "confirmPublish",
+                label: (
+                  <Link href="#" onClick={() => confirmPublish(id!)}>
+                    تایید انتشار
+                  </Link>
+                ),
+              },
+            ];
+          }}
         />
       </div>
     </>

@@ -34,14 +34,14 @@ export type PanelTableProps = {
   detail?: ReactNode;
   deletable?: boolean;
   editable?: boolean;
-  extraOperations?: (id: string) => any[];
+  extraOperations?: (id?: string, record?: any) => any[];
   update?: any;
   defaultPageCount?: number;
 
   tableToolsList?: any[];
 };
 
-function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id) => [], defaultPageCount, deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: PanelTableProps) {
+function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, record) => [], defaultPageCount, deletable, editable, footerTitle, endpoint, data, columns, loading = false, selectable = true, sortable = false, minWidth, expandable = false, detail, update = false }: PanelTableProps) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [dataSource, setDataSource] = useState(data?.length !== undefined ? data : []);
 
@@ -163,8 +163,8 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id) => 
   };
 
   const baseRoute = (params?.id ? pathname?.replace(params.id as string, "") : pathname) || "/";
-  const hasOperations = deletable || editable || extraOperations("");
-  const generateOperations = (id: string) => {
+  let hasOperations = deletable || editable || extraOperations();
+  const generateOperations = (id: string, record: any) => {
     let operationsItem: any[] = [];
     if (deletable) {
       operationsItem.push({
@@ -185,7 +185,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id) => 
         label: <Link href={`${baseRoute}/${id}` + (spm ? "?" + spm?.toString() : "")}>ویرایش</Link>,
       });
     }
-    return [...operationsItem, ...extraOperations(id)];
+    return [...operationsItem, ...extraOperations(id, record)];
   };
 
   const Header = () => {
@@ -252,11 +252,11 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id) => 
       key: "operation",
       dataIndex: "_id",
       width: "75px",
-      render: (id: string) => (
+      render: (id: string, record) => (
         <Space size="middle">
           <Dropdown
             menu={{
-              items: generateOperations(id),
+              items: generateOperations(id, record),
             }}
           >
             <a>
