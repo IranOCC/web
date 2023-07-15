@@ -67,16 +67,18 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
                     {detail?.confirmedBy?.fullName} - {moment(detail?.confirmedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
                   </p>
                 </Alert>
-                <Button
-                  //
-                  title="لغو انتشار"
-                  type="button"
-                  loading={isSubmitting || isLoading || isValidating || publishLoading}
-                  noSpace
-                  variant="outline"
-                  size="small"
-                  onClick={rejectPublish}
-                />
+                {detail?.allowConfirm && (
+                  <Button
+                    //
+                    title="لغو انتشار"
+                    type="button"
+                    loading={isSubmitting || isLoading || isValidating || publishLoading}
+                    noSpace
+                    variant="outline"
+                    size="small"
+                    onClick={rejectPublish}
+                  />
+                )}
               </>
             )}
             {!detail?.isConfirmed && (
@@ -85,15 +87,17 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
                   <AlertTitle>تایید نشده</AlertTitle>
                   <p>پست هنوز تایید نشده است و تا زمانی که تایید نشود منتشر نخواهد شد</p>
                 </Alert>
-                <Button
-                  //
-                  title="تایید انتشار"
-                  type="button"
-                  loading={isSubmitting || isLoading || isValidating || publishLoading}
-                  noSpace
-                  size="small"
-                  onClick={confirmPublish}
-                />
+                {detail?.allowConfirm && (
+                  <Button
+                    //
+                    title="تایید انتشار"
+                    type="button"
+                    loading={isSubmitting || isLoading || isValidating || publishLoading}
+                    noSpace
+                    size="small"
+                    onClick={confirmPublish}
+                  />
+                )}
               </>
             )}
           </>
