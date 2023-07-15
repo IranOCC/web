@@ -81,6 +81,7 @@ const Input = (props: IProps) => {
         <Controller
           render={({ field }) => {
             const removeItem = (index: number) => {
+              if (disabled || loading || readOnly) return;
               field.value.splice(index, 1);
               field.onChange([...field.value]);
             };
@@ -94,11 +95,13 @@ const Input = (props: IProps) => {
                         Array.isArray(field.value)
                           ? field.value?.map((label: string, index: number) => {
                               return (
-                                <span key={index} className="cursor-default bg-secondary text-white px-2 rounded flex justify-center items-center">
+                                <span key={index} className={"cursor-default  text-white px-2 rounded flex justify-center items-center" + (disabled || loading || readOnly ? " bg-disable" : " bg-secondary")}>
                                   {label}
-                                  <div className="text-slate-100 hover:text-slate-300 ps-3 cursor-pointer" onClick={() => removeItem(index)}>
-                                    ×
-                                  </div>
+                                  {!(disabled || loading || readOnly) && (
+                                    <div className="text-slate-100 hover:text-slate-300 ps-3 cursor-pointer" onClick={() => removeItem(index)}>
+                                      ×
+                                    </div>
+                                  )}
                                 </span>
                               );
                             })
