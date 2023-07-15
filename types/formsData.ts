@@ -273,9 +273,7 @@ export type BlogPostFormData = {
 
     categories: string[];
 
-
-    createdBy?: User | string;
-    confirmedBy?: User | string;
+    author?: User | string;
     office?: Office | string;
 };
 

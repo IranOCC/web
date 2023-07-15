@@ -269,7 +269,6 @@ export type BlogPost = {
 
     image?: StorageFile | string;
 
-
     status: string;
     visibility: string;
     pinned: boolean;
@@ -279,10 +278,16 @@ export type BlogPost = {
 
     categories: string[];
 
+    author?: User | string;
+    office?: Office | string;
 
     createdBy?: User | string;
+    createdAt?: Date;
+
+    isConfirmed?: boolean;
+
     confirmedBy?: User | string;
-    office?: Office | string;
+    confirmedAt?: Date;
 };
 
 

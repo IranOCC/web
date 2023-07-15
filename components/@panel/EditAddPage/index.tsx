@@ -7,7 +7,7 @@ import PanelCard from "@/components/@panel/Card";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { FieldValues, useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { handleFieldsError } from "@/lib/axios";
 
 type IProps = {
@@ -18,9 +18,10 @@ type IProps = {
   setInitialData: (data: any) => void;
   componentProps?: any;
   beforeSubmit?: (data: any) => any;
+  TopSubmitCard?: any;
 };
 
-export default function EditAddPage<F extends FieldValues, T>({ Center, Side = null, beforeSubmit, endpoint, form, setInitialData, componentProps = {} }: IProps) {
+export default function EditAddPage<F extends FieldValues, T>({ Center, Side = null, TopSubmitCard, beforeSubmit, endpoint, form, setInitialData, componentProps = {} }: IProps) {
   const params = useParams();
   const pathname = usePathname();
 
@@ -95,7 +96,8 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
           </div>
           <div className="col-span-full lg:col-span-2">
             <div className="grid grid-cols-1 gap-4">
-              <PanelCard className="order-last lg:order-first">
+              <PanelCard className="order-last lg:order-first" loading={dataLoading}>
+                {TopSubmitCard && <TopSubmitCard form={form} loading={dataLoading} section={SECTION} props={componentProps} />}
                 {!SECTION && (
                   <Button
                     //

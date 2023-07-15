@@ -73,8 +73,9 @@ const DateTimePicker = (props: IProps) => {
                   style={{ direction: "ltr" }}
                   editable={false}
                   value={field.value}
-                  onChange={(v) => {
-                    field.onChange((v as any).unix * 1000);
+                  onChange={(v: any) => {
+                    if (v) field.onChange(new Date((v.unix as number) * 1000).toISOString());
+                    else field.onChange(null);
                   }}
                   calendar={jalali}
                   locale={persian_fa}

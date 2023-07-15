@@ -5,10 +5,10 @@ import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import { Estate } from "@/types/interfaces";
+import { BlogPost, Estate, User } from "@/types/interfaces";
 import moment from "jalali-moment";
 
-const columns: ColumnsType<Estate> = [
+const columns: ColumnsType<BlogPost> = [
   {
     title: "نام",
     dataIndex: "title",
@@ -26,17 +26,48 @@ const columns: ColumnsType<Estate> = [
     dataIndex: ["office", "name"],
     responsive: ["lg"],
   },
+
   {
-    title: "نویسنده",
-    dataIndex: ["createdBy", "fullName"],
+    title: "ثبت کننده",
     responsive: ["lg"],
+    render: (value, { createdAt, createdBy }) => {
+      return (
+        <div className="flex flex-col">
+          {!!createdBy && <span>{(createdBy as User)?.fullName}</span>}
+          {!!createdAt && <span>{moment(createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
+        </div>
+      );
+    },
   },
   {
     title: "تایید کننده",
-    dataIndex: ["confirmedBy", "fullName"],
     responsive: ["xl"],
-    render: (value) => {
-      return value || "-";
+    render: (value, { confirmedAt, confirmedBy, isConfirmed }) => {
+      if (!isConfirmed)
+        return (
+          <Tag color="red" key="not-confirmed">
+            تایید نشده
+          </Tag>
+        );
+      return (
+        <div className="flex flex-col">
+          {!!confirmedBy && <span>{(confirmedBy as User)?.fullName}</span>}
+          {!!confirmedAt && <span>{moment(confirmedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
+        </div>
+      );
+    },
+  },
+  {
+    title: "نویسنده",
+    dataIndex: ["author", "fullName"],
+    responsive: ["lg"],
+    render: (value, { createdAt, createdBy }) => {
+      return (
+        <div className="flex flex-col">
+          {!!createdBy && <span>{(createdBy as User)?.fullName}</span>}
+          {!!createdAt && <span>{moment(createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
+        </div>
+      );
     },
   },
   {
@@ -51,29 +82,13 @@ const columns: ColumnsType<Estate> = [
       );
     },
   },
-  {
-    title: "زمان ایجاد",
-    dataIndex: "createdAt",
-    responsive: ["xl"],
-    render: (value) => {
-      return value ? moment(value).locale("fa").format("DD MMM YYYY HH:mm:ss") : "-";
-    },
-  },
-  {
-    title: "زمان تایید و انتشار",
-    dataIndex: "publishedAt",
-    responsive: ["xl"],
-    render: (value) => {
-      return value ? moment(value).locale("fa").format("DD MMM YYYY HH:mm:ss") : "-";
-    },
-  },
 ];
 
 export default function Page() {
   return (
     <>
       <div className="p-4">
-        <PanelTable<Estate>
+        <PanelTable<BlogPost>
           //
           endpoint="blog/post"
           headerTitle="لیست پست ها"

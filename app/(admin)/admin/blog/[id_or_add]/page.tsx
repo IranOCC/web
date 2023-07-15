@@ -12,6 +12,7 @@ import BlogPostRegistrantBox from "@/components/@panel/Features/Blog/PostRegistr
 import BlogPostMediaBox from "@/components/@panel/Features/Blog/PostMediaBox";
 import AddEditPostCheckModal from "@/components/Modals/AddPostCheckModal";
 import { useState } from "react";
+import BlogPostAuthorBox from "@/components/@panel/Features/Blog/PostAuthorBox";
 
 
 const Center = (props: AddEditComponentProps) => {
@@ -30,10 +31,10 @@ const Side = (props: AddEditComponentProps) => {
   return (
     <>
       <BlogPostMediaBox {...props} />
+      <BlogPostAuthorBox {...props} />
       <BlogPostCategoryBox {...props} />
       <BlogPostTagsBox {...props} />
       <BlogPostVisibilityBox {...props} />
-      <BlogPostRegistrantBox {...props} />
     </>
   );
 };
@@ -43,8 +44,9 @@ export default function Page() {
   const { setValue, getValues } = form;
 
   const [checkingData, setCheckingData] = useState(null)
+  const [detail, setDetail] = useState<any>(null)
 
-  const setInitialData = (data: BlogPostFormData) => {
+  const setInitialData = (data: BlogPost) => {
     setValue("_id", data._id);
 
     setValue("title", data.title);
@@ -65,9 +67,18 @@ export default function Page() {
     setValue("tags", data.tags);
     setValue("categories", data.categories);
 
-    setValue("createdBy", data.createdBy);
-    setValue("confirmedBy", data.confirmedBy);
     setValue("office", data.office);
+
+    setDetail({
+      ID: data._id,
+      createdBy: data.createdBy,
+      createdAt: data.createdAt,
+
+      isConfirmed: data.isConfirmed,
+      
+      confirmedBy: data.confirmedBy,
+      confirmedAt: data.confirmedAt,
+    })
   };
 
 
@@ -79,9 +90,11 @@ export default function Page() {
         Center={Center}
         Side={Side}
         form={form}
-        componentProps={{checkingData}}
+        componentProps={{checkingData, detail}}
         setInitialData={setInitialData}
         endpoint="blog/post"
+
+        TopSubmitCard={BlogPostRegistrantBox}
       />
 
       <AddEditPostCheckModal 
