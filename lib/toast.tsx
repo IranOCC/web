@@ -18,7 +18,7 @@ const ShowSnackbar = ({ message, variant }: { message: SnackbarMessage; variant:
 export const toast = (msg: SnackbarMessage, variant: "default" | "error" | "success" | "warning" | "info" = "default") => {
   if (root) {
     const provider = (
-      <SnackbarProvider maxSnack={5} anchorOrigin={{ horizontal: "left", vertical: "bottom" }}>
+      <SnackbarProvider maxSnack={5} className="z-[1501]" anchorOrigin={{ horizontal: "left", vertical: "bottom" }}>
         <ShowSnackbar message={msg} variant={variant} />
       </SnackbarProvider>
     );
