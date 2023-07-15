@@ -56,6 +56,7 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
   return (
     <>
       <div className="grid grid-cols-1 gap-4 mb-4">
+        {}
         {!!detail && (
           <>
             {detail?.isConfirmed && (
@@ -66,6 +67,16 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
                     {detail?.confirmedBy?.fullName} - {moment(detail?.confirmedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
                   </p>
                 </Alert>
+                <Button
+                  //
+                  title="لغو انتشار"
+                  type="button"
+                  loading={isSubmitting || isLoading || isValidating || publishLoading}
+                  noSpace
+                  variant="outline"
+                  size="small"
+                  onClick={rejectPublish}
+                />
               </>
             )}
             {!detail?.isConfirmed && (
@@ -74,31 +85,17 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
                   <AlertTitle>تایید نشده</AlertTitle>
                   <p>پست هنوز تایید نشده است و تا زمانی که تایید نشود منتشر نخواهد شد</p>
                 </Alert>
+                <Button
+                  //
+                  title="تایید انتشار"
+                  type="button"
+                  loading={isSubmitting || isLoading || isValidating || publishLoading}
+                  noSpace
+                  size="small"
+                  onClick={confirmPublish}
+                />
               </>
             )}
-            <div className="grid grid-cols-2 gap-2 ">
-              <Button
-                //
-                title="لغو انتشار"
-                type="button"
-                loading={isSubmitting || isLoading || isValidating || publishLoading}
-                noSpace
-                variant="outline"
-                size="small"
-                disabled={!detail?.isConfirmed}
-                onClick={rejectPublish}
-              />
-              <Button
-                //
-                title="تایید انتشار"
-                type="button"
-                loading={isSubmitting || isLoading || isValidating || publishLoading}
-                noSpace
-                size="small"
-                disabled={!!detail?.isConfirmed}
-                onClick={confirmPublish}
-              />
-            </div>
           </>
         )}
         {!detail && (

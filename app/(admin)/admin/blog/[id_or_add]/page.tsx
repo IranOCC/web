@@ -11,8 +11,8 @@ import BlogPostVisibilityBox from "@/components/@panel/Features/Blog/PostVisibil
 import BlogPostRegistrantBox from "@/components/@panel/Features/Blog/PostRegistrantBox";
 import BlogPostMediaBox from "@/components/@panel/Features/Blog/PostMediaBox";
 import AddEditPostCheckModal from "@/components/Modals/AddPostCheckModal";
-import { useState } from "react";
 import BlogPostAuthorBox from "@/components/@panel/Features/Blog/PostAuthorBox";
+import { useState } from "react";
 
 
 const Center = (props: AddEditComponentProps) => {
@@ -66,6 +66,8 @@ export default function Page() {
 
     setValue("tags", data.tags);
     setValue("categories", data.categories);
+
+    setValue("author", data.author);
 
     setValue("office", data.office);
 
