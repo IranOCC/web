@@ -30,7 +30,7 @@ const columns: ColumnsType<BlogPost> = [
     responsive: ["lg"],
   },
   {
-    title: "ثبت کننده",
+    title: "ثبت",
     responsive: ["lg"],
     render: (value, { createdAt, createdBy }) => {
       return (
@@ -42,7 +42,7 @@ const columns: ColumnsType<BlogPost> = [
     },
   },
   {
-    title: "تایید کننده",
+    title: "تایید",
     responsive: ["xl"],
     render: (value, { confirmedAt, confirmedBy, isConfirmed }) => {
       if (!isConfirmed)
@@ -65,17 +65,14 @@ const columns: ColumnsType<BlogPost> = [
     responsive: ["md"],
   },
   {
-    title: "انتشار",
+    title: "وضعیت انتشار",
     dataIndex: "status",
     responsive: ["md"],
     render: (status: string, { publishedAt }) => {
       return (
-        <div className="flex flex-col">
-          <Tag color="blue" key={status}>
-            {status}
-          </Tag>
-          {!!publishedAt && <span>{moment(publishedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
-        </div>
+        <Tag color="blue" key={status}>
+          {status}
+        </Tag>
       );
     },
   },
@@ -83,22 +80,31 @@ const columns: ColumnsType<BlogPost> = [
 
 export default function Page() {
   const [updateTable, setUpdateTable] = useState([false]);
+  const [loading, setLoading] = useState(false);
 
   const api = useAxiosAuth();
   const confirmPublish = async (id: string) => {
+    setLoading(true);
     try {
       await api.patch(`/admin/blog/post/confirm/${id}`);
       toast.success("انتشار پست تایید شد");
       setUpdateTable([true]);
-    } catch (error) {}
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   const rejectPublish = async (id: string) => {
+    setLoading(true);
     try {
       await api.patch(`/admin/blog/post/reject/${id}`);
       toast.success("انتشار پست رد شد");
       setUpdateTable([true]);
-    } catch (error) {}
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -112,6 +118,7 @@ export default function Page() {
           deletable
           editable
           update={updateTable}
+          loading={loading}
           extraOperations={(id?: string, record?: any) => {
             if (record?.isConfirmed) {
               return [
