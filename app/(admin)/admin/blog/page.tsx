@@ -8,6 +8,8 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import { BlogPost, Estate, User } from "@/types/interfaces";
 import moment from "jalali-moment";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { useState } from "react";
+import { toast } from "@/lib/toast";
 
 const columns: ColumnsType<BlogPost> = [
   {
@@ -63,30 +65,39 @@ const columns: ColumnsType<BlogPost> = [
     responsive: ["md"],
   },
   {
-    title: "وضعیت انتشار",
+    title: "انتشار",
     dataIndex: "status",
     responsive: ["md"],
-    render: (status: string) => {
+    render: (status: string, { publishedAt }) => {
       return (
-        <Tag color="blue" key={status}>
-          {status}
-        </Tag>
+        <div className="flex flex-col">
+          <Tag color="blue" key={status}>
+            {status}
+          </Tag>
+          {!!publishedAt && <span>{moment(publishedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
+        </div>
       );
     },
   },
 ];
 
 export default function Page() {
+  const [updateTable, setUpdateTable] = useState([false]);
+
   const api = useAxiosAuth();
   const confirmPublish = async (id: string) => {
     try {
       await api.patch(`/admin/blog/post/confirm/${id}`);
+      toast.success("انتشار پست تایید شد");
+      setUpdateTable([true]);
     } catch (error) {}
   };
 
   const rejectPublish = async (id: string) => {
     try {
       await api.patch(`/admin/blog/post/reject/${id}`);
+      toast.success("انتشار پست رد شد");
+      setUpdateTable([true]);
     } catch (error) {}
   };
 
@@ -100,8 +111,9 @@ export default function Page() {
           columns={columns}
           deletable
           editable
+          update={updateTable}
           extraOperations={(id?: string, record?: any) => {
-            if (record.isConfirmed) {
+            if (record?.isConfirmed) {
               return [
                 {
                   key: "rejectPublish",
