@@ -1,6 +1,10 @@
-import { ReactNode } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Controller } from "react-hook-form";
+import MediaHandler from "@/components/Uploader/MediaHandler";
+import MediaLibrary from "@/components/Uploader/MediaHandler/MediaLibrary";
+import { StorageFile } from "@/types/interfaces";
+import { LoadingWithoutBg } from "@/components/Loading";
 
 const TextEditor = (props: IProps) => {
   const { label, name, control, defaultValue, placeholder, disabled, loading, readOnly, error, warning, success, containerClassName = "" } = props;
@@ -25,6 +29,10 @@ const TextEditor = (props: IProps) => {
     labelClass = " text-orange-500";
   }
 
+  const [openLibrary, setOpenLibrary] = useState(false);
+  const mmm = useRef(null);
+  const [loader, setLoader] = useState(true);
+
   return (
     <>
       <div className={"w-full relative z-10" + " " + containerClassName}>
@@ -37,13 +45,23 @@ const TextEditor = (props: IProps) => {
                 <Editor
                   apiKey="c5202p0ybgpmcrokfgwn78asoww5xabm9hxbqxxvzxwgsmhg"
                   onEditorChange={field.onChange}
+                  textareaName={field.name}
+                  {...field}
+                  ref={mmm}
+                  onInit={() => {
+                    setLoader(false);
+                  }}
                   init={{
-                    height: 400,
-                    menubar: false,
+                    height: 500,
+                    menubar: true,
                     directionality: "rtl",
                     plugins: ["advlist", "autolink", "lists", "link", "image", "charmap", "preview", "anchor", "searchreplace", "visualblocks", "code", "fullscreen", "insertdatetime", "media", "table", "code", "help", "wordcount", "directionality"],
-                    toolbar: "undo redo | blocks | " + "image | " + "bold italic forecolor | alignleft aligncenter " + "alignright alignjustify | ltr rtl | bullist numlist outdent indent | " + "removeformat | help |",
+                    toolbar: "insertfile undo redo | blocks | " + "image | " + "bold italic forecolor | alignleft aligncenter " + "alignright alignjustify | ltr rtl | bullist numlist outdent indent | " + "removeformat | help |",
                     content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px, }",
+                    file_picker_types: "image",
+                    file_picker_callback: function (callback, value, meta) {
+                      setOpenLibrary(true);
+                    },
                   }}
                   disabled={loading || disabled || readOnly}
                 />
@@ -53,6 +71,28 @@ const TextEditor = (props: IProps) => {
             defaultValue={defaultValue}
           />
         </div>
+
+        <LoadingWithoutBg />
+
+        <MediaLibrary
+          //
+          open={openLibrary}
+          setOpen={setOpenLibrary}
+          uploadPath="blog"
+          uploaderField="image"
+          setSelectFiles={(data: StorageFile[]) => {
+            if (disabled || loading) return;
+            const path = "https://storage.iranocc.com/blog/uw47kunfK2pmFe3y.jpg";
+            const title = "hello";
+            console.log("***", (mmm?.current as any).editor);
+
+            (mmm?.current as any).editor.editorManager.execCommand("mscimage", path);
+
+            // callback(data[0].path, {title:data[0].title });
+            setOpenLibrary(false);
+          }}
+          maxFile={1}
+        />
         {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
       </div>
     </>
