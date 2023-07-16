@@ -31,25 +31,23 @@ export default function MediaLibrary({ open, setOpen, uploadPath, setSelectFiles
                   {/*  */}
                   {selected.map((file, index) => {
                     return (
-                      <>
-                        <div key={index} className="relative overflow-hidden aspect-square h-full min-w-max" tabIndex={index}>
-                          <Image
-                            //
-                            fill
-                            src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + file.path}
-                            alt={file.alt}
-                            title={file.title}
-                          />
-                          <Cancel
-                            //
-                            onClick={() => {
-                              selected.splice(index, 1);
-                              setSelected([...selected]);
-                            }}
-                            className="absolute text-red-500 top-1 right-1 cursor-pointer hover:text-white"
-                          />
-                        </div>
-                      </>
+                      <div key={index} className="relative overflow-hidden aspect-square h-full min-w-max" tabIndex={index}>
+                        <Image
+                          //
+                          fill
+                          src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + file.path}
+                          alt={file.alt}
+                          title={file.title}
+                        />
+                        <Cancel
+                          //
+                          onClick={() => {
+                            selected.splice(index, 1);
+                            setSelected([...selected]);
+                          }}
+                          className="absolute text-red-500 top-1 right-1 cursor-pointer hover:text-white"
+                        />
+                      </div>
                     );
                   })}
                   {/*  */}

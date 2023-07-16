@@ -201,55 +201,53 @@ const FieldComponent = (props: FieldComponentType) => {
                   : //
                     indexFileControl?.field.value?._id === item._id;
               return (
-                <>
-                  <div key={index} className="relative overflow-hidden aspect-square min-h-max cursor-pointer">
-                    <Image
-                      //
-                      fill
-                      src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + item.path}
-                      alt={item.alt}
-                      title={item.title}
-                    />
+                <div key={index} className="relative overflow-hidden aspect-square min-h-max cursor-pointer">
+                  <Image
+                    //
+                    fill
+                    src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + item.path}
+                    alt={item.alt}
+                    title={item.title}
+                  />
 
-                    {!!(disabled || loading) ? (
-                      <>
-                        {!!indexFileControl && !!isMain && (
-                          <>
-                            <Star className="absolute text-yellow-300 bottom-1 left-1" />
-                          </>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {!!indexFileControl && (
-                          <div className="absolute flex justify-center items-center bg-black/40 w-full h-full transition-opacity opacity-0 hover:opacity-100">
-                            {/*  */}
-                            {!isMain && (
-                              <div onClick={() => indexFileControl?.field.onChange(item)} className="border bg-white text-yellow-300 px-1 border-yellow-300 rounded w-auto">
-                                شاخص شود؟
-                              </div>
-                            )}
-                            {/*  */}
-                          </div>
-                        )}
-                        <Cancel
-                          //
-                          onClick={() => {
-                            if (disabled || loading) return;
-                            field.value.splice(index, 1);
-                            field.onChange([...field.value]);
-                          }}
-                          className="absolute text-red-500 top-1 right-1 cursor-pointer hover:text-gray-500"
-                        />
-                        {!!indexFileControl && !!isMain && (
-                          <Tooltip title="شاخص">
-                            <Star className="absolute text-yellow-300 bottom-1 left-1" />
-                          </Tooltip>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </>
+                  {!!(disabled || loading) ? (
+                    <>
+                      {!!indexFileControl && !!isMain && (
+                        <>
+                          <Star className="absolute text-yellow-300 bottom-1 left-1" />
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {!!indexFileControl && (
+                        <div className="absolute flex justify-center items-center bg-black/40 w-full h-full transition-opacity opacity-0 hover:opacity-100">
+                          {/*  */}
+                          {!isMain && (
+                            <div onClick={() => indexFileControl?.field.onChange(item)} className="border bg-white text-yellow-300 px-1 border-yellow-300 rounded w-auto">
+                              شاخص شود؟
+                            </div>
+                          )}
+                          {/*  */}
+                        </div>
+                      )}
+                      <Cancel
+                        //
+                        onClick={() => {
+                          if (disabled || loading) return;
+                          field.value.splice(index, 1);
+                          field.onChange([...field.value]);
+                        }}
+                        className="absolute text-red-500 top-1 right-1 cursor-pointer hover:text-gray-500"
+                      />
+                      {!!indexFileControl && !!isMain && (
+                        <Tooltip title="شاخص">
+                          <Star className="absolute text-yellow-300 bottom-1 left-1" />
+                        </Tooltip>
+                      )}
+                    </>
+                  )}
+                </div>
               );
             })}
           </div>

@@ -67,6 +67,9 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
                     {detail?.confirmedBy?.fullName} - {moment(detail?.confirmedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
                   </p>
                 </Alert>
+                <Alert severity="warning" variant="filled">
+                  <p>در صورت ویرایش نیاز به تایید مجدد مدیریت جهت انتشار خواهد بود</p>
+                </Alert>
                 {detail?.allowConfirm && (
                   <Button
                     //

@@ -93,6 +93,11 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             label=""
             error={errors.content?.message}
             loading={isSubmitting}
+            //
+            useMediaLibrary
+            mediaUploadPath="blog"
+            mediaUploaderField="image"
+            //
             defaultValue={checkingData?.content?.default}
             disabled={checkingData?.content?.disabled}
             containerClassName={"col-span-full " + (!!checkingData?.content?.hidden ? "hidden" : "")}
