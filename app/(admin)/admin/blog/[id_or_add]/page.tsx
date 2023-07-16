@@ -87,7 +87,7 @@ export default function Page() {
 
 
 
-  return (
+  return      (
     <>
       <EditAddPage<BlogPostFormData, BlogPost>
         //
@@ -100,12 +100,9 @@ export default function Page() {
 
         TopSubmitCard={BlogPostRegistrantBox}
       />
-
       <AddEditPostCheckModal 
         set={setCheckingData}
       />
-      
-      
     </>
   );
 }

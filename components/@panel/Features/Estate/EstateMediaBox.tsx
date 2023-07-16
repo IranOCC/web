@@ -6,7 +6,7 @@ import PanelCard from "@/components/@panel/Card";
 import { AddEditComponentProps } from "../../EditAddPage";
 import MediaHandler from "@/components/Uploader/MediaHandler";
 
-export default function EstateMediaBox({ form, loading }: AddEditComponentProps) {
+export default function EstateMediaBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -24,12 +24,14 @@ export default function EstateMediaBox({ form, loading }: AddEditComponentProps)
     register("image");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <PanelCard title="رسانه" loading={loading}>
         <div className="grid grid-cols-1 gap-4 ">
           {/*  */}
-          {}
           <MediaHandler
             //
             name="gallery"
@@ -41,6 +43,9 @@ export default function EstateMediaBox({ form, loading }: AddEditComponentProps)
             fromLibrary
             showFilesList
             showUploadList
+            defaultValue={checkingData?.gallery?.default}
+            disabled={checkingData?.gallery?.disabled}
+            containerClassName={!!checkingData?.gallery?.hidden ? "hidden" : ""}
           />
           {/*  */}
         </div>

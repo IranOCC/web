@@ -3,11 +3,9 @@ import { EstateFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/@panel/Select";
-import TextEditor from "@/components/@panel/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function EstateTagsBox({ form, loading }: AddEditComponentProps) {
+export default function EstateTagsBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -24,6 +22,9 @@ export default function EstateTagsBox({ form, loading }: AddEditComponentProps) 
     register("tags");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <PanelCard title="برچسب ها" loading={loading}>
@@ -39,6 +40,9 @@ export default function EstateTagsBox({ form, loading }: AddEditComponentProps) 
             lines={3}
             tagsMode
             noSpace
+            defaultValue={checkingData?.tags?.default}
+            disabled={checkingData?.tags?.disabled}
+            containerClassName={!!checkingData?.tags?.hidden ? "hidden" : ""}
           />
         </div>
       </PanelCard>

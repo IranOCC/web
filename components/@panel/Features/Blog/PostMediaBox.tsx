@@ -27,7 +27,7 @@ export default function BlogPostMediaBox({ form, loading, props }: AddEditCompon
 
   return (
     <>
-      <PanelCard title="رسانه" loading={loading}>
+      <PanelCard title="تصویر شاخص" loading={loading}>
         <div className="grid grid-cols-1 gap-4 ">
           {/*  */}
           <MediaHandler

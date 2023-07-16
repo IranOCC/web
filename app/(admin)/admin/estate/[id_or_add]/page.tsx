@@ -1,13 +1,12 @@
 "use client";
 
 import EditAddPage, { type AddEditComponentProps } from "@/components/@panel/EditAddPage";
-import SendEmailBox from "@/components/@panel/Features/@common/SendEmailBox";
-import SendSmsBox from "@/components/@panel/Features/@common/SendSmsBox";
+import { useState } from "react";
 import EstateBox from "@/components/@panel/Features/Estate/EstateBox";
 import EstateLocationBox from "@/components/@panel/Features/Estate/EstateLocationBox";
 import EstateGeneralBox from "@/components/@panel/Features/Estate/EstateGeneralBox";
-import { EstateFormData, UserFormData } from "@/types/formsData";
-import { Estate, StorageFile, User } from "@/types/interfaces";
+import { EstateFormData,  } from "@/types/formsData";
+import { Estate,  } from "@/types/interfaces";
 import { useForm } from "react-hook-form";
 import EstateVisibilityBox from "@/components/@panel/Features/Estate/EstateVisibilityBox";
 import EstateMediaBox from "@/components/@panel/Features/Estate/EstateMediaBox";
@@ -15,48 +14,19 @@ import EstateTagsBox from "@/components/@panel/Features/Estate/EstateTagsBox";
 import EstateFeaturesBox from "@/components/@panel/Features/Estate/EstateFeaturesBox";
 import EstateOwnerBox from "@/components/@panel/Features/Estate/EstateOwnerBox";
 import EstateRegistrantBox from "@/components/@panel/Features/Estate/EstateRegistrantBox";
-
 import EstateSetCategoryModal from "@/components/@panel/Features/Estate/EstateSetCategoryModal";
+import AddEditEstateCheckModal from "@/components/Modals/AddEstateCheckModal";
 
-import { useState } from "react";
-import PanelTab from "@/components/@panel/Tab";
-import PanelCard from "@/components/@panel/Card";
-
-const Center = (props: AddEditComponentProps) => {
+const Center    =  (props: AddEditComponentProps) => {
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-full">
           <EstateBox {...props} />
         </div>
-        {/* <div className="col-span-full">
-          <PanelCard>
-            <PanelTab
-              //
-              data={[
-                {
-                  title: "ویژگی های عمومی",
-                  content: "kkkk",
-                },
-                {
-                  title: "ویژگی های اختصاصی",
-                  content: "nnn",
-                },
-                {
-                  title: "موقعیت مکانی",
-                  content: "nnn",
-                },
-                {
-                  title: "گالری و رسانه",
-                  content: "nnn",
-                },
-              ]}
-            />
-          </PanelCard>
-        </div> */}
         <div className="col-span-full md:col-span-1">
           <EstateGeneralBox {...props} />
-        </div>
+        </div> 
         <div className="col-span-full md:col-span-1">
           <EstateFeaturesBox {...props} />
         </div>
@@ -75,7 +45,6 @@ const Side = (props: AddEditComponentProps) => {
       <EstateOwnerBox {...props} />
       <EstateTagsBox {...props} />
       <EstateVisibilityBox {...props} />
-      <EstateRegistrantBox {...props} />
     </>
   );
 };
@@ -84,7 +53,10 @@ export default function Page() {
   const form = useForm<EstateFormData>();
   const { setValue, getValues } = form;
 
-  const setInitialData = (data: EstateFormData) => {
+const [checkingData, setCheckingData] = useState(null)
+  const [detail, setDetail] = useState<any>(null)
+
+  const setInitialData = (data: Estate) => {
 
     setSelectedCat(data.category)
 
@@ -138,9 +110,21 @@ export default function Page() {
     setValue("location", data.location);
 
     setValue("owner", data.owner);
-    setValue("createdBy", data.createdBy);
-    setValue("confirmedBy", data.confirmedBy);
     setValue("office", data.office);
+
+
+    setDetail({
+      ID: data._id,
+      updatedAt:data.updatedAt,
+      
+      createdBy: data.createdBy,
+      createdAt: data.createdAt,
+
+      isConfirmed: data.isConfirmed,
+      
+      confirmedBy: data.confirmedBy,
+      confirmedAt: data.confirmedAt,
+    })
   };
 
   const [selectedCat, setSelectedCat] = useState<string | undefined | null>(null);
@@ -156,16 +140,21 @@ export default function Page() {
         form={form}
         setInitialData={setInitialData}
         endpoint="estate"
-        componentProps={{ selectedCat, setSelectedCat }}
+        componentProps={{ selectedCat, setSelectedCat,checkingData, detail }}
+
+        TopSubmitCard={EstateRegistrantBox}
       />
       {/*  */}
       <EstateSetCategoryModal
         //
-        open={selectedCat === null}
+        open={!!checkingData && selectedCat === null}
         setCategory={(val: string) => {
           setValue("category", val, { shouldValidate: true });
           setSelectedCat(val);
         }}
+      />
+      <AddEditEstateCheckModal 
+        set={setCheckingData}
       />
     </>
   );

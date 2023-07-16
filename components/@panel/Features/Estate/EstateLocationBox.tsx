@@ -7,7 +7,7 @@ import LocationChooser from "../@common/LocationChooser";
 import { AddEditComponentProps } from "../../EditAddPage";
 import { Select } from "@/components/@panel/Select";
 
-export default function EstateLocationBox({ form, loading }: AddEditComponentProps) {
+export default function EstateLocationBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -25,12 +25,15 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
     register("city", { required: "شهر را مشخص کنید" });
     register("district", { required: "منطقه را مشخص کنید" });
     register("quarter", { required: "محله را مشخص کنید" });
-    register("alley", {});
-    register("address", {});
-    register("location", {});
+    register("alley");
+    register("address");
+    register("location");
   }, []);
 
   const [province, setProvince] = useState(null);
+
+  const { checkingData } = props;
+  if (!checkingData) return null;
 
   return (
     <PanelCard title="موقعیت مکانی" loading={loading}>
@@ -45,10 +48,11 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
           placeholder="انتخاب کنید"
           apiPath="/static/province"
           onChange={(value) => setProvince(value)}
-          containerClassName="md:col-span-3"
           searchable
           noSpace
-          defaultValue="مازندران"
+          defaultValue={checkingData?.province?.default}
+          disabled={checkingData?.province?.disabled}
+          containerClassName={"md:col-span-3 " + (!!checkingData?.province?.hidden ? "hidden" : "")}
         />
         <Select
           //
@@ -60,10 +64,11 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
           placeholder="انتخاب کنید"
           apiPath="/static/city"
           filterApi={{ province: province || undefined }}
-          containerClassName="md:col-span-3"
           searchable
           noSpace
-          defaultValue="چالوس"
+          defaultValue={checkingData?.city?.default}
+          disabled={checkingData?.city?.disabled}
+          containerClassName={"md:col-span-3 " + (!!checkingData?.city?.hidden ? "hidden" : "")}
         />
         <Input
           //
@@ -73,7 +78,9 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
           error={errors.district?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="md:col-span-2"
+          defaultValue={checkingData?.district?.default}
+          disabled={checkingData?.district?.disabled}
+          containerClassName={"md:col-span-2 " + (!!checkingData?.district?.hidden ? "hidden" : "")}
         />
         <Input
           //
@@ -83,7 +90,9 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
           error={errors.quarter?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="md:col-span-2"
+          defaultValue={checkingData?.quarter?.default}
+          disabled={checkingData?.quarter?.disabled}
+          containerClassName={"md:col-span-2 " + (!!checkingData?.quarter?.hidden ? "hidden" : "")}
         />
         <Input
           //
@@ -93,7 +102,9 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
           error={errors.alley?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="md:col-span-2"
+          defaultValue={checkingData?.alley?.default}
+          disabled={checkingData?.alley?.disabled}
+          containerClassName={"md:col-span-2 " + (!!checkingData?.alley?.hidden ? "hidden" : "")}
         />
         <Input
           //
@@ -103,7 +114,9 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
           error={errors.address?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="col-span-full"
+          defaultValue={checkingData?.address?.default}
+          disabled={checkingData?.address?.disabled}
+          containerClassName={"col-span-full " + (!!checkingData?.address?.hidden ? "hidden" : "")}
         />
         <LocationChooser
           //
@@ -112,7 +125,9 @@ export default function EstateLocationBox({ form, loading }: AddEditComponentPro
           error={errors.location?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="col-span-full"
+          defaultValue={checkingData?.location?.default}
+          disabled={checkingData?.location?.disabled}
+          containerClassName={"col-span-full " + (!!checkingData?.location?.hidden ? "hidden" : "")}
         />
       </div>
     </PanelCard>

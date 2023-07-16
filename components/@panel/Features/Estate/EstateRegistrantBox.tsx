@@ -1,13 +1,17 @@
 import { CheckBox, Input } from "@/components/@panel/Input";
 import { EstateFormData } from "@/types/formsData";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/@panel/Select";
 
 import { AddEditComponentProps } from "../../EditAddPage";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { Alert, AlertTitle } from "@mui/material";
+import moment from "jalali-moment";
+import { Button } from "../../Button";
 
-export default function EstateRegistrantBox({ form, loading }: AddEditComponentProps) {
+export default function EstateRegistrantBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -21,53 +25,120 @@ export default function EstateRegistrantBox({ form, loading }: AddEditComponentP
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("createdBy", { required: "ثبت کننده نامشخص است" });
-    register("confirmedBy", { required: "تایید کننده نامشخص است" });
-    register("office", { required: "شعبه ثبت کننده نامشخص است" });
+    register("office", { required: "آفیس را مشخص کنید" });
   }, []);
+
+  const [publishLoading, setPublishLoading] = useState(false);
+  const { checkingData, detail } = props;
+
+  const api = useAxiosAuth();
+  const confirmPublish = async () => {
+    setPublishLoading(true);
+    try {
+      await api.patch(`/admin/estate/confirm/${detail.ID}`);
+      setPublishLoading(false);
+      window.location.reload();
+    } catch (error) {
+      setPublishLoading(false);
+    }
+  };
+
+  const rejectPublish = async () => {
+    setPublishLoading(true);
+    try {
+      await api.patch(`/admin/estate/reject/${detail.ID}`);
+      setPublishLoading(false);
+      window.location.reload();
+    } catch (error) {
+      setPublishLoading(false);
+    }
+  };
+
+  if (!checkingData) return null;
 
   return (
     <>
-      <PanelCard title="جزییات فایل" loading={loading}>
-        <div className="grid grid-cols-1 gap-4 ">
-          <Select
-            //
-            control={control}
-            name="createdBy"
-            error={errors.createdBy?.message}
-            loading={isSubmitting}
-            label="ثبت کننده"
-            placeholder="انتخاب کنید"
-            apiPath="/tools/user/autoComplete"
-            searchable
-            noSpace
-          />
-          <Select
-            //
-            control={control}
-            name="confirmedBy"
-            error={errors.confirmedBy?.message}
-            loading={isSubmitting}
-            label="تایید کننده"
-            placeholder="انتخاب کنید"
-            apiPath="/tools/user/autoComplete"
-            searchable
-            noSpace
-          />
-          <Select
-            //
-            control={control}
-            name="office"
-            error={errors.office?.message}
-            loading={isSubmitting}
-            label="شعبه"
-            placeholder="انتخاب کنید"
-            apiPath="/tools/office/autoComplete"
-            searchable
-            noSpace
-          />
-        </div>
-      </PanelCard>
+      <div className="grid grid-cols-1 gap-4 ">
+        {!!detail && (
+          <>
+            {detail?.isConfirmed && (
+              <>
+                <Alert severity="success" variant="filled">
+                  <AlertTitle>تایید شده</AlertTitle>
+                  <p>
+                    {detail?.confirmedBy?.fullName} - {moment(detail?.confirmedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
+                  </p>
+                </Alert>
+                <Alert severity="warning" variant="filled">
+                  <p>در صورت ویرایش نیاز به تایید مجدد مدیریت جهت انتشار خواهد بود</p>
+                </Alert>
+                {detail?.allowConfirm && (
+                  <Button
+                    //
+                    title="لغو انتشار"
+                    type="button"
+                    loading={isSubmitting || isLoading || isValidating || publishLoading}
+                    noSpace
+                    variant="outline"
+                    size="small"
+                    onClick={rejectPublish}
+                  />
+                )}
+              </>
+            )}
+            {!detail?.isConfirmed && (
+              <>
+                <Alert severity="warning" variant="filled">
+                  <AlertTitle>تایید نشده</AlertTitle>
+                  <p>پست هنوز تایید نشده است و تا زمانی که تایید نشود منتشر نخواهد شد</p>
+                </Alert>
+                {detail?.allowConfirm && (
+                  <Button
+                    //
+                    title="تایید انتشار"
+                    type="button"
+                    loading={isSubmitting || isLoading || isValidating || publishLoading}
+                    noSpace
+                    size="small"
+                    onClick={confirmPublish}
+                  />
+                )}
+              </>
+            )}
+            <hr />
+            ثبت شده توسط: {detail?.createdBy?.fullName}
+            <br />
+            زمان ایجاد: {moment(detail?.createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
+            <br />
+            آخرین ویرایش: {moment(detail?.updatedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
+          </>
+        )}
+        {!detail && (
+          <>
+            <Alert severity="info" variant="filled">
+              <AlertTitle>عدم انتشار قبل از تایید</AlertTitle>
+              <p>این پست تا هنگامیکه توسط مدیر تایید نشود، منتشر نخواهد شد</p>
+              <p>در صورتی که مدیر هستید، پس از انتشار می توانید آن را تایید کنید</p>
+            </Alert>
+          </>
+        )}
+        <hr />
+        <Select
+          //
+          control={control}
+          name="office"
+          error={errors.office?.message}
+          loading={isSubmitting}
+          label="شعبه"
+          placeholder="انتخاب کنید"
+          apiPath="/tools/office/autoComplete"
+          searchable
+          noSpace
+          defaultValue={checkingData?.office?.default}
+          disabled={checkingData?.office?.disabled}
+          containerClassName={!!checkingData?.office?.hidden ? "hidden" : ""}
+        />
+      </div>
     </>
   );
 }

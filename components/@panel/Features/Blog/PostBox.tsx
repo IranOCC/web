@@ -32,7 +32,7 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
   return (
     <>
       <PanelCard title="اطلاعات پست" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 gap-4 ">
           <Input
             //
             control={control}
@@ -57,7 +57,7 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             }}
             defaultValue={checkingData?.title?.default}
             disabled={checkingData?.title?.disabled}
-            containerClassName={"col-span-full " + (!!checkingData?.title?.hidden ? "hidden" : "")}
+            containerClassName={!!checkingData?.title?.hidden ? "hidden" : ""}
           />
           <Input
             //
@@ -70,7 +70,7 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             noSpace
             defaultValue={checkingData?.slug?.default}
             disabled={checkingData?.slug?.disabled}
-            containerClassName={"col-span-full " + (!!checkingData?.slug?.hidden ? "hidden" : "")}
+            containerClassName={!!checkingData?.slug?.hidden ? "hidden" : ""}
           />
           <Input
             //
@@ -84,7 +84,7 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             noSpace
             defaultValue={checkingData?.excerpt?.default}
             disabled={checkingData?.excerpt?.disabled}
-            containerClassName={"col-span-full " + (!!checkingData?.excerpt?.hidden ? "hidden" : "")}
+            containerClassName={!!checkingData?.excerpt?.hidden ? "hidden" : ""}
           />
           <TextEditor
             //
@@ -100,7 +100,7 @@ export default function BlogPostBox({ form, loading, props }: AddEditComponentPr
             //
             defaultValue={checkingData?.content?.default}
             disabled={checkingData?.content?.disabled}
-            containerClassName={"col-span-full " + (!!checkingData?.content?.hidden ? "hidden" : "")}
+            containerClassName={!!checkingData?.content?.hidden ? "hidden" : ""}
           />
         </div>
       </PanelCard>

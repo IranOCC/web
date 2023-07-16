@@ -8,7 +8,7 @@ import TextEditor from "@/components/@panel/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
 import moment from "moment";
 
-export default function EstateVisibilityBox({ form, loading }: AddEditComponentProps) {
+export default function EstateVisibilityBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -23,11 +23,14 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
   } = form as UseFormReturn<EstateFormData>;
 
   useEffect(() => {
-    register("status", { required: "وضعیت را مشخص کنید" });
-    register("visibility", { required: "وضعیت نمایش را مشخص کنید" });
-    register("publishedAt", { required: "تاریخ انتشار را مشخص کنید" });
+    register("status");
+    register("visibility");
+    register("publishedAt");
     register("pinned");
   }, []);
+
+  const { checkingData } = props;
+  if (!checkingData) return null;
 
   return (
     <>
@@ -43,7 +46,9 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
             placeholder="انتخاب کنید"
             noSpace
             apiPath="/tools/estate/statics/status"
-            defaultValue="Publish"
+            defaultValue={checkingData?.status?.default}
+            disabled={checkingData?.status?.disabled}
+            containerClassName={!!checkingData?.status?.hidden ? "hidden" : ""}
           />
           <Select
             //
@@ -55,7 +60,9 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
             placeholder="انتخاب کنید"
             noSpace
             apiPath="/tools/estate/statics/visibility"
-            defaultValue="Public"
+            defaultValue={checkingData?.visibility?.default}
+            disabled={checkingData?.visibility?.disabled}
+            containerClassName={!!checkingData?.visibility?.hidden ? "hidden" : ""}
           />
           <DateTimePicker
             //
@@ -63,9 +70,11 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
             name="publishedAt"
             label="تاریخ انتشار"
             error={errors.publishedAt?.message}
-            defaultValue={new Date()}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.publishedAt?.default}
+            disabled={checkingData?.publishedAt?.disabled}
+            containerClassName={!!checkingData?.publishedAt?.hidden ? "hidden" : ""}
           />
           <CheckBox //
             control={control}
@@ -74,6 +83,9 @@ export default function EstateVisibilityBox({ form, loading }: AddEditComponentP
             error={errors.pinned?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.pinned?.default}
+            disabled={checkingData?.pinned?.disabled}
+            containerClassName={!!checkingData?.pinned?.hidden ? "hidden" : ""}
           />
         </div>
       </PanelCard>

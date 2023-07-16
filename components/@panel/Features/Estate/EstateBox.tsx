@@ -23,17 +23,20 @@ export default function EstateBox({ form, loading, props }: AddEditComponentProp
 
   useEffect(() => {
     register("title", { required: "عنوان را وارد کنید" });
-    register("slug");
+    register("slug", { required: "شناسه الزامی است" });
     register("excerpt");
     register("content");
   }, []);
 
   const [openContent, setOpenContent] = useState(false);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <PanelCard title="اطلاعات ملک" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 gap-4 ">
           <Input
             //
             control={control}
@@ -42,7 +45,6 @@ export default function EstateBox({ form, loading, props }: AddEditComponentProp
             error={errors.title?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-full"
             onKeyUp={(e: any) => {
               setValue(
                 "slug",
@@ -57,6 +59,9 @@ export default function EstateBox({ form, loading, props }: AddEditComponentProp
                 { shouldValidate: true }
               );
             }}
+            defaultValue={checkingData?.title?.default}
+            disabled={checkingData?.title?.disabled}
+            containerClassName={!!checkingData?.title?.hidden ? "hidden" : ""}
           />
           <Input
             //
@@ -67,13 +72,15 @@ export default function EstateBox({ form, loading, props }: AddEditComponentProp
             error={errors.slug?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-full"
+            defaultValue={checkingData?.slug?.default}
+            disabled={checkingData?.slug?.disabled}
+            containerClassName={!!checkingData?.slug?.hidden ? "hidden" : ""}
           />
-          <div className="col-span-full text-center text-white cursor-pointer font-bold rounded bg-orange-400 p-2" onClick={() => setOpenContent((o) => !o)}>
+          <div className="text-center text-white cursor-pointer font-bold rounded bg-orange-400 p-2" onClick={() => setOpenContent((o) => !o)}>
             {openContent ? "عدم نمایش توضیحات عمومی" : "نمایش توضیحات عمومی"}
             {/*  */}
           </div>
-          <Collapse className="col-span-full" in={openContent} timeout="auto" unmountOnExit>
+          <Collapse in={openContent} timeout="auto" unmountOnExit>
             <div className="grid grid-cols-1 gap-4">
               <Input
                 //
@@ -85,6 +92,9 @@ export default function EstateBox({ form, loading, props }: AddEditComponentProp
                 multiline
                 lines={4}
                 noSpace
+                defaultValue={checkingData?.excerpt?.default}
+                disabled={checkingData?.excerpt?.disabled}
+                containerClassName={!!checkingData?.excerpt?.hidden ? "hidden" : ""}
               />
               <TextEditor
                 //
@@ -93,6 +103,14 @@ export default function EstateBox({ form, loading, props }: AddEditComponentProp
                 label="توضیحات عمومی"
                 error={errors.content?.message}
                 loading={isSubmitting}
+                //
+                useMediaLibrary
+                mediaUploadPath="estate"
+                mediaUploaderField="image"
+                //
+                defaultValue={checkingData?.content?.default}
+                disabled={checkingData?.content?.disabled}
+                containerClassName={!!checkingData?.content?.hidden ? "hidden" : ""}
               />
             </div>
           </Collapse>

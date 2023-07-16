@@ -146,7 +146,7 @@ export type EstateFormData = {
     code?: string;
     category: string;
     type?: string;
-    documentType?: string[];
+    documentType?: string;
     area: number;
     price: number;
     totalPrice?: number;
@@ -173,8 +173,6 @@ export type EstateFormData = {
     location?: [number, number] | string;
 
     owner?: User | string;
-    createdBy?: User | string;
-    confirmedBy?: User | string;
     office?: Office | string;
 };
 

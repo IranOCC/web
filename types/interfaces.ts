@@ -107,10 +107,13 @@ export interface Estate {
     code?: string;
     category: string;
     type?: string;
-    documentType?: string[];
-    area?: number;
-    price?: number;
+    documentType?: string;
+    features?: string[];
+
+    area: number;
+    price: number;
     totalPrice?: number;
+
     description?: string;
     canBarter?: boolean;
 
@@ -123,7 +126,7 @@ export interface Estate {
     unitsCount?: number;
     floor?: number;
     withOldBuilding?: boolean;
-    features?: string[];
+
 
     province?: string;
     city?: string;
@@ -134,9 +137,16 @@ export interface Estate {
     location?: [number, number] | string;
 
     owner?: User | string;
-    createdBy?: User | string;
-    confirmedBy?: User | string;
     office?: Office | string;
+
+    updatedAt?: Date;
+    createdBy?: User | string;
+    createdAt?: Date;
+
+    isConfirmed?: boolean;
+
+    confirmedBy?: User | string;
+    confirmedAt?: Date;
 };
 
 
@@ -281,10 +291,7 @@ export type BlogPost = {
     author?: User | string;
     office?: Office | string;
 
-
     updatedAt?: Date;
-
-
     createdBy?: User | string;
     createdAt?: Date;
 

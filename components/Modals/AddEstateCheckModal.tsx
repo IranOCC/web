@@ -10,7 +10,7 @@ import { LoadingWithoutBg } from "../Loading";
 //
 //
 
-const AddEditPostCheckModal = ({ set }: any) => {
+const AddEditEstateCheckModal = ({ set }: any) => {
   const [openModal, setOpenModal] = useState(true);
   const [checking, setChecking] = useState(true);
   const [noOffice, setNoOffice] = useState(false);
@@ -23,7 +23,7 @@ const AddEditPostCheckModal = ({ set }: any) => {
     const isNew = !!params?.id_or_add && (params?.id_or_add as string) === "add";
     const ID = isNew ? undefined : (params?.id_or_add as string);
     try {
-      const d = await api.get(`tools/blog/post/checking/${isNew ? "create" : "update"}`, { params: isNew ? undefined : { id: ID } });
+      const d = await api.get(`tools/estate/checking/${isNew ? "create" : "update"}`, { params: isNew ? undefined : { id: ID } });
       set(d.data);
       setOpenModal(false);
     } catch (error) {
@@ -61,4 +61,4 @@ const AddEditPostCheckModal = ({ set }: any) => {
   );
 };
 
-export default AddEditPostCheckModal;
+export default AddEditEstateCheckModal;

@@ -5,7 +5,8 @@ import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import { Estate } from "@/types/interfaces";
+import { Estate, User } from "@/types/interfaces";
+import moment from "jalali-moment";
 
 const columns: ColumnsType<Estate> = [
   {
@@ -38,20 +39,51 @@ const columns: ColumnsType<Estate> = [
     responsive: ["lg"],
   },
   {
-    title: "مالک",
-    dataIndex: ["owner", "fullName"],
-    responsive: ["xxl"],
+    title: "شعبه",
+    dataIndex: ["office", "name"],
+    responsive: ["lg"],
   },
   {
-    title: "نویسنده فایل",
-    dataIndex: ["createdBy", "fullName"],
-    responsive: ["xxl"],
+    title: "ثبت",
+    responsive: ["lg"],
+    render: (value, { createdAt, createdBy }) => {
+      return (
+        <div className="flex flex-col">
+          {!!createdBy && <span>{(createdBy as User)?.fullName}</span>}
+          {!!createdAt && <span>{moment(createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
+        </div>
+      );
+    },
+  },
+  {
+    title: "تایید",
+    dataIndex: "isConfirmed",
+    responsive: ["xl"],
+    render: (isConfirmed, { confirmedAt, confirmedBy }) => {
+      if (!isConfirmed)
+        return (
+          <Tag color="red" key="not-confirmed">
+            تایید نشده
+          </Tag>
+        );
+      return (
+        <div className="flex flex-col">
+          {!!confirmedBy && <span>{(confirmedBy as User)?.fullName}</span>}
+          {!!confirmedAt && <span>{moment(confirmedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
+        </div>
+      );
+    },
+  },
+  {
+    title: "نویسنده",
+    dataIndex: ["author", "fullName"],
+    responsive: ["md"],
   },
   {
     title: "وضعیت انتشار",
     dataIndex: "status",
     responsive: ["md"],
-    render: (status: string) => {
+    render: (status: string, { publishedAt }) => {
       return (
         <Tag color="blue" key={status}>
           {status}

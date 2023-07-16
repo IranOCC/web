@@ -7,7 +7,7 @@ import { Select } from "@/components/@panel/Select";
 
 import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function EstateOwnerBox({ form, loading }: AddEditComponentProps) {
+export default function EstateOwnerBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -24,6 +24,9 @@ export default function EstateOwnerBox({ form, loading }: AddEditComponentProps)
     register("owner", { required: "صاحب ملک نامشخص است" });
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <PanelCard title="صاحب ملک" loading={loading}>
@@ -38,6 +41,9 @@ export default function EstateOwnerBox({ form, loading }: AddEditComponentProps)
             apiPath="/tools/user/autoComplete"
             searchable
             noSpace
+            defaultValue={checkingData?.owner?.default}
+            disabled={checkingData?.owner?.disabled}
+            containerClassName={!!checkingData?.owner?.hidden ? "hidden" : ""}
           />
         </div>
       </PanelCard>
