@@ -87,7 +87,7 @@ export default function Page() {
 
 
 
-  return      (
+  return (
     <>
       <EditAddPage<BlogPostFormData, BlogPost>
         //

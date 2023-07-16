@@ -17,7 +17,7 @@ import EstateRegistrantBox from "@/components/@panel/Features/Estate/EstateRegis
 import EstateSetCategoryModal from "@/components/@panel/Features/Estate/EstateSetCategoryModal";
 import AddEditEstateCheckModal from "@/components/Modals/AddEstateCheckModal";
 
-const Center    =  (props: AddEditComponentProps) => {
+const Center = (props: AddEditComponentProps) => {
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
@@ -42,7 +42,7 @@ const Side = (props: AddEditComponentProps) => {
   return (
     <>
       <EstateMediaBox {...props} />
-      <EstateOwnerBox {...props} />
+      <EstateOwnerBox {...props} />ّّ
       <EstateTagsBox {...props} />
       <EstateVisibilityBox {...props} />
     </>
