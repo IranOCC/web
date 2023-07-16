@@ -51,7 +51,7 @@ const TextEditor = (props: IProps) => {
                   apiKey="c5202p0ybgpmcrokfgwn78asoww5xabm9hxbqxxvzxwgsmhg"
                   onEditorChange={field.onChange}
                   textareaName={field.name}
-                  {...field}
+                  value={field.value}
                   onInit={() => {
                     setLoader(false);
                   }}

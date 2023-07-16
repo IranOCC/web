@@ -56,7 +56,6 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
   return (
     <>
       <div className="grid grid-cols-1 gap-4 mb-4">
-        {}
         {!!detail && (
           <>
             {detail?.isConfirmed && (
@@ -103,6 +102,12 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
                 )}
               </>
             )}
+            <hr />
+            ثبت شده توسط: {detail?.createdBy?.fullName}
+            <br />
+            زمان ایجاد: {moment(detail?.createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
+            <br />
+            آخرین ویرایش: {moment(detail?.updatedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
           </>
         )}
         {!detail && (
@@ -129,43 +134,7 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
           defaultValue={checkingData?.office?.default}
           disabled={checkingData?.office?.disabled}
           containerClassName={!!checkingData?.office?.hidden ? "hidden" : ""}
-          // onChange={(v) => setSelectedOffice(v)}
         />
-
-        {/* {!!selectedOffice && (
-          <>
-            <Select
-              //
-              control={control}
-              name="createdBy"
-              error={errors.createdBy?.message}
-              loading={isSubmitting}
-              label="ایجاد کننده"
-              placeholder="انتخاب کنید"
-              apiPath={`/tools/office/${selectedOffice}/member/autoComplete`}
-              searchable
-              noSpace
-              defaultValue={checkingData?.createdBy?.default}
-              disabled={checkingData?.createdBy?.disabled}
-              containerClassName={!!checkingData?.createdBy?.hidden ? "hidden" : ""}
-            />
-            <Select
-              //
-              control={control}
-              name="confirmedBy"
-              error={errors.confirmedBy?.message}
-              loading={isSubmitting}
-              label="تایید کننده"
-              placeholder="انتخاب کنید"
-              apiPath={`/tools/office/${selectedOffice}/member/autoComplete`}
-              searchable
-              noSpace
-              defaultValue={checkingData?.confirmedBy?.default}
-              disabled={checkingData?.confirmedBy?.disabled}
-              containerClassName={!!checkingData?.confirmedBy?.hidden ? "hidden" : ""}
-            />
-          </>
-        )} */}
       </div>
     </>
   );

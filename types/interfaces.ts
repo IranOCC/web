@@ -281,6 +281,10 @@ export type BlogPost = {
     author?: User | string;
     office?: Office | string;
 
+
+    updatedAt?: Date;
+
+
     createdBy?: User | string;
     createdAt?: Date;
 

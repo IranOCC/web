@@ -73,6 +73,8 @@ export default function Page() {
 
     setDetail({
       ID: data._id,
+      updatedAt:data.updatedAt,
+      
       createdBy: data.createdBy,
       createdAt: data.createdAt,
 

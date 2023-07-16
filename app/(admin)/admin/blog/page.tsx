@@ -43,8 +43,9 @@ const columns: ColumnsType<BlogPost> = [
   },
   {
     title: "تایید",
+    dataIndex: "isConfirmed",
     responsive: ["xl"],
-    render: (value, { confirmedAt, confirmedBy, isConfirmed }) => {
+    render: (isConfirmed, { confirmedAt, confirmedBy }) => {
       if (!isConfirmed)
         return (
           <Tag color="red" key="not-confirmed">
