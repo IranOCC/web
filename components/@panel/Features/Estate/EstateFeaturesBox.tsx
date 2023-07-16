@@ -1,6 +1,6 @@
 import { CheckBox, Input } from "@/components/@panel/Input";
 import { EstateFormData } from "@/types/formsData";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/@panel/Select";
@@ -26,7 +26,7 @@ export default function EstateFeaturesBox(_props: AddEditComponentProps) {
   const [_loading, _setLoading] = useState(true);
   const [category, setCategory] = useState<EstateCategory | null>(null);
 
-  let ComponentBox: ({ form, loading, props }: AddEditComponentProps) => JSX.Element = () => <>{null}</>;
+  let ComponentBox: any = () => <>{null}</>;
 
   const api = useAxiosAuth();
   const getCategory = async () => {
@@ -62,10 +62,13 @@ export default function EstateFeaturesBox(_props: AddEditComponentProps) {
       break;
   }
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <PanelCard title="ویژگی های اختصاصی" loading={loading || _loading || !category}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 ">
           <Select
             //
             control={control}
@@ -73,12 +76,13 @@ export default function EstateFeaturesBox(_props: AddEditComponentProps) {
             error={errors.category?.message}
             loading={isSubmitting}
             label="دسته"
-            disabled
             placeholder="انتخاب کنید"
             apiPath="/tools/estate/category/autoComplete"
             noSpace
-            containerClassName="col-span-full"
             onChange={(v) => props.setSelectedCat(v)}
+            defaultValue={checkingData?.category?.default}
+            disabled={checkingData?.category?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.category?.hidden ? "hidden" : ""].join(" ")}
           />
           <ComponentBox {..._props} />
         </div>
@@ -112,6 +116,9 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
     register("features");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <Input
@@ -124,7 +131,9 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         error={errors.constructionYear?.message}
         loading={isSubmitting}
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.constructionYear?.default}
+        disabled={checkingData?.constructionYear?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.constructionYear?.hidden ? "hidden" : ""].join(" ")}
       />
 
       <Input
@@ -137,7 +146,9 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         error={errors.buildingArea?.message}
         loading={isSubmitting}
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.buildingArea?.default}
+        disabled={checkingData?.buildingArea?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.buildingArea?.hidden ? "hidden" : ""].join(" ")}
       />
 
       <Input
@@ -150,6 +161,9 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         error={errors.roomsCount?.message}
         loading={isSubmitting}
         noSpace
+        defaultValue={checkingData?.roomsCount?.default}
+        disabled={checkingData?.roomsCount?.disabled}
+        containerClassName={!!checkingData?.roomsCount?.hidden ? "hidden" : ""}
       />
       <Input
         //
@@ -161,6 +175,9 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         error={errors.mastersCount?.message}
         loading={isSubmitting}
         noSpace
+        defaultValue={checkingData?.mastersCount?.default}
+        disabled={checkingData?.mastersCount?.disabled}
+        containerClassName={!!checkingData?.mastersCount?.hidden ? "hidden" : ""}
       />
 
       <Select
@@ -179,7 +196,9 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         multiline
         lines={4}
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.features?.default}
+        disabled={checkingData?.features?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.features?.hidden ? "hidden" : ""].join(" ")}
       />
     </>
   );
@@ -207,6 +226,9 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
     register("features");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <Input
@@ -219,6 +241,9 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         error={errors.roomsCount?.message}
         loading={isSubmitting}
         noSpace
+        defaultValue={checkingData?.roomsCount?.default}
+        disabled={checkingData?.roomsCount?.disabled}
+        containerClassName={!!checkingData?.roomsCount?.hidden ? "hidden" : ""}
       />
       <Input
         //
@@ -230,6 +255,9 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         error={errors.mastersCount?.message}
         loading={isSubmitting}
         noSpace
+        defaultValue={checkingData?.mastersCount?.default}
+        disabled={checkingData?.mastersCount?.disabled}
+        containerClassName={!!checkingData?.mastersCount?.hidden ? "hidden" : ""}
       />
       <Input
         //
@@ -241,6 +269,9 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         error={errors.floorsCount?.message}
         loading={isSubmitting}
         noSpace
+        defaultValue={checkingData?.floorsCount?.default}
+        disabled={checkingData?.floorsCount?.disabled}
+        containerClassName={!!checkingData?.floorsCount?.hidden ? "hidden" : ""}
       />
       <Input
         //
@@ -252,6 +283,9 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         error={errors.unitsCount?.message}
         loading={isSubmitting}
         noSpace
+        defaultValue={checkingData?.unitsCount?.default}
+        disabled={checkingData?.unitsCount?.disabled}
+        containerClassName={!!checkingData?.unitsCount?.hidden ? "hidden" : ""}
       />
       <Input
         //
@@ -263,7 +297,9 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         error={errors.floor?.message}
         loading={isSubmitting}
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.floor?.default}
+        disabled={checkingData?.floor?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.floor?.hidden ? "hidden" : ""].join(" ")}
       />
       <Select
         //
@@ -281,7 +317,9 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         multiline
         lines={4}
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.features?.default}
+        disabled={checkingData?.features?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.features?.hidden ? "hidden" : ""].join(" ")}
       />
     </>
   );
@@ -305,6 +343,9 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
     register("floor", { required: "طبقه ملک را وارد کنید" });
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <Input
@@ -317,7 +358,9 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
         error={errors.buildingArea?.message}
         loading={isSubmitting}
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.buildingArea?.default}
+        disabled={checkingData?.buildingArea?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.buildingArea?.hidden ? "hidden" : ""].join(" ")}
       />
       <Input
         //
@@ -329,7 +372,9 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
         error={errors.floor?.message}
         loading={isSubmitting}
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.floor?.default}
+        disabled={checkingData?.floor?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.floor?.hidden ? "hidden" : ""].join(" ")}
       />
     </>
   );
@@ -353,6 +398,9 @@ export const EstateFeaturesLandBox = ({ form, loading, props }: AddEditComponent
     register("withOldBuilding");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <Select
@@ -367,7 +415,9 @@ export const EstateFeaturesLandBox = ({ form, loading, props }: AddEditComponent
         filterApi={{ categories: props?.selectedCat }}
         showTitle
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.features?.default}
+        disabled={checkingData?.features?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.features?.hidden ? "hidden" : ""].join(" ")}
       />
       <CheckBox //
         control={control}
@@ -376,7 +426,9 @@ export const EstateFeaturesLandBox = ({ form, loading, props }: AddEditComponent
         error={errors.withOldBuilding?.message}
         loading={isSubmitting}
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.withOldBuilding?.default}
+        disabled={checkingData?.withOldBuilding?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.withOldBuilding?.hidden ? "hidden" : ""].join(" ")}
       />
     </>
   );
@@ -400,6 +452,9 @@ export const EstateFeaturesHectareBox = ({ form, loading, props }: AddEditCompon
     register("withOldBuilding");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <Select
@@ -414,7 +469,9 @@ export const EstateFeaturesHectareBox = ({ form, loading, props }: AddEditCompon
         filterApi={{ categories: props?.selectedCat }}
         showTitle
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.features?.default}
+        disabled={checkingData?.features?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.features?.hidden ? "hidden" : ""].join(" ")}
       />
       <CheckBox //
         control={control}
@@ -423,7 +480,9 @@ export const EstateFeaturesHectareBox = ({ form, loading, props }: AddEditCompon
         error={errors.withOldBuilding?.message}
         loading={isSubmitting}
         noSpace
-        containerClassName="col-span-full"
+        defaultValue={checkingData?.withOldBuilding?.default}
+        disabled={checkingData?.withOldBuilding?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.withOldBuilding?.hidden ? "hidden" : ""].join(" ")}
       />
     </>
   );

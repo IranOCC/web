@@ -1,8 +1,8 @@
 "use client";
 
 import EditAddPage, { type AddEditComponentProps } from "@/components/@panel/EditAddPage";
-import { BlogPostFormData, } from "@/types/formsData";
-import { BlogPost, StorageFile, } from "@/types/interfaces";
+import { BlogPostFormData } from "@/types/formsData";
+import { BlogPost, StorageFile } from "@/types/interfaces";
 import { useForm } from "react-hook-form";
 import BlogPostBox from "@/components/@panel/Features/Blog/PostBox";
 import BlogPostCategoryBox from "@/components/@panel/Features/Blog/PostCategoryBox";
@@ -13,7 +13,6 @@ import BlogPostMediaBox from "@/components/@panel/Features/Blog/PostMediaBox";
 import AddEditPostCheckModal from "@/components/Modals/AddPostCheckModal";
 import BlogPostAuthorBox from "@/components/@panel/Features/Blog/PostAuthorBox";
 import { useState } from "react";
-
 
 const Center = (props: AddEditComponentProps) => {
   return (
@@ -43,8 +42,8 @@ export default function Page() {
   const form = useForm<BlogPostFormData>();
   const { setValue, getValues } = form;
 
-  const [checkingData, setCheckingData] = useState(null)
-  const [detail, setDetail] = useState<any>(null)
+  const [checkingData, setCheckingData] = useState(null);
+  const [detail, setDetail] = useState<any>(null);
 
   const setInitialData = (data: BlogPost) => {
     setValue("_id", data._id);
@@ -55,7 +54,7 @@ export default function Page() {
     setValue("slug", data.slug);
 
     // pictures
-    if(data.image) setValue("gallery", [data.image as StorageFile]);
+    if (data.image) setValue("gallery", [data.image as StorageFile]);
     else setValue("gallery", []);
     setValue("image", data.image);
 
@@ -73,19 +72,17 @@ export default function Page() {
 
     setDetail({
       ID: data._id,
-      updatedAt:data.updatedAt,
-      
+      updatedAt: data.updatedAt,
+
       createdBy: data.createdBy,
       createdAt: data.createdAt,
 
       isConfirmed: data.isConfirmed,
-      
+
       confirmedBy: data.confirmedBy,
       confirmedAt: data.confirmedAt,
-    })
+    });
   };
-
-
 
   return (
     <>
@@ -94,15 +91,12 @@ export default function Page() {
         Center={Center}
         Side={Side}
         form={form}
-        componentProps={{checkingData, detail}}
+        componentProps={{ checkingData, detail }}
         setInitialData={setInitialData}
         endpoint="blog/post"
-
         TopSubmitCard={BlogPostRegistrantBox}
       />
-      <AddEditPostCheckModal 
-        set={setCheckingData}
-      />
+      <AddEditPostCheckModal set={setCheckingData} />
     </>
   );
 }

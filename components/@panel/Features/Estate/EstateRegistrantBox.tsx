@@ -58,7 +58,7 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 ">
+      <div className="mb-4 grid grid-cols-1 gap-4">
         {!!detail && (
           <>
             {detail?.isConfirmed && (
@@ -90,7 +90,7 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
               <>
                 <Alert severity="warning" variant="filled">
                   <AlertTitle>تایید نشده</AlertTitle>
-                  <p>پست هنوز تایید نشده است و تا زمانی که تایید نشود منتشر نخواهد شد</p>
+                  <p>فایل هنوز تایید نشده است و تا زمانی که تایید نشود منتشر نخواهد شد</p>
                 </Alert>
                 {detail?.allowConfirm && (
                   <Button
@@ -117,7 +117,7 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
           <>
             <Alert severity="info" variant="filled">
               <AlertTitle>عدم انتشار قبل از تایید</AlertTitle>
-              <p>این پست تا هنگامیکه توسط مدیر تایید نشود، منتشر نخواهد شد</p>
+              <p>این فایل تا هنگامیکه توسط مدیر تایید نشود، منتشر نخواهد شد</p>
               <p>در صورتی که مدیر هستید، پس از انتشار می توانید آن را تایید کنید</p>
             </Alert>
           </>

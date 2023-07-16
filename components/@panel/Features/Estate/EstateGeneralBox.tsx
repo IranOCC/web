@@ -5,7 +5,6 @@ import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/@panel/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
-// import { NumericFormat } from "react-number-format";
 
 export default function EstateGeneralBox({ form, loading, props }: AddEditComponentProps) {
   const {
@@ -38,10 +37,13 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
     setValue("totalPrice", parseInt(m) || 0, { shouldValidate: true });
   };
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <PanelCard title="ویژگی های عمومی" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 ">
           <Input
             //
             control={control}
@@ -51,7 +53,9 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             error={errors.code?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-full"
+            defaultValue={checkingData?.code?.default}
+            disabled={checkingData?.code?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.code?.hidden ? "hidden" : ""].join(" ")}
           />
           <Select
             //
@@ -64,6 +68,9 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             apiPath="/tools/estate/type/autoComplete"
             filterApi={{ categories: props?.selectedCat }}
             noSpace
+            defaultValue={checkingData?.type?.default}
+            disabled={checkingData?.type?.disabled}
+            containerClassName={!!checkingData?.type?.hidden ? "hidden" : ""}
           />
           <Select
             //
@@ -76,6 +83,9 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             apiPath="/tools/estate/documentType/autoComplete"
             filterApi={{ categories: props?.selectedCat }}
             noSpace
+            defaultValue={checkingData?.documentType?.default}
+            disabled={checkingData?.documentType?.disabled}
+            containerClassName={!!checkingData?.documentType?.hidden ? "hidden" : ""}
           />
           {/* <NumericFormat /> */}
           <Input
@@ -89,6 +99,9 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             loading={isSubmitting}
             noSpace
             onKeyUp={(e: any) => calculateTotalPrice(e.target.value, "area")}
+            defaultValue={checkingData?.area?.default}
+            disabled={checkingData?.area?.disabled}
+            containerClassName={!!checkingData?.area?.hidden ? "hidden" : ""}
           />
           <Input
             //
@@ -100,6 +113,9 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             loading={isSubmitting}
             noSpace
             onKeyUp={(e: any) => calculateTotalPrice(e.target.value, "price")}
+            defaultValue={checkingData?.price?.default}
+            disabled={checkingData?.price?.disabled}
+            containerClassName={!!checkingData?.price?.hidden ? "hidden" : ""}
           />
           <Input
             //
@@ -110,7 +126,9 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             error={errors.totalPrice?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-full"
+            defaultValue={checkingData?.totalPrice?.default}
+            disabled={checkingData?.totalPrice?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.totalPrice?.hidden ? "hidden" : ""].join(" ")}
           />
           <Input
             //
@@ -122,7 +140,9 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             noSpace
             multiline
             lines={4}
-            containerClassName="col-span-full"
+            defaultValue={checkingData?.description?.default}
+            disabled={checkingData?.description?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.description?.hidden ? "hidden" : ""].join(" ")}
           />
           <CheckBox //
             control={control}
@@ -131,7 +151,9 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             error={errors.canBarter?.message}
             loading={isSubmitting}
             noSpace
-            containerClassName="col-span-full"
+            defaultValue={checkingData?.canBarter?.default}
+            disabled={checkingData?.canBarter?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.canBarter?.hidden ? "hidden" : ""].join(" ")}
           />
         </div>
       </PanelCard>

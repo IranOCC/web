@@ -5,8 +5,8 @@ import { useState } from "react";
 import EstateBox from "@/components/@panel/Features/Estate/EstateBox";
 import EstateLocationBox from "@/components/@panel/Features/Estate/EstateLocationBox";
 import EstateGeneralBox from "@/components/@panel/Features/Estate/EstateGeneralBox";
-import { EstateFormData,  } from "@/types/formsData";
-import { Estate,  } from "@/types/interfaces";
+import { EstateFormData } from "@/types/formsData";
+import { Estate } from "@/types/interfaces";
 import { useForm } from "react-hook-form";
 import EstateVisibilityBox from "@/components/@panel/Features/Estate/EstateVisibilityBox";
 import EstateMediaBox from "@/components/@panel/Features/Estate/EstateMediaBox";
@@ -26,7 +26,7 @@ const Center = (props: AddEditComponentProps) => {
         </div>
         <div className="col-span-full md:col-span-1">
           <EstateGeneralBox {...props} />
-        </div> 
+        </div>
         <div className="col-span-full md:col-span-1">
           <EstateFeaturesBox {...props} />
         </div>
@@ -42,7 +42,7 @@ const Side = (props: AddEditComponentProps) => {
   return (
     <>
       <EstateMediaBox {...props} />
-      <EstateOwnerBox {...props} />ّّ
+      <EstateOwnerBox {...props} />
       <EstateTagsBox {...props} />
       <EstateVisibilityBox {...props} />
     </>
@@ -53,13 +53,11 @@ export default function Page() {
   const form = useForm<EstateFormData>();
   const { setValue, getValues } = form;
 
-const [checkingData, setCheckingData] = useState(null)
-  const [detail, setDetail] = useState<any>(null)
+  const [checkingData, setCheckingData] = useState<any>(null);
+  const [detail, setDetail] = useState<any>(null);
 
   const setInitialData = (data: Estate) => {
-
-    setSelectedCat(data.category)
-
+    setSelectedCat(data.category);
 
     setValue("_id", data._id);
 
@@ -80,7 +78,6 @@ const [checkingData, setCheckingData] = useState(null)
     setValue("tags", data.tags);
     setValue("code", data.code);
 
-
     setValue("category", data.category);
     setValue("type", data.type);
     setValue("documentType", data.documentType);
@@ -90,7 +87,6 @@ const [checkingData, setCheckingData] = useState(null)
     setValue("description", data.description);
     setValue("canBarter", data.canBarter);
 
-
     setValue("constructionYear", data.constructionYear);
     setValue("roomsCount", data.roomsCount);
     setValue("mastersCount", data.mastersCount);
@@ -99,7 +95,6 @@ const [checkingData, setCheckingData] = useState(null)
     setValue("floor", data.floor);
     setValue("withOldBuilding", data.withOldBuilding);
     setValue("features", data.features);
-
 
     setValue("province", data.province);
     setValue("city", data.city);
@@ -112,24 +107,21 @@ const [checkingData, setCheckingData] = useState(null)
     setValue("owner", data.owner);
     setValue("office", data.office);
 
-
     setDetail({
       ID: data._id,
-      updatedAt:data.updatedAt,
-      
+      updatedAt: data.updatedAt,
+
       createdBy: data.createdBy,
       createdAt: data.createdAt,
 
       isConfirmed: data.isConfirmed,
-      
+
       confirmedBy: data.confirmedBy,
       confirmedAt: data.confirmedAt,
-    })
+    });
   };
 
   const [selectedCat, setSelectedCat] = useState<string | undefined | null>(null);
-
-
 
   return (
     <>
@@ -140,22 +132,19 @@ const [checkingData, setCheckingData] = useState(null)
         form={form}
         setInitialData={setInitialData}
         endpoint="estate"
-        componentProps={{ selectedCat, setSelectedCat,checkingData, detail }}
-
+        componentProps={{ selectedCat, setSelectedCat, checkingData, detail }}
         TopSubmitCard={EstateRegistrantBox}
       />
       {/*  */}
       <EstateSetCategoryModal
         //
-        open={!!checkingData && selectedCat === null}
+        open={!!checkingData && checkingData?.allowSelectCategory && !selectedCat}
         setCategory={(val: string) => {
           setValue("category", val, { shouldValidate: true });
           setSelectedCat(val);
         }}
       />
-      <AddEditEstateCheckModal 
-        set={setCheckingData}
-      />
+      <AddEditEstateCheckModal set={setCheckingData} />
     </>
   );
 }

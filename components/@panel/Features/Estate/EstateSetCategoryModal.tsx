@@ -38,7 +38,7 @@ export default function EstateSetCategoryModal({ open, setOpen, setCategory }: a
       >
         {!loading && (
           <>
-            <RadioGroup value={selected} onChange={(value) => setSelected(value)}>
+            <RadioGroup value={selected} onChange={(value: any) => setSelected(value)}>
               <div className="grid grid-cols-2 gap-4 py-4">
                 {categories.map(({ value, title }: { value: string; title: string }, index) => {
                   return (
@@ -47,7 +47,9 @@ export default function EstateSetCategoryModal({ open, setOpen, setCategory }: a
                       value={value}
                       key={index}
                     >
-                      {({ checked }) => <div className={"bg-slate-100 text-slate-800 py-6 cursor-pointer font-semibold transition-colors hover:bg-yellow-300 hover:text-white rounded text-center flex justify-center items-center" + (checked ? " bg-yellow-300 text-white" : "")}>{title}</div>}
+                      {({ checked }: { checked: boolean }) => (
+                        <div className={"bg-slate-100 text-slate-800 flex cursor-pointer items-center justify-center rounded py-6 text-center font-semibold transition-colors hover:bg-yellow-300 hover:text-white" + (checked ? " bg-yellow-300 text-white" : "")}>{title}</div>
+                      )}
                     </RadioGroup.Option>
                   );
                 })}
