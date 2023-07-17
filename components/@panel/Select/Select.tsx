@@ -136,32 +136,32 @@ const Select = (props: IProps) => {
     setDataLoading(false);
   }, [open]);
 
-  const _className = `placeholder:text-left ${
+  const _className = `placeholder:text-left overflow-x-hidden ${
     disabled ? "cursor-not-allowed bg-gray-200" : "cursor-default bg-slate-100"
   } rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start pe-8 border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className}`;
 
   return (
-    <div className={"w-full relative" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-      {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
+    <div className={"relative w-full" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+      {label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
 
       <ClickAwayListener
         onClickAway={() => {
           setOpen(false);
         }}
       >
-        <div className="w-full relative" ref={anchorRef}>
+        <div className="relative w-full" ref={anchorRef}>
           <div
             //
             className={_className}
             dir={direction}
-            style={{ height: multiline ? (lines || 4) * 25.5 + "px" : "" }}
+            style={{ height: multiline ? (lines || 4) * 30 + "px" : "" }}
             onClick={(e) => {
               if (disabled || loading) return;
               console.log((e.target as any)?.nodeName);
               if (!["LI", "INPUT"].includes((e.target as any)?.nodeName)) setOpen((o) => !o);
             }}
           >
-            <div className="h-5 w-0 float-right" />
+            <div className="float-right h-5 w-0" />
             {!!dataLoading && "انتخاب نشده"}
             {!dataLoading && !dataList && "در حال دریافت ..."}
             <Controller
@@ -199,14 +199,14 @@ const Select = (props: IProps) => {
             />
           </div>
 
-          <span className={`absolute top-0 end-0 text-secondary  flex items-center justify-center h-full me-2.5 text-md ms-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
+          <span className={`text-md absolute top-0 flex  h-full items-center justify-center text-secondary transition-transform ms-1 me-2.5 end-0 ${open ? "rotate-180" : "rotate-0"}`}>
             <ArrowDownIcon />
           </span>
-          {icon && <span className={`absolute top-0 flex items-center justify-center h-full w-12 text-sm${iconClass} border-e${bordersClass}`}>{icon}</span>}
+          {icon && <span className={`absolute top-0 flex h-full w-12 items-center justify-center text-sm${iconClass} border-e${bordersClass}`}>{icon}</span>}
         </div>
       </ClickAwayListener>
 
-      {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
+      {helperText && <p className={"mt-1 block text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
     </div>
   );
 };
@@ -299,7 +299,7 @@ const FieldComponent = (props: FieldComponentType) => {
           tagsMode ? (
             <div className="flex flex-wrap gap-1">
               {(objectValue as SelectDataType[]).map((item: SelectDataType, index) => (
-                <span key={index} className="cursor-default bg-secondary text-white px-2 rounded flex justify-center items-center">
+                <span key={index} className="flex cursor-default items-center justify-center rounded bg-secondary px-2 text-white">
                   {item.title}
                 </span>
               ))}
@@ -329,7 +329,7 @@ const FieldComponent = (props: FieldComponentType) => {
     <>
       {!dataLoading && _value}
       {!!dataList && (
-        <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="shadow-lg z-20">
+        <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="z-20 shadow-lg">
           {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}
@@ -338,15 +338,15 @@ const FieldComponent = (props: FieldComponentType) => {
               }}
             >
               <Paper style={{ boxShadow: "none" }}>
-                <div className="relative bg-white w-full border border-gray-300  mt-1">
+                <div className="relative mt-1 w-full border border-gray-300  bg-white">
                   {searchable ? (
-                    <li className="w-full relative flex items-center">
+                    <li className="relative flex w-full items-center">
                       <input
                         //
                         type="text"
                         disabled={disabled || loading}
                         placeholder="جستجو ..."
-                        className={`w-full placeholder:text-gray-400 bg-white focus:bg-white p-2.5 text-gray-900 focus:ring-0 block text-sm border-b focus:border-gray-300 border-gray-300 border-0`}
+                        className={`block w-full border-0 border-b border-gray-300 bg-white p-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-gray-300 focus:bg-white focus:ring-0`}
                         dir={direction}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
@@ -356,7 +356,7 @@ const FieldComponent = (props: FieldComponentType) => {
                       </div>
                     </li>
                   ) : null}
-                  <ul className="text-sm text-gray-700 dark:text-gray-200 max-h-60 overflow-x-hidden">
+                  <ul className="max-h-60 overflow-x-hidden text-sm text-gray-700 dark:text-gray-200">
                     <SelectOption
                       //
                       title="انتخاب نشده"
@@ -412,7 +412,7 @@ const FieldComponent = (props: FieldComponentType) => {
                     })}
                     {dataList.length === 0 && <SelectOption title="موردی پیدا نشد" key={-1} selected={false} />}
                   </ul>
-                  <div className={"absolute bg-slate-50 opacity-70 w-full bottom-0 items-center justify-center" + (searchable ? " top-10" : "") + (dataLoading ? " flex" : " hidden")}>
+                  <div className={"bg-slate-50 absolute bottom-0 w-full items-center justify-center opacity-70" + (searchable ? " top-10" : "") + (dataLoading ? " flex" : " hidden")}>
                     <Spin />
                   </div>
                 </div>
@@ -432,7 +432,7 @@ const SelectOption = ({ onClick, title, selected }: { onClick?: any; title: stri
       role="button"
       aria-label={"list item " + title}
       onClick={onClick}
-      className={`relative flex items-center justify-between cursor-pointer px-4 py-2 ${selected ? "bg-disable " : onClick ? "hover:bg-gray-100" : ""}`}
+      className={`relative flex cursor-pointer items-center justify-between px-4 py-2 ${selected ? "bg-disable " : onClick ? "hover:bg-gray-100" : ""}`}
     >
       {title}
     </li>
