@@ -31,7 +31,7 @@ const LocationChooser = (props: IProps) => {
   }
 
   const def = defaultValue?.split(",");
-  const [initialCenter, setInitialCenter] = useState<L.LatLngExpression>(def ? [+def[0], +def[1]] : [0, 0]);
+  const [center, setCenter] = useState<L.LatLngTuple>(def ? [+def[0], +def[1]] : [0, 0]);
   //
   return (
     <>
@@ -41,17 +41,17 @@ const LocationChooser = (props: IProps) => {
         <div className="relative w-full">
           <Controller
             render={({ field }) => {
-              let center: L.LatLngExpression | null = null;
+              let value: L.LatLngExpression | null = null;
               if (typeof field.value === "string") {
                 const m = field.value.split(",").map((v) => +v);
-                center = [m[0], m[1]];
+                value = [m[0], m[1]];
               }
 
               return (
                 <>
                   <MapContainer
                     //
-                    center={center || initialCenter}
+                    center={center}
                     zoom={15}
                     scrollWheelZoom={true}
                     zoomControl={false}
@@ -66,19 +66,16 @@ const LocationChooser = (props: IProps) => {
                     />
                     <DraggableMarker
                       //
-                      isSelected={!!field.value}
-                      // @ts-ignore
-                      location={field.value || `${initialCenter[0]},${initialCenter[1]}`}
-                      setLocation={(data: [number, number]) => field.onChange(data.join(","))}
+                      isSelected={!!value}
+                      location={value || center}
+                      setLocation={(data: L.LatLngTuple) => field.onChange(data.join(","))}
                       disabled={disabled || loading || readOnly}
                     />
-
                     <LocationEvent
                       //
-                      setCenter={(data: [number, number]) => setInitialCenter(data)}
-                      // @ts-ignore
-                      center={`${initialCenter[0]},${initialCenter[1]}`}
-                      autoLocate={!field.value}
+                      setCenter={(data: L.LatLngTuple) => setCenter(data)}
+                      center={center}
+                      autoLocate={!value}
                     />
                   </MapContainer>
                 </>
@@ -116,18 +113,18 @@ export type IProps = {
   success?: ReactNode;
 };
 
-function LocationEvent({ center, setCenter, autoLocate }: { center: string; setCenter: any; autoLocate: any }) {
+function LocationEvent({ center, setCenter, autoLocate }: { center: L.LatLngTuple; setCenter: any; autoLocate: any }) {
   //
   //
   const map = useMapEvents({
     locationfound(e) {
       toast.success("موقعیت شما پیدا شد");
-      setCenter([e.latlng?.lat, e.latlng?.lng, map.getZoom()]);
+      setCenter([e.latlng?.lat, e.latlng?.lng]);
     },
-    moveend(e) {
-      const c = map.getCenter();
-      setCenter([c.lat, c.lng, map.getZoom()]);
-    },
+    // moveend(e) {
+    //   const c = map.getCenter();
+    //   setCenter([c.lat, c.lng]);
+    // },
     locationerror(e) {
       console.log("LocErr:", e);
       toast.error("خطا در دریافت موقعیت");
@@ -136,8 +133,7 @@ function LocationEvent({ center, setCenter, autoLocate }: { center: string; setC
 
   useEffect(() => {
     if (center) {
-      const loc = center.split(",");
-      map.panTo(new L.LatLng(+loc[0], +loc[1]));
+      map.panTo(new L.LatLng(center[0], center[1]));
     }
   }, [center]);
 
@@ -158,8 +154,7 @@ function LocationEvent({ center, setCenter, autoLocate }: { center: string; setC
   );
 }
 
-function DraggableMarker({ location, setLocation, isSelected, disabled }: { location: string; setLocation: any; isSelected?: boolean; disabled?: boolean }) {
-  const loc = location.split(",");
+function DraggableMarker({ location, setLocation, isSelected, disabled }: { location: L.LatLngTuple; setLocation: any; isSelected?: boolean; disabled?: boolean }) {
   const markerRef = useRef<any>(null);
   const eventHandlers = useMemo(
     () => ({
@@ -186,7 +181,7 @@ function DraggableMarker({ location, setLocation, isSelected, disabled }: { loca
       icon={markerIcon}
       draggable={!disabled}
       eventHandlers={eventHandlers}
-      position={{ lat: +loc[0], lng: +loc[1] }}
+      position={{ lat: location[0], lng: location[1] }}
       ref={markerRef}
     />
   );
