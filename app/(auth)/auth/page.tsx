@@ -5,7 +5,7 @@ import { Input } from "@/components/@panel/Input";
 import { LoginPhoneOtpFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
-import axios from "@/lib/axios";
+import axios, { handleFieldsError } from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -45,7 +45,13 @@ export default function Page() {
       router.replace(url);
       setSendAgainTime(moment().add(2, "minutes").toDate());
       return true;
-    } catch (error) {}
+    } catch (error) {
+      handleFieldsError(error, setError);
+      setError("phone", {
+        type: "manual",
+        message: "خطایی رخ داده است",
+      });
+    }
   };
   const loginByOtp = async (data: LoginPhoneOtpFormData) => {
     const result = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });
@@ -92,8 +98,8 @@ export default function Page() {
 
   return (
     <>
-      <div className="h-full flex flex-col justify-center items-center">
-        <h2 className="text-secondary text-center font-bold mb-2">ورود یا عضویت</h2>
+      <div className="flex h-full flex-col items-center justify-center">
+        <h2 className="mb-2 text-center font-bold text-secondary">ورود یا عضویت</h2>
         <form onSubmit={handleSubmit(isStep2 ? loginByOtp : sendOtp)}>
           <Input
             /* */
@@ -110,7 +116,7 @@ export default function Page() {
           />
           {isStep2 && (
             <>
-              <span className="block select-none text-center font-medium w-full text-sm text-secondary mt-2 mb-6 cursor-pointer" onClick={editNumber}>
+              <span className="mb-6 mt-2 block w-full cursor-pointer select-none text-center text-sm font-medium text-secondary" onClick={editNumber}>
                 ویرایش شماره
               </span>
               <Input
@@ -126,7 +132,7 @@ export default function Page() {
                 icon={<QrcodeIcon />}
                 className="text-center tracking-wider"
               />
-              <span className={`block select-none text-center font-medium w-full text-sm mt-2 ${countDown > 0 ? "text-gray-500 cursor-not-allowed" : "text-secondary cursor-pointer"}`} onClick={sendOtpAgain}>
+              <span className={`mt-2 block w-full select-none text-center text-sm font-medium ${countDown > 0 ? "cursor-not-allowed text-gray-500" : "cursor-pointer text-secondary"}`} onClick={sendOtpAgain}>
                 ارسال مجدد {countDown > 0 && "(" + moment.duration(countDown, "milliseconds").asSeconds().toFixed() + ")"}
               </span>
             </>

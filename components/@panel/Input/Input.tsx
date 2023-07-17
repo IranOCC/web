@@ -73,7 +73,7 @@ const Input = (props: IProps) => {
     inputClass += " ltr:pl-32 rtl:pl-32";
   }
 
-  const _className = `${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-100"} rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className} `;
+  const _className = `${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-100"} rounded overflow-x-hidden focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className} `;
   return (
     <div className={"relative z-10 w-full" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
       {label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
@@ -88,7 +88,7 @@ const Input = (props: IProps) => {
             if (tagsMode)
               return (
                 <>
-                  <div className={_className} style={{ height: multiline ? (lines || 4) * 25.5 + "px" : "" }} dir={direction}>
+                  <div className={_className} style={{ height: multiline ? (lines || 4) * 30 + "px" : "" }} dir={direction}>
                     <div className="flex flex-wrap gap-1">
                       {
                         //
@@ -112,7 +112,7 @@ const Input = (props: IProps) => {
                         //
                         // enterKeyHint="enter"
                         type="search"
-                        className={`bg-transparent ${disabled ? "cursor-not-allowed" : ""} block w-full min-w-[100px] flex-1 border-none text-sm text-gray-900 outline-none focus:outline-none ${inputClass}`}
+                        className={`bg-transparent p-0 !ring-0 ${disabled ? "cursor-not-allowed" : ""} block w-full min-w-[100px] flex-1 border-none text-sm text-gray-900 outline-none focus:outline-none ${inputClass}`}
                         disabled={disabled || loading}
                         placeholder={placeholder}
                         readOnly={readOnly || loading}
