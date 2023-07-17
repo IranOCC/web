@@ -147,9 +147,9 @@ export type EstateFormData = {
     category: string;
     type?: string;
     documentType?: string;
-    area: number;
-    price: number;
-    totalPrice?: number;
+    area: string | number;
+    price: string | number;
+    totalPrice: string | number;
     description?: string;
     canBarter?: boolean;
 

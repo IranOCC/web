@@ -48,25 +48,27 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
   const noSubmit = componentProps?.checkingData?.allowSubmit !== undefined && componentProps.checkingData.allowSubmit === false;
 
   // submit
-  const onSubmit = (redirect: boolean = SECTION ? false : true) => async (data: F) => {
-    if (noSubmit) return;
-    if (beforeSubmit) data = beforeSubmit(data);
-    try {
-      if (isNew) {
-        const { data: result } = await api.post(`/admin/${endpoint}`, data);
-        toast.success("با موفقیت ایجاد شد");
-        if (redirect) router.replace(baseRoute);
-        else router.replace(baseRoute + result._id);
-      } else {
-        await api.patch(`/admin/${endpoint}/` + (SECTION || ID), data);
-        toast.success("با موفقیت ویرایش شد");
-        if (redirect) router.replace(baseRoute);
-        else window.location.reload();
+  const onSubmit =
+    (redirect: boolean = SECTION ? false : true) =>
+    async (data: F) => {
+      if (noSubmit) return;
+      if (beforeSubmit) data = beforeSubmit(data);
+      try {
+        if (isNew) {
+          const { data: result } = await api.post(`/admin/${endpoint}`, data);
+          toast.success("با موفقیت ایجاد شد");
+          if (redirect) router.replace(baseRoute);
+          else router.replace(baseRoute + result._id);
+        } else {
+          await api.patch(`/admin/${endpoint}/` + (SECTION || ID), data);
+          toast.success("با موفقیت ویرایش شد");
+          if (redirect) router.replace(baseRoute);
+          else window.location.reload();
+        }
+      } catch (error) {
+        handleFieldsError(error, setError);
       }
-    } catch (error) {
-      handleFieldsError(error, setError);
-    }
-  };
+    };
 
   const [dataLoading, setDataLoading] = useState<boolean>(false);
   const getData = async () => {

@@ -112,7 +112,7 @@ export interface Estate {
 
     area: number;
     price: number;
-    totalPrice?: number;
+    totalPrice: number;
 
     description?: string;
     canBarter?: boolean;

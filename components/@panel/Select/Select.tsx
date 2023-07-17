@@ -274,8 +274,14 @@ const FieldComponent = (props: FieldComponentType) => {
 
   // ==========================>
   useEffect(() => {
-    if (!dataList.some(({ value }) => value === field.value)) {
-      field.onChange(null);
+    if (!multiple) {
+      if (!dataList.some(({ value }) => value === field.value)) {
+        field.onChange(null);
+      }
+    } else {
+      if (dataList.filter(({ value }) => field.value.includes(value)).length !== field.value.length) {
+        field.onChange([]);
+      }
     }
   }, [dataList]);
 

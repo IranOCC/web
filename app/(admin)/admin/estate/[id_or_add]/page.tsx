@@ -121,6 +121,12 @@ export default function Page() {
     });
   };
 
+  const beforeSubmit = (data: EstateFormData) => {
+    data.price = parseInt(data.price.toString().replaceAll(",", ""));
+    data.totalPrice = parseInt(data.totalPrice.toString().replaceAll(",", ""));
+    return data;
+  };
+
   const [selectedCat, setSelectedCat] = useState<string | undefined | null>(null);
 
   return (
@@ -131,6 +137,7 @@ export default function Page() {
         Side={Side}
         form={form}
         setInitialData={setInitialData}
+        beforeSubmit={beforeSubmit}
         endpoint="estate"
         componentProps={{ selectedCat, setSelectedCat, checkingData, detail }}
         TopSubmitCard={EstateRegistrantBox}

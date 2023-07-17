@@ -35,10 +35,10 @@ const LocationChooser = (props: IProps) => {
   //
   return (
     <>
-      <div className={"w-full relative z-10" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-        {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
+      <div className={"relative z-10 w-full" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+        {label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
 
-        <div className="w-full relative">
+        <div className="relative w-full">
           <Controller
             render={({ field }) => {
               let center: L.LatLngExpression | null = null;
@@ -59,13 +59,13 @@ const LocationChooser = (props: IProps) => {
                     scrollWheelZoom={true}
                     zoomControl
                     attributionControl
-                    style={{ height: 300, width: "100%" }}
-                    className={"rounded " + className + " flex justify-center items-center"}
+                    style={{ height: 400, width: "100%" }}
+                    className={"rounded " + className + " flex items-center justify-center"}
                   >
-                    <div className="text-blue-500 w-12 h-12 -mt-6 z-[9999]">
+                    <div className="z-[9999] -mt-6 h-12 w-12 text-blue-500">
                       <MarkerIcon />
                     </div>
-                    {!center && <div className="text-blue-500 font-bold rounded absolute top-3 bg-white p-2 z-[9999]">لوکیشن ثبت نشده است</div>}
+                    {!center && <div className="absolute top-3 z-[9999] rounded bg-white p-2 font-bold text-blue-500">لوکیشن ثبت نشده است</div>}
 
                     <TileLayer
                       //
@@ -86,7 +86,7 @@ const LocationChooser = (props: IProps) => {
             control={control}
           />
         </div>
-        {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
+        {helperText && <p className={"mt-1 block text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
       </div>
     </>
   );
@@ -151,7 +151,7 @@ function LocationEvent({ location, setLocation }: { location: [number, number]; 
           toast.info("در حال دریافت موقعیت مکانی ...");
           map.locate();
         }}
-        className="text-white font-bold absolute rounded left-1 bottom-1 bg-orange-500 p-2 z-[9999]"
+        className="absolute bottom-1 left-1 z-[9999] rounded bg-orange-500 p-2 font-bold text-white"
       >
         موقعیت من
       </div>
