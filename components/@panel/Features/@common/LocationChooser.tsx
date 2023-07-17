@@ -143,7 +143,7 @@ function LocationEvent({ isSelected, marker, center, setCenter, autoLocate }: { 
 
   const locateToMarker = () => {
     setCenter(marker);
-    map.flyTo(new L.LatLng(marker[0], marker[1]), 15, { duration: 500 });
+    map.flyTo(new L.LatLng(marker[0], marker[1]), 15, { duration: 600 });
   };
 
   return (
