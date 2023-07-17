@@ -1,7 +1,7 @@
 import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Controller } from "react-hook-form";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import L from "leaflet";
 import MarkerIcon from "@/components/Icons/MarkerIcon";
 import { toast } from "@/lib/toast";
@@ -30,8 +30,8 @@ const LocationChooser = (props: IProps) => {
     labelClass = " text-orange-500";
   }
 
-  const initialLocation: L.LatLngExpression = [0.0, 0.0];
-
+  const def = defaultValue?.split(",");
+  const [initialCenter, setInitialCenter] = useState<L.LatLngExpression>(def ? [+def[0], +def[1]] : [0, 0]);
   //
   return (
     <>
@@ -42,10 +42,7 @@ const LocationChooser = (props: IProps) => {
           <Controller
             render={({ field }) => {
               let center: L.LatLngExpression | null = null;
-              if (Array.isArray(field.value)) {
-                const m = field.value as number[];
-                center = [m[0], m[1]];
-              } else if (typeof field.value === "string") {
+              if (typeof field.value === "string") {
                 const m = field.value.split(",").map((v) => +v);
                 center = [m[0], m[1]];
               }
@@ -54,7 +51,7 @@ const LocationChooser = (props: IProps) => {
                 <>
                   <MapContainer
                     //
-                    center={center || initialLocation}
+                    center={center || initialCenter}
                     zoom={15}
                     scrollWheelZoom={true}
                     zoomControl={false}
@@ -62,26 +59,31 @@ const LocationChooser = (props: IProps) => {
                     style={{ height: 400, width: "100%" }}
                     className={"rounded " + className + " flex items-center justify-center"}
                   >
-                    <div className="z-[9999] -mt-6 h-12 w-12 text-blue-500">
-                      <MarkerIcon />
-                    </div>
-                    {!center && <div className="absolute top-3 z-[9999] rounded bg-white p-2 font-bold text-blue-500">لوکیشن ثبت نشده است</div>}
-
                     <TileLayer
                       //
                       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
+                    <DraggableMarker
+                      //
+                      isSelected={!!field.value}
+                      // @ts-ignore
+                      location={field.value || `${initialCenter[0]},${initialCenter[1]}`}
+                      setLocation={(data: [number, number]) => field.onChange(data.join(","))}
+                      disabled={disabled || loading || readOnly}
+                    />
+
                     <LocationEvent
                       //
-                      setLocation={(data: [number, number]) => field.onChange(data.join(","))}
-                      location={field.value}
+                      setCenter={(data: [number, number]) => setInitialCenter(data)}
+                      // @ts-ignore
+                      center={`${initialCenter[0]},${initialCenter[1]}`}
+                      autoLocate={!field.value}
                     />
                   </MapContainer>
                 </>
               );
             }}
-            defaultValue={defaultValue}
             name={name}
             control={control}
           />
@@ -97,7 +99,7 @@ export default LocationChooser;
 export type IProps = {
   name: string;
   control: any;
-  defaultValue?: [number, number, number];
+  defaultValue?: string;
   noSpace?: boolean;
   className?: string;
   containerClassName?: string;
@@ -114,61 +116,78 @@ export type IProps = {
   success?: ReactNode;
 };
 
-function LocationEvent({ location, setLocation }: { location: string; setLocation: any }) {
+function LocationEvent({ center, setCenter, autoLocate }: { center: string; setCenter: any; autoLocate: any }) {
   //
   //
   const map = useMapEvents({
     locationfound(e) {
-      toast.success("موقعیت پیدا شد");
-      setLocation([e.latlng?.lat, e.latlng?.lng, map.getZoom()]);
+      toast.success("موقعیت شما پیدا شد");
+      setCenter([e.latlng?.lat, e.latlng?.lng, map.getZoom()]);
     },
     moveend(e) {
       const c = map.getCenter();
-      setLocation([c.lat, c.lng, map.getZoom()]);
+      setCenter([c.lat, c.lng, map.getZoom()]);
     },
     locationerror(e) {
-      console.log(e, "LocErr");
-      toast.error("خطای موقعیت");
+      console.log("LocErr:", e);
+      toast.error("خطا در دریافت موقعیت");
     },
   });
 
-  // useMapEvents({
-  //   locationfound(e) {
-  //     const c = map.getCenter();
-  //     setLocation([c.lat, c.lng]);
-  //   },
-  //   moveend(e) {
-  //     const c = map.getCenter();
-  //     setLocation([c.lat, c.lng]);
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   map.addHandler().forEach(function (handler: any) {
-  //     if (disabled) handler.disable();
-  //     else handler.enable();
-  //   });
-  // }, [disabled]);
-
   useEffect(() => {
-    if (location) {
-      const loc = location.split(",");
+    if (center) {
+      const loc = center.split(",");
       map.panTo(new L.LatLng(+loc[0], +loc[1]));
     }
-  }, [location]);
+  }, [center]);
+
+  const mapLocate = () => {
+    toast.info("در حال دریافت موقعیت مکانی ...");
+    map.locate();
+  };
+  useEffect(() => {
+    mapLocate();
+  }, [autoLocate]);
 
   return (
     <>
-      <div
-        onClick={() => {
-          // alert("location");
-          toast.info("در حال دریافت موقعیت مکانی ...");
-          map.locate();
-        }}
-        className="absolute bottom-1 left-1 z-[9999] rounded bg-orange-500 p-2 font-bold text-white"
-      >
+      <div onClick={mapLocate} className="absolute bottom-1 left-1 z-[9999] rounded bg-orange-500 p-2 font-bold text-white">
         موقعیت من
       </div>
     </>
+  );
+}
+
+function DraggableMarker({ location, setLocation, isSelected, disabled }: { location: string; setLocation: any; isSelected?: boolean; disabled?: boolean }) {
+  const loc = location.split(",");
+  const markerRef = useRef<any>(null);
+  const eventHandlers = useMemo(
+    () => ({
+      dragend() {
+        const marker = markerRef.current;
+        if (marker != null) {
+          setLocation([marker.getLatLng().lat, marker.getLatLng().lng]);
+        }
+      },
+    }),
+    []
+  );
+
+  const markerIcon = new L.Icon({
+    iconUrl: "/assets/icons/marker.svg",
+    iconRetinaUrl: "/assets/icons/marker.svg",
+    iconSize: new L.Point(60, 75),
+    // className: "leaflet-div-icon",
+  });
+
+  return (
+    <Marker
+      //
+      icon={markerIcon}
+      draggable={!disabled}
+      eventHandlers={eventHandlers}
+      position={{ lat: +loc[0], lng: +loc[1] }}
+      ref={markerRef}
+    />
   );
 }
