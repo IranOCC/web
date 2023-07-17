@@ -75,9 +75,9 @@ const Input = (props: IProps) => {
 
   const _className = `${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-100"} rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className} `;
   return (
-    <div className={"w-full relative z-10" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-      {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
-      <div className="w-full relative">
+    <div className={"relative z-10 w-full" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+      {label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
+      <div className="relative w-full">
         <Controller
           render={({ field }) => {
             const removeItem = (index: number) => {
@@ -95,10 +95,10 @@ const Input = (props: IProps) => {
                         Array.isArray(field.value)
                           ? field.value?.map((label: string, index: number) => {
                               return (
-                                <span key={index} className={"cursor-default  text-white px-2 rounded flex justify-center items-center" + (disabled || loading || readOnly ? " bg-disable" : " bg-secondary")}>
+                                <span key={index} className={"flex  cursor-default items-center justify-center rounded px-2 text-white" + (disabled || loading || readOnly ? " bg-disable" : " bg-secondary")}>
                                   {label}
                                   {!(disabled || loading || readOnly) && (
-                                    <div className="text-slate-100 hover:text-slate-300 ps-3 cursor-pointer" onClick={() => removeItem(index)}>
+                                    <div className="text-slate-100 hover:text-slate-300 cursor-pointer ps-3" onClick={() => removeItem(index)}>
                                       ×
                                     </div>
                                   )}
@@ -110,7 +110,8 @@ const Input = (props: IProps) => {
                       }
                       <input
                         //
-                        className={`bg-transparent ${disabled ? "cursor-not-allowed" : ""} text-gray-900 outline-none focus:outline-none block flex-1 w-full text-sm border-none min-w-[100px] ${inputClass}`}
+                        enterKeyHint="enter"
+                        className={`bg-transparent ${disabled ? "cursor-not-allowed" : ""} block w-full min-w-[100px] flex-1 border-none text-sm text-gray-900 outline-none focus:outline-none ${inputClass}`}
                         disabled={disabled || loading}
                         placeholder={placeholder}
                         readOnly={readOnly || loading}
@@ -173,13 +174,13 @@ const Input = (props: IProps) => {
         />
 
         {innerSubmitBtn && (
-          <div className={`end-0 h-full absolute top-0 flex items-center justify-center p-2`}>
+          <div className={`absolute top-0 flex h-full items-center justify-center p-2 end-0`}>
             <Button type="submit" title={innerSubmitBtn} noSpace size={"small"} className="h-full" loading={loading} disabled={disabled} />
           </div>
         )}
-        {icon && <span className={`absolute top-0 flex items-center justify-center h-full w-12 text-sm${iconClass} border-e${bordersClass}`}>{icon}</span>}
+        {icon && <span className={`absolute top-0 flex h-full w-12 items-center justify-center text-sm${iconClass} border-e${bordersClass}`}>{icon}</span>}
       </div>
-      {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
+      {helperText && <p className={"mt-1 block text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
     </div>
   );
 };
