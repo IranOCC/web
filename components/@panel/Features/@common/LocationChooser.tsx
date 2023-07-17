@@ -123,9 +123,11 @@ function LocationEvent({ location, setLocation }: { location: string; setLocatio
       setLocation([e.latlng?.lat, e.latlng?.lng, map.getZoom()]);
     },
     moveend(e) {
-      toast.success("موقعیت رفت");
       const c = map.getCenter();
       setLocation([c.lat, c.lng, map.getZoom()]);
+    },
+    locationerror(e) {
+      toast.error("خطای موقعیت");
     },
   });
 
