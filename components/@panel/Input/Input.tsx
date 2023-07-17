@@ -110,7 +110,8 @@ const Input = (props: IProps) => {
                       }
                       <input
                         //
-                        enterKeyHint="enter"
+                        // enterKeyHint="enter"
+                        type="search"
                         className={`bg-transparent ${disabled ? "cursor-not-allowed" : ""} block w-full min-w-[100px] flex-1 border-none text-sm text-gray-900 outline-none focus:outline-none ${inputClass}`}
                         disabled={disabled || loading}
                         placeholder={placeholder}
