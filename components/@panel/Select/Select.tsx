@@ -279,7 +279,7 @@ const FieldComponent = (props: FieldComponentType) => {
         field.onChange(null);
       }
     } else {
-      if (dataList.filter(({ value }) => field.value.includes(value)).length !== field.value.length) {
+      if (dataList.filter(({ value }) => (field.value || []).includes(value)).length !== (field.value || []).length) {
         field.onChange([]);
       }
     }
