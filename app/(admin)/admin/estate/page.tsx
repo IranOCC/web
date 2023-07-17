@@ -7,6 +7,9 @@ import Link from "next/link";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Estate, User } from "@/types/interfaces";
 import moment from "jalali-moment";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { toast } from "@/lib/toast";
+import { useState } from "react";
 
 const columns: ColumnsType<Estate> = [
   {
@@ -75,8 +78,8 @@ const columns: ColumnsType<Estate> = [
     },
   },
   {
-    title: "نویسنده",
-    dataIndex: ["author", "fullName"],
+    title: "صاحب ملک",
+    dataIndex: ["owner", "fullName"],
     responsive: ["md"],
   },
   {
@@ -94,6 +97,34 @@ const columns: ColumnsType<Estate> = [
 ];
 
 export default function Page() {
+  const [updateTable, setUpdateTable] = useState([false]);
+  const [loading, setLoading] = useState(false);
+
+  const api = useAxiosAuth();
+  const confirmPublish = async (id: string) => {
+    setLoading(true);
+    try {
+      await api.patch(`/admin/estate/confirm/${id}`);
+      toast.success("انتشار ملک تایید شد");
+      setUpdateTable([true]);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  const rejectPublish = async (id: string) => {
+    setLoading(true);
+    try {
+      await api.patch(`/admin/estate/reject/${id}`);
+      toast.success("انتشار ملک رد شد");
+      setUpdateTable([true]);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="p-4">
@@ -104,6 +135,32 @@ export default function Page() {
           columns={columns}
           deletable
           editable
+          update={updateTable}
+          loading={loading}
+          extraOperations={(id?: string, record?: any) => {
+            if (record?.isConfirmed) {
+              return [
+                {
+                  key: "rejectPublish",
+                  label: (
+                    <Link href="#" onClick={() => rejectPublish(id!)}>
+                      لغو انتشار
+                    </Link>
+                  ),
+                },
+              ];
+            }
+            return [
+              {
+                key: "confirmPublish",
+                label: (
+                  <Link href="#" onClick={() => confirmPublish(id!)}>
+                    تایید انتشار
+                  </Link>
+                ),
+              },
+            ];
+          }}
         />
       </div>
     </>
