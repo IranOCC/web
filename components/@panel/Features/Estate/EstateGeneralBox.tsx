@@ -34,8 +34,8 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
 
   const calculateTotalPrice = (val: string, f: "area" | "price") => {
     const value = parseInt(val.replaceAll(",", ""));
-    const area = parseInt(getValues("area").toString().replaceAll(",", ""));
-    const price = parseInt(getValues("price").toString().replaceAll(",", ""));
+    const area = parseInt(getValues("area")?.toString()?.replaceAll(",", "") || "0");
+    const price = parseInt(getValues("price")?.toString()?.replaceAll(",", "") || "0");
     const data = parseInt((f === "area" ? value * price : value * area).toString());
     setValue("totalPrice", data || 0, { shouldValidate: true });
   };
