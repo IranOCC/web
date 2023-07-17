@@ -169,8 +169,8 @@ function DraggableMarker({ location, setLocation, isSelected, disabled }: { loca
   );
 
   const markerIcon = new L.Icon({
-    iconUrl: "/assets/icons/marker.svg",
-    iconRetinaUrl: "/assets/icons/marker.svg",
+    iconUrl: isSelected ? "/assets/icons/marker-selected.svg" : "/assets/icons/marker.svg",
+    iconRetinaUrl: isSelected ? "/assets/icons/marker-selected.svg" : "/assets/icons/marker.svg",
     iconSize: new L.Point(60, 75),
     // className: "leaflet-div-icon",
   });
