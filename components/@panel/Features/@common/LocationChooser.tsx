@@ -121,6 +121,7 @@ function LocationEvent({ isSelected, marker, center, setCenter, autoLocate }: { 
   const map = useMapEvents({
     locationfound(e) {
       setCenter([e.latlng?.lat, e.latlng?.lng]);
+      map.flyTo(new L.LatLng(e.latlng?.lat, e.latlng?.lng), 15);
     },
     moveend(e) {
       const c = map.getCenter();
@@ -134,7 +135,7 @@ function LocationEvent({ isSelected, marker, center, setCenter, autoLocate }: { 
 
   useEffect(() => {
     if (center) {
-      map.flyTo(new L.LatLng(center[0], center[1]), 15);
+      map.panTo(new L.LatLng(center[0], center[1]));
     }
   }, [center]);
 
