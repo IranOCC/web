@@ -102,6 +102,11 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             defaultValue={checkingData?.area?.default}
             disabled={checkingData?.area?.disabled}
             containerClassName={!!checkingData?.area?.hidden ? "hidden" : ""}
+            formattingProps={{
+              allowNegative: false,
+              allowLeadingZeros: false,
+              decimalScale: 1,
+            }}
           />
           <Input
             //
@@ -116,6 +121,13 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             defaultValue={checkingData?.price?.default}
             disabled={checkingData?.price?.disabled}
             containerClassName={!!checkingData?.price?.hidden ? "hidden" : ""}
+            formattingProps={{
+              allowNegative: false,
+              allowLeadingZeros: false,
+              decimalScale: 0,
+              thousandsGroupStyle: "lakh",
+              thousandSeparator: ",",
+            }}
           />
           <Input
             //
@@ -129,6 +141,13 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             defaultValue={checkingData?.totalPrice?.default}
             disabled={checkingData?.totalPrice?.disabled}
             containerClassName={["col-span-full", !!checkingData?.totalPrice?.hidden ? "hidden" : ""].join(" ")}
+            formattingProps={{
+              allowNegative: false,
+              allowLeadingZeros: false,
+              decimalScale: 0,
+              thousandsGroupStyle: "lakh",
+              thousandSeparator: ",",
+            }}
           />
           <Input
             //

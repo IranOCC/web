@@ -1,6 +1,8 @@
-import { ChangeEventHandler, KeyboardEventHandler, ReactNode } from "react";
+import { KeyboardEventHandler, ReactNode } from "react";
 import { Controller } from "react-hook-form";
 import { Button } from "../Button";
+import { NumericFormat } from "react-number-format";
+import { PatternFormat } from "react-number-format";
 
 const Input = (props: IProps) => {
   const {
@@ -29,6 +31,7 @@ const Input = (props: IProps) => {
     tagsMode,
     noResize = false,
     onKeyUp,
+    formattingProps,
   } = props;
   let { status, helperText } = props;
 
@@ -85,7 +88,7 @@ const Input = (props: IProps) => {
               field.value.splice(index, 1);
               field.onChange([...field.value]);
             };
-            if (tagsMode)
+            if (tagsMode) {
               return (
                 <>
                   <div className={_className} style={{ height: multiline ? (lines || 4) * 30 + "px" : "" }} dir={direction}>
@@ -135,7 +138,8 @@ const Input = (props: IProps) => {
                   </div>
                 </>
               );
-            if (multiline)
+            }
+            if (multiline) {
               return (
                 <textarea
                   //
@@ -152,22 +156,41 @@ const Input = (props: IProps) => {
                   onKeyUp={onKeyUp as KeyboardEventHandler<HTMLTextAreaElement> | undefined}
                 />
               );
-            else
+            } else {
               return (
-                <input
-                  //
-                  type={type}
-                  disabled={disabled || loading}
-                  placeholder={placeholder}
-                  readOnly={readOnly || loading}
-                  maxLength={maxLength}
-                  className={_className}
-                  dir={direction}
-                  {...field}
-                  value={field.value || ""}
-                  onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
-                />
+                <>
+                  <NumericFormat
+                    //
+                    disabled={disabled || loading}
+                    placeholder={placeholder}
+                    readOnly={readOnly || loading}
+                    maxLength={maxLength}
+                    className={_className}
+                    dir={direction}
+                    {...field}
+                    value={field.value || ""}
+                    onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
+                    // props
+                    {...formattingProps}
+                  />
+                  {/* 
+                  <input
+                    //
+                    type={type}
+                    disabled={disabled || loading}
+                    placeholder={placeholder}
+                    readOnly={readOnly || loading}
+                    maxLength={maxLength}
+                    className={_className}
+                    dir={direction}
+                    {...field}
+                    value={field.value || ""}
+                    onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
+                  /> 
+                  */}
+                </>
               );
+            }
           }}
           defaultValue={defaultValue}
           name={name}
@@ -217,6 +240,8 @@ export type IProps = {
   success?: ReactNode;
   innerSubmitBtn?: string;
   size?: "small" | "default" | "large";
+  priceFormat?: boolean;
+  formattingProps?: {};
 
   onKeyUp?: KeyboardEventHandler<HTMLTextAreaElement> | KeyboardEventHandler<HTMLInputElement>;
 };
