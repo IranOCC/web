@@ -127,6 +127,7 @@ function LocationEvent({ location, setLocation }: { location: string; setLocatio
       setLocation([c.lat, c.lng, map.getZoom()]);
     },
     locationerror(e) {
+      console.log(e, "LocErr");
       toast.error("خطای موقعیت");
     },
   });
