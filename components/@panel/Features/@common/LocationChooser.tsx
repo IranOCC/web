@@ -129,16 +129,16 @@ function LocationEvent({ location, setLocation }: { location: string; setLocatio
     },
   });
 
-  useMapEvents({
-    locationfound(e) {
-      const c = map.getCenter();
-      setLocation([c.lat, c.lng]);
-    },
-    moveend(e) {
-      const c = map.getCenter();
-      setLocation([c.lat, c.lng]);
-    },
-  });
+  // useMapEvents({
+  //   locationfound(e) {
+  //     const c = map.getCenter();
+  //     setLocation([c.lat, c.lng]);
+  //   },
+  //   moveend(e) {
+  //     const c = map.getCenter();
+  //     setLocation([c.lat, c.lng]);
+  //   },
+  // });
 
   // useEffect(() => {
   //   map.addHandler().forEach(function (handler: any) {
