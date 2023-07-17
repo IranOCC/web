@@ -126,18 +126,13 @@ function LocationEvent({ isSelected, marker, center, setCenter, autoLocate }: { 
     moveend(e) {
       const c = map.getCenter();
       setCenter([c.lat, c.lng]);
+      map.panTo(new L.LatLng(c.lat, c.lng));
     },
     locationerror(e) {
       console.log("LocErr:", e);
       toast.error("خطا در دریافت موقعیت");
     },
   });
-
-  // useEffect(() => {
-  //   if (center) {
-  //     map.panTo(new L.LatLng(center[0], center[1]));
-  //   }
-  // }, [center]);
 
   const mapLocate = () => {
     map.locate();
