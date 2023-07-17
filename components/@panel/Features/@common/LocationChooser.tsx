@@ -73,8 +73,10 @@ const LocationChooser = (props: IProps) => {
                     />
                     <LocationEvent
                       //
+                      isSelected={!!value}
                       setCenter={(data: L.LatLngTuple) => setCenter(data)}
                       center={center}
+                      marker={value || center}
                       autoLocate={!value}
                     />
                   </MapContainer>
@@ -113,18 +115,17 @@ export type IProps = {
   success?: ReactNode;
 };
 
-function LocationEvent({ center, setCenter, autoLocate }: { center: L.LatLngTuple; setCenter: any; autoLocate: any }) {
+function LocationEvent({ isSelected, marker, center, setCenter, autoLocate }: { isSelected: boolean; marker: L.LatLngTuple; center: L.LatLngTuple; setCenter: any; autoLocate: any }) {
   //
   //
   const map = useMapEvents({
     locationfound(e) {
-      toast.success("موقعیت شما پیدا شد");
       setCenter([e.latlng?.lat, e.latlng?.lng]);
     },
-    // moveend(e) {
-    //   const c = map.getCenter();
-    //   setCenter([c.lat, c.lng]);
-    // },
+    moveend(e) {
+      const c = map.getCenter();
+      setCenter([c.lat, c.lng]);
+    },
     locationerror(e) {
       console.log("LocErr:", e);
       toast.error("خطا در دریافت موقعیت");
@@ -133,23 +134,39 @@ function LocationEvent({ center, setCenter, autoLocate }: { center: L.LatLngTupl
 
   useEffect(() => {
     if (center) {
-      map.panTo(new L.LatLng(center[0], center[1]));
+      map.flyTo(new L.LatLng(center[0], center[1]), 15);
     }
   }, [center]);
 
   const mapLocate = () => {
-    toast.info("در حال دریافت موقعیت مکانی ...");
     map.locate();
   };
   useEffect(() => {
-    mapLocate();
+    if (autoLocate) mapLocate();
   }, [autoLocate]);
+
+  const locateToMarker = () => {
+    map.flyTo(new L.LatLng(marker[0], marker[1]), 15);
+  };
 
   return (
     <>
-      <div onClick={mapLocate} className="absolute bottom-1 left-1 z-[9999] rounded bg-orange-500 p-2 font-bold text-white">
+      <div
+        //
+        onClick={mapLocate}
+        className="absolute bottom-1 left-1 z-[9999] rounded bg-orange-500 p-2 font-bold text-white"
+      >
         موقعیت من
       </div>
+      {isSelected && (
+        <div
+          //
+          onClick={locateToMarker}
+          className="absolute bottom-11 left-1 z-[9999] rounded bg-green-500 p-2 font-bold text-white"
+        >
+          موقعیت ثبت شده
+        </div>
+      )}
     </>
   );
 }
