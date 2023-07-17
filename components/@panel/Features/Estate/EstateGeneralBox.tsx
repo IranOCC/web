@@ -102,7 +102,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             defaultValue={checkingData?.area?.default}
             disabled={checkingData?.area?.disabled}
             containerClassName={!!checkingData?.area?.hidden ? "hidden" : ""}
-            formattingProps={{
+            numericFormatProps={{
               allowNegative: false,
               allowLeadingZeros: false,
               decimalScale: 1,
@@ -121,7 +121,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             defaultValue={checkingData?.price?.default}
             disabled={checkingData?.price?.disabled}
             containerClassName={!!checkingData?.price?.hidden ? "hidden" : ""}
-            formattingProps={{
+            numericFormatProps={{
               allowNegative: false,
               allowLeadingZeros: false,
               decimalScale: 0,
@@ -141,7 +141,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             defaultValue={checkingData?.totalPrice?.default}
             disabled={checkingData?.totalPrice?.disabled}
             containerClassName={["col-span-full", !!checkingData?.totalPrice?.hidden ? "hidden" : ""].join(" ")}
-            formattingProps={{
+            numericFormatProps={{
               allowNegative: false,
               allowLeadingZeros: false,
               decimalScale: 0,

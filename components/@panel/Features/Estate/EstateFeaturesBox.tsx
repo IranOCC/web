@@ -134,7 +134,7 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         defaultValue={checkingData?.constructionYear?.default}
         disabled={checkingData?.constructionYear?.disabled}
         containerClassName={["col-span-full", !!checkingData?.constructionYear?.hidden ? "hidden" : ""].join(" ")}
-        formattingProps={{
+        numericFormatProps={{
           allowNegative: false,
           allowLeadingZeros: false,
           decimalScale: 0,
@@ -154,7 +154,7 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         defaultValue={checkingData?.buildingArea?.default}
         disabled={checkingData?.buildingArea?.disabled}
         containerClassName={["col-span-full", !!checkingData?.buildingArea?.hidden ? "hidden" : ""].join(" ")}
-        formattingProps={{
+        numericFormatProps={{
           allowNegative: false,
           allowLeadingZeros: false,
           decimalScale: 1,
@@ -174,7 +174,7 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         defaultValue={checkingData?.roomsCount?.default}
         disabled={checkingData?.roomsCount?.disabled}
         containerClassName={!!checkingData?.roomsCount?.hidden ? "hidden" : ""}
-        formattingProps={{
+        numericFormatProps={{
           allowNegative: false,
           allowLeadingZeros: false,
           decimalScale: 0,
@@ -193,7 +193,7 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         defaultValue={checkingData?.mastersCount?.default}
         disabled={checkingData?.mastersCount?.disabled}
         containerClassName={!!checkingData?.mastersCount?.hidden ? "hidden" : ""}
-        formattingProps={{
+        numericFormatProps={{
           allowNegative: false,
           allowLeadingZeros: false,
           decimalScale: 0,
@@ -264,7 +264,7 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         defaultValue={checkingData?.roomsCount?.default}
         disabled={checkingData?.roomsCount?.disabled}
         containerClassName={!!checkingData?.roomsCount?.hidden ? "hidden" : ""}
-        formattingProps={{
+        numericFormatProps={{
           allowNegative: false,
           allowLeadingZeros: false,
           decimalScale: 0,
@@ -283,7 +283,7 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         defaultValue={checkingData?.mastersCount?.default}
         disabled={checkingData?.mastersCount?.disabled}
         containerClassName={!!checkingData?.mastersCount?.hidden ? "hidden" : ""}
-        formattingProps={{
+        numericFormatProps={{
           allowNegative: false,
           allowLeadingZeros: false,
           decimalScale: 0,
@@ -302,7 +302,7 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         defaultValue={checkingData?.floorsCount?.default}
         disabled={checkingData?.floorsCount?.disabled}
         containerClassName={!!checkingData?.floorsCount?.hidden ? "hidden" : ""}
-        formattingProps={{
+        numericFormatProps={{
           allowNegative: false,
           allowLeadingZeros: false,
           decimalScale: 0,
@@ -321,7 +321,7 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         defaultValue={checkingData?.unitsCount?.default}
         disabled={checkingData?.unitsCount?.disabled}
         containerClassName={!!checkingData?.unitsCount?.hidden ? "hidden" : ""}
-        formattingProps={{
+        numericFormatProps={{
           allowNegative: false,
           allowLeadingZeros: false,
           decimalScale: 0,
@@ -340,7 +340,7 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         defaultValue={checkingData?.floor?.default}
         disabled={checkingData?.floor?.disabled}
         containerClassName={["col-span-full", !!checkingData?.floor?.hidden ? "hidden" : ""].join(" ")}
-        formattingProps={{
+        numericFormatProps={{
           allowNegative: false,
           allowLeadingZeros: false,
           decimalScale: 0,
@@ -406,7 +406,7 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
         defaultValue={checkingData?.buildingArea?.default}
         disabled={checkingData?.buildingArea?.disabled}
         containerClassName={["col-span-full", !!checkingData?.buildingArea?.hidden ? "hidden" : ""].join(" ")}
-        formattingProps={{
+        numericFormatProps={{
           allowNegative: false,
           allowLeadingZeros: false,
           decimalScale: 1,

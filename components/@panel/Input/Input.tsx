@@ -31,7 +31,8 @@ const Input = (props: IProps) => {
     tagsMode,
     noResize = false,
     onKeyUp,
-    formattingProps,
+    numericFormatProps,
+    patternFormatProps,
   } = props;
   let { status, helperText } = props;
 
@@ -156,39 +157,58 @@ const Input = (props: IProps) => {
                   onKeyUp={onKeyUp as KeyboardEventHandler<HTMLTextAreaElement> | undefined}
                 />
               );
+            }
+            if (!!numericFormatProps) {
+              return (
+                <NumericFormat
+                  //
+                  disabled={disabled || loading}
+                  placeholder={placeholder}
+                  readOnly={readOnly || loading}
+                  maxLength={maxLength}
+                  className={_className}
+                  dir={direction}
+                  {...field}
+                  value={field.value || ""}
+                  onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
+                  // props
+                  {...numericFormatProps}
+                />
+              );
+            }
+            if (!!patternFormatProps) {
+              return (
+                <PatternFormat
+                  //
+                  disabled={disabled || loading}
+                  placeholder={placeholder}
+                  readOnly={readOnly || loading}
+                  maxLength={maxLength}
+                  className={_className}
+                  dir={direction}
+                  {...field}
+                  value={field.value || ""}
+                  onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
+                  // props
+                  format="#"
+                  {...patternFormatProps}
+                />
+              );
             } else {
               return (
-                <>
-                  <NumericFormat
-                    //
-                    disabled={disabled || loading}
-                    placeholder={placeholder}
-                    readOnly={readOnly || loading}
-                    maxLength={maxLength}
-                    className={_className}
-                    dir={direction}
-                    {...field}
-                    value={field.value || ""}
-                    onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
-                    // props
-                    {...formattingProps}
-                  />
-                  {/* 
-                  <input
-                    //
-                    type={type}
-                    disabled={disabled || loading}
-                    placeholder={placeholder}
-                    readOnly={readOnly || loading}
-                    maxLength={maxLength}
-                    className={_className}
-                    dir={direction}
-                    {...field}
-                    value={field.value || ""}
-                    onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
-                  /> 
-                  */}
-                </>
+                <input
+                  //
+                  type={type}
+                  disabled={disabled || loading}
+                  placeholder={placeholder}
+                  readOnly={readOnly || loading}
+                  maxLength={maxLength}
+                  className={_className}
+                  dir={direction}
+                  {...field}
+                  value={field.value || ""}
+                  onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
+                />
               );
             }
           }}
@@ -241,7 +261,8 @@ export type IProps = {
   innerSubmitBtn?: string;
   size?: "small" | "default" | "large";
   priceFormat?: boolean;
-  formattingProps?: {};
+  numericFormatProps?: {};
+  patternFormatProps?: {};
 
   onKeyUp?: KeyboardEventHandler<HTMLTextAreaElement> | KeyboardEventHandler<HTMLInputElement>;
 };
