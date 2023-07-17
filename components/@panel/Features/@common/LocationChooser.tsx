@@ -30,7 +30,7 @@ const LocationChooser = (props: IProps) => {
     labelClass = " text-orange-500";
   }
 
-  const initialLocation: L.LatLngExpression = [36.6560965, 51.4432027];
+  const initialLocation: L.LatLngExpression = [0.0, 0.0];
 
   //
   return (
@@ -57,8 +57,8 @@ const LocationChooser = (props: IProps) => {
                     center={center || initialLocation}
                     zoom={15}
                     scrollWheelZoom={true}
-                    zoomControl
-                    attributionControl
+                    zoomControl={false}
+                    // attributionControl
                     style={{ height: 400, width: "100%" }}
                     className={"rounded " + className + " flex items-center justify-center"}
                   >
@@ -69,7 +69,7 @@ const LocationChooser = (props: IProps) => {
 
                     <TileLayer
                       //
-                      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     <LocationEvent
@@ -114,10 +114,20 @@ export type IProps = {
   success?: ReactNode;
 };
 
-function LocationEvent({ location, setLocation }: { location: [number, number]; setLocation: any }) {
+function LocationEvent({ location, setLocation }: { location: string; setLocation: any }) {
   //
   //
-  const map = useMap();
+  const map = useMapEvents({
+    locationfound(e) {
+      toast.success("موقعیت پیدا شد");
+      setLocation([e.latlng?.lat, e.latlng?.lng, map.getZoom()]);
+    },
+    moveend(e) {
+      toast.success("موقعیت رفت");
+      const c = map.getCenter();
+      setLocation([c.lat, c.lng, map.getZoom()]);
+    },
+  });
 
   useMapEvents({
     locationfound(e) {
@@ -137,11 +147,12 @@ function LocationEvent({ location, setLocation }: { location: [number, number]; 
   //   });
   // }, [disabled]);
 
-  // useEffect(() => {
-  //   if (location) {
-  //     map.panTo(new L.LatLng(location[0], location[1]));
-  //   }
-  // }, [location]);
+  useEffect(() => {
+    if (location) {
+      const loc = location.split(",");
+      map.panTo(new L.LatLng(+loc[0], +loc[1]));
+    }
+  }, [location]);
 
   return (
     <>
