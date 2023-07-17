@@ -38,11 +38,10 @@ const TextEditor = (props: IProps) => {
 
   return (
     <>
-      <div className={"w-full relative z-10" + " " + containerClassName}>
+      <div className={"relative z-10 w-full" + " " + containerClassName}>
         {loader && <LoadingWithoutBg label="بارگذاری ویرایشگر ..." />}
-
-        {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
-        <div className="w-full relative">
+        {!loader && label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
+        <div className="relative w-full">
           <Controller
             control={control}
             render={({ field }) => {
@@ -105,7 +104,7 @@ const TextEditor = (props: IProps) => {
           />
         )}
 
-        {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
+        {helperText && <p className={"mt-1 block text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
       </div>
     </>
   );
