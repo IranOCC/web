@@ -35,6 +35,7 @@ export default function Page() {
   const isStep2 = phoneSet?.length !== undefined;
 
   const sendOtp = async (data: LoginPhoneOtpFormData) => {
+    data.phone = data.phone.replaceAll(" ", "");
     try {
       const response = await axios.post("/auth/phoneOtp", data);
       toast.success("کد با موفقیت ارسال شد");
@@ -54,6 +55,7 @@ export default function Page() {
     }
   };
   const loginByOtp = async (data: LoginPhoneOtpFormData) => {
+    data.token = data.token.replaceAll(" ", "");
     const result = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });
     // @ts-ignore
     if (result?.ok) {
@@ -113,6 +115,11 @@ export default function Page() {
             type="tel"
             noSpace
             icon={<PhoneIcon />}
+            patternFormatProps={{
+              format: isStep2 ? "+## ### ### ####" : "+98 9## ### ####",
+              allowEmptyFormatting: true,
+              mask: "_",
+            }}
           />
           {isStep2 && (
             <>
@@ -131,6 +138,11 @@ export default function Page() {
                 noSpace
                 icon={<QrcodeIcon />}
                 className="text-center tracking-wider"
+                patternFormatProps={{
+                  format: "# # # # # #",
+                  allowEmptyFormatting: true,
+                  mask: "_",
+                }}
               />
               <span className={`mt-2 block w-full select-none text-center text-sm font-medium ${countDown > 0 ? "cursor-not-allowed text-gray-500" : "cursor-pointer text-secondary"}`} onClick={sendOtpAgain}>
                 ارسال مجدد {countDown > 0 && "(" + moment.duration(countDown, "milliseconds").asSeconds().toFixed() + ")"}

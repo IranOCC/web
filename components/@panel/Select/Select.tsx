@@ -88,14 +88,11 @@ const Select = (props: IProps) => {
   const [dataList, setDataList] = useState<SelectDataType[] | null>(null);
   const [search, setSearch] = useState("");
   const [dataLoading, setDataLoading] = useState(true);
-  const [resetValue, setResetValue] = useState<boolean[] | null>(null);
 
   const isFirstRenderResetApply = useRef(true);
 
   const api = useAxiosAuth();
-  const getItems = async (reset = false) => {
-    if (reset) setResetValue([true]);
-
+  const getItems = async () => {
     setDataLoading(true);
     try {
       const data = await api.get(apiPath!, { params: { initial: _c.field.value, search, filter: filterApi } });
@@ -126,7 +123,7 @@ const Select = (props: IProps) => {
 
   useEffect(() => {
     if (!items && apiPath && filterApi) {
-      if (!isFirstRenderResetApply.current) getItems(true);
+      if (!isFirstRenderResetApply.current) getItems();
       else isFirstRenderResetApply.current = false;
     }
   }, [filterApi?.categories, filterApi?.province]);
@@ -170,7 +167,6 @@ const Select = (props: IProps) => {
                 return (
                   <FieldComponent
                     //
-                    resetValue={resetValue}
                     dataList={dataList}
                     setOpen={setOpen}
                     open={open}
@@ -232,7 +228,6 @@ type FieldComponentType = {
   setSearch: (s: string) => void;
   onChange?: (value: any) => void;
 
-  resetValue?: any;
   defaultValue?: string | string[];
 };
 
@@ -256,7 +251,6 @@ const FieldComponent = (props: FieldComponentType) => {
     search,
     setSearch,
     onChange,
-    resetValue,
     tagsMode,
     defaultValue,
   } = props;
@@ -280,14 +274,14 @@ const FieldComponent = (props: FieldComponentType) => {
 
   // ==========================>
   useEffect(() => {
-    // console.log(resetValue, defaultValue);
-    // if (!!resetValue) field.onChange(defaultValue);
-  }, [resetValue]);
+    if (!dataList.some(({ value }) => value === field.value)) {
+      field.onChange(null);
+    }
+  }, [dataList]);
 
+  // ===> onChange
   useEffect(() => {
     if (onChange) onChange(field.value);
-    // console.log(resetValue, defaultValue);
-    // field.onChange(field.value || defaultValue);
   }, []);
 
   const _value =
@@ -329,7 +323,7 @@ const FieldComponent = (props: FieldComponentType) => {
     <>
       {!dataLoading && _value}
       {!!dataList && (
-        <Popper open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="z-20 shadow-lg">
+        <Popper ref={field.ref} open={open} anchorEl={anchorRef.current} placement={"bottom-end"} transition disablePortal style={{ width: "100%" }} className="z-20 shadow-lg">
           {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}

@@ -1,8 +1,7 @@
 import { KeyboardEventHandler, ReactNode } from "react";
 import { Controller } from "react-hook-form";
 import { Button } from "../Button";
-import { NumericFormat } from "react-number-format";
-import { PatternFormat } from "react-number-format";
+import { NumericFormat, PatternFormat } from "react-number-format";
 
 const Input = (props: IProps) => {
   const {
@@ -31,6 +30,7 @@ const Input = (props: IProps) => {
     tagsMode,
     noResize = false,
     onKeyUp,
+    onKeyDown,
     numericFormatProps,
     patternFormatProps,
   } = props;
@@ -120,6 +120,7 @@ const Input = (props: IProps) => {
                         disabled={disabled || loading}
                         placeholder={placeholder}
                         readOnly={readOnly || loading}
+                        ref={field.ref}
                         onKeyDown={(e) => {
                           // @ts-ignore
                           if (e.key === "Enter" && e.target?.value) {
@@ -155,6 +156,7 @@ const Input = (props: IProps) => {
                   {...field}
                   value={field.value || ""}
                   onKeyUp={onKeyUp as KeyboardEventHandler<HTMLTextAreaElement> | undefined}
+                  onKeyDown={onKeyDown as KeyboardEventHandler<HTMLTextAreaElement> | undefined}
                 />
               );
             }
@@ -168,9 +170,13 @@ const Input = (props: IProps) => {
                   maxLength={maxLength}
                   className={_className}
                   dir={direction}
-                  {...field}
+                  getInputRef={field.ref}
+                  name={field.name}
+                  onBlur={field.onBlur}
+                  onChange={field.onChange}
                   value={field.value || ""}
                   onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
+                  onKeyDown={onKeyDown as KeyboardEventHandler<HTMLInputElement> | undefined}
                   // props
                   {...numericFormatProps}
                 />
@@ -186,9 +192,13 @@ const Input = (props: IProps) => {
                   maxLength={maxLength}
                   className={_className}
                   dir={direction}
-                  {...field}
+                  getInputRef={field.ref}
+                  name={field.name}
+                  onBlur={field.onBlur}
+                  onChange={field.onChange}
                   value={field.value || ""}
                   onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
+                  onKeyDown={onKeyDown as KeyboardEventHandler<HTMLInputElement> | undefined}
                   // props
                   format="#"
                   {...patternFormatProps}
@@ -205,9 +215,13 @@ const Input = (props: IProps) => {
                   maxLength={maxLength}
                   className={_className}
                   dir={direction}
-                  {...field}
+                  ref={field.ref}
+                  name={field.name}
+                  onBlur={field.onBlur}
+                  onChange={field.onChange}
                   value={field.value || ""}
                   onKeyUp={onKeyUp as KeyboardEventHandler<HTMLInputElement> | undefined}
+                  onKeyDown={onKeyDown as KeyboardEventHandler<HTMLInputElement> | undefined}
                 />
               );
             }
@@ -265,6 +279,7 @@ export type IProps = {
   patternFormatProps?: {};
 
   onKeyUp?: KeyboardEventHandler<HTMLTextAreaElement> | KeyboardEventHandler<HTMLInputElement>;
+  onKeyDown?: KeyboardEventHandler<HTMLTextAreaElement> | KeyboardEventHandler<HTMLInputElement>;
 };
 
 export default Input;

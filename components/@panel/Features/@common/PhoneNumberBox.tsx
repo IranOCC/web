@@ -40,7 +40,11 @@ export default function PhoneNumberBox({ form, loading, allowVerify = true }: { 
           loading={isSubmitting}
           direction="ltr"
           noSpace
-          maxLength={15}
+          patternFormatProps={{
+            format: "+98 9## ### ####",
+            allowEmptyFormatting: true,
+            mask: "_",
+          }}
         />
         {allowVerify && (
           <CheckBox //

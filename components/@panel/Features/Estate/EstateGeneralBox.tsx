@@ -32,9 +32,12 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
     register("canBarter");
   }, []);
 
-  const calculateTotalPrice = (val: number, f: "area" | "price") => {
-    const m = (f === "area" ? val * getValues("price") : val * getValues("area")).toString();
-    setValue("totalPrice", parseInt(m) || 0, { shouldValidate: true });
+  const calculateTotalPrice = (val: string, f: "area" | "price") => {
+    const value = parseInt(val.replaceAll(",", ""));
+    const area = parseInt(getValues("area").toString().replaceAll(",", ""));
+    const price = parseInt(getValues("price").toString().replaceAll(",", ""));
+    const data = parseInt((f === "area" ? value * price : value * area).toString());
+    setValue("totalPrice", data || 0, { shouldValidate: true });
   };
 
   const { checkingData } = props;
@@ -125,7 +128,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
               allowNegative: false,
               allowLeadingZeros: false,
               decimalScale: 0,
-              thousandsGroupStyle: "lakh",
+              thousandsGroupStyle: "thousand",
               thousandSeparator: ",",
             }}
           />
@@ -145,7 +148,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
               allowNegative: false,
               allowLeadingZeros: false,
               decimalScale: 0,
-              thousandsGroupStyle: "lakh",
+              thousandsGroupStyle: "thousand",
               thousandSeparator: ",",
             }}
           />
