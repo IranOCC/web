@@ -472,7 +472,7 @@ export type IProps = {
   warning?: ReactNode;
   success?: ReactNode;
   size?: "small" | "default" | "large";
-  disabledItems: string[];
+  disabledItems?: string[];
 
   items?: SelectDataType[];
   apiPath?: string;
