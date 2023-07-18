@@ -219,9 +219,10 @@ const SearchBox = ({ setMarkerPosition }: { setMarkerPosition: any }) => {
         {searchResult?.length === 0 && <span className="flex items-center justify-center p-1 font-bold">موردی یافت نشد ...</span>}
         {!!searchResult?.length && (
           <div className="flex max-h-[15rem] w-full max-w-full flex-col overflow-x-hidden rounded-b-lg">
-            {searchResult?.map((item: any) => {
+            {searchResult?.map((item: any, idx: number) => {
               return (
                 <div
+                  key={idx}
                   onClick={() => {
                     setSearchResult(null);
                     setText("");
