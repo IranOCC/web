@@ -258,7 +258,6 @@ const FieldComponent = (props: FieldComponentType) => {
   const [objectValue, setObjectValue] = useState<SelectDataType[] | SelectDataType | undefined>();
 
   useEffect(() => {
-    // alert(field.value);
     setObjectValue(
       multiple
         ? //
@@ -271,7 +270,7 @@ const FieldComponent = (props: FieldComponentType) => {
         : dataList.filter((item) => item.value === field.value)[0] || undefined
     );
     if (onChange) onChange(field.value);
-  }, [field.value]);
+  }, [field.value, dataList]);
 
   // ==========================>
   useEffect(() => {

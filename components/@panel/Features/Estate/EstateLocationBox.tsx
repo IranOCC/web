@@ -37,6 +37,7 @@ export default function EstateLocationBox({ form, loading, props }: AddEditCompo
 
   return (
     <PanelCard title="موقعیت مکانی" loading={loading}>
+      {province}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="grid grid-cols-1 gap-4">
           <Select
@@ -135,7 +136,7 @@ export default function EstateLocationBox({ form, loading, props }: AddEditCompo
               setValue("province", data.province);
               setValue("city", data.city || data.county);
               setValue("district", data.district);
-              setValue("quarter", data.primary);
+              setValue("quarter", data.neighbourhood || data.primary);
               setValue("alley", data.last);
               setValue("address", data.address_compact);
               console.log("Address:", data);

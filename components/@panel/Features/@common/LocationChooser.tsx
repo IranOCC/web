@@ -23,6 +23,17 @@ const Map = Mapir.setToken({
   },
 });
 
+const searchLocation = (params: any) => {
+  return fetch(`https://map.ir/search/v2/`, {
+    method: "POST",
+    headers: {
+      "x-api-key": API_KEY,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(params),
+  });
+};
+
 const LocationChooser = (props: IProps) => {
   const { name, control, defaultValue, label, getAddress, containerClassName = "", className = "", noSpace, loading, disabled, readOnly, error, warning, success } = props;
   let { status, helperText } = props;
@@ -108,6 +119,13 @@ const LocationChooser = (props: IProps) => {
                       />
                     )}
                   </Mapir>
+                  <SearchBox
+                    //
+                    setMarkerPosition={(data: number[]) => {
+                      field.onChange([data[1], data[0]].join(","));
+                      setCenter([data[0], data[1]]);
+                    }}
+                  />
                   {!!value && <Button noSpace title="نمایش موقعیت ثبت شده" onClick={() => setCenter(value!)} />}
                   {!value && <Button noSpace title="موقعیت را با کلیک بر روی نقشه مشخص کنید" disabled />}
                 </>
@@ -145,4 +163,82 @@ export type IProps = {
   success?: ReactNode;
 
   getAddress?: (data: any) => void;
+};
+
+const SearchBox = ({ setMarkerPosition }: { setMarkerPosition: any }) => {
+  const [searchResult, setSearchResult] = useState<any[] | null>(null);
+  const [text, setText] = useState("");
+  useEffect(() => {
+    if (text.length > 1) {
+      const params: any = {};
+      const options: any = { text };
+      for (let key in options) {
+        if (options[key] !== null && options[key] !== "") {
+          params[key] = options[key];
+        }
+      }
+      searchLocation(params)
+        .then((data: any) => data.json())
+        .then((data: any) => {
+          if (data["odata.count"] > 0) {
+            setSearchResult(data.value);
+          } else {
+            setSearchResult([]);
+          }
+        });
+    } else {
+      setSearchResult(null);
+    }
+  }, [text]);
+
+  function clearSearch() {
+    setSearchResult(null);
+    setText("");
+  }
+  return (
+    <div className="absolute top-2.5 z-10 flex h-full w-full flex-col">
+      <div className="relative flex h-full w-full flex-col px-12">
+        <div className="flex w-full flex-row">
+          <input
+            //
+            autoComplete="off"
+            type="search"
+            placeholder="جستجوی مکان..."
+            onChange={(e) => setText(e.target.value)}
+            value={text}
+            className={"flex-1 rounded-tr-lg border-0 bg-yellow-100 text-sm ring-0 transition-all focus:ring-0" + (!!searchResult?.length ? "" : " rounded-br-lg")}
+          />
+          <button
+            //
+            className={"rounded-tl-lg bg-secondary px-5 transition-all" + (!!searchResult?.length ? "" : " rounded-bl-lg")}
+          >
+            برو
+          </button>
+        </div>
+        {searchResult?.length === 0 && <span className="flex items-center justify-center p-1 font-bold">موردی یافت نشد ...</span>}
+        {!!searchResult?.length && (
+          <div className="flex max-h-[calc(100%-8rem)] w-full max-w-full flex-col overflow-x-hidden rounded-b-lg">
+            {searchResult?.map((item: any) => {
+              return (
+                <div
+                  onClick={() => {
+                    setSearchResult(null);
+                    setText("");
+                    setMarkerPosition(item.geom.coordinates);
+                  }}
+                  className="flex w-full cursor-pointer flex-col items-start bg-yellow-100 p-2 hover:bg-yellow-200"
+                >
+                  <p className="flex gap-2 font-bold">
+                    <img src="https://map.ir/css/images/marker-default-yellow.svg" width={25} />
+                    {item.title || item.district || item.county}
+                  </p>
+                  <p className="search-result-item-address">{item.address}</p>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
