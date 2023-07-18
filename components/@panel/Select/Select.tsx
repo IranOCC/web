@@ -40,6 +40,7 @@ const Select = (props: IProps) => {
     onChange,
     disabledItems = [],
   } = props;
+
   let { status, helperText } = props;
 
   if (error) {
