@@ -8,6 +8,7 @@ import "@/assets/css/map.css";
 import { toast } from "@/lib/toast";
 import Mapir from "mapir-react-typescript";
 import { Button } from "../../Button";
+import { Search } from "@mui/icons-material";
 
 const API_KEY =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ1NTg4YzVkM2I3YjFjYWU0NWE2OWNjZTM4ZjU3ZTdmN2U1Yjg4YTkxNWMwM2JhOTdiYWJlZWI4OWE2NDMxNDg1Nzc4YTYyNGQ0ZDMwMTc5In0.eyJhdWQiOiI5OTk2IiwianRpIjoiZDU1ODhjNWQzYjdiMWNhZTQ1YTY5Y2NlMzhmNTdlN2Y3ZTViODhhOTE1YzAzYmE5N2JhYmVlYjg5YTY0MzE0ODU3NzhhNjI0ZDRkMzAxNzkiLCJpYXQiOjE1OTQyMDM0MzMsIm5iZiI6MTU5NDIwMzQzMywiZXhwIjoxNTk2Nzk1NDMzLCJzdWIiOiIiLCJzY29wZXMiOlsiYmFzaWMiXX0.RfZI-G-vJsKB8AaAXLtoR93ilorPnOWqEkGnap18EVEOoiWsFwuQaxSpNzYrzSbPeskmo68FdWvfrfcS0IaXvtU2rwI3D1udVrUlz5oDD_Z7NJMB-Dm9qY6mWC2OTsaTyTgNJ2ZC2q8ZK1aTdoEWUv27QrAsYEu_thQgTvSIPn0RoSFwMa-MHH6v7ATGTFY8MNdrazi2VdvTSR49REcssAn5iNjxFX7C9XLwltOA3VKTtCjY6MjkeVOhVrc2Bgo1QDukFTNSWGiEX0nSm1xKAs-OIXRKxvmmt9Sm6lcaT_2WbyPVn6Mo3aO7AjjhtxPjQZZk1PKtFwRH4r-JJdY2SA";
@@ -104,7 +105,7 @@ const LocationChooser = (props: IProps) => {
                     center={center}
                     zoom={[16]}
                     userLocation
-                    className={"rounded " + className + " !h-[30rem] !w-full overflow-hidden"}
+                    className={className + " mb-2 !h-[30rem] !w-full overflow-hidden rounded"}
                     onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
                     interactive
                     hash
@@ -128,7 +129,7 @@ const LocationChooser = (props: IProps) => {
                     }}
                   />
                   {!!value && <Button noSpace title="نمایش موقعیت ثبت شده" onClick={() => setCenter(value!)} />}
-                  {!value && <Button noSpace title="موقعیت را با کلیک بر روی نقشه مشخص کنید" disabled />}
+                  {!value && <Button noSpace title="بر روی نقشه کلیک کنید" disabled />}
                 </>
               );
             }}
@@ -197,50 +198,52 @@ const SearchBox = ({ setMarkerPosition }: { setMarkerPosition: any }) => {
     setText("");
   }
   return (
-    <div className="absolute top-20 flex w-full flex-col sm:top-2.5">
-      <div className="relative flex max-h-full w-full flex-col px-2 sm:px-12 ">
-        <div className="flex w-full flex-row">
-          <input
-            //
-            autoComplete="off"
-            type="search"
-            placeholder="جستجوی مکان..."
-            onChange={(e) => setText(e.target.value)}
-            value={text}
-            className={"w-0 flex-1 rounded-tr-lg border-0 bg-yellow-100 text-sm ring-0 transition-all focus:ring-0" + (!!searchResult?.length ? "" : " rounded-br-lg")}
-          />
-          <button
-            //
-            className={"rounded-tl-lg bg-secondary px-5 transition-all" + (!!searchResult?.length ? "" : " rounded-bl-lg")}
-          >
-            برو
-          </button>
-        </div>
-        {searchResult?.length === 0 && <span className="flex items-center justify-center p-1 font-bold">موردی یافت نشد ...</span>}
-        {!!searchResult?.length && (
-          <div className="flex max-h-[15rem] w-full max-w-full flex-col overflow-x-hidden rounded-b-lg">
-            {searchResult?.map((item: any, idx: number) => {
-              return (
-                <div
-                  key={idx}
-                  onClick={() => {
-                    setSearchResult(null);
-                    setText("");
-                    setMarkerPosition(item.geom.coordinates);
-                  }}
-                  className="flex w-full cursor-pointer flex-col items-start bg-yellow-100 p-2 hover:bg-yellow-200"
-                >
-                  <p className="flex gap-2 font-bold">
-                    <img src="https://map.ir/css/images/marker-default-yellow.svg" width={25} />
-                    {item.title || item.district || item.county}
-                  </p>
-                  <p className="search-result-item-address">{item.address}</p>
-                </div>
-              );
-            })}
+    <>
+      <div className="absolute top-2.5 z-10 flex w-full flex-col">
+        <div className="relative flex max-h-full w-full flex-col  px-12 ">
+          <div className="flex w-full flex-row">
+            <input
+              //
+              autoComplete="off"
+              type="search"
+              placeholder="جستجوی مکان..."
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+              className={"w-0 flex-1 rounded-tr-lg border-0 bg-yellow-100 text-sm ring-0 transition-all focus:ring-0" + (!!searchResult?.length ? "" : " rounded-br-lg")}
+            />
+            <button
+              //
+              className={"rounded-tl-lg bg-secondary px-2.5 transition-all" + (!!searchResult?.length ? "" : " rounded-bl-lg")}
+            >
+              <Search sx={{ fontSize: 16 }} />
+            </button>
           </div>
-        )}
+          {searchResult?.length === 0 && <span className="flex items-center justify-center p-1 font-bold">موردی یافت نشد ...</span>}
+          {!!searchResult?.length && (
+            <div className="flex max-h-[15rem] w-full max-w-full flex-col overflow-x-hidden rounded-b-lg">
+              {searchResult?.map((item: any, idx: number) => {
+                return (
+                  <div
+                    key={idx}
+                    onClick={() => {
+                      setSearchResult(null);
+                      setText("");
+                      setMarkerPosition(item.geom.coordinates);
+                    }}
+                    className="flex w-full cursor-pointer flex-col items-start bg-yellow-100 p-2 hover:bg-yellow-200"
+                  >
+                    <p className="flex gap-2 font-bold">
+                      <img src="https://map.ir/css/images/marker-default-yellow.svg" width={25} />
+                      {item.title || item.district || item.county}
+                    </p>
+                    <p className="search-result-item-address">{item.address}</p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };

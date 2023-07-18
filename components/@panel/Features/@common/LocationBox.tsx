@@ -34,7 +34,7 @@ export default function LocationBox({ form, loading, props }: AddEditComponentPr
 
   return (
     <PanelCard title="موقعیت مکانی" loading={loading}>
-      <div className="grid gap-4 lg:grid-cols-2 ">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Select
           //
           control={control}
