@@ -1,11 +1,10 @@
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { usePrevious } from "@/hooks/usePrevious";
 import { SelectDataType } from "@/types/interfaces";
-import { Chip, ClickAwayListener, Grow, Paper, Popper, PopperPlacementType } from "@mui/material";
+import { ClickAwayListener, Grow, Paper, Popper } from "@mui/material";
 import { Spin } from "antd";
-import { ChangeEventHandler, ReactNode, RefObject, useEffect, useRef, useState } from "react";
+import { ReactNode, RefObject, useEffect, useRef, useState } from "react";
 import { Controller, ControllerRenderProps, FieldValues, useController } from "react-hook-form";
-import { Button } from "../Button";
 import ArrowDownIcon from "../../Icons/ArrowDown";
 import SearchIcon from "../../Icons/Search";
 
