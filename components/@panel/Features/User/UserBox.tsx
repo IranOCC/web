@@ -5,8 +5,9 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/@panel/Select";
 import LogoUploader from "@/components/Uploader/LogoUploader";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function UserBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function UserBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -28,26 +29,26 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
     register("active");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <PanelCard title="اطلاعات کاربر" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 ">
           <LogoUploader
             //
             control={control}
             name="avatar"
             uploaderField="image"
             uploadPath="storage/user/avatar"
-            body={
-              {
-                // relatedToID: user?._id,
-              }
-            }
             label="آواتار"
             error={errors.avatar?.message}
             loading={isSubmitting}
-            containerClassName="col-span-full"
             noSpace
+            defaultValue={checkingData?.avatar?.default}
+            disabled={checkingData?.avatar?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.avatar?.hidden ? "hidden" : ""].join(" ")}
           />
           <Input
             //
@@ -57,6 +58,9 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
             error={errors.firstName?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.firstName?.default}
+            disabled={checkingData?.firstName?.disabled}
+            containerClassName={!!checkingData?.firstName?.hidden ? "hidden" : ""}
           />
           <Input
             //
@@ -66,6 +70,9 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
             error={errors.lastName?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.lastName?.default}
+            disabled={checkingData?.lastName?.disabled}
+            containerClassName={!!checkingData?.lastName?.hidden ? "hidden" : ""}
           />
 
           <Select
@@ -81,26 +88,32 @@ export default function UserBox({ form, loading }: { form: any; loading?: boolea
             showTitle
             tagsMode
             apiPath="/tools/user/statics/roles"
-            containerClassName="col-span-full"
-            defaultValue={["User"]}
+            defaultValue={checkingData?.roles?.default}
+            disabled={checkingData?.roles?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.roles?.hidden ? "hidden" : ""].join(" ")}
+            disabledItems={checkingData?.roles?.disabledItems}
           />
           <CheckBox //
             control={control}
             name="verified"
             label="احراز شده"
-            defaultValue={false}
             error={errors.verified?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.verified?.default}
+            disabled={checkingData?.verified?.disabled}
+            containerClassName={!!checkingData?.verified?.hidden ? "hidden" : ""}
           />
           <CheckBox //
             control={control}
             name="active"
             label="فعال"
-            defaultValue={true}
             error={errors.active?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.active?.default}
+            disabled={checkingData?.active?.disabled}
+            containerClassName={!!checkingData?.active?.hidden ? "hidden" : ""}
           />
         </div>
       </PanelCard>

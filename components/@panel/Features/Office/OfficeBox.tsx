@@ -6,8 +6,9 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/@panel/Select";
 import LogoUploader from "@/components/Uploader/LogoUploader";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function OfficeBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function OfficeBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -35,26 +36,26 @@ export default function OfficeBox({ form, loading }: { form: any; loading?: bool
     register("active");
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <>
       <PanelCard title="اطلاعات شعبه" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 ">
           <LogoUploader
             //
             control={control}
             name="logo"
             uploaderField="image"
             uploadPath="storage/office/logo"
-            body={
-              {
-                // relatedToID: user?._id,
-              }
-            }
             label="لوگو"
             error={errors.logo?.message}
             loading={isSubmitting}
-            containerClassName="col-span-full"
             noSpace
+            defaultValue={checkingData?.logo?.default}
+            disabled={checkingData?.logo?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.logo?.hidden ? "hidden" : ""].join(" ")}
           />
           <Input
             //
@@ -64,6 +65,9 @@ export default function OfficeBox({ form, loading }: { form: any; loading?: bool
             error={errors.name?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.name?.default}
+            disabled={checkingData?.name?.disabled}
+            containerClassName={!!checkingData?.name?.hidden ? "hidden" : ""}
           />
           <Select
             //
@@ -76,6 +80,9 @@ export default function OfficeBox({ form, loading }: { form: any; loading?: bool
             apiPath="/tools/user/autoComplete"
             searchable
             noSpace
+            defaultValue={checkingData?.management?.default}
+            disabled={checkingData?.management?.disabled}
+            containerClassName={!!checkingData?.management?.hidden ? "hidden" : ""}
           />
           <Input
             //
@@ -86,7 +93,9 @@ export default function OfficeBox({ form, loading }: { form: any; loading?: bool
             loading={isSubmitting}
             noSpace
             multiline
-            containerClassName="col-span-full"
+            defaultValue={checkingData?.description?.default}
+            disabled={checkingData?.description?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.description?.hidden ? "hidden" : ""].join(" ")}
           />
 
           <CheckBox //
@@ -96,16 +105,21 @@ export default function OfficeBox({ form, loading }: { form: any; loading?: bool
             error={errors.verified?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.verified?.default}
+            disabled={checkingData?.verified?.disabled}
+            containerClassName={!!checkingData?.verified?.hidden ? "hidden" : ""}
           />
 
           <CheckBox //
             control={control}
             name="active"
             label="فعال"
-            defaultValue={true}
             error={errors.active?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.active?.default}
+            disabled={checkingData?.active?.disabled}
+            containerClassName={!!checkingData?.active?.hidden ? "hidden" : ""}
           />
         </div>
       </PanelCard>

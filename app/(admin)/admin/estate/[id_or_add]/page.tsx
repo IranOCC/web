@@ -151,7 +151,10 @@ export default function Page() {
           setSelectedCat(val);
         }}
       />
-      <AddEditEstateCheckModal set={setCheckingData} />
+      <AddEditEstateCheckModal
+      // 
+       set={setCheckingData} 
+       />
     </>
   );
 }

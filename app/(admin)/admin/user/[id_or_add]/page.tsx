@@ -7,25 +7,27 @@ import PhoneNumberBox from "@/components/@panel/Features/@common/PhoneNumberBox"
 import SendEmailBox from "@/components/@panel/Features/@common/SendEmailBox";
 import SendSmsBox from "@/components/@panel/Features/@common/SendSmsBox";
 import UserBox from "@/components/@panel/Features/User/UserBox";
+import AddEditUserCheckModal from "@/components/Modals/AddUserCheckModal";
 import { UserFormData } from "@/types/formsData";
 import { Email, Phone, StorageFile, User } from "@/types/interfaces";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const Center = ({ form, loading }: AddEditComponentProps) => {
+const Center = (props: AddEditComponentProps) => {
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-full">
-          <UserBox form={form} loading={loading} />
+          <UserBox {...props} />
         </div>
         <div className="col-span-full md:col-span-1">
-          <PhoneNumberBox form={form} loading={loading} />
+          <PhoneNumberBox {...props} />
         </div>
         <div className="col-span-full md:col-span-1">
-          <EmailAddressBox form={form} loading={loading} />
+          <EmailAddressBox {...props} />
         </div>
         <div className="col-span-full">
-          <LocationBox form={form} loading={loading} />
+          <LocationBox {...props} />
         </div>
       </div>
     </>
@@ -45,6 +47,8 @@ const Side = ({ form, loading }: AddEditComponentProps) => {
 export default function Page() {
   const form = useForm<UserFormData>();
   const { setValue } = form;
+
+  const [checkingData, setCheckingData] = useState<any>(null);
 
   const setInitialData = (data: UserFormData) => {
     setValue("_id", data._id);
@@ -72,9 +76,10 @@ export default function Page() {
     if (!(data.email as Email)?.value) {
       data.email = undefined;
     }
+
     return data;
   };
-  if(!form.setError) return null
+  if (!form.setError) return null;
   return (
     <>
       <EditAddPage<UserFormData, User>
@@ -84,7 +89,12 @@ export default function Page() {
         form={form}
         setInitialData={setInitialData}
         endpoint="user"
+        componentProps={{ checkingData }}
         beforeSubmit={beforeSubmit}
+      />
+      <AddEditUserCheckModal
+        //
+        set={setCheckingData}
       />
     </>
   );

@@ -3,8 +3,9 @@ import { OfficeFormData, UserFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function PhoneNumberBox({ form, loading, allowVerify = true }: { form: any; loading?: boolean; allowVerify?: boolean }) {
+export default function PhoneNumberBox({ form, loading, props, allowVerify = true }: AddEditComponentProps & { allowVerify?: boolean }) {
   const {
     register,
     unregister,
@@ -27,6 +28,9 @@ export default function PhoneNumberBox({ form, loading, allowVerify = true }: { 
     });
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <PanelCard title="شماره" loading={loading}>
       <div className="grid grid-cols-1 gap-4 ">
@@ -45,6 +49,9 @@ export default function PhoneNumberBox({ form, loading, allowVerify = true }: { 
             allowEmptyFormatting: true,
             mask: "_",
           }}
+          defaultValue={checkingData?.phone?.value?.default}
+          disabled={checkingData?.phone?.value?.disabled}
+          containerClassName={!!checkingData?.phone?.value?.hidden ? "hidden" : ""}
         />
         {allowVerify && (
           <CheckBox //
@@ -55,6 +62,9 @@ export default function PhoneNumberBox({ form, loading, allowVerify = true }: { 
             error={errors?.phone?.verified?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.phone?.verified?.default}
+            disabled={checkingData?.phone?.verified?.disabled}
+            containerClassName={!!checkingData?.phone?.verified?.hidden ? "hidden" : ""}
           />
         )}
       </div>

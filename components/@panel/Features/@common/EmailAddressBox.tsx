@@ -4,8 +4,9 @@ import { OfficeFormData, UserFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function EmailAddressBox({ form, loading, allowVerify = true }: { form: any; loading?: boolean; allowVerify?: boolean }) {
+export default function EmailAddressBox({ form, loading, props, allowVerify = true }: AddEditComponentProps & { allowVerify?: boolean }) {
   const {
     register,
     unregister,
@@ -28,6 +29,9 @@ export default function EmailAddressBox({ form, loading, allowVerify = true }: {
     });
   }, []);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <PanelCard title="ایمیل" loading={loading}>
       <div className="grid grid-cols-1 gap-4 ">
@@ -41,6 +45,9 @@ export default function EmailAddressBox({ form, loading, allowVerify = true }: {
           loading={isSubmitting}
           direction="ltr"
           noSpace
+          defaultValue={checkingData?.email?.value?.default}
+          disabled={checkingData?.email?.value?.disabled}
+          containerClassName={!!checkingData?.email?.value?.hidden ? "hidden" : ""}
         />
         {allowVerify && (
           <CheckBox //
@@ -51,6 +58,9 @@ export default function EmailAddressBox({ form, loading, allowVerify = true }: {
             error={errors?.email?.verified?.message}
             loading={isSubmitting}
             noSpace
+            defaultValue={checkingData?.email?.verified?.default}
+            disabled={checkingData?.email?.verified?.disabled}
+            containerClassName={!!checkingData?.email?.verified?.hidden ? "hidden" : ""}
           />
         )}
       </div>

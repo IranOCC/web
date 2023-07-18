@@ -38,6 +38,7 @@ const Select = (props: IProps) => {
     addNew = false,
     containerClassName = "",
     onChange,
+    disabledItems = [],
   } = props;
   let { status, helperText } = props;
 
@@ -186,6 +187,7 @@ const Select = (props: IProps) => {
                     onChange={onChange}
                     tagsMode={tagsMode}
                     defaultValue={defaultValue}
+                    disabledItems={disabledItems}
                   />
                 );
               }}
@@ -229,6 +231,7 @@ type FieldComponentType = {
   onChange?: (value: any) => void;
 
   defaultValue?: string | string[];
+  disabledItems: string[];
 };
 
 const FieldComponent = (props: FieldComponentType) => {
@@ -253,6 +256,7 @@ const FieldComponent = (props: FieldComponentType) => {
     onChange,
     tagsMode,
     defaultValue,
+    disabledItems = [],
   } = props;
 
   const [objectValue, setObjectValue] = useState<SelectDataType[] | SelectDataType | undefined>();
@@ -359,7 +363,7 @@ const FieldComponent = (props: FieldComponentType) => {
                   <ul className="max-h-60 overflow-x-hidden text-sm text-gray-700 dark:text-gray-200">
                     <SelectOption
                       //
-                      title="انتخاب نشده"
+                      title="هیچکدام"
                       selected={!field.value?.length}
                       onClick={() => {
                         if (disabled || loading) return;
@@ -377,6 +381,7 @@ const FieldComponent = (props: FieldComponentType) => {
                           //
                           title={title}
                           key={_index}
+                          disabled={disabledItems.includes(value)}
                           selected={
                             multiple
                               ? //
@@ -421,14 +426,15 @@ const FieldComponent = (props: FieldComponentType) => {
   );
 };
 
-const SelectOption = ({ onClick, title, selected }: { onClick?: any; title: string; selected: boolean }) => {
+const SelectOption = ({ onClick, title, selected, disabled }: { onClick?: any; title: string; selected: boolean; disabled?: boolean }) => {
   return (
     <li
       //
       role="button"
       aria-label={"list item " + title}
-      onClick={onClick}
-      className={`relative flex cursor-pointer items-center justify-between px-4 py-2 ${selected ? "bg-disable " : onClick ? "hover:bg-gray-100" : ""}`}
+      aria-disabled={disabled}
+      onClick={disabled ? undefined : onClick}
+      className={`relative flex items-center justify-between px-4 py-2 ${selected ? "bg-disable " : onClick && !disabled ? "cursor-pointer hover:bg-gray-100" : "cursor-not-allowed"} ${disabled ? "text-gray-400 " : ""}`}
     >
       {title}
     </li>
@@ -466,6 +472,7 @@ export type IProps = {
   warning?: ReactNode;
   success?: ReactNode;
   size?: "small" | "default" | "large";
+  disabledItems: string[];
 
   items?: SelectDataType[];
   apiPath?: string;

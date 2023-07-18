@@ -5,8 +5,9 @@ import { FieldValues, UseFormReturn } from "react-hook-form";
 import { OfficeFormData, UserFormData } from "@/types/formsData";
 import LocationChooser from "./LocationChooser";
 import { Select } from "@/components/@panel/Select";
+import { AddEditComponentProps } from "../../EditAddPage";
 
-export default function LocationBox({ form, loading }: { form: any; loading?: boolean }) {
+export default function LocationBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -28,9 +29,12 @@ export default function LocationBox({ form, loading }: { form: any; loading?: bo
 
   const [province, setProvince] = useState(null);
 
+  const { checkingData } = props;
+  if (!checkingData) return null;
+
   return (
     <PanelCard title="موقعیت مکانی" loading={loading}>
-      <div className="grid lg:grid-cols-2 gap-4 ">
+      <div className="grid gap-4 lg:grid-cols-2 ">
         <Select
           //
           control={control}
@@ -43,7 +47,9 @@ export default function LocationBox({ form, loading }: { form: any; loading?: bo
           onChange={(value) => setProvince(value)}
           searchable
           noSpace
-          defaultValue="مازندران"
+          defaultValue={checkingData?.province?.default}
+          disabled={checkingData?.province?.disabled}
+          containerClassName={!!checkingData?.province?.hidden ? "hidden" : ""}
         />
         <Select
           //
@@ -57,7 +63,9 @@ export default function LocationBox({ form, loading }: { form: any; loading?: bo
           filterApi={{ province: province || undefined }}
           searchable
           noSpace
-          defaultValue="چالوس"
+          defaultValue={checkingData?.city?.default}
+          disabled={checkingData?.city?.disabled}
+          containerClassName={!!checkingData?.city?.hidden ? "hidden" : ""}
         />
         <Input
           //
@@ -67,7 +75,9 @@ export default function LocationBox({ form, loading }: { form: any; loading?: bo
           error={errors.address?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="col-span-full"
+          defaultValue={checkingData?.address?.default}
+          disabled={checkingData?.address?.disabled}
+          containerClassName={["col-span-full", !!checkingData?.address?.hidden ? "hidden" : ""].join(" ")}
         />
         <LocationChooser
           //
@@ -76,7 +86,9 @@ export default function LocationBox({ form, loading }: { form: any; loading?: bo
           error={errors.location?.message}
           loading={isSubmitting}
           noSpace
-          containerClassName="col-span-full"
+          defaultValue={checkingData?.location?.default}
+          disabled={checkingData?.location?.disabled}
+          containerClassName={["col-span-full", !!checkingData?.location?.hidden ? "hidden" : ""].join(" ")}
         />
       </div>
     </PanelCard>
