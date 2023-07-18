@@ -7,7 +7,7 @@ import Image from "next/image";
 export default async function Page() {
   return (
     <>
-      <div className="p-4">
+      <div className="p-4 pt-0">
         <PanelCard title="لیست فایل ها">
           <GridList
             //

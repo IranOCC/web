@@ -96,7 +96,7 @@ export default function ListEditPage<F extends FieldValues, T>({ FormComponent, 
 
   return (
     <>
-      <div className="p-4">
+      <div className="p-4 pt-0">
         {updateTable}
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-full	lg:col-span-5">

@@ -6,7 +6,7 @@ import MediaHandler from "@/components/Uploader/MediaHandler";
 export default function Page() {
   return (
     <>
-      <div className="p-4">
+      <div className="p-4 pt-0">
         <PanelCard>
           <MediaHandler
             //

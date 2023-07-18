@@ -18,6 +18,7 @@ import { UserRoles } from "@/types/enum";
 import { ClickAwayListener } from "@mui/material";
 
 import { Tooltip } from "antd";
+import { signOut } from "next-auth/react";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -357,11 +358,12 @@ const MainMenu = ({ handleOpenSubMenu, itemOpen }: any) => {
       <div className="h-full" />
       <MainMenuItem
         //
-        title="حساب کاربری من"
-        href="profile"
-        icon={<UserIcon />}
+        title="خروج"
+        // href="profile"
+        onClick={() => signOut()}
+        icon={<LogoutOutlineIcon />}
         highlight
-        highlightClass="text-yellow-600 bg-yellow-100 dark:text-yellow-300 dark:bg-gray-800"
+        highlightClass="text-red-600 bg-red-100 dark:text-red-300 dark:bg-gray-800"
       />
     </div>
   );

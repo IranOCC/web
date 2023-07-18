@@ -6,7 +6,7 @@ export default function Page({ searchParams }: any) {
   const { warning, error, info } = searchParams;
   return (
     <>
-      <div className="p-4">
+      <div className="p-4 pt-0">
         <div className="pb-4 empty:hidden">
           {!!error && <Alert severity="error">{error}</Alert>}
           {!!warning && <Alert severity="warning">{warning}</Alert>}

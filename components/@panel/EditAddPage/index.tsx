@@ -92,7 +92,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
 
   return (
     <>
-      <div className="p-4">
+      <div className="p-4 pt-0">
         <form onSubmit={handleSubmit(onSubmit())} />
         <div className="grid grid-cols-6 gap-4">
           <div className="col-span-full	lg:col-span-4">

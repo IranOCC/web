@@ -80,7 +80,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="p-4">
+      <div className="p-4 pt-0">
         <div className="grid grid-cols-2 gap-4">
           <div className="col-span-full">
             <PanelCard title="پروفایل من" loading={loading}>
