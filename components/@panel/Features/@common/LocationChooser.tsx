@@ -73,16 +73,16 @@ const LocationChooser = (props: IProps) => {
         <div className="relative w-full">
           <Controller
             render={({ field }) => {
-              async function reverseFunction(map: any, e: any) {
-                field.onChange([e.lngLat.lat, e.lngLat.lng].join(","));
-                setCenter([e.lngLat.lng, e.lngLat.lat]);
+              async function setMarkerAndAddress(data: number[]) {
+                field.onChange([data[1], data[0]].join(","));
+                setCenter([data[0], data[1]]);
                 if (!!getAddress) {
-                  const url = `https://map.ir/reverse/no?lat=${e.lngLat.lat}&lon=${e.lngLat.lng}`;
+                  const url = `https://map.ir/reverse/no?lat=${data[1]}&lon=${data[0]}`;
                   const response = await fetch(url, {
                     headers: { "Content-Type": "application/json", "x-api-key": API_KEY },
                   });
-                  const data = await response.json();
-                  getAddress(data);
+                  const _data = await response.json();
+                  getAddress(_data);
                 }
               }
 
@@ -103,7 +103,7 @@ const LocationChooser = (props: IProps) => {
                     zoom={[16]}
                     userLocation
                     className={"rounded " + className + " !h-[30rem] !w-full overflow-hidden"}
-                    onClick={reverseFunction}
+                    onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
                     interactive
                     hash
                   >
@@ -122,8 +122,7 @@ const LocationChooser = (props: IProps) => {
                   <SearchBox
                     //
                     setMarkerPosition={(data: number[]) => {
-                      field.onChange([data[1], data[0]].join(","));
-                      setCenter([data[0], data[1]]);
+                      setMarkerAndAddress(data);
                     }}
                   />
                   {!!value && <Button noSpace title="نمایش موقعیت ثبت شده" onClick={() => setCenter(value!)} />}
@@ -196,8 +195,8 @@ const SearchBox = ({ setMarkerPosition }: { setMarkerPosition: any }) => {
     setText("");
   }
   return (
-    <div className="absolute top-2.5 z-10 flex h-full w-full flex-col">
-      <div className="relative flex h-full w-full flex-col px-12">
+    <div className="absolute top-2.5 flex w-full flex-col">
+      <div className="relative flex max-h-full w-full flex-col px-12">
         <div className="flex w-full flex-row">
           <input
             //
@@ -217,7 +216,7 @@ const SearchBox = ({ setMarkerPosition }: { setMarkerPosition: any }) => {
         </div>
         {searchResult?.length === 0 && <span className="flex items-center justify-center p-1 font-bold">موردی یافت نشد ...</span>}
         {!!searchResult?.length && (
-          <div className="flex max-h-[calc(100%-8rem)] w-full max-w-full flex-col overflow-x-hidden rounded-b-lg">
+          <div className="flex max-h-[15rem] w-full max-w-full flex-col overflow-x-hidden rounded-b-lg">
             {searchResult?.map((item: any) => {
               return (
                 <div
