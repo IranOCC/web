@@ -48,7 +48,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
   const tableColumns = columns.map((item) => ({ ...item, ellipsis: false }));
 
   const scroll: { x?: number | string; y?: number | string } = {};
-  scroll.y = "calc(100vh - 260px)";
+  scroll.y = "calc(100vh - 340px)";
 
   // fixed column
   // scroll.x = minWidth;
