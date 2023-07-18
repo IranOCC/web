@@ -34,6 +34,7 @@
     "jalali-moment": "^3.3.11",
     "leaflet": "^1.9.4",
     "mapir-react-component": "^2.0.7",
+    "mapir-react-typescript": "^0.0.5",
     "moment": "^2.29.4",
     "next": "^13.4.10",
     "next-auth": "^4.22.1",
