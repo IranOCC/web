@@ -316,5 +316,7 @@ export type Page = {
 
     tags?: string[];
 
+    updatedAt?: Date;
     createdBy?: User | string;
+    createdAt?: Date;
 };

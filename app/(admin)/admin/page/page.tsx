@@ -1,11 +1,10 @@
 "use client";
 
 import PanelTable from "@/components/@panel/Table";
-import { Space, Tag } from "antd";
+import { Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
-import Link from "next/link";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import { Estate } from "@/types/interfaces";
+import { Estate, User } from "@/types/interfaces";
+import moment from "jalali-moment";
 
 const columns: ColumnsType<Estate> = [
   {
@@ -21,9 +20,16 @@ const columns: ColumnsType<Estate> = [
     },
   },
   {
-    title: "نویسنده",
-    dataIndex: ["createdBy", "fullName"],
+    title: "ثبت",
     responsive: ["lg"],
+    render: (value, { createdAt, createdBy }) => {
+      return (
+        <div className="flex flex-col">
+          {!!createdBy && <span>{(createdBy as User)?.fullName}</span>}
+          {!!createdAt && <span>{moment(createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
+        </div>
+      );
+    },
   },
   {
     title: "وضعیت انتشار",

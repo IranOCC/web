@@ -1,14 +1,14 @@
 "use client";
 
 import EditAddPage, { type AddEditComponentProps } from "@/components/@panel/EditAddPage";
-import { Page } from "@/types/interfaces";
+import { Page as PageType } from "@/types/interfaces";
 import { useForm } from "react-hook-form";
 import { PageFormData } from "@/types/formsData";
 import PageRegistrantBox from "@/components/@panel/Features/Page/PageRegistrantBox";
 import PageVisibilityBox from "@/components/@panel/Features/Page/PageVisibilityBox";
 import PageTagsBox from "@/components/@panel/Features/Page/PageTagsBox";
 import PageBox from "@/components/@panel/Features/Page/PageBox";
-
+import { useState } from "react";
 
 const Center = (props: AddEditComponentProps) => {
   return (
@@ -36,7 +36,9 @@ export default function Page() {
   const form = useForm<PageFormData>();
   const { setValue, getValues } = form;
 
-  const setInitialData = (data: PageFormData) => {
+  const [detail, setDetail] = useState<any>(null);
+
+  const setInitialData = (data: PageType) => {
     setValue("_id", data._id);
 
     setValue("title", data.title);
@@ -48,20 +50,25 @@ export default function Page() {
 
     setValue("tags", data.tags);
 
-    setValue("createdBy", data.createdBy);
+    setDetail({
+      ID: data._id,
+      updatedAt: data.updatedAt,
+      createdBy: data.createdBy,
+      createdAt: data.createdAt,
+    });
   };
-
-
 
   return (
     <>
-      <EditAddPage<PageFormData, Page>
+      <EditAddPage<PageFormData, PageType>
         //
         Center={Center}
         Side={Side}
         form={form}
+        componentProps={{ detail }}
         setInitialData={setInitialData}
         endpoint="page"
+        TopSubmitCard={PageRegistrantBox}
       />
     </>
   );

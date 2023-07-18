@@ -1,11 +1,10 @@
 import { PageFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
-import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/@panel/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
+import moment from "jalali-moment";
 
-export default function PageRegistrantBox({ form, loading }: AddEditComponentProps) {
+export default function PageRegistrantBox({ form, loading, props }: AddEditComponentProps) {
   const {
     register,
     unregister,
@@ -18,28 +17,20 @@ export default function PageRegistrantBox({ form, loading }: AddEditComponentPro
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = form as UseFormReturn<PageFormData>;
 
-  useEffect(() => {
-    register("createdBy", { required: "نویسنده نامشخص است" });
-  }, []);
+  const { detail } = props;
 
   return (
     <>
-      <PanelCard title="جزییات صفحه" loading={loading}>
-        <div className="grid grid-cols-1 gap-4 ">
-          <Select
-            //
-            control={control}
-            name="createdBy"
-            error={errors.createdBy?.message}
-            loading={isSubmitting}
-            label="نویسنده"
-            placeholder="انتخاب کنید"
-            apiPath="/tools/user/autoComplete"
-            searchable
-            noSpace
-          />
-        </div>
-      </PanelCard>
+      {!!detail && (
+        <>
+          ثبت شده توسط: {detail?.createdBy?.fullName}
+          <br />
+          زمان ایجاد: {moment(detail?.createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
+          <br />
+          آخرین ویرایش: {moment(detail?.updatedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
+          <hr />
+        </>
+      )}
     </>
   );
 }
