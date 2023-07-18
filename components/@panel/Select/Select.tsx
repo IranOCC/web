@@ -270,6 +270,7 @@ const FieldComponent = (props: FieldComponentType) => {
         ? field.value
         : dataList.filter((item) => item.value === field.value)[0] || undefined
     );
+    if (onChange) onChange(field.value);
   }, [field.value]);
 
   // ==========================>
@@ -286,9 +287,9 @@ const FieldComponent = (props: FieldComponentType) => {
   }, [dataList]);
 
   // ===> onChange
-  useEffect(() => {
-    if (onChange) onChange(field.value);
-  }, []);
+  // useEffect(() => {
+  //   if (onChange) onChange(field.value);
+  // }, []);
 
   const _value =
     !dataLoading && multiple ? (
@@ -365,10 +366,8 @@ const FieldComponent = (props: FieldComponentType) => {
                         if (disabled || loading) return;
                         if (multiple) {
                           field.onChange(null);
-                          if (onChange) onChange(null);
                         } else {
                           field.onChange(null);
-                          if (onChange) onChange(null);
                           setOpen(false);
                         }
                       }}
@@ -400,10 +399,8 @@ const FieldComponent = (props: FieldComponentType) => {
                                 a = [...(field.value || []), value];
                               }
                               field.onChange(a);
-                              if (onChange) onChange(a);
                             } else {
                               field.onChange(value);
-                              if (onChange) onChange(value);
                               setOpen(false);
                             }
                           }}

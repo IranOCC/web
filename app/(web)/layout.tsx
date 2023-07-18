@@ -18,12 +18,13 @@ export async function generateMetadata() {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  return children;
   return (
     <>
       <div
         //
         style={{ "--image-url": `url(/assets/images/web-bg.png)` } as React.CSSProperties}
-        className="flex flex-col justify-center items-center h-full bg-gray-300/50 bg-cover bg-no-repeat bg-[image:var(--image-url)]"
+        className="flex h-full flex-col items-center justify-center bg-gray-300/50 bg-[image:var(--image-url)] bg-cover bg-no-repeat"
       >
         {/*  */}
         <Link href="/admin" className="text-blue-500">

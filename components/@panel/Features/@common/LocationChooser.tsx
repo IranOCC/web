@@ -3,11 +3,28 @@ import "leaflet/dist/leaflet.css";
 import { Controller } from "react-hook-form";
 import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import L from "leaflet";
-import MarkerIcon from "@/components/Icons/MarkerIcon";
+
+import "@/assets/css/map.css";
 import { toast } from "@/lib/toast";
+import Mapir from "mapir-react-component";
+import { Button } from "../../Button";
+
+const API_KEY =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ1NTg4YzVkM2I3YjFjYWU0NWE2OWNjZTM4ZjU3ZTdmN2U1Yjg4YTkxNWMwM2JhOTdiYWJlZWI4OWE2NDMxNDg1Nzc4YTYyNGQ0ZDMwMTc5In0.eyJhdWQiOiI5OTk2IiwianRpIjoiZDU1ODhjNWQzYjdiMWNhZTQ1YTY5Y2NlMzhmNTdlN2Y3ZTViODhhOTE1YzAzYmE5N2JhYmVlYjg5YTY0MzE0ODU3NzhhNjI0ZDRkMzAxNzkiLCJpYXQiOjE1OTQyMDM0MzMsIm5iZiI6MTU5NDIwMzQzMywiZXhwIjoxNTk2Nzk1NDMzLCJzdWIiOiIiLCJzY29wZXMiOlsiYmFzaWMiXX0.RfZI-G-vJsKB8AaAXLtoR93ilorPnOWqEkGnap18EVEOoiWsFwuQaxSpNzYrzSbPeskmo68FdWvfrfcS0IaXvtU2rwI3D1udVrUlz5oDD_Z7NJMB-Dm9qY6mWC2OTsaTyTgNJ2ZC2q8ZK1aTdoEWUv27QrAsYEu_thQgTvSIPn0RoSFwMa-MHH6v7ATGTFY8MNdrazi2VdvTSR49REcssAn5iNjxFX7C9XLwltOA3VKTtCjY6MjkeVOhVrc2Bgo1QDukFTNSWGiEX0nSm1xKAs-OIXRKxvmmt9Sm6lcaT_2WbyPVn6Mo3aO7AjjhtxPjQZZk1PKtFwRH4r-JJdY2SA";
+const Map = Mapir.setToken({
+  transformRequest: (url: string) => {
+    return {
+      url: url,
+      headers: {
+        "x-api-key": API_KEY,
+        "Mapir-SDK": "reactjs",
+      },
+    };
+  },
+});
 
 const LocationChooser = (props: IProps) => {
-  const { name, control, defaultValue, label, containerClassName = "", className = "", noSpace, loading, disabled, readOnly, error, warning, success } = props;
+  const { name, control, defaultValue, label, getAddress, containerClassName = "", className = "", noSpace, loading, disabled, readOnly, error, warning, success } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -30,9 +47,13 @@ const LocationChooser = (props: IProps) => {
     labelClass = " text-orange-500";
   }
 
+  // here [lng, lat] accepted but in the server [lat, lng]
+  // so every things from server reversed (***)
+
   const def = defaultValue?.split(",");
-  const [center, setCenter] = useState<L.LatLngTuple>(def ? [+def[0], +def[1]] : [0, 0]);
-  //
+  // (***)
+  const [center, setCenter] = useState(def ? [+def[1], +def[0]] : [0, 0]);
+
   return (
     <>
       <div className={"relative z-10 w-full" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
@@ -41,45 +62,54 @@ const LocationChooser = (props: IProps) => {
         <div className="relative w-full">
           <Controller
             render={({ field }) => {
-              let value: L.LatLngExpression | null = null;
-              if (typeof field.value === "string") {
-                const m = field.value.split(",").map((v) => +v);
-                value = [m[0], m[1]];
+              async function reverseFunction(map: any, e: any) {
+                field.onChange([e.lngLat.lat, e.lngLat.lng].join(","));
+                setCenter([e.lngLat.lng, e.lngLat.lat]);
+                if (!!getAddress) {
+                  const url = `https://map.ir/reverse/no?lat=${e.lngLat.lat}&lon=${e.lngLat.lng}`;
+                  const response = await fetch(url, {
+                    headers: { "Content-Type": "application/json", "x-api-key": API_KEY },
+                  });
+                  const data = await response.json();
+                  getAddress(data);
+                }
+              }
+
+              // convert to array
+              let value: number[] | null = null;
+              if (!!field.value) {
+                const m = field.value.split(",").map((v: string) => +v);
+                // (***)
+                value = [m[1], m[0]];
               }
 
               return (
                 <>
-                  <MapContainer
+                  <Mapir
                     //
+                    Map={Map}
                     center={center}
-                    zoom={15}
-                    scrollWheelZoom={true}
-                    zoomControl={false}
-                    // attributionControl
-                    style={{ height: 400, width: "100%" }}
-                    className={"rounded " + className + " flex items-center justify-center"}
+                    zoom={[16]}
+                    userLocation
+                    className={"rounded " + className + " !h-[30rem] !w-full overflow-hidden"}
+                    onClick={reverseFunction}
+                    interactive
+                    hash
                   >
-                    <TileLayer
-                      //
-                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <DraggableMarker
-                      //
-                      isSelected={!!value}
-                      location={value || center}
-                      setLocation={(data: L.LatLngTuple) => field.onChange(data.join(","))}
-                      disabled={disabled || loading || readOnly}
-                    />
-                    <LocationEvent
-                      //
-                      isSelected={!!value}
-                      setCenter={(data: L.LatLngTuple) => setCenter(data)}
-                      center={center}
-                      marker={value || center}
-                      autoLocate={!value}
-                    />
-                  </MapContainer>
+                    {/* zoom */}
+                    <Mapir.ZoomControl position="top-left" />
+                    {/* marker */}
+                    {!!value && (
+                      <Mapir.Marker
+                        //
+                        coordinates={value}
+                        anchor="bottom"
+                        Image={"https://map.ir/css/images/marker-default-yellow.svg"}
+                      />
+                    )}
+                  </Mapir>
+                  {!!value && <Button noSpace title="نمایش موقعیت ثبت شده" onClick={() => setCenter(value!)} />}
+                  {!value && <Button noSpace title="موقعیت را با کلیک بر روی نقشه مشخص کنید" disabled />}
                 </>
               );
             }}
@@ -113,90 +143,6 @@ export type IProps = {
   error?: ReactNode;
   warning?: ReactNode;
   success?: ReactNode;
+
+  getAddress?: (data: any) => void;
 };
-
-function LocationEvent({ isSelected, marker, center, setCenter, autoLocate }: { isSelected: boolean; marker: L.LatLngTuple; center: L.LatLngTuple; setCenter: any; autoLocate: any }) {
-  //
-  //
-  const map = useMapEvents({
-    locationfound(e) {
-      setCenter([e.latlng?.lat, e.latlng?.lng]);
-      map.flyTo(new L.LatLng(e.latlng?.lat, e.latlng?.lng), 15, { duration: 2 });
-    },
-    moveend(e) {
-      const c = map.getCenter();
-      setCenter([c.lat, c.lng]);
-      map.panTo(new L.LatLng(c.lat, c.lng));
-    },
-    locationerror(e) {
-      console.log("LocErr:", e);
-      toast.error("خطا در دریافت موقعیت");
-    },
-  });
-
-  const mapLocate = () => {
-    map.locate();
-  };
-  useEffect(() => {
-    if (autoLocate) mapLocate();
-  }, [autoLocate]);
-
-  const locateToMarker = () => {
-    setCenter(marker);
-    map.flyTo(new L.LatLng(marker[0], marker[1]), 15, { duration: 2 });
-  };
-
-  return (
-    <>
-      <div
-        //
-        onClick={mapLocate}
-        className="absolute bottom-1 left-1 z-[9999] rounded bg-orange-500 p-2 font-bold text-white"
-      >
-        موقعیت من
-      </div>
-      {isSelected && (
-        <div
-          //
-          onClick={locateToMarker}
-          className="absolute bottom-11 left-1 z-[9999] rounded bg-green-500 p-2 font-bold text-white"
-        >
-          موقعیت ثبت شده
-        </div>
-      )}
-    </>
-  );
-}
-
-function DraggableMarker({ location, setLocation, isSelected, disabled }: { location: L.LatLngTuple; setLocation: any; isSelected?: boolean; disabled?: boolean }) {
-  const markerRef = useRef<any>(null);
-  const eventHandlers = useMemo(
-    () => ({
-      dragend() {
-        const marker = markerRef.current;
-        if (marker != null) {
-          setLocation([marker.getLatLng().lat, marker.getLatLng().lng]);
-        }
-      },
-    }),
-    []
-  );
-
-  const markerIcon = new L.Icon({
-    iconUrl: isSelected ? "/assets/icons/marker-selected.svg" : "/assets/icons/marker.svg",
-    iconRetinaUrl: isSelected ? "/assets/icons/marker-selected.svg" : "/assets/icons/marker.svg",
-    iconSize: new L.Point(60, 75),
-    // className: "leaflet-div-icon",
-  });
-
-  return (
-    <Marker
-      //
-      icon={markerIcon}
-      draggable={!disabled}
-      eventHandlers={eventHandlers}
-      position={{ lat: location[0], lng: location[1] }}
-      ref={markerRef}
-    />
-  );
-}
