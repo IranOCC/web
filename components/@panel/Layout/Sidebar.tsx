@@ -308,7 +308,7 @@ const PanelSideBar = () => {
 
   return (
     <ClickAwayListener onClickAway={() => setOpenSubMenu(null)}>
-      <aside className="fixed h-full flex z-30">
+      <aside className="fixed z-30 flex h-full">
         <MainMenu
           //
           itemOpen={isOpenSubMenu}
@@ -333,7 +333,7 @@ export default PanelSideBar;
 const MainMenu = ({ handleOpenSubMenu, itemOpen }: any) => {
   const { roles: myRoles } = useContext(CurrentUserContext) as CurrentUserContextType;
   return (
-    <div className="relative z-10 overflow-x-hidden flex flex-col items-center w-16 h-full py-4 space-y-8 border-l bg-white dark:bg-gray-900 dark:border-gray-700">
+    <div className="relative z-10 flex h-full w-16 flex-col items-center space-y-8 overflow-x-hidden border-l bg-white py-4 dark:border-gray-700 dark:bg-gray-900">
       {menuItems
         .filter(({ roles }) => {
           return !!myRoles && roles.some((role) => myRoles.includes(role));
@@ -355,7 +355,6 @@ const MainMenu = ({ handleOpenSubMenu, itemOpen }: any) => {
           );
         })}
       <div className="h-full" />
-      <div className="rotate-90">{myRoles}</div>
       <MainMenuItem
         //
         title="حساب کاربری من"
@@ -377,7 +376,7 @@ const MainMenuItem = ({ href = "#", onClick, icon, title = "test", highlight = f
       <Link
         href={onClick ? pathname + "#" : mainHref}
         onClick={onClick}
-        className={(isActive ? "text-blue-500 bg-blue-100 dark:text-blue-400 dark:bg-gray-800 " : highlight ? highlightClass + " " : "text-gray-500 bg-white hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 ") + "p-1.5 focus:outline-nones transition-colors duration-200 rounded-lg"}
+        className={(isActive ? "bg-blue-100 text-blue-500 dark:bg-gray-800 dark:text-blue-400 " : highlight ? highlightClass + " " : "bg-white text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 ") + "focus:outline-nones rounded-lg p-1.5 transition-colors duration-200"}
       >
         {icon}
       </Link>
@@ -392,7 +391,7 @@ const SubMenu = ({ open, title, sub, parentPath }: { open: boolean; title: strin
   const { roles: myRoles } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   return (
-    <div className={"h-full shadow-lg py-8 overflow-y-auto bg-white border-l w-64 dark:bg-gray-900 dark:border-gray-700 absolute start-16 xl:relative xl:!start-0 transition-all duration-500" + (open ? " " : " !-start-48")}>
+    <div className={"absolute h-full w-64 overflow-y-auto border-l bg-white py-8 shadow-lg transition-all duration-500 start-16 dark:border-gray-700 dark:bg-gray-900 xl:relative xl:!start-0" + (open ? " " : " !-start-48")}>
       <h2 className="px-5 text-lg font-medium text-gray-800 dark:text-white">{title}</h2>
       <div className="mt-8 space-y-4">
         {sub
@@ -404,9 +403,9 @@ const SubMenu = ({ open, title, sub, parentPath }: { open: boolean; title: strin
             const isActive = !href.length ? pathname === panelPrefix + "/" + parentPath : pathname?.startsWith(mainHref);
             return (
               <Link key={index} href={mainHref}>
-                <button className={"flex items-center w-full px-5 py-2 transition-colors duration-200  gap-x-2 focus:outline-none" + (isActive ? " bg-blue-100 dark:bg-gray-800" : " dark:hover:bg-gray-800 hover:bg-gray-100")}>
+                <button className={"flex w-full items-center gap-x-2 px-5 py-2 transition-colors  duration-200 focus:outline-none" + (isActive ? " bg-blue-100 dark:bg-gray-800" : " hover:bg-gray-100 dark:hover:bg-gray-800")}>
                   <div className="text-left rtl:text-right">
-                    <h1 className="text-sm font-medium text-gray-700 capitalize dark:text-white">{title}</h1>
+                    <h1 className="text-sm font-medium capitalize text-gray-700 dark:text-white">{title}</h1>
                     <p className="text-xs text-gray-500 dark:text-gray-400">{subtitle}</p>
                   </div>
                 </button>
