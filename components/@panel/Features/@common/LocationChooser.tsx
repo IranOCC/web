@@ -197,8 +197,8 @@ const SearchBox = ({ setMarkerPosition }: { setMarkerPosition: any }) => {
     setText("");
   }
   return (
-    <div className="absolute top-2.5 flex w-full flex-col">
-      <div className="relative flex max-h-full w-full flex-col px-12">
+    <div className="absolute top-20 flex w-full flex-col sm:top-2.5">
+      <div className="relative flex max-h-full w-full flex-col px-2 sm:px-12 ">
         <div className="flex w-full flex-row">
           <input
             //
@@ -207,7 +207,7 @@ const SearchBox = ({ setMarkerPosition }: { setMarkerPosition: any }) => {
             placeholder="جستجوی مکان..."
             onChange={(e) => setText(e.target.value)}
             value={text}
-            className={"flex-1 rounded-tr-lg border-0 bg-yellow-100 text-sm ring-0 transition-all focus:ring-0" + (!!searchResult?.length ? "" : " rounded-br-lg")}
+            className={"w-0 flex-1 rounded-tr-lg border-0 bg-yellow-100 text-sm ring-0 transition-all focus:ring-0" + (!!searchResult?.length ? "" : " rounded-br-lg")}
           />
           <button
             //
