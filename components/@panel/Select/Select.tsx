@@ -228,6 +228,7 @@ type FieldComponentType = {
   anchorRef: RefObject<HTMLDivElement>;
   search: string;
   setSearch: (s: string) => void;
+
   onChange?: (value: any) => void;
 
   defaultValue?: string | string[];
