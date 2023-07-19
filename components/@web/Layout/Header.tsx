@@ -18,7 +18,7 @@ const WebHeader = () => {
   const [openSubMenu, setOpenSubMenu] = useState(false);
   return (
     <>
-      <div className="flex flex-1 flex-col text-sm">
+      <div className="hidden flex-col text-sm md:flex">
         <div className="flex flex-row items-start justify-end gap-5 px-4 py-4">
           {isLogin && (
             <Link href="#" className="flex h-full cursor-pointer items-center justify-center gap-2" onMouseEnter={() => setOpenSubMenu(true)} onMouseLeave={() => setOpenSubMenu(false)}>
@@ -29,7 +29,6 @@ const WebHeader = () => {
                 </span>
 
                 <div className={"absolute top-0 -z-10 w-full overflow-hidden rounded-2xl bg-white px-4 pb-2 pt-10 shadow-[0px_0px_19px_0px_rgba(0,0,0,0.25)]" + (openSubMenu ? " block" : " hidden")}>
-                  {/*  */}
                   <hr />
                   <ul className="mt-2">
                     <li className="py-0.5 transition-colors hover:text-secondary">
@@ -67,7 +66,7 @@ const WebHeader = () => {
           <div
             //
             onClick={toggleFullscreen}
-            className="flex h-full cursor-pointer items-center justify-center rounded-lg bg-white p-2 text-gray-500 shadow-[0px_0px_22px_0px_rgba(0,0,0,0.25)]"
+            className="hidden h-full cursor-pointer items-center justify-center rounded-lg bg-white p-2 text-gray-500 shadow-[0px_0px_22px_0px_rgba(0,0,0,0.25)] 2xl:flex"
           >
             {isFullscreen && <FullscreenExitIcon />}
             {!isFullscreen && <FullscreenIcon />}
