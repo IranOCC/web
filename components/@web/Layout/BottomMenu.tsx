@@ -45,7 +45,7 @@ const WebBottomMenu = () => {
       index: 2,
       icon: <VipIconBottomMenu />,
       title: "املاک ویژه",
-      href: "/property?filter[level]=vip",
+      href: "/property/special",
     },
     {
       index: 3,
