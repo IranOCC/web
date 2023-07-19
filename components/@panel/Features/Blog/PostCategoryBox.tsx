@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/@panel/Select";
-import TextEditor from "@/components/@panel/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
 
 export default function BlogPostCategoryBox({ form, loading, props }: AddEditComponentProps) {

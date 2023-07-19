@@ -8,7 +8,7 @@ import { LoadingWithoutBg } from "@/components/Loading";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 
 const TextEditor = (props: IProps) => {
-  const { label, name, control, defaultValue, placeholder, useMediaLibrary, mediaUploadPath = "main", mediaUploaderField = "image", disabled, loading, readOnly, error, warning, success, containerClassName = "" } = props;
+  const { label, name, control, defaultValue, placeholder, useMediaLibrary, mediaUploadPath, mediaUploaderField = "image", disabled, loading, readOnly, error, warning, success, containerClassName = "" } = props;
   let { status, helperText } = props;
   if (error) {
     status = "error";
@@ -61,15 +61,17 @@ const TextEditor = (props: IProps) => {
                     plugins: ["advlist", "autolink", "lists", "link", "image", "charmap", "preview", "anchor", "searchreplace", "visualblocks", "code", "fullscreen", "insertdatetime", "media", "table", "code", "help", "wordcount", "directionality"],
                     toolbar: "insertfile undo redo | blocks | " + "image | " + "bold italic forecolor | alignleft aligncenter " + "alignright alignjustify | ltr rtl | bullist numlist outdent indent | " + "removeformat | help |",
                     content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px, }",
-                    images_upload_handler: async (blobInfo, progress) => {
-                      const formData = new FormData();
-                      formData.append(mediaUploaderField, blobInfo.blob(), blobInfo.filename());
-                      const headers = { "Content-Type": "multipart/form-data" };
-                      const { data } = await api.post(process.env.NEXT_PUBLIC_BASE_URL + "/storage/" + mediaUploadPath, formData, { headers });
-                      return process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + data.path;
-                    },
-                    automatic_uploads: true,
-                    paste_data_images: true,
+                    images_upload_handler: !mediaUploadPath
+                      ? undefined
+                      : async (blobInfo, progress) => {
+                          const formData = new FormData();
+                          formData.append(mediaUploaderField, blobInfo.blob(), blobInfo.filename());
+                          const headers = { "Content-Type": "multipart/form-data" };
+                          const { data } = await api.post(process.env.NEXT_PUBLIC_BASE_URL + "/storage/" + mediaUploadPath, formData, { headers });
+                          return process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + data.path;
+                        },
+                    automatic_uploads: !!mediaUploadPath,
+                    paste_data_images: !!mediaUploadPath,
                     file_picker_types: "image",
                     file_picker_callback: !useMediaLibrary
                       ? undefined

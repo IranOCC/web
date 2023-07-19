@@ -29,7 +29,7 @@ export default function PageBox({ form, loading, props }: AddEditComponentProps)
   return (
     <>
       <PanelCard title="اطلاعات صفحه" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 ">
           <Input
             //
             control={control}
@@ -73,6 +73,10 @@ export default function PageBox({ form, loading, props }: AddEditComponentProps)
             error={errors.content?.message}
             loading={isSubmitting}
             containerClassName="col-span-full"
+            //
+            useMediaLibrary
+            mediaUploadPath="page"
+            mediaUploaderField="image"
           />
         </div>
       </PanelCard>

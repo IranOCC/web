@@ -48,7 +48,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
   const tableColumns = columns.map((item) => ({ ...item, ellipsis: false }));
 
   const scroll: { x?: number | string; y?: number | string } = {};
-  scroll.y = "calc(100vh - 340px)";
+  scroll.y = "calc(100vh - 280px)";
 
   // fixed column
   // scroll.x = minWidth;
@@ -193,7 +193,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
       <>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           {/* {!!headerTitle && headerTitle(totalItemsCount)} */}
-          <div className="text-base font-semibold flex items-center gap-4 justify-between sm:justify-start">
+          <div className="flex items-center justify-between gap-4 text-base font-semibold sm:justify-start">
             {/*  */}
             {headerTitle} {!!totalItemsCount && "(" + totalItemsCount + ")"}
             {hasSelected && (
@@ -222,13 +222,13 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
             )}
           </div>
 
-          <div className="flex items-center gap-x-2 self-end w-full sm:w-auto">
-            <div className="relative flex items-center w-full">
+          <div className="flex w-full items-center gap-x-2 self-end sm:w-auto">
+            <div className="relative flex w-full items-center">
               <input
                 //
                 type="text"
                 placeholder="جستجو ..."
-                className={`placeholder:text-gray-400 w-full bg-white focus:bg-white p-2.5 text-gray-900 focus:ring-0 block text-sm border-b focus:border-gray-300 border-gray-300 border-0`}
+                className={`block w-full border-0 border-b border-gray-300 bg-white p-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-gray-300 focus:bg-white focus:ring-0`}
                 value={_search || ""}
                 onChange={(e) => {
                   const $s = new URLSearchParams(searchParams?.toString());
