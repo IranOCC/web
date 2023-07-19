@@ -3,8 +3,7 @@
 import { ReactNode, useContext, useEffect } from "react";
 import { ThemeContext, ThemeContextType } from "@/context/theme.context";
 import { LoadingContext, LoadingContextType } from "@/context/loading.context";
-import { useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import CompleteProfileModal from "../Modals/CompleteProfileModal";
@@ -13,7 +12,7 @@ import RolesConflictModal from "../Modals/RolesConflictModal";
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { darkMode } = useContext(ThemeContext) as ThemeContextType;
   const { hideLoading } = useContext(LoadingContext) as LoadingContextType;
-  const { user, setUser } = useContext(CurrentUserContext) as CurrentUserContextType;
+  const { setUser } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const { status: sessionStatus } = useSession();
   const api = useAxiosAuth();
@@ -23,7 +22,6 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
       setUser(me.data);
       hideLoading();
     } catch (error) {
-      // await signOut();
       hideLoading();
     }
   };
@@ -34,11 +32,10 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   }, [sessionStatus]);
 
   return (
-    <body lang="fa" dir="rtl" className={"select-none bg-gray-200 selection:bg-yellow-200 selection:text-yellow-900 font-rubik print:hidden scroll-smooth" + (darkMode ? " dark" : "")}>
+    <body lang="fa" dir="rtl" className={"font-rubik select-none scroll-smooth bg-gray-200 selection:bg-yellow-200 selection:text-yellow-900 print:hidden" + (darkMode ? " dark" : "")}>
       {children}
       <CompleteProfileModal />
       <RolesConflictModal />
-      {/*  */}
     </body>
   );
 };

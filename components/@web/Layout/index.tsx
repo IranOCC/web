@@ -1,22 +1,27 @@
-// "use client";
+"use client";
 
-import styles from "./style.module.css";
-import Footer from "@/components/@web/Layout/Footer";
-import Header from "@/components/@web/Layout/Header";
-import { ReactNode, useState } from "react";
-import { Session } from "next-auth";
+import { ReactNode, useContext } from "react";
+import WebSideBar from "./Sidebar";
+import WebHeader from "./Header";
+import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const WebLayout = ({ children }: { children: ReactNode }) => {
+  const { isFullscreen } = useContext(WebPreviewContext) as WebPreviewContextType;
+
   return (
-    <div className="min-h-full flex flex-col bg-slate-100">
-      {/* @ts-expect-error Server Component */}
-      <Header />
-      <main className="grow min-h-[300px] mt-16">
-        <div className="w-full">{children}</div>
-      </main>
-      <Footer />
-    </div>
+    <main
+      //
+      style={{ "--image-url": `url(/assets/images/web-bg.png)` } as React.CSSProperties}
+      className=" h-full bg-gray-300/50 bg-[image:var(--image-url)] bg-cover bg-no-repeat"
+    >
+      <div className="flex h-full w-full justify-center p-5">
+        <div className={"relative flex h-full w-full max-w-screen-2xl flex-row overflow-hidden rounded-2xl bg-white transition-all duration-1000" + (isFullscreen ? " !max-w-full" : "")}>
+          <WebSideBar />
+          <WebHeader />
+        </div>
+      </div>
+    </main>
   );
 };
 
-export default Layout;
+export default WebLayout;

@@ -8,6 +8,7 @@ import React, { ReactNode, useEffect } from "react";
 export type CurrentUserContextType = {
   user: User | null;
   roles?: UserRoles[];
+  isLogin: boolean;
   isSuperAdmin: boolean;
   isAdmin: boolean;
   isAgent: boolean;
@@ -27,6 +28,7 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
 
   // const _sUser = session?.user as User;
   const value = {
+    isLogin: !!currentUser,
     user: currentUser,
     roles: currentUser?.roles,
     isSuperAdmin: !!currentUser?.roles.includes(UserRoles.SuperAdmin),

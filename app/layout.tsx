@@ -51,7 +51,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                     <MainLayout>
                       {children}
                       <Loading />
-                      {/*  */}
                     </MainLayout>
                   </html>
                 </CurrentUserProvider>

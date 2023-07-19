@@ -1,12 +1,11 @@
 import React, { ReactNode, useEffect, useState } from "react";
 // import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, Modal, Spin, Upload } from "antd";
-import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { Controller, ControllerRenderProps, FieldValues } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { StorageFile } from "@/types/interfaces";
-import Loading from "../Loading";
+
 import { Session } from "next-auth";
 
 const beforeUpload = (file: RcFile) => {
@@ -48,7 +47,7 @@ const LogoUploader = (props: IProps) => {
 
   return (
     <>
-      <div className={"w-full relative z-20 flex flex-col items-center justify-center" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+      <div className={"relative z-20 flex w-full flex-col items-center justify-center" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
         <Controller
           render={({ field }) => (
             <FieldComponent
@@ -67,7 +66,7 @@ const LogoUploader = (props: IProps) => {
           name={name}
           control={control}
         />
-        {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
+        {helperText && <p className={"mt-1 block text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
       </div>
     </>
   );

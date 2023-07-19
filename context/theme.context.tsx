@@ -9,7 +9,7 @@ export type ThemeContextType = {
 
 export const ThemeContext = React.createContext<ThemeContextType | null>(null);
 
-export const ThemeProvider = ({ children, initial }: { children: ReactNode; initial?: {dark:boolean} }) => {
+export const ThemeProvider = ({ children, initial }: { children: ReactNode; initial?: { dark: boolean } }) => {
   const [darkMode, setDarkMode] = React.useState<boolean>(initial?.dark || false);
 
   const toggleTheme = () => {
