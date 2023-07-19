@@ -36,7 +36,7 @@ const items: ItemType[] = [
     index: 2,
     icon: <VipIconSideBar />,
     title: "املاک ویژه",
-    href: "/property?filter[level]=vip",
+    href: "/property/special",
   },
   {
     index: 3,
