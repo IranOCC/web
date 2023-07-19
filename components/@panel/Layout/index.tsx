@@ -12,9 +12,9 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   if (status === "loading") return <Loading />;
 
   return (
-    <div className="flex h-full flex-row ">
+    <div className="flex flex-row ">
       <PanelSideBar />
-      <main className={"relative mb-12 h-full w-[calc(100%-4rem)] transition-all duration-500 start-16 xl:w-[calc(100%-20rem)] xl:start-80"}>
+      <main className={"relative h-auto w-[calc(100%-4rem)] transition-all duration-500 start-16 xl:w-[calc(100%-20rem)] xl:start-80"}>
         <PanelHeader />
         {children}
       </main>
