@@ -19,19 +19,21 @@ export type CurrentUserContextType = {
 export const CurrentUserContext = React.createContext<CurrentUserContextType | null>(null);
 
 // @ DON'T GET USER ROLES FROM CURRENT USER, GET IT FROM SESSION ONLY FOR SYNCING WITH JWT
+// For a bug in session we use current user
+// instead we sign out if session roles not equal with real roles
 export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
   const { data: session } = useSession();
   const [currentUser, _setCurrentUser] = React.useState<User | null>(null);
 
-  const _sUser = session?.user as User;
+  // const _sUser = session?.user as User;
   const value = {
     user: currentUser,
-    roles: _sUser?.roles,
-    isSuperAdmin: !!_sUser?.roles.includes(UserRoles.SuperAdmin),
-    isAdmin: !!_sUser?.roles.includes(UserRoles.Admin),
-    isAgent: !!_sUser?.roles.includes(UserRoles.Agent),
-    isAuthor: !!_sUser?.roles.includes(UserRoles.Author),
-    isUser: !!_sUser?.roles.includes(UserRoles.User),
+    roles: currentUser?.roles,
+    isSuperAdmin: !!currentUser?.roles.includes(UserRoles.SuperAdmin),
+    isAdmin: !!currentUser?.roles.includes(UserRoles.Admin),
+    isAgent: !!currentUser?.roles.includes(UserRoles.Agent),
+    isAuthor: !!currentUser?.roles.includes(UserRoles.Author),
+    isUser: !!currentUser?.roles.includes(UserRoles.User),
     setUser: _setCurrentUser,
   };
 
