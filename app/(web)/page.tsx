@@ -6,7 +6,7 @@ export default function Page() {
       {/*  */}
       صفحه اصلی
       <br />
-      <Link href="/" className="font-bold text-blue-500 underline">
+      <Link href="/admin" className="font-bold text-blue-500 underline">
         پنل مدیریت
       </Link>
     </div>
