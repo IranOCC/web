@@ -1,5 +1,6 @@
 "use client";
 
+import NotificationIcon from "@/components/Icons/Notification";
 import RefreshIcon from "@/components/Icons/Refresh";
 import UserIcon from "@/components/Icons/User";
 import ViewIcon from "@/components/Icons/View";
@@ -22,9 +23,10 @@ const PanelHeader = () => {
         >
           <WebsiteIcon />
         </Link>
+
         <Link
           //
-          href={"#"}
+          href="#"
           onClick={() => window.location.reload()}
           className={"focus:outline-nones rounded-lg bg-orange-200  p-1.5 text-orange-500 transition-colors duration-200 hover:bg-orange-300"}
         >
@@ -32,7 +34,14 @@ const PanelHeader = () => {
         </Link>
         <Link
           //
-          href={"/admin/profile"}
+          href="/admin/notification"
+          className={"focus:outline-nones rounded-lg bg-blue-200  p-1.5 text-blue-500 transition-colors duration-200 hover:bg-blue-300"}
+        >
+          <NotificationIcon />
+        </Link>
+        <Link
+          //
+          href="/admin/profile"
           className={"focus:outline-nones flex gap-1 rounded-lg bg-purple-200 p-1.5 text-purple-500 transition-colors duration-200 hover:bg-purple-300"}
         >
           <UserIcon />
