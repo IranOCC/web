@@ -3,6 +3,7 @@
 import RefreshIcon from "@/components/Icons/Refresh";
 import UserIcon from "@/components/Icons/User";
 import ViewIcon from "@/components/Icons/View";
+import WebsiteIcon from "@/components/Icons/Website";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import Link from "next/link";
 import { useContext } from "react";
@@ -19,7 +20,7 @@ const PanelHeader = () => {
           href="/"
           className={"focus:outline-nones rounded-lg bg-green-200  p-1.5 text-green-500 transition-colors duration-200 hover:bg-green-300"}
         >
-          <ViewIcon />
+          <WebsiteIcon />
         </Link>
         <Link
           //
