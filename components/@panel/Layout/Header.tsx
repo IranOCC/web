@@ -2,6 +2,7 @@
 
 import RefreshIcon from "@/components/Icons/Refresh";
 import UserIcon from "@/components/Icons/User";
+import ViewIcon from "@/components/Icons/View";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import Link from "next/link";
 import { useContext } from "react";
@@ -15,8 +16,15 @@ const PanelHeader = () => {
         {/* */}
         <Link
           //
+          href="/"
+          className={"focus:outline-nones rounded-lg bg-green-200  p-1.5 text-green-500 transition-colors duration-200 hover:bg-green-300"}
+        >
+          <ViewIcon />
+        </Link>
+        <Link
+          //
           href={"#"}
-          onClick={window.location.reload}
+          onClick={() => window.location.reload()}
           className={"focus:outline-nones rounded-lg bg-orange-200  p-1.5 text-orange-500 transition-colors duration-200 hover:bg-orange-300"}
         >
           <RefreshIcon />
