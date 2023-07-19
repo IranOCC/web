@@ -76,6 +76,7 @@ const WebSideBar = () => {
             return (
               <MenuItem
                 //
+                key={item.index}
                 {...item}
                 setHovering={setHovering}
               />
