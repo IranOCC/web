@@ -158,6 +158,9 @@ export default function Page() {
             loading={isSubmitSuccessful || isSubmitting || isLoading || isValidating}
           />
         </form>
+        <span className="mt-5 block cursor-pointer select-none p-1 text-center text-sm font-medium text-blue-500" onClick={() => router.push("/")}>
+          بازگشت به صفحه اصلی
+        </span>
       </div>
     </>
   );
