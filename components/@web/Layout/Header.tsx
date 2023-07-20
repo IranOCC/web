@@ -10,9 +10,11 @@ import ArrowDownOutlineIcon from "@/components/Icons/web/ArrowDownOutline";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import BreadCrump from "./BreadCrump";
+import FullContentExitIcon from "@/components/Icons/web/FullContentExit";
+import FullContentIcon from "@/components/Icons/web/FullContent";
 
 const WebHeader = () => {
-  const { toggleFullscreen, isFullscreen } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { toggleFullscreen, isFullscreen, toggleFullContent, isFullContent, sidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
   const { user, showAdminPanel, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const [openSubMenu, setOpenSubMenu] = useState(false);
@@ -72,11 +74,13 @@ const WebHeader = () => {
             )}
             <div
               //
-              onClick={toggleFullscreen}
-              className="hidden h-full cursor-pointer items-center justify-center rounded-lg bg-white p-2 text-gray-500 shadow-[0px_0px_22px_0px_rgba(0,0,0,0.25)] 2xl:flex"
+              onClick={!sidebar ? toggleFullscreen : toggleFullContent}
+              className={"hidden h-full cursor-pointer items-center justify-center rounded-lg bg-white p-2 text-gray-500 shadow-[0px_0px_22px_0px_rgba(0,0,0,0.25)]" + (!sidebar ? " 2xl:flex" : " xl:flex")}
             >
-              {isFullscreen && <FullscreenExitIcon />}
-              {!isFullscreen && <FullscreenIcon />}
+              {!sidebar && isFullscreen && <FullscreenExitIcon />}
+              {!sidebar && !isFullscreen && <FullscreenIcon />}
+              {!!sidebar && isFullContent && <FullContentExitIcon />}
+              {!!sidebar && !isFullContent && <FullContentIcon />}
             </div>
           </div>
         </div>

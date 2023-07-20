@@ -4,7 +4,7 @@ import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.c
 import { useContext, useEffect } from "react";
 
 export default function Page() {
-  const { setBreadCrump } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { setBreadCrump, setSidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   useEffect(() => {
     setBreadCrump([
@@ -12,6 +12,10 @@ export default function Page() {
       { title: "ویلا", url: "/" },
       { title: "متل قو", url: "/" },
     ]);
+    setSidebar({
+      small: false,
+      content: "Hello",
+    });
   }, []);
   return (
     <>
