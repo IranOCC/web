@@ -1,3 +1,5 @@
+"use client";
+
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import { useContext, useEffect } from "react";
 
