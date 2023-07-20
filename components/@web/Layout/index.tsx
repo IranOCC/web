@@ -20,9 +20,12 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
           <WebSideBar />
           <div className="flex flex-1 flex-col">
             <WebHeader />
-            <div className="h-full overflow-x-hidden bg-green-400 p-2 pb-[5.5rem] md:pb-2">
-              {children}
-              {/*  */}
+            <div className="h-full overflow-hidden p-0 pb-16 md:pb-0">
+              <div className="h-full overflow-auto bg-green-400 p-2">
+                {/*  */}
+                {children}
+                {/*  */}
+              </div>
             </div>
           </div>
         </div>
