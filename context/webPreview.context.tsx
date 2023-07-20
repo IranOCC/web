@@ -15,8 +15,8 @@ export type WebPreviewContextType = {
   breadCrump?: { title: string; url?: string }[];
   setBreadCrump: (n: { title: string; url?: string }[] | undefined) => void;
 
-  sidebar?: { small: boolean; content: ReactNode };
-  setSidebar: (n: { small: boolean; content: ReactNode } | undefined) => void;
+  sidebar?: { small: boolean; props?: {}; content: (props: any) => JSX.Element };
+  setSidebar: (n: { small: boolean; props?: {}; content: (props: any) => JSX.Element } | undefined) => void;
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
@@ -25,7 +25,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const [isFullscreen, setFullscreen] = React.useState<boolean>(initial?.full || false);
   const [background, setBackground] = React.useState<string>("bg-white");
   const [breadCrump, setBreadCrump] = React.useState<{ title: string; url?: string }[] | undefined>(undefined);
-  const [sidebar, setSidebar] = React.useState<{ small: boolean; content: ReactNode } | undefined>(undefined);
+  const [sidebar, setSidebar] = React.useState<{ small: boolean; props?: {}; content: (props: any) => JSX.Element } | undefined>(undefined);
   const [isFullContent, setFullContent] = React.useState<boolean>(false);
 
   const toggleFullscreen = () => {

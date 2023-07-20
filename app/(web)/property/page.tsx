@@ -15,7 +15,8 @@ export default function Page() {
     ]);
     setSidebar({
       small: false,
-      content: <MapEstate />,
+      content: MapEstate,
+      // props: {},
     });
   }, []);
 

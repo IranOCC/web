@@ -144,10 +144,10 @@ export default WebBottomMenu;
 // === MenuItem
 const MenuItem = ({ index, icon, title, href, className, setOpenSub, setHovering }: ItemType & { setOpenSub: (d: number) => void; setHovering: (d: number | null) => void }) => {
   return (
-    <Tooltip arrow={false} placement="top" title={title}>
-      <Link href={href || "#"} onClick={() => setOpenSub(index)} className={" z-[1] flex h-full items-center justify-center px-2" + (className ? " " + className : "")} onMouseEnter={() => setHovering(index)} onMouseLeave={() => setHovering(null)}>
-        <div className="flex items-center justify-center p-2">{icon}</div>
-      </Link>
-    </Tooltip>
+    // <Tooltip arrow={false} placement="top" title={title}>
+    <Link href={href || "#"} onClick={() => setOpenSub(index)} className={" z-[1] flex h-full items-center justify-center px-2" + (className ? " " + className : "")} onMouseEnter={() => setHovering(index)} onMouseLeave={() => setHovering(null)}>
+      <div className="flex items-center justify-center p-2">{icon}</div>
+    </Link>
+    // </Tooltip>
   );
 };
