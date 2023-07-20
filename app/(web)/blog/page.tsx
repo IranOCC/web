@@ -4,8 +4,9 @@ import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.c
 import { useContext, useEffect } from "react";
 
 export default function Page() {
-  const { setBreadCrump, setSidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { setBackground, setBreadCrump, setSidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
   useEffect(() => {
+    setBackground("bg-white");
     setBreadCrump(undefined);
     setSidebar(undefined);
   }, []);

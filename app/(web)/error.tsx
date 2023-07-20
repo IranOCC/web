@@ -11,7 +11,6 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
   const { setBreadCrump, setBackground, setSidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   useEffect(() => {
-    setBackground("bg-secondary");
     console.log("#Err:", error);
     console.log("#ErrName:", error.name);
     console.log("#ErrMessage:", error.message);
@@ -20,6 +19,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
   }, [error]);
 
   useEffect(() => {
+    setBackground("bg-secondary");
     setBreadCrump(undefined);
     setSidebar(undefined);
   }, []);
