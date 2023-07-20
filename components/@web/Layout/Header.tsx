@@ -12,7 +12,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 
 const WebHeader = () => {
-  const { toggleFullscreen, isFullscreen } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { toggleFullscreen, background, isFullscreen } = useContext(WebPreviewContext) as WebPreviewContextType;
   const { user, showAdminPanel, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const [openSubMenu, setOpenSubMenu] = useState(false);
@@ -59,8 +59,8 @@ const WebHeader = () => {
             </div>
           )}
           {!isLogin && (
-            <Link href="/auth" className="group flex h-full cursor-pointer items-center justify-center gap-2">
-              <div className="flex h-full items-center justify-center gap-1 transition-colors group-hover:text-secondary">
+            <Link href="/auth" className="flex h-full cursor-pointer items-center justify-center gap-2">
+              <div className="flex h-full items-center justify-center gap-1 transition-colors">
                 <span>ورود / عضویت</span>
               </div>
               <div className="rounded-full border-4 border-gray-400 bg-gray-50 p-1 text-gray-400 transition-colors">

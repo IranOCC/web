@@ -18,7 +18,6 @@ import { handleFieldsError } from "@/lib/axios";
 //
 
 const CompleteProfileModal = () => {
-  const router = useRouter();
   const pathname = usePathname();
   const { user } = useContext(CurrentUserContext) as CurrentUserContextType;
 
@@ -69,7 +68,7 @@ const CompleteProfileModal = () => {
       title="تکمیل اطلاعات پروفایل"
       closeButton={false}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <LogoUploader
           //
           control={control}

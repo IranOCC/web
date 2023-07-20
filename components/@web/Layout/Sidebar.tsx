@@ -63,7 +63,7 @@ const WebSideBar = () => {
   });
   const y = hovering !== null ? hovering : isActive[0]?.index !== undefined ? isActive[0]?.index : -2;
   return (
-    <aside className="hidden h-full w-64 flex-col justify-between md:flex">
+    <aside className="z-10 hidden h-full w-64 flex-col justify-between bg-white rounded-e-2xl md:flex">
       <div className="flex flex-col items-center gap-3 px-10 py-5">
         <Image src={Logo} alt="logo" />
         <h2 className="text-lg font-bold">املاک اکازیون</h2>

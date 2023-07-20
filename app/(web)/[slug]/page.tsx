@@ -1,3 +1,3 @@
 export default function Page() {
-  throw Error("PropertyNotFound");
+  throw Error("PageNotFound");
 }

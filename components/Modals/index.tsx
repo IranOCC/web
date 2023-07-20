@@ -1,3 +1,5 @@
+"use client";
+
 import { Fragment, ReactNode, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,7 +33,7 @@ type IProps = {
 
 export default function Modal({ path, paddingChildren = true, open, setOpen, title, children, footerButton, closeButton = true, whiteClose = false, className = "", loading }: IProps) {
   const cancelButtonRef = useRef(null);
-  const router = useRouter();
+  // const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -41,9 +43,9 @@ export default function Modal({ path, paddingChildren = true, open, setOpen, tit
   const openHandler = (status: boolean) => {
     if (path) {
       if (status) {
-        router.push("?modal=" + path);
+        // router.push("?modal=" + path);
       } else {
-        router.back();
+        // router.back();
       }
     } else {
       if (setOpen) setOpen(status);
@@ -72,24 +74,24 @@ export default function Modal({ path, paddingChildren = true, open, setOpen, tit
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className={"relative transform overflow-hidden sm:rounded-lg bg-white text-left shadow-xl transition-all w-full sm:my-8 sm:w-full sm:max-w-2xl" + " " + className}>
+              <Dialog.Panel className={"relative w-full transform overflow-hidden bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:rounded-lg" + " " + className}>
                 <div className="bg-white px-4 pb-4 pt-4">
                   {closeButton && (
-                    <div className={"absolute end-4 z-10 flex justify-center items-center w-7 h-7 rounded-full cursor-pointer" + (whiteClose ? " text-white" : " text-secondary")} onClick={() => setOpen(false)}>
+                    <div className={"absolute z-10 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full end-4" + (whiteClose ? " text-white" : " text-secondary")} onClick={() => setOpen(false)}>
                       <FontAwesomeIcon icon={faXmark} size="lg" />
                     </div>
                   )}
                   <div className={closeButton ? "mt-8" : "mt-0" + " sm:flex sm:items-start"}>
-                    <div className="w-full text-center sm:text-start block">
+                    <div className="block w-full text-center sm:text-start">
                       {title && (
                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
                           {title}
                         </Dialog.Title>
                       )}
-                      <div className={"relative overflow-x-hidden max-h-[calc(100vh-8rem)] " + (paddingChildren ? "p-2" : "")}>
+                      <div className={"relative max-h-[calc(100vh-8rem)] overflow-x-hidden " + (paddingChildren ? "p-2" : "")}>
                         {/*  */}
                         {!!loading && (
-                          <div className="flex justify-center items-center py-10">
+                          <div className="flex items-center justify-center py-10">
                             <Spin />
                           </div>
                         )}
