@@ -7,6 +7,7 @@ import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.c
 import WebBottomMenu from "./BottomMenu";
 import FullscreenExitIcon from "@/components/Icons/web/FullscreenExit";
 import FullscreenIcon from "@/components/Icons/web/Fullscreen";
+import MapEstate from "../Features/Estate/MapEstate";
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
   const { isFullscreen, isFullContent, toggleFullscreen, background, sidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -43,7 +44,17 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                 {!isFullscreen && <FullscreenIcon />}
               </div>
             </div>
-            {!!sidebar?.content && <sidebar.content {...(sidebar.props || {})} />}
+            {!!sidebar &&
+              (() => {
+                switch (sidebar.content) {
+                  case "MapEstate":
+                    return <MapEstate {...(sidebar.props || {})} />;
+                  case "RelatePost":
+                    return "RelatePost";
+                  default:
+                    return sidebar.content;
+                }
+              })()}
           </div>
         </div>
 
