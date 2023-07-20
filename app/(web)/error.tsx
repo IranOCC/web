@@ -8,7 +8,8 @@ import { Input } from "@/components/@panel/Input";
 import Link from "next/link";
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
-  const { setBackground } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { setBreadCrump, setBackground, setSidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
+
   useEffect(() => {
     setBackground("bg-secondary");
     console.log("#Err:", error);
@@ -17,6 +18,11 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
     console.log("#ErrCause:", error.cause);
     console.log("#ErrStack:", error.stack);
   }, [error]);
+
+  useEffect(() => {
+    setBreadCrump(undefined);
+    setSidebar(undefined);
+  }, []);
 
   let _error = { code: 500, title: "مشکلی پیش اومده", message: error.message };
   switch (error.message) {

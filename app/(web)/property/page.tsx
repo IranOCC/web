@@ -5,7 +5,6 @@ import { useContext, useEffect } from "react";
 
 export default function Page() {
   const { setBreadCrump, setSidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
-
   useEffect(() => {
     setBreadCrump([
       { title: "ایران اکازیون", url: "/" },
@@ -14,9 +13,10 @@ export default function Page() {
     ]);
     setSidebar({
       small: false,
-      content: "Hello",
+      content: "Map",
     });
   }, []);
+
   return (
     <>
       <div>

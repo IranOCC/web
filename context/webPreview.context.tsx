@@ -9,14 +9,14 @@ export type WebPreviewContextType = {
   background: string;
   setBackground: (n: string) => void;
 
-  breadCrump?: { title: string; url?: string }[];
-  setBreadCrump: (n: { title: string; url?: string }[]) => void;
-
   isFullContent: boolean;
   toggleFullContent: () => void;
 
+  breadCrump?: { title: string; url?: string }[];
+  setBreadCrump: (n: { title: string; url?: string }[] | undefined) => void;
+
   sidebar?: { small: boolean; content: ReactNode };
-  setSidebar: (n: { small: boolean; content: ReactNode }) => void;
+  setSidebar: (n: { small: boolean; content: ReactNode } | undefined) => void;
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
