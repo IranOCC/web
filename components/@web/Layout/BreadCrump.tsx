@@ -7,12 +7,11 @@ import { useContext } from "react";
 
 const BreadCrump = () => {
   const { breadCrump: items } = useContext(WebPreviewContext) as WebPreviewContextType;
-  if (!items?.length) return null;
   return (
     <>
       <div className="flex h-full items-center">
         <ul className="flex flex-row">
-          {items.map(({ title, url }, idx) => {
+          {items?.map(({ title, url }, idx) => {
             const isLast = !(items.length === idx + 1);
             return (
               <>
