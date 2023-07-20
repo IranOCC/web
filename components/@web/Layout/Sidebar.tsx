@@ -67,7 +67,7 @@ const WebSideBar = () => {
       <div className="flex flex-col items-center gap-3 px-10 py-5">
         <Image src={Logo} alt="logo" />
         <h2 className="text-lg font-bold">املاک اکازیون</h2>
-        <a href="tel:0115400" className="flex flex-row justify-center gap-1 text-lg font-bold ">
+        <a href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold ">
           <span>۰۱۱-۵۴۰۰</span>
           <ContactIcon />
         </a>
