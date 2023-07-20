@@ -14,14 +14,12 @@ const BreadCrump = () => {
           {items?.map(({ title, url }, idx) => {
             const isLast = !(items.length === idx + 1);
             return (
-              <>
-                <li key={idx} className="flex justify-center pe-2">
-                  <Link className="transition-colors pe-2 hover:text-blue-500" href={url || "#"}>
-                    {title}
-                  </Link>
-                  {isLast && <ArrowLeftOutlineIcon />}
-                </li>
-              </>
+              <li key={idx} className="flex justify-center pe-2">
+                <Link className="transition-colors pe-2 hover:text-blue-500" href={url || "#"}>
+                  {title}
+                </Link>
+                {isLast && <ArrowLeftOutlineIcon />}
+              </li>
             );
           })}
         </ul>

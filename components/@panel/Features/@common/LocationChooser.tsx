@@ -105,7 +105,7 @@ const LocationChooser = (props: IProps) => {
                     hash
                   >
                     {/* zoom */}
-                    <Mapir.ZoomControl position="top-left" />
+                    <Mapir.ZoomControl position="bottom-right" />
                     {/* marker */}
                     {!!value && (
                       <Mapir.Marker
@@ -194,7 +194,7 @@ const SearchBox = ({ setMarkerPosition }: { setMarkerPosition: any }) => {
   return (
     <>
       <div className="absolute top-2.5 z-10 flex w-full flex-col">
-        <div className="relative flex max-h-full w-full flex-col  px-12 ">
+        <div className="relative flex max-h-full w-full flex-col pe-3 ps-12">
           <div className="flex w-full flex-row">
             <input
               //

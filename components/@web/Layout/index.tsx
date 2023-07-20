@@ -19,7 +19,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
     >
       <div className="flex h-full w-full flex-col justify-center p-0 md:flex-row md:p-5">
         <div className={"relative flex h-full w-full flex-row overflow-hidden bg-white transition-all duration-1000 md:max-w-screen-2xl md:rounded-2xl" + (isFullscreen ? " md:!max-w-full" : "")}>
-          <div className={"z-10 flex h-full w-full flex-row transition-all duration-1000 md:rounded-e-2xl" + (background ? " " + background : "")}>
+          <div className={"z-[101] flex h-full w-full flex-row transition-all duration-1000 md:rounded-e-2xl" + (background ? " " + background : "")}>
             <WebSideBar />
             <div className="flex flex-1 flex-col">
               <WebHeader />
@@ -33,7 +33,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
             </div>
           </div>
           <div className={"relative h-full w-0 transition-all duration-1000 xl:flex" + (!isFullContent && !!sidebar ? (sidebar?.small ? " xl:w-[32rem]" : " xl:w-[32rem] 2xl:w-[64rem]") : "")}>
-            <div className="absolute top-4 end-4">
+            <div className="absolute top-4 z-[100] end-4">
               <div
                 //
                 onClick={toggleFullscreen}

@@ -1,8 +1,6 @@
 import "@/assets/css/map.css";
-import { Controller } from "react-hook-form";
-import { ReactNode, useEffect, useState } from "react";
 import Mapir from "mapir-react-typescript";
-import { Search } from "@mui/icons-material";
+import { useCallback } from "react";
 
 const API_KEY = process.env.NEXT_PUBLIC_MAPIR_TOKEN || "";
 
@@ -37,7 +35,7 @@ const MapEstate = (props: IProps) => {
           hash
         >
           {/* zoom */}
-          <Mapir.ZoomControl position="top-left" />
+          <Mapir.ZoomControl position="bottom-right" />
           {/* marker */}
           {/* {!!value && (
                       <Mapir.Marker
