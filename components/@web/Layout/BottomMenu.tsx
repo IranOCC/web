@@ -78,9 +78,7 @@ const WebBottomMenu = () => {
   const isActive = items.filter(({ href }: ItemType) => {
     return pathname === href;
   });
-  const x = hovering !== null ? hovering : isOpenSub[0]?.index || isActive[0]?.index || -1;
-
-  const haveSubItems = [4];
+  const x = hovering !== null ? hovering : isOpenSub[0]?.index !== undefined ? isOpenSub[0]?.index : isActive[0]?.index !== undefined ? isActive[0]?.index : -1;
 
   return (
     <ClickAwayListener onClickAway={() => setOpenSub(null)}>

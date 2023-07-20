@@ -61,7 +61,7 @@ const WebSideBar = () => {
   const isActive = items.filter(({ href }: ItemType) => {
     return href === pathname;
   });
-  const y = hovering !== null ? hovering : isActive[0]?.index;
+  const y = hovering !== null ? hovering : isActive[0]?.index !== undefined ? isActive[0]?.index : -2;
   return (
     <aside className="hidden h-full w-64 flex-col justify-between md:flex">
       <div className="flex flex-col items-center gap-3 px-10 py-5">
