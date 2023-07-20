@@ -9,6 +9,7 @@ export type CurrentUserContextType = {
   user: User | null;
   roles?: UserRoles[];
   isLogin: boolean;
+  showAdminPanel: boolean;
   isSuperAdmin: boolean;
   isAdmin: boolean;
   isAgent: boolean;
@@ -31,6 +32,7 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
     isLogin: !!currentUser,
     user: currentUser,
     roles: currentUser?.roles,
+    showAdminPanel: !!currentUser?.roles?.some((v) => [UserRoles.SuperAdmin, UserRoles.Admin, UserRoles.Agent, UserRoles.Author].includes(v)),
     isSuperAdmin: !!currentUser?.roles.includes(UserRoles.SuperAdmin),
     isAdmin: !!currentUser?.roles.includes(UserRoles.Admin),
     isAgent: !!currentUser?.roles.includes(UserRoles.Agent),

@@ -16,7 +16,9 @@ type ItemType = {
   index: number;
   icon: ReactNode;
   title: string;
-  href: string;
+  href?: string;
+  className?: string;
+  onClick?: () => void;
 };
 
 const items: ItemType[] = [
@@ -98,9 +100,9 @@ export default WebSideBar;
 
 //
 // === MenuItem
-const MenuItem = ({ index, icon, title, href, setHovering }: ItemType & { setHovering: (d: number | null) => void }) => {
+const MenuItem = ({ index, icon, title, href, className, onClick, setHovering }: ItemType & { setHovering: (d: number | null) => void }) => {
   return (
-    <Link href={href} className="z-[1] w-full" onMouseEnter={() => setHovering(index)} onMouseLeave={() => setHovering(null)}>
+    <Link href={href || "#"} onClick={onClick} className={"z-[1] w-full" + (className ? " " + className : "")} onMouseEnter={() => setHovering(index)} onMouseLeave={() => setHovering(null)}>
       <div className="flex h-[4.5rem] w-full flex-row items-center gap-2 p-6 font-bold transition-all text-start">
         {icon}
         <span>{title}</span>

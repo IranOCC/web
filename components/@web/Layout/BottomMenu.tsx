@@ -13,21 +13,24 @@ import { Tooltip } from "antd";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import BlogIconBottomMenu from "@/components/Icons/web/bottomMenu/Blog";
 import VipIconBottomMenu from "@/components/Icons/web/bottomMenu/Vip";
+import { ClickAwayListener } from "@mui/material";
+import { signOut } from "next-auth/react";
 
 type ItemType = {
   index: number;
   icon: ReactNode;
   title: string;
-  href: string;
+  href?: string;
   className?: string;
 };
 
 const WebBottomMenu = () => {
   //
+  const [openSub, setOpenSub] = useState<number | null>(null);
   const [hovering, setHovering] = useState<number | null>(null);
   const pathname = usePathname();
 
-  const { user, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
+  const { user, showAdminPanel, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const items: ItemType[] = [
     {
@@ -61,38 +64,77 @@ const WebBottomMenu = () => {
     {
       index: 4,
       icon: <UserIconBottomMenu />,
-      title: isLogin ? "داشبورد" : "ورود/عضویت",
-      href: isLogin ? "/dashboard" : "/auth",
+      title: isLogin ? "حساب کاربری" : "ورود/عضویت",
+      href: isLogin ? undefined : "/auth",
       // className: "hidden min-[180px]:block",
     },
   ];
 
-  const isActive = items.filter(({ href }: ItemType) => {
-    return href === pathname;
+  const isOpenSub = items.filter(({ index }: ItemType) => {
+    return openSub === index;
   });
-  const x = hovering !== null ? hovering : isActive[0]?.index;
+  const isActive = items.filter(({ href }: ItemType) => {
+    return pathname === href;
+  });
+  const x = hovering !== null ? hovering : isOpenSub[0]?.index || isActive[0]?.index || -1;
+
+  const haveSubItems = [4];
+
   return (
-    <aside className="absolute bottom-0 z-10 flex h-[4.5rem] w-full items-center justify-center rounded-t-3xl bg-white px-3 py-4 md:hidden">
-      {/*  */}
-      <div className="relative flex h-full flex-row items-center justify-center overflow-y-hidden">
-        {items.map((item: ItemType) => {
-          return (
-            <MenuItem
+    <ClickAwayListener onClickAway={() => setOpenSub(null)}>
+      <aside className={"absolute bottom-0 z-10 flex w-full flex-col items-center justify-end rounded-t-3xl bg-white px-3 py-3 transition-all md:hidden" + (openSub !== null ? " h-40" : " h-[4.5rem]")}>
+        {openSub === 4 && (
+          <>
+            <div className="mb-3 w-full flex-1">
+              <div className="h-full">
+                <ul className="grid grid-cols-2 gap-1 p-2 text-sm font-bold">
+                  {showAdminPanel && (
+                    <li className="transition-colors hover:text-secondary">
+                      <Link href="/admin">پنل مدیریت</Link>
+                    </li>
+                  )}
+                  <li className="transition-colors hover:text-secondary">
+                    <Link href="/dashboard">داشبورد من</Link>
+                  </li>
+                  <li className="transition-colors hover:text-secondary">
+                    <Link href="/dashboard/profile">پروفایل</Link>
+                  </li>
+                  <li className="transition-colors hover:text-secondary">
+                    <Link href="/dashboard/favorites">علاقه مندی ها</Link>
+                  </li>
+                  <li className="transition-colors hover:text-secondary">
+                    <Link href="#" onClick={() => signOut()}>
+                      خروج
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              <hr />
+            </div>
+          </>
+        )}
+        <div className="relative">
+          <div className="relative flex h-full flex-row items-center overflow-y-hidden">
+            {items.map((item: ItemType) => {
+              return (
+                <MenuItem
+                  //
+                  key={item.index}
+                  {...item}
+                  setOpenSub={(idx: number) => setOpenSub((prev) => (prev !== idx && haveSubItems.includes(idx) ? idx : null))}
+                  setHovering={setHovering}
+                />
+              );
+            })}
+            <div
               //
-              key={item.index}
-              {...item}
-              setHovering={setHovering}
+              style={{ "--trX": `${-3.5 * x - 0.5}rem` } as React.CSSProperties}
+              className="absolute z-0 hidden aspect-square h-full translate-x-[var(--trX)] rounded-2xl bg-secondary transition-transform start-0 min-[180px]:block"
             />
-          );
-        })}
-        <div
-          //
-          style={{ "--trX": `${-3.5 * x - 0.5}rem` } as React.CSSProperties}
-          className="absolute z-0 hidden aspect-square h-full translate-x-[var(--trX)] rounded-2xl bg-secondary transition-transform start-0 min-[180px]:block"
-        />
-      </div>
-      {/*  */}
-    </aside>
+          </div>
+        </div>
+      </aside>
+    </ClickAwayListener>
   );
 };
 
@@ -100,10 +142,10 @@ export default WebBottomMenu;
 
 //
 // === MenuItem
-const MenuItem = ({ index, icon, title, href, className, setHovering }: ItemType & { setHovering: (d: number | null) => void }) => {
+const MenuItem = ({ index, icon, title, href, className, setOpenSub, setHovering }: ItemType & { setOpenSub: (d: number) => void; setHovering: (d: number | null) => void }) => {
   return (
     <Tooltip arrow={false} placement="top" title={title}>
-      <Link href={href} className={" z-[1] flex h-full items-center justify-center px-2" + (className ? " " + className : "")} onMouseEnter={() => setHovering(index)} onMouseLeave={() => setHovering(null)}>
+      <Link href={href || "#"} onClick={() => setOpenSub(index)} className={" z-[1] flex h-full items-center justify-center px-2" + (className ? " " + className : "")} onMouseEnter={() => setHovering(index)} onMouseLeave={() => setHovering(null)}>
         <div className="flex items-center justify-center p-2">{icon}</div>
       </Link>
     </Tooltip>

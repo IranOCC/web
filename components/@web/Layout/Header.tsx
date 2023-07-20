@@ -13,7 +13,7 @@ import { signOut } from "next-auth/react";
 
 const WebHeader = () => {
   const { toggleFullscreen, isFullscreen } = useContext(WebPreviewContext) as WebPreviewContextType;
-  const { user, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
+  const { user, showAdminPanel, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const [openSubMenu, setOpenSubMenu] = useState(false);
   return (
@@ -31,8 +31,13 @@ const WebHeader = () => {
                 <div className={"absolute top-0 -z-10 w-full overflow-hidden rounded-2xl bg-white px-4 pb-2 pt-10 shadow-[0px_0px_19px_0px_rgba(0,0,0,0.25)]" + (openSubMenu ? " block" : " hidden")}>
                   <hr />
                   <ul className="mt-2">
+                    {showAdminPanel && (
+                      <li className="py-0.5 transition-colors hover:text-secondary">
+                        <Link href="/admin">پنل مدیریت</Link>
+                      </li>
+                    )}
                     <li className="py-0.5 transition-colors hover:text-secondary">
-                      <Link href="/dashboard">داشبورد</Link>
+                      <Link href="/dashboard">داشبورد من</Link>
                     </li>
                     <li className="py-0.5 transition-colors hover:text-secondary">
                       <Link href="/dashboard/profile">پروفایل</Link>
