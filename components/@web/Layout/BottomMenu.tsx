@@ -22,6 +22,7 @@ type ItemType = {
   title: string;
   href?: string;
   className?: string;
+  hasSubMenu?: boolean;
 };
 
 const WebBottomMenu = () => {
@@ -66,6 +67,7 @@ const WebBottomMenu = () => {
       icon: <UserIconBottomMenu />,
       title: isLogin ? "حساب کاربری" : "ورود/عضویت",
       href: isLogin ? undefined : "/auth",
+      hasSubMenu: !!isLogin,
       // className: "hidden min-[180px]:block",
     },
   ];
@@ -121,7 +123,7 @@ const WebBottomMenu = () => {
                   //
                   key={item.index}
                   {...item}
-                  setOpenSub={(idx: number) => setOpenSub((prev) => (prev !== idx && haveSubItems.includes(idx) ? idx : null))}
+                  setOpenSub={(idx: number) => setOpenSub((prev) => (prev !== idx && items[idx].hasSubMenu ? idx : null))}
                   setHovering={setHovering}
                 />
               );
