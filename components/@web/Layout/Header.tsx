@@ -21,7 +21,7 @@ const WebHeader = () => {
       <div className="hidden flex-col text-sm md:flex">
         <div className="flex flex-row items-start justify-end gap-5 px-4 py-4">
           {isLogin && (
-            <Link href="#" className="flex h-full cursor-pointer items-center justify-center gap-2" onMouseEnter={() => setOpenSubMenu(true)} onMouseLeave={() => setOpenSubMenu(false)}>
+            <div className="flex h-full cursor-pointer items-center justify-center gap-2" onMouseEnter={() => setOpenSubMenu(true)} onMouseLeave={() => setOpenSubMenu(false)}>
               <div className="relative z-10 h-full">
                 <span className="flex h-full  items-center justify-center gap-1 px-2 transition-colors">
                   <ArrowDownOutlineIcon />
@@ -56,7 +56,7 @@ const WebHeader = () => {
               <div className="rounded-full border-4 border-gray-400 bg-gray-50 p-1 text-gray-400">
                 <UserFillIcon />
               </div>
-            </Link>
+            </div>
           )}
           {!isLogin && (
             <Link href="/auth" className="group flex h-full cursor-pointer items-center justify-center gap-2">
