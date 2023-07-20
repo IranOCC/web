@@ -31,9 +31,9 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
             </div>
           </div>
           {/* left sidebar */}
-          <div className="h-full w-0 transition-all duration-1000 xl:flex xl:w-[32rem]">
+          <div className="h-full w-0 transition-all duration-1000 xl:flex xl:w-[32rem] 2xl:w-[64rem]">
             {/*  */}
-            hhh
+            sidebar
             {/*  */}
           </div>
         </div>

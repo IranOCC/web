@@ -10,6 +10,8 @@ export type WebPreviewContextType = {
 
   breadCrump?: { title: string; url?: string }[];
   setBreadCrump: (n: { title: string; url?: string }[]) => void;
+
+  // hasSidebar: boolean;
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
