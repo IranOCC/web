@@ -49,7 +49,7 @@ const LoginModal = ({ session }: { session: Session | null }) => {
     } catch (error) {}
   };
   const loginByOtp = async (data: LoginPhoneOtpFormData) => {
-    const result = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });
+    const result: any = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });
     if (result?.ok) {
       toast.success("با موفقیت وارد شدید!");
       const callbackUrl = searchParams?.get("callbackUrl");
@@ -96,12 +96,12 @@ const LoginModal = ({ session }: { session: Session | null }) => {
   if (session) return null;
   return (
     <Modal path={ModalPath} whiteClose>
-      <div className={`absolute top-0 left-0 bg-blue-500 w-full h-40 overflow-hidden`}>
+      <div className={`absolute left-0 top-0 h-40 w-full overflow-hidden bg-blue-500`}>
         <img src={LoginBackImage.src} />
-        <div className="absolute top-0 left-0  w-full h-full" />
+        <div className="absolute left-0 top-0  h-full w-full" />
       </div>
       <div className="mt-40">
-        <h2 className="text-blue-500 text-center font-bold mb-2">ورود یا عضویت</h2>
+        <h2 className="mb-2 text-center font-bold text-blue-500">ورود یا عضویت</h2>
         <form onSubmit={handleSubmit(isStep2 ? loginByOtp : sendOtp)}>
           <Input
             /* */
@@ -117,7 +117,7 @@ const LoginModal = ({ session }: { session: Session | null }) => {
           />
           {isStep2 && (
             <>
-              <span className="block text-center font-medium w-full text-sm text-blue-500 mt-2 mb-6 cursor-pointer" onClick={editNumber}>
+              <span className="mb-6 mt-2 block w-full cursor-pointer text-center text-sm font-medium text-blue-500" onClick={editNumber}>
                 ویرایش شماره
               </span>
               <Input
@@ -132,7 +132,7 @@ const LoginModal = ({ session }: { session: Session | null }) => {
                 icon={<QrcodeIcon />}
                 className="text-center tracking-wider"
               />
-              <span className={`block text-center font-medium w-full text-sm mt-2 ${countDown > 0 ? "text-gray-500 cursor-not-allowed" : "text-blue-500 cursor-pointer"}`} onClick={sendOtpAgain}>
+              <span className={`mt-2 block w-full text-center text-sm font-medium ${countDown > 0 ? "cursor-not-allowed text-gray-500" : "cursor-pointer text-blue-500"}`} onClick={sendOtpAgain}>
                 ارسال مجدد {countDown > 0 && "(" + moment.duration(countDown, "milliseconds").asSeconds().toFixed() + ")"}
               </span>
             </>

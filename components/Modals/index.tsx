@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, ReactNode, useEffect, useRef, useState } from "react";
+// @ts-ignore
 import { Dialog, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";

@@ -1,21 +1,21 @@
+// @ts-ignore
 import { Tab } from "@headlessui/react";
-import { Card, Col, Row } from "antd";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 
 const PanelTab = ({ data }: IProps) => {
   return (
     <div className="w-full px-2 sm:px-0">
       <Tab.Group>
-        <Tab.List className="w-full space-x-1 space-x-reverse flex">
+        <Tab.List className="flex w-full space-x-1 space-x-reverse">
           {data.map(({ title }, idx) => (
             <Tab
               key={idx}
-              className={({ selected }) =>
+              className={({ selected }: { selected: boolean }) =>
                 [
                   //
-                  "w-full py-2.5 text-sm font-medium leading-5 border-gray-200 border",
+                  "w-full border border-gray-200 py-2.5 text-sm font-medium leading-5",
                   "focus:outline-none focus:ring-0",
-                  selected ? "bg-secondary text-white" : "bg-white text-slate-800",
+                  selected ? "bg-secondary text-white" : "text-slate-800 bg-white",
                   //
                 ].join(" ")
               }

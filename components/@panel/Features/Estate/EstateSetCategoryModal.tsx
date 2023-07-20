@@ -1,6 +1,7 @@
 import { Button } from "@/components/@panel/Button";
 import Modal from "@/components/Modals";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
+// @ts-ignore
 import { RadioGroup } from "@headlessui/react";
 import { useEffect, useState } from "react";
 
