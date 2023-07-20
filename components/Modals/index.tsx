@@ -33,7 +33,7 @@ type IProps = {
 
 export default function Modal({ path, paddingChildren = true, open, setOpen, title, children, footerButton, closeButton = true, whiteClose = false, className = "", loading }: IProps) {
   const cancelButtonRef = useRef(null);
-  // const router = useRouter();
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -43,9 +43,9 @@ export default function Modal({ path, paddingChildren = true, open, setOpen, tit
   const openHandler = (status: boolean) => {
     if (path) {
       if (status) {
-        // router.push("?modal=" + path);
+        router.push("?modal=" + path);
       } else {
-        // router.back();
+        router.back();
       }
     } else {
       if (setOpen) setOpen(status);

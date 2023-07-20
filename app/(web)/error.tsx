@@ -40,7 +40,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
       <div className="absolute flex h-full w-full items-center justify-center">
         <h1 className="text-[40vw] font-bold text-black/10 md:text-[25vw]">{_error.code}</h1>
       </div>
-      <div className="flex h-full flex-col items-center justify-center gap-4">
+      <div className="relative flex h-full flex-col items-center justify-center gap-4">
         <Image src={BlackLogo} alt="logo" height={125} />
         <div className="flex flex-col items-center">
           <h2 className="text-2xl font-bold">{_error.title}</h2>
