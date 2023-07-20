@@ -33,6 +33,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
               </div>
             </div>
           </div>
+          {/* SIDEBAR:::: only show upper xl size */}
           <div className={"relative h-full w-0 transition-all duration-1000 xl:flex" + (!isFullContent && !!sidebar ? (sidebar?.small ? " xl:w-[32rem]" : " xl:w-[32rem] 2xl:w-[64rem]") : "")}>
             <div className="absolute top-4 z-[100] end-4">
               <div
