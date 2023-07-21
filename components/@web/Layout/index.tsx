@@ -46,17 +46,19 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                 {!isFullscreen && <FullscreenIcon />}
               </div>
             </div>
-            {!!sidebar &&
-              (() => {
-                switch (sidebar.content) {
-                  case "MapEstate":
-                    return <MapEstate {...(sidebar?.props || {})} />;
-                  case "RelatePost":
-                    return "RelatePost";
-                  default:
-                    return sidebar.content;
-                }
-              })()}
+            {
+              !!sidebar && <MapEstate {...(sidebar?.props || {})} />
+              // (() => {
+              //   switch (sidebar.content) {
+              //     case "MapEstate":
+              //       return <MapEstate {...(sidebar?.props || {})} />;
+              //     case "RelatePost":
+              //       return "RelatePost";
+              //     default:
+              //       return sidebar.content;
+              //   }
+              // })()
+            }
           </div>
         </div>
 
