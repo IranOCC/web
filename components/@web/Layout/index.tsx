@@ -46,7 +46,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                 {!isFullscreen && <FullscreenIcon />}
               </div>
             </div>
-
+            <MapEstate />
             {/* {
               !!sidebar && <MapEstate {...(sidebar?.props || {})} />
               // (() => {
