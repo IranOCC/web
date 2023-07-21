@@ -72,7 +72,7 @@ const WebSideBar = () => {
           <ContactIcon />
         </a>
       </div>
-      <div className="relative z-10 flex flex-col overflow-x-hidden px-4 pb-4">
+      <div className="relative z-10 flex flex-col overflow-x-hidden px-4 pb-12">
         <div className="relative flex flex-col">
           {items.map((item: ItemType) => {
             return (
