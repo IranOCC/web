@@ -49,7 +49,13 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                 {!isFullscreen && <FullscreenIcon />}
               </div>
             </div>
-            <LocationChooser name={"location"} control={control} />
+
+            <div className="absolute h-full w-[calc(100%+1rem)] bg-pink-600 -start-4">
+              {/*  */}
+              {/*  */}
+              {/*  */}
+            </div>
+
             {/* {
               !!sidebar && <MapEstate {...(sidebar?.props || {})} />
               // (() => {
