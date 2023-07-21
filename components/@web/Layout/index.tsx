@@ -51,7 +51,9 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
             </div>
 
             <div className="absolute h-full w-full overflow-hidden p-2 ps-0">
-              <div className="h-full w-full overflow-hidden rounded-xl rounded-s-none">{/* <MapEstate /> */}</div>
+              <div className="h-full w-full overflow-hidden rounded-xl rounded-s-none">
+                <MapEstate />
+              </div>
             </div>
             {/*  */}
 
