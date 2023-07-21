@@ -33,17 +33,20 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
             <WebSideBar />
             <div className="flex flex-1 flex-col">
               <WebHeader />
-              <div className="h-full overflow-hidden p-0 pb-16 md:pb-0">
-                {/* <div className="h-full overflow-auto p-2"> */}
+              <div className="h-full overflow-hidden p-0 pb-20 md:pb-4">
                 <Scrollbars
                   //
-
                   universal
                   renderView={(props) => <div {...props} style={{ ...props.style, padding: "0 15px", marginLeft: props.style.marginRight, marginRight: 0 }} />}
+                  //
+                  renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, right: 2, bottom: 2, top: 2, borderRadius: 0, background: "#D6D6D6", width: 2 }} />}
+                  renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", width: 6, borderRadius: "20px" }} />}
+                  //
+                  renderTrackVertical={(props) => <div {...props} style={{ ...props.style, right: 2, bottom: 2, top: 2, borderRadius: 0, background: "#D6D6D6", width: 2 }} />}
+                  renderThumbVertical={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", width: 6, borderRadius: "20px" }} />}
                 >
                   {children}
                 </Scrollbars>
-                {/* </div> */}
               </div>
             </div>
           </div>
