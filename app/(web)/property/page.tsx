@@ -13,11 +13,11 @@ export default function Page() {
       { title: "ویلا", url: "/" },
       { title: "متل قو", url: "/" },
     ]);
-    setSidebar({
-      small: false,
-      content: "MapEstate",
-      props: {},
-    });
+    // setSidebar({
+    //   small: false,
+    //   content: "MapEstate",
+    //   props: {},
+    // });
   }, []);
 
   return (
