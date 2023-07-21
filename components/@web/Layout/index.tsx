@@ -20,7 +20,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
     >
       <div className="flex h-full w-full flex-col justify-center p-0 md:flex-row md:p-5">
         <div className={"relative flex h-full w-full flex-row overflow-hidden bg-white transition-all duration-1000 md:max-w-screen-2xl md:rounded-2xl" + (isFullscreen ? " md:!max-w-full" : "")}>
-          <div className={"z-[101] flex h-full w-full flex-row transition-all duration-1000 md:rounded-e-2xl" + (background ? " " + background : "")}>
+          <div className={"z-[101] flex h-full w-full flex-row shadow-[-6px_0px_20px_2px_#00000040] transition-all duration-1000 md:rounded-e-2xl" + (background ? " " + background : "")}>
             <WebSideBar />
             <div className="flex flex-1 flex-col">
               <WebHeader />
@@ -46,17 +46,17 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                 {!isFullscreen && <FullscreenIcon />}
               </div>
             </div>
-            {/* {!!sidebar &&
+            {!!sidebar &&
               (() => {
                 switch (sidebar.content) {
                   case "MapEstate":
-                    return <MapEstate {...(sidebar.props || {})} />;
+                    return <MapEstate {...(sidebar?.props || {})} />;
                   case "RelatePost":
                     return "RelatePost";
                   default:
                     return sidebar.content;
                 }
-              })()} */}
+              })()}
           </div>
         </div>
 
