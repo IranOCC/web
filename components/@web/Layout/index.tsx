@@ -7,7 +7,7 @@ import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.c
 import WebBottomMenu from "./BottomMenu";
 import FullscreenExitIcon from "@/components/Icons/web/FullscreenExit";
 import FullscreenIcon from "@/components/Icons/web/Fullscreen";
-// import MapEstate from "../Features/Estate/MapEstate";
+import MapEstate from "../Features/Estate/MapEstate";
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
   const { isFullscreen, isFullContent, toggleFullscreen, background, sidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
