@@ -9,6 +9,7 @@ import FullscreenExitIcon from "@/components/Icons/web/FullscreenExit";
 import FullscreenIcon from "@/components/Icons/web/Fullscreen";
 import dynamic from "next/dynamic";
 import { LoadingWithoutBg } from "@/components/Loading";
+import Scrollbars from "react-custom-scrollbars-2";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -33,11 +34,16 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
             <div className="flex flex-1 flex-col">
               <WebHeader />
               <div className="h-full overflow-hidden p-0 pb-16 md:pb-0">
-                <div className="h-full overflow-auto p-2">
-                  {/*  */}
+                {/* <div className="h-full overflow-auto p-2"> */}
+                <Scrollbars
+                  //
+
+                  universal
+                  renderView={(props) => <div {...props} style={{ ...props.style, padding: "0 15px", marginLeft: props.style.marginRight, marginRight: 0 }} />}
+                >
                   {children}
-                  {/*  */}
-                </div>
+                </Scrollbars>
+                {/* </div> */}
               </div>
             </div>
           </div>
