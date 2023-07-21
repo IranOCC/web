@@ -15,8 +15,8 @@ export type WebPreviewContextType = {
   breadCrump?: { title: string; url?: string }[];
   setBreadCrump: (n: { title: string; url?: string }[] | undefined) => void;
 
-  sidebar?: { small: boolean; props?: {}; content: "MapEstate" | "RelatePost" };
-  setSidebar: (n: { small: boolean; props?: {}; content: "MapEstate" | "RelatePost" } | undefined) => void;
+  sidebar?: { small: boolean; props?: {}; component: string };
+  setSidebar: (n: { small: boolean; props?: {}; component: string } | undefined) => void;
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
@@ -25,7 +25,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const [isFullscreen, setFullscreen] = React.useState<boolean>(initial?.full || false);
   const [background, setBackground] = React.useState<string>("bg-white");
   const [breadCrump, setBreadCrump] = React.useState<{ title: string; url?: string }[] | undefined>(undefined);
-  const [sidebar, setSidebar] = React.useState<{ small: boolean; props?: {}; content: "MapEstate" | "RelatePost" } | undefined>(undefined);
+  const [sidebar, setSidebar] = React.useState<{ small: boolean; props?: {}; component: string } | undefined>(undefined);
   const [isFullContent, setFullContent] = React.useState<boolean>(false);
 
   const toggleFullscreen = () => {

@@ -22,11 +22,15 @@ const MapEstate = () => {
   return (
     <>
       <div className="relative z-10 h-full w-full overflow-hidden bg-white p-2 ps-0">
-        <div className="relative h-full w-full overflow-hidden rounded-xl bg-purple-400 rounded-s-none">
+        <div className="relative h-full w-full overflow-hidden rounded-xl bg-gray-100 rounded-s-none">
           <Mapir
             //
             Map={Map}
             center={[51.42, 35.71]}
+            zoom={[16]}
+            userLocation
+            interactive
+            hash
           >
             {/*  */}
           </Mapir>

@@ -1,6 +1,5 @@
 "use client";
 
-// import MapEstate from "@/components/@web/Features/Estate/MapEstate";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import { useContext, useEffect } from "react";
 
@@ -15,7 +14,7 @@ export default function Page() {
     ]);
     setSidebar({
       small: false,
-      content: "MapEstate",
+      component: "Features/Estate/MapEstate",
       props: {},
     });
   }, []);

@@ -7,21 +7,19 @@ import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.c
 import WebBottomMenu from "./BottomMenu";
 import FullscreenExitIcon from "@/components/Icons/web/FullscreenExit";
 import FullscreenIcon from "@/components/Icons/web/Fullscreen";
-// import MapEstate from "../Features/Estate/MapEstate";
-import LocationChooser from "@/components/@panel/Features/@common/LocationChooser";
-import { useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
+import { LoadingWithoutBg } from "@/components/Loading";
 
-const getDynamicComponent = () =>
-  dynamic(() => import(`@/components/@web/Features/Estate/MapEstate`), {
+const getDynamicComponent = (path: string) =>
+  dynamic(() => import("@/components/@web/" + path), {
     ssr: false,
-    loading: () => <p>Loadinggggggggggg....</p>,
+    loading: () => <LoadingWithoutBg />,
   });
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
   const { isFullscreen, isFullContent, toggleFullscreen, background, sidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
 
-  const DynamicComp = getDynamicComponent();
+  const SideBarComponent = !!sidebar ? getDynamicComponent(sidebar.component) : undefined;
   return (
     <main
       //
@@ -56,27 +54,13 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                 {!isFullscreen && <FullscreenIcon />}
               </div>
             </div>
-
-            <div className="absolute -start-6 h-full w-[calc(100%+1.5rem)] overflow-hidden">
-              <div className="h-full w-full overflow-hidden">
-                <DynamicComp />
+            {!!SideBarComponent && (
+              <div className="absolute -start-6 h-full w-[calc(100%+1.5rem)] overflow-hidden">
+                <div className="h-full w-full overflow-hidden">
+                  <SideBarComponent {...(sidebar?.props || {})} />
+                </div>
               </div>
-            </div>
-            {/*  */}
-
-            {/* {
-              !!sidebar && <MapEstate {...(sidebar?.props || {})} />
-              // (() => {
-              //   switch (sidebar.content) {
-              //     case "MapEstate":
-              //       return <MapEstate {...(sidebar?.props || {})} />;
-              //     case "RelatePost":
-              //       return "RelatePost";
-              //     default:
-              //       return sidebar.content;
-              //   }
-              // })()
-            } */}
+            )}
           </div>
         </div>
 
