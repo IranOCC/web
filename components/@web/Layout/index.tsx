@@ -37,6 +37,8 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                 <Scrollbars
                   //
                   universal
+                  autoHide
+                  hideTracksWhenNotNeeded
                   renderView={(props) => <div {...props} style={{ ...props.style, padding: "0 15px", marginLeft: props.style.marginRight, marginRight: 0 }} />}
                   //
                   renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, right: 2, bottom: 2, top: 2, borderRadius: 0, background: "#D6D6D6", width: 2 }} />}
