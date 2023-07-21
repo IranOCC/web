@@ -66,11 +66,12 @@ const LocationChooser = (props: IProps) => {
     <>
       <div className={"relative z-10 w-full" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
         {label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
-
+        {(disabled || loading) && <div className="absolute z-20 h-full w-full" />}
         <div className="relative w-full">
           <Controller
             render={({ field }) => {
               async function setMarkerAndAddress(data: number[]) {
+                if (loading || readOnly || disabled) return;
                 field.onChange([data[1], data[0]].join(","));
                 setCenter([data[0], data[1]]);
                 if (!!getAddress) {
@@ -193,8 +194,8 @@ const SearchBox = ({ setMarkerPosition }: { setMarkerPosition: any }) => {
   }
   return (
     <>
-      <div className="absolute top-2.5 z-10 flex w-full flex-col">
-        <div className="relative flex max-h-full w-full flex-col pe-3 ps-12">
+      <div className="absolute top-2.5 z-10 mx-12 flex w-[calc(100%-3rem)] flex-col">
+        <div className="relative flex max-h-full w-full flex-col pe-3">
           <div className="flex w-full flex-row">
             <input
               //

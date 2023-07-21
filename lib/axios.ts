@@ -26,7 +26,7 @@ axiosAuth.interceptors.response.use(
     },
     (error: any) => {
         if (error.response.status === 401) {
-            signOut()
+            // signOut()
             return Promise.reject(error)
         }
         handleToastError(error);
