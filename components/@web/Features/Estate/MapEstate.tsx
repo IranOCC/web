@@ -122,8 +122,8 @@ const MapEstate = () => {
 
   return (
     <>
-      <div className="relative z-10 h-full w-full overflow-hidden bg-green-400">
-        <div className="relative h-full w-full"></div>
+      <div className="relative z-10 h-full w-full overflow-hidden bg-white p-2 ps-0">
+        <div className="relative h-full w-full rounded-xl bg-red-400 rounded-s-none"></div>
       </div>
     </>
   );

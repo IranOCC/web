@@ -50,8 +50,8 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
               </div>
             </div>
 
-            <div className="absolute h-full w-full overflow-hidden p-2 ps-0">
-              <div className="h-full w-full overflow-hidden rounded-xl rounded-s-none">
+            <div className="absolute -start-6 h-full w-[calc(100%+1.5rem)] overflow-hidden">
+              <div className="h-full w-full overflow-hidden">
                 <MapEstate />
               </div>
             </div>
