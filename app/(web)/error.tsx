@@ -35,6 +35,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
       _error = { code: 503, title: "در حال تعمیرات هستیم", message: error.message };
       break;
   }
+
   return (
     <div className="relative h-full">
       <div className="absolute flex h-full w-full items-center justify-center">
