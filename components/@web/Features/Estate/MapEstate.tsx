@@ -117,9 +117,7 @@ const Map = Mapir.setToken({
 //   ],
 // };
 
-const MapEstate = (props: IProps) => {
-  const {} = props;
-
+const MapEstate = () => {
   return (
     <>
       <div className="relative z-10 h-full w-full">
@@ -151,4 +149,4 @@ const MapEstate = (props: IProps) => {
 
 export default MapEstate;
 
-export type IProps = {};
+type IProps = {};

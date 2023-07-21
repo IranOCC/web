@@ -8,10 +8,13 @@ import WebBottomMenu from "./BottomMenu";
 import FullscreenExitIcon from "@/components/Icons/web/FullscreenExit";
 import FullscreenIcon from "@/components/Icons/web/Fullscreen";
 import MapEstate from "../Features/Estate/MapEstate";
+import LocationChooser from "@/components/@panel/Features/@common/LocationChooser";
+import { useForm } from "react-hook-form";
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
   const { isFullscreen, isFullContent, toggleFullscreen, background, sidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
 
+  const { control } = useForm();
   return (
     <main
       //
@@ -46,7 +49,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                 {!isFullscreen && <FullscreenIcon />}
               </div>
             </div>
-            <MapEstate />
+            <LocationChooser name={"location"} control={control} />
             {/* {
               !!sidebar && <MapEstate {...(sidebar?.props || {})} />
               // (() => {
