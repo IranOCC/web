@@ -127,27 +127,10 @@ const MapEstate = () => {
   }, []);
   return (
     <>
-      <div className="relative z-10 h-full w-full overflow-hidden bg-white">
+      <div className="relative z-10 h-full w-full overflow-hidden bg-green-400">
         <div className="relative h-full w-full">
-          <Mapir
-            //
-            Map={Map}
-            center={[51.42, 35.71]}
-            zoom={[16]}
-            userLocation
-            // className="!h-full !w-full overflow-hidden"
-            // onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
-            interactive
-            hash
-          >
-            {/* marker */}
-            {/* <Mapir.Cluster zoomOnClick ClusterMarkerFactory={clusterMarker}>
-            {points.features.map((feature, key) => (
-              <Mapir.Marker key={key} coordinates={feature.geometry.coordinates} />
-            ))}
-          </Mapir.Cluster> */}
-            {/* <Mapir.Marker coordinates={[51.42, 35.71]} /> */}
-          </Mapir>
+          {/*  */}
+          {/*  */}
         </div>
       </div>
     </>
@@ -157,3 +140,23 @@ const MapEstate = () => {
 export default MapEstate;
 
 type IProps = {};
+
+// <Mapir
+//   //
+//   Map={Map}
+//   center={[51.42, 35.71]}
+//   zoom={[16]}
+//   userLocation
+//   // className="!h-full !w-full overflow-hidden"
+//   // onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
+//   interactive
+//   hash
+// >
+//   {/* marker */}
+//   {/* <Mapir.Cluster zoomOnClick ClusterMarkerFactory={clusterMarker}>
+//             {points.features.map((feature, key) => (
+//               <Mapir.Marker key={key} coordinates={feature.geometry.coordinates} />
+//             ))}
+//           </Mapir.Cluster> */}
+//   {/* <Mapir.Marker coordinates={[51.42, 35.71]} /> */}
+// </Mapir>;
