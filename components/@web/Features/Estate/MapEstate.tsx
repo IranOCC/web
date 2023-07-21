@@ -1,5 +1,6 @@
 import "@/assets/css/map.css";
 import Mapir from "mapir-react-typescript";
+import { useEffect, useState } from "react";
 
 const API_KEY = process.env.NEXT_PUBLIC_MAPIR_TOKEN || "";
 const Map = Mapir.setToken({
@@ -118,30 +119,38 @@ const Map = Mapir.setToken({
 // };
 
 const MapEstate = () => {
+  const [update, setUpdate] = useState(0);
+  useEffect(() => {
+    // setInterval(() => {
+    //   setUpdate((prev) => prev + 1);
+    // }, 1000);
+  }, []);
   return (
     <>
       <div className="relative z-10 h-full w-full">
-        <Mapir
-          //
-          Map={Map}
-          center={[51.42, 35.71]}
-          zoom={[16]}
-          userLocation
-          className="!h-full !w-full overflow-hidden"
-          // onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
-          interactive
-          hash
-        >
-          {/* zoom */}
-          <Mapir.ZoomControl position="bottom-right" />
-          {/* marker */}
-          {/* <Mapir.Cluster zoomOnClick ClusterMarkerFactory={clusterMarker}>
+        <div className="relative h-full w-full">
+          <Mapir
+            //
+            Map={Map}
+            center={[51.42, 35.71]}
+            zoom={[16]}
+            userLocation
+            className="!h-full !w-full overflow-hidden"
+            // onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
+            interactive
+            hash
+          >
+            {/* zoom */}
+            <Mapir.ZoomControl position="bottom-left" />
+            {/* marker */}
+            {/* <Mapir.Cluster zoomOnClick ClusterMarkerFactory={clusterMarker}>
             {points.features.map((feature, key) => (
               <Mapir.Marker key={key} coordinates={feature.geometry.coordinates} />
             ))}
           </Mapir.Cluster> */}
-          {/* <Mapir.Marker coordinates={[51.42, 35.71]} /> */}
-        </Mapir>
+            {/* <Mapir.Marker coordinates={[51.42, 35.71]} /> */}
+          </Mapir>
+        </div>
       </div>
     </>
   );

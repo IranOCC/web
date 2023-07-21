@@ -50,9 +50,9 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
               </div>
             </div>
 
-            <div className="absolute h-full w-[calc(100%+1rem)] bg-pink-600 -start-4">
+            <div className="absolute h-full w-[calc(100%+1.5rem)] -start-6 ">
               {/*  */}
-              {/*  */}
+              <MapEstate />
               {/*  */}
             </div>
 
