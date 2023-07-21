@@ -127,7 +127,7 @@ const MapEstate = () => {
   }, []);
   return (
     <>
-      <div className="relative z-10 h-full w-full">
+      <div className="relative z-10 h-full w-full overflow-hidden bg-white">
         <div className="relative h-full w-full">
           <Mapir
             //
@@ -135,13 +135,11 @@ const MapEstate = () => {
             center={[51.42, 35.71]}
             zoom={[16]}
             userLocation
-            className="!h-full !w-full overflow-hidden"
+            // className="!h-full !w-full overflow-hidden"
             // onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
             interactive
             hash
           >
-            {/* zoom */}
-            <Mapir.ZoomControl position="bottom-left" />
             {/* marker */}
             {/* <Mapir.Cluster zoomOnClick ClusterMarkerFactory={clusterMarker}>
             {points.features.map((feature, key) => (
