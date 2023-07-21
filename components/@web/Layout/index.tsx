@@ -7,14 +7,21 @@ import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.c
 import WebBottomMenu from "./BottomMenu";
 import FullscreenExitIcon from "@/components/Icons/web/FullscreenExit";
 import FullscreenIcon from "@/components/Icons/web/Fullscreen";
-import MapEstate from "../Features/Estate/MapEstate";
+// import MapEstate from "../Features/Estate/MapEstate";
 import LocationChooser from "@/components/@panel/Features/@common/LocationChooser";
 import { useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
+
+const getDynamicComponent = () =>
+  dynamic(() => import(`@/components/@web/Features/Estate/MapEstate`), {
+    ssr: false,
+    loading: () => <p>Loadinggggggggggg....</p>,
+  });
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
   const { isFullscreen, isFullContent, toggleFullscreen, background, sidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
 
-  const { control } = useForm();
+  const DynamicComp = getDynamicComponent();
   return (
     <main
       //
@@ -52,7 +59,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
 
             <div className="absolute -start-6 h-full w-[calc(100%+1.5rem)] overflow-hidden">
               <div className="h-full w-full overflow-hidden">
-                <MapEstate />
+                <DynamicComp />
               </div>
             </div>
             {/*  */}
