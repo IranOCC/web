@@ -56,7 +56,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
             </div>
             {!!SideBarComponent && (
               <div className="absolute -start-6 h-full w-[calc(100%+1.5rem)] overflow-hidden">
-                <div className="h-full w-full overflow-hidden">
+                <div className="sidebar-component h-full w-full overflow-hidden">
                   <SideBarComponent {...(sidebar?.props || {})} />
                 </div>
               </div>

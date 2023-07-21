@@ -73,7 +73,12 @@
 
 .mapboxgl-ctrl-top-right {
     top: 0;
-    right: 0
+    right: 0;
+}
+
+.sidebar-component .mapboxgl-ctrl-top-right {
+    top: 0;
+    right: 24px !important;
 }
 
 .mapboxgl-ctrl-bottom-left {
