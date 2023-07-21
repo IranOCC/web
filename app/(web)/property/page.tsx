@@ -1,6 +1,6 @@
 "use client";
 
-import MapEstate from "@/components/@web/Features/Estate/MapEstate";
+// import MapEstate from "@/components/@web/Features/Estate/MapEstate";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import { useContext, useEffect } from "react";
 
