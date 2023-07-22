@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useContext } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import WebSideBar from "./Sidebar";
 import WebHeader from "./Header";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
@@ -10,6 +10,11 @@ import FullscreenIcon from "@/components/Icons/web/Fullscreen";
 import dynamic from "next/dynamic";
 import { LoadingWithoutBg } from "@/components/Loading";
 import Scrollbars from "react-custom-scrollbars-2";
+import LocationOutlineIcon from "@/components/Icons/LocationOutline";
+import MarkerIcon from "@/components/Icons/MarkerIcon";
+import { Favorite, FavoriteBorderOutlined, ReportGmailerrorredOutlined, ShareOutlined, Verified, WarningAmberOutlined, WarningOutlined } from "@mui/icons-material";
+import Image from "next/image";
+import { Tooltip } from "antd";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -33,11 +38,19 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
             <WebSideBar />
             <div className="flex flex-1 flex-col">
               <WebHeader />
+              <div className="flex flex-col gap-2 px-3">
+                <h1 className="text-lg font-bold">خرید ویلا ۳۰۰متری شهرکی در بهترین منطقه متل ی شهرکی در بهترین منطقه متل ی شهرکی در بهترین منطقه متل ی شهرکی در بهترین منطقه متل قو</h1>
+                <h4 className="text-sm font-bold">کد: DV1662</h4>
+                <h6 className="flex items-center gap-1 text-sm font-medium text-gray-500">
+                  <MarkerIcon />
+                  مازندران - متل قو - منطقه سوم
+                </h6>
+              </div>
               <div className="h-full overflow-hidden p-0 pb-20 pt-4 md:pb-4">
                 <Scrollbars
                   //
                   universal
-                  autoHide
+                  autoHide={false}
                   hideTracksWhenNotNeeded
                   renderView={(props) => <div {...props} style={{ ...props.style, padding: "0 15px", marginLeft: props.style.marginRight, marginRight: 0 }} />}
                   //
@@ -45,9 +58,9 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                   renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", width: 6, borderRadius: "20px" }} />}
                   //
                   renderTrackVertical={(props) => <div {...props} style={{ ...props.style, right: 2, bottom: 2, top: 2, borderRadius: 0, background: "#D6D6D6", width: 2 }} />}
-                  renderThumbVertical={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", width: 6, borderRadius: "20px" }} />}
+                  renderThumbVertical={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", right: -2, width: 6, borderRadius: "20px" }} />}
                 >
-                  {children}
+                    {children}
                 </Scrollbars>
               </div>
             </div>
@@ -66,7 +79,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
               </div>
             </div>
             {!!SideBarComponent && (
-              <div className="absolute -start-6 h-full w-[calc(100%+1.5rem)] overflow-hidden">
+              <div className="absolute h-full w-[calc(100%+1.5rem)] overflow-hidden -start-6">
                 <div className="sidebar-component h-full w-full overflow-hidden">
                   <SideBarComponent {...(sidebar?.props || {})} />
                 </div>

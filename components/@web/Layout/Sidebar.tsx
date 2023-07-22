@@ -11,6 +11,7 @@ import { ReactNode, useState } from "react";
 import Logo from "@/assets/images/logo.png";
 import Image from "next/image";
 import ContactIcon from "@/components/Icons/web/Contact";
+import Scrollbars from "react-custom-scrollbars-2";
 
 type ItemType = {
   index: number;
@@ -72,24 +73,38 @@ const WebSideBar = () => {
           <ContactIcon />
         </a>
       </div>
-      <div className="relative z-10 flex flex-col overflow-x-hidden px-4 pb-12">
-        <div className="relative flex flex-col">
-          {items.map((item: ItemType) => {
-            return (
-              <MenuItem
-                //
-                key={item.index}
-                {...item}
-                setHovering={setHovering}
-              />
-            );
-          })}
-          <div
-            //
-            style={{ "--trY": `${y * 4.5}rem` } as React.CSSProperties}
-            className="absolute top-0 z-0 h-[4.5rem] w-full translate-y-[var(--trY)] rounded-[1.875rem] bg-secondary shadow-xl transition-transform"
-          />
-        </div>
+      <div className="relative z-10 flex h-full flex-col overflow-x-hidden py-5">
+        <Scrollbars
+          //
+          universal
+          autoHide={false}
+          hideTracksWhenNotNeeded
+          renderView={(props) => <div {...props} style={{ ...props.style, padding: "0 15px", marginLeft: props.style.marginRight, marginRight: 0 }} />}
+          //
+          renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, display: "none", right: 2, bottom: 2, top: 2, borderRadius: 0, background: "#D6D6D6", width: 2 }} />}
+          renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, display: "none", background: "#BEBEBE", width: 6, borderRadius: "20px" }} />}
+          //
+          renderTrackVertical={(props) => <div {...props} style={{ ...props.style, display: "none", right: 2, bottom: 2, top: 2, borderRadius: 0, background: "#D6D6D6", width: 2 }} />}
+          renderThumbVertical={(props) => <div {...props} style={{ ...props.style, display: "none", background: "#BEBEBE", right: -2, width: 6, borderRadius: "20px" }} />}
+        >
+          <div className="relative flex w-full flex-col">
+            {items.map((item: ItemType) => {
+              return (
+                <MenuItem
+                  //
+                  key={item.index}
+                  {...item}
+                  setHovering={setHovering}
+                />
+              );
+            })}
+            <div
+              //
+              style={{ "--trY": `${y * 4.5}rem` } as React.CSSProperties}
+              className="absolute top-0 z-0 h-[4.5rem] w-full translate-y-[var(--trY)] rounded-[1.875rem] bg-secondary shadow-xl transition-transform"
+            />
+          </div>
+        </Scrollbars>
       </div>
       <div></div>
     </aside>
