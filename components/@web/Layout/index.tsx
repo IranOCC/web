@@ -67,17 +67,33 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                       <Rating size="small" />
                     </div>
                     <div className="flex items-center justify-center gap-1 rounded-xl bg-gray-100 p-1">
-                      <Tooltip title="تایید شده" placement="top" arrow={false}>
-                        <div role="verified" className="flex cursor-pointer items-center justify-center text-secondary">
-                          <Verified style={{ fontSize: 20 }} />
+                      <Tooltip title="گزارش مشکل" placement="top" arrow={false}>
+                        <div role="report" className="flex cursor-pointer items-center justify-center text-gray-500">
+                          <ReportGmailerrorredOutlined style={{ fontSize: 20 }} />
                         </div>
                       </Tooltip>
-                      <Tooltip title="افزودن به مورد علاقه ها" placement="top" arrow={false}>
-                        <div role="add-to-favorites" className="flex cursor-pointer items-center justify-center  text-gray-500 text-red-500">
-                          {/* <FavoriteBorderOutlined style={{ fontSize: 24 }} /> */}
-                          <Favorite style={{ fontSize: 20 }} />
+                      <Tooltip title="اشتراک گذاری" placement="top" arrow={false}>
+                        <div role="share" className="flex cursor-pointer items-center justify-center text-gray-500">
+                          <ShareOutlined style={{ fontSize: 20 }} />
                         </div>
                       </Tooltip>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/*  */}
+              <div className="flex flex-col gap-2 px-3">
+                <h1 className="text-lg font-bold">اطلاعیه مشارکت ساخت و ساز در شهرک امیردشت</h1>
+                <div className="flex flex-col justify-between gap-y-1 lg:flex-row">
+                  <h6 className="flex items-center gap-1 text-sm font-medium ">
+                    <span className="text-gray-600">تاریخ انتشار:</span>
+                    <span className="text-black">۱۴۰۱/۰۵/۰۵</span>
+                  </h6>
+                  <div className="flex flex-row items-stretch gap-2">
+                    <div className="flex items-center justify-center rounded-xl bg-gray-100 p-1">
+                      <Rating size="small" />
+                    </div>
+                    <div className="flex items-center justify-center gap-1 rounded-xl bg-gray-100 p-1">
                       <Tooltip title="گزارش مشکل" placement="top" arrow={false}>
                         <div role="report" className="flex cursor-pointer items-center justify-center text-gray-500">
                           <ReportGmailerrorredOutlined style={{ fontSize: 20 }} />
