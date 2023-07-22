@@ -15,6 +15,7 @@ import MarkerIcon from "@/components/Icons/MarkerIcon";
 import { Favorite, FavoriteBorderOutlined, ReportGmailerrorredOutlined, ShareOutlined, Verified, WarningAmberOutlined, WarningOutlined } from "@mui/icons-material";
 import Image from "next/image";
 import { Tooltip } from "antd";
+import { Rating } from "@mui/material";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -41,10 +42,55 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
               <div className="flex flex-col gap-2 px-3">
                 <h1 className="text-lg font-bold">خرید ویلا ۳۰۰متری شهرکی در بهترین منطقه متل ی شهرکی در بهترین منطقه متل ی شهرکی در بهترین منطقه متل ی شهرکی در بهترین منطقه متل قو</h1>
                 <h4 className="text-sm font-bold">کد: DV1662</h4>
-                <h6 className="flex items-center gap-1 text-sm font-medium text-gray-500">
+                <h6 className="flex items-center gap-1 text-sm font-medium text-gray-600">
                   <MarkerIcon />
                   مازندران - متل قو - منطقه سوم
                 </h6>
+              </div>
+              <div className="flex flex-col gap-2 px-3">
+                <h1 className="text-lg font-bold">نحوه ی محاسبه مالیات شهرداری</h1>
+                <div className="flex flex-col justify-between gap-y-1 lg:flex-row">
+                  <h6 className="flex items-center gap-1 text-sm font-medium ">
+                    <span className="text-gray-600">دسته بندی:</span>
+                    <span className="text-black">آموزش ها</span>
+                  </h6>
+                  <h6 className="flex items-center gap-1 text-sm font-medium ">
+                    <span className="text-gray-600">نویسنده:</span>
+                    <span className="text-black">ایران اکازیون</span>
+                  </h6>
+                  <h6 className="flex items-center gap-1 text-sm font-medium ">
+                    <span className="text-gray-600">تاریخ انتشار:</span>
+                    <span className="text-black">۱۴۰۱/۰۵/۰۵</span>
+                  </h6>
+                  <div className="flex flex-row items-stretch gap-2">
+                    <div className="flex items-center justify-center rounded-xl bg-gray-100 p-1">
+                      <Rating size="small" />
+                    </div>
+                    <div className="flex items-center justify-center gap-1 rounded-xl bg-gray-100 p-1">
+                      <Tooltip title="تایید شده" placement="top" arrow={false}>
+                        <div role="verified" className="flex cursor-pointer items-center justify-center text-secondary">
+                          <Verified style={{ fontSize: 20 }} />
+                        </div>
+                      </Tooltip>
+                      <Tooltip title="افزودن به مورد علاقه ها" placement="top" arrow={false}>
+                        <div role="add-to-favorites" className="flex cursor-pointer items-center justify-center  text-gray-500 text-red-500">
+                          {/* <FavoriteBorderOutlined style={{ fontSize: 24 }} /> */}
+                          <Favorite style={{ fontSize: 20 }} />
+                        </div>
+                      </Tooltip>
+                      <Tooltip title="گزارش مشکل" placement="top" arrow={false}>
+                        <div role="report" className="flex cursor-pointer items-center justify-center text-gray-500">
+                          <ReportGmailerrorredOutlined style={{ fontSize: 20 }} />
+                        </div>
+                      </Tooltip>
+                      <Tooltip title="اشتراک گذاری" placement="top" arrow={false}>
+                        <div role="share" className="flex cursor-pointer items-center justify-center text-gray-500">
+                          <ShareOutlined style={{ fontSize: 20 }} />
+                        </div>
+                      </Tooltip>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="h-full overflow-hidden p-0 pb-20 pt-4 md:pb-4">
                 <Scrollbars
@@ -60,7 +106,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                   renderTrackVertical={(props) => <div {...props} style={{ ...props.style, right: 2, bottom: 2, top: 2, borderRadius: 0, background: "#D6D6D6", width: 2 }} />}
                   renderThumbVertical={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", right: -2, width: 6, borderRadius: "20px" }} />}
                 >
-                    {children}
+                  {children}
                 </Scrollbars>
               </div>
             </div>
