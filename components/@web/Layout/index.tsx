@@ -10,10 +10,8 @@ import FullscreenIcon from "@/components/Icons/web/Fullscreen";
 import dynamic from "next/dynamic";
 import { LoadingWithoutBg } from "@/components/Loading";
 import Scrollbars from "react-custom-scrollbars-2";
-import LocationOutlineIcon from "@/components/Icons/LocationOutline";
 import MarkerIcon from "@/components/Icons/MarkerIcon";
-import { Favorite, FavoriteBorderOutlined, ReportGmailerrorredOutlined, ShareOutlined, Verified, WarningAmberOutlined, WarningOutlined } from "@mui/icons-material";
-import Image from "next/image";
+import { ReportGmailerrorredOutlined, ShareOutlined } from "@mui/icons-material";
 import { Tooltip } from "antd";
 import { Rating } from "@mui/material";
 
@@ -24,7 +22,7 @@ const getDynamicComponent = (path: string) =>
   });
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
-  const { isFullscreen, isFullContent, toggleFullscreen, background, sidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { isFullscreen, isFullContent, toggleFullscreen, background, sidebar, headerTitle, headerSubTitle } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   const SideBarComponent = !!sidebar ? getDynamicComponent(sidebar.component) : undefined;
   return (
@@ -39,75 +37,79 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
             <WebSideBar />
             <div className="flex flex-1 flex-col">
               <WebHeader />
-              <div className="flex flex-col gap-2 px-3">
-                <h1 className="text-lg font-bold">خرید ویلا ۳۰۰متری شهرکی در بهترین منطقه متل ی شهرکی در بهترین منطقه متل ی شهرکی در بهترین منطقه متل ی شهرکی در بهترین منطقه متل قو</h1>
-                <h4 className="text-sm font-bold">کد: DV1662</h4>
-                <h6 className="flex items-center gap-1 text-sm font-medium text-gray-600">
-                  <MarkerIcon />
-                  مازندران - متل قو - منطقه سوم
-                </h6>
-              </div>
-              <div className="flex flex-col gap-2 px-3">
-                <h1 className="text-lg font-bold">نحوه ی محاسبه مالیات شهرداری</h1>
-                <div className="flex flex-col justify-between gap-y-1 lg:flex-row">
-                  <h6 className="flex items-center gap-1 text-sm font-medium ">
-                    <span className="text-gray-600">دسته بندی:</span>
-                    <span className="text-black">آموزش ها</span>
-                  </h6>
-                  <h6 className="flex items-center gap-1 text-sm font-medium ">
-                    <span className="text-gray-600">نویسنده:</span>
-                    <span className="text-black">ایران اکازیون</span>
-                  </h6>
-                  <h6 className="flex items-center gap-1 text-sm font-medium ">
-                    <span className="text-gray-600">تاریخ انتشار:</span>
-                    <span className="text-black">۱۴۰۱/۰۵/۰۵</span>
-                  </h6>
-                  <div className="flex flex-row items-stretch gap-2">
-                    <div className="flex items-center justify-center rounded-xl bg-gray-100 p-1">
-                      <Rating size="small" />
-                    </div>
-                    <div className="flex items-center justify-center gap-1 rounded-xl bg-gray-100 p-1">
-                      <Tooltip title="گزارش مشکل" placement="top" arrow={false}>
-                        <div role="report" className="flex cursor-pointer items-center justify-center text-gray-500">
-                          <ReportGmailerrorredOutlined style={{ fontSize: 20 }} />
+
+              {headerTitle && (
+                <div className="flex flex-col gap-2 px-3">
+                  <h1 className="text-lg font-bold">{headerTitle}</h1>
+                  <div className="flex flex-col justify-between gap-y-1 empty:hidden lg:flex-row">
+                    {headerSubTitle?.type === "estate" && <h4 className="text-sm font-bold">کد: {headerSubTitle.code || "-"}</h4>}
+                    {headerSubTitle?.type === "estate" && (
+                      <h6 className="flex items-center gap-1 text-sm font-medium text-gray-600">
+                        <MarkerIcon />
+                        <span className="order-last lg:order-first">{headerSubTitle.location || "-"}</span>
+                      </h6>
+                    )}
+                    {headerSubTitle?.type === "blog" && (
+                      <h6 className="flex items-center gap-1 text-sm font-medium ">
+                        <span className="text-gray-600">دسته بندی:</span>
+                        <span className="text-black">{headerSubTitle.category || "-"}</span>
+                      </h6>
+                    )}
+                    {headerSubTitle?.type === "blog" && (
+                      <h6 className="flex items-center gap-1 text-sm font-medium ">
+                        <span className="text-gray-600">نویسنده:</span>
+                        <span className="text-black">{headerSubTitle.author || "-"}</span>
+                      </h6>
+                    )}
+                    {headerSubTitle?.type === "blog" && (
+                      <h6 className="flex items-center gap-1 text-sm font-medium ">
+                        <span className="text-gray-600">تاریخ انتشار:</span>
+                        <span className="text-black">{headerSubTitle.publishedAt?.toString() || "-"}</span>
+                      </h6>
+                    )}
+                    {headerSubTitle?.type === "page" && (
+                      <h6 className="flex items-center gap-1 text-sm font-medium ">
+                        <span className="text-gray-600">تاریخ انتشار:</span>
+                        <span className="text-black">{headerSubTitle.publishedAt?.toString()}</span>
+                      </h6>
+                    )}
+                    {(headerSubTitle?.type === "blog" || headerSubTitle?.type === "page") && (
+                      <div className="flex flex-row items-stretch gap-2">
+                        {headerSubTitle?.rating && (
+                          <div className="flex items-center justify-center rounded-xl bg-gray-100 p-1">
+                            <Rating
+                              //
+                              size="small"
+                              readOnly={!!headerSubTitle?.userRate}
+                              value={headerSubTitle?.rateScore || 0}
+                              onChange={(e) => {}}
+                            />
+                          </div>
+                        )}
+                        <div className="flex items-center justify-center gap-1 rounded-xl bg-gray-100 p-1 empty:hidden">
+                          {headerSubTitle?.report && (
+                            <Tooltip title="گزارش مشکل" placement="top" arrow={false}>
+                              <div role="report" className="flex cursor-pointer items-center justify-center text-gray-500">
+                                <ReportGmailerrorredOutlined style={{ fontSize: 20 }} />
+                              </div>
+                            </Tooltip>
+                          )}
+                          {headerSubTitle?.sharing && (
+                            <Tooltip title="اشتراک گذاری" placement="top" arrow={false}>
+                              <div role="share" className="flex cursor-pointer items-center justify-center text-gray-500">
+                                <ShareOutlined style={{ fontSize: 20 }} />
+                              </div>
+                            </Tooltip>
+                          )}
                         </div>
-                      </Tooltip>
-                      <Tooltip title="اشتراک گذاری" placement="top" arrow={false}>
-                        <div role="share" className="flex cursor-pointer items-center justify-center text-gray-500">
-                          <ShareOutlined style={{ fontSize: 20 }} />
-                        </div>
-                      </Tooltip>
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
-              {/*  */}
-              <div className="flex flex-col gap-2 px-3">
-                <h1 className="text-lg font-bold">اطلاعیه مشارکت ساخت و ساز در شهرک امیردشت</h1>
-                <div className="flex flex-col justify-between gap-y-1 lg:flex-row">
-                  <h6 className="flex items-center gap-1 text-sm font-medium ">
-                    <span className="text-gray-600">تاریخ انتشار:</span>
-                    <span className="text-black">۱۴۰۱/۰۵/۰۵</span>
-                  </h6>
-                  <div className="flex flex-row items-stretch gap-2">
-                    <div className="flex items-center justify-center rounded-xl bg-gray-100 p-1">
-                      <Rating size="small" />
-                    </div>
-                    <div className="flex items-center justify-center gap-1 rounded-xl bg-gray-100 p-1">
-                      <Tooltip title="گزارش مشکل" placement="top" arrow={false}>
-                        <div role="report" className="flex cursor-pointer items-center justify-center text-gray-500">
-                          <ReportGmailerrorredOutlined style={{ fontSize: 20 }} />
-                        </div>
-                      </Tooltip>
-                      <Tooltip title="اشتراک گذاری" placement="top" arrow={false}>
-                        <div role="share" className="flex cursor-pointer items-center justify-center text-gray-500">
-                          <ShareOutlined style={{ fontSize: 20 }} />
-                        </div>
-                      </Tooltip>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )}
+              {/* <SingleEstateHeader />
+              <SinglePageHeader />
+              <SingleBlogHeader /> */}
               <div className="h-full overflow-hidden p-0 pb-20 pt-4 md:pb-4">
                 <Scrollbars
                   //

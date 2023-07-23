@@ -7,7 +7,7 @@ import { useContext, useEffect } from "react";
 import Image from "next/image";
 
 export default function Page() {
-  const { setBackground, setBreadCrump, setSidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { setBackground, setBreadCrump, setHeaderTitle, setSidebar, setHeaderSubTitle } = useContext(WebPreviewContext) as WebPreviewContextType;
   useEffect(() => {
     setBackground("bg-white");
     setBreadCrump([
@@ -19,6 +19,15 @@ export default function Page() {
       small: false,
       component: "Features/Estate/MapEstate",
       props: {},
+    });
+    setHeaderTitle("فروش ویلای خوب");
+    setHeaderSubTitle({
+      type: "blog",
+      rating: true,
+      rateScore: 4,
+      // userRate: 2,
+      sharing: true,
+      report: true,
     });
   }, []);
 
@@ -59,7 +68,7 @@ export default function Page() {
                   </div>
                 </Tooltip>
                 <Tooltip title="افزودن به مورد علاقه ها" placement="top" arrow={false}>
-                  <div role="add-to-favorites" className="flex cursor-pointer items-center justify-center  text-gray-500 text-red-500">
+                  <div role="add-to-favorites" className="flex cursor-pointer items-center justify-center  text-red-500">
                     {/* <FavoriteBorderOutlined style={{ fontSize: 28 }} /> */}
                     <Favorite style={{ fontSize: 28 }} />
                   </div>

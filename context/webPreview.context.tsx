@@ -1,6 +1,25 @@
 "use client";
 
+import { Estate } from "@/types/interfaces";
 import React, { ReactNode } from "react";
+
+type SubTitleType = {
+  type: "page" | "blog" | "estate";
+  //
+  category?: string;
+  author?: string;
+  publishedAt?: Date;
+  //
+  rating?: boolean;
+  sharing?: boolean;
+  report?: boolean;
+  //
+  rateScore?: number;
+  userRate?: number;
+  //
+  code?: string;
+  location?: string;
+};
 
 export type WebPreviewContextType = {
   isFullscreen: boolean;
@@ -13,10 +32,16 @@ export type WebPreviewContextType = {
   toggleFullContent: () => void;
 
   breadCrump?: { title: string; url?: string }[];
-  setBreadCrump: (n: { title: string; url?: string }[] | undefined) => void;
+  setBreadCrump: (n?: { title: string; url?: string }[] | undefined) => void;
 
   sidebar?: { small: boolean; props?: {}; component: string };
-  setSidebar: (n: { small: boolean; props?: {}; component: string } | undefined) => void;
+  setSidebar: (n?: { small: boolean; props?: {}; component: string } | undefined) => void;
+
+  headerTitle?: string;
+  setHeaderTitle: (n?: string) => void;
+
+  headerSubTitle?: SubTitleType;
+  setHeaderSubTitle: (n?: SubTitleType) => void;
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
@@ -27,6 +52,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const [breadCrump, setBreadCrump] = React.useState<{ title: string; url?: string }[] | undefined>(undefined);
   const [sidebar, setSidebar] = React.useState<{ small: boolean; props?: {}; component: string } | undefined>(undefined);
   const [isFullContent, setFullContent] = React.useState<boolean>(false);
+  const [headerTitle, setHeaderTitle] = React.useState<string | undefined>(undefined);
+  const [headerSubTitle, setHeaderSubTitle] = React.useState<SubTitleType | undefined>(undefined);
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
@@ -47,6 +74,10 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
         setBreadCrump,
         sidebar,
         setSidebar,
+        headerTitle,
+        setHeaderTitle,
+        headerSubTitle,
+        setHeaderSubTitle,
       }}
     >
       {children}
