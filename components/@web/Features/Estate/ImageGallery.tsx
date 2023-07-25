@@ -1,7 +1,6 @@
 import { useKeenSlider, KeenSliderPlugin, KeenSliderInstance } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { MutableRefObject } from "react";
-import "./image_gallery.css";
 import Image from "next/image";
 import { StorageFile } from "@/types/interfaces";
 
@@ -39,13 +38,19 @@ function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): 
 }
 
 const ImageGallery = ({ items }: { items: StorageFile[] }) => {
-  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({ initial: 0 });
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
+    initial: 0,
+    mode: "free-snap",
+    rtl: true,
+  });
   const [thumbnailRef] = useKeenSlider<HTMLDivElement>(
     {
       initial: 0,
+      mode: "free-snap",
+      rtl: false,
       slides: {
-        perView: 3,
-        spacing: 10,
+        perView: "auto",
+        spacing: 5,
       },
     },
     [ThumbnailPlugin(instanceRef)]
@@ -53,10 +58,10 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
 
   return (
     <>
-      <div ref={sliderRef} className="keen-slider">
+      <div ref={sliderRef} className="keen-slider zoom-out">
         {items.map(({ path, title, alt }) => {
           return (
-            <div className="keen-slider__slide relative flex flex-col items-center justify-center overflow-hidden rounded-xl">
+            <div className="keen-slider__slide zoom-out__slide relative flex flex-col items-center justify-center overflow-hidden rounded-xl">
               <Image
                 //
                 src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
@@ -70,22 +75,28 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
           );
         })}
       </div>
-      <div ref={thumbnailRef} className="keen-slider thumbnail">
-        {items.map(({ path, title, alt }) => {
-          return (
-            <div className="keen-slider__slide relative flex flex-col items-center justify-center overflow-hidden rounded-xl">
-              <Image
-                //
-                src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
-                alt={alt}
-                title={title}
-                width={120}
-                height={60}
-                className="block rounded-xl object-cover"
-              />
-            </div>
-          );
-        })}
+      <div className="flex w-full flex-row py-4">
+        <div className="h-full bg-gray-200">
+          salam
+          {/*  */}
+        </div>
+        <div ref={thumbnailRef} className="keen-slider">
+          {items.map(({ path, title, alt }) => {
+            return (
+              <div className="keen-slider__slide group relative flex min-w-[5rem] max-w-[5rem] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl">
+                <Image
+                  //
+                  src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
+                  alt={alt}
+                  title={title}
+                  width={180}
+                  height={100}
+                  className="block h-full rounded-xl border-2 border-transparent object-fill group-[.active]:border-secondary"
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );
