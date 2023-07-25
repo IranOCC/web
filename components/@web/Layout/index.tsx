@@ -14,6 +14,7 @@ import MarkerIcon from "@/components/Icons/MarkerIcon";
 import { ReportGmailerrorredOutlined, ShareOutlined } from "@mui/icons-material";
 import { Tooltip } from "antd";
 import { Rating } from "@mui/material";
+import moment from "jalali-moment";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -55,6 +56,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                         <span className="text-black">{headerSubTitle.category || "-"}</span>
                       </h6>
                     )}
+
                     {headerSubTitle?.type === "blog" && (
                       <h6 className="flex items-center gap-1 text-sm font-medium ">
                         <span className="text-gray-600">نویسنده:</span>
@@ -64,13 +66,13 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                     {headerSubTitle?.type === "blog" && (
                       <h6 className="flex items-center gap-1 text-sm font-medium ">
                         <span className="text-gray-600">تاریخ انتشار:</span>
-                        <span className="text-black">{headerSubTitle.publishedAt?.toString() || "-"}</span>
+                        <span className="text-black">{moment(headerSubTitle.publishedAt).locale("fa").format("DD MMM YYYY HH:mm:ss") || "-"}</span>
                       </h6>
                     )}
                     {headerSubTitle?.type === "page" && (
                       <h6 className="flex items-center gap-1 text-sm font-medium ">
                         <span className="text-gray-600">تاریخ انتشار:</span>
-                        <span className="text-black">{headerSubTitle.publishedAt?.toString()}</span>
+                        <span className="text-black">{moment(headerSubTitle.publishedAt).locale("fa").format("DD MMM YYYY HH:mm:ss") || "-"}</span>
                       </h6>
                     )}
                     {(headerSubTitle?.type === "blog" || headerSubTitle?.type === "page") && (

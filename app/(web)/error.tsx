@@ -8,7 +8,7 @@ import { Input } from "@/components/@panel/Input";
 import Link from "next/link";
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
-  const { setBreadCrump, setBackground, setSidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { errorPage } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   useEffect(() => {
     console.log("#Err:", error);
@@ -19,9 +19,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
   }, [error]);
 
   useEffect(() => {
-    setBackground("bg-secondary");
-    setBreadCrump(undefined);
-    setSidebar(undefined);
+    errorPage()
   }, []);
 
   let _error = { code: 500, title: "مشکلی پیش اومده", message: error.message };

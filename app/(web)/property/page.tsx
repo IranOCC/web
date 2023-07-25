@@ -7,28 +7,9 @@ import { useContext, useEffect } from "react";
 import Image from "next/image";
 
 export default function Page() {
-  const { setBackground, setBreadCrump, setHeaderTitle, setSidebar, setHeaderSubTitle } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { setBackground, setBreadCrump, setHeaderTitle, setSidebar, setHeaderSubTitle, singleEstate } = useContext(WebPreviewContext) as WebPreviewContextType;
   useEffect(() => {
-    setBackground("bg-white");
-    setBreadCrump([
-      { title: "ایران اکازیون", url: "/" },
-      { title: "ویلا", url: "/" },
-      { title: "متل قو", url: "/" },
-    ]);
-    setSidebar({
-      small: false,
-      component: "Features/Estate/MapEstate",
-      props: {},
-    });
-    setHeaderTitle("فروش ویلای خوب");
-    setHeaderSubTitle({
-      type: "blog",
-      rating: true,
-      rateScore: 4,
-      // userRate: 2,
-      sharing: true,
-      report: true,
-    });
+    // singleEstate("12345", "یه خونه برای خرید");
   }, []);
 
   return (

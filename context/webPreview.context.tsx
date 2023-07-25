@@ -42,6 +42,11 @@ export type WebPreviewContextType = {
 
   headerSubTitle?: SubTitleType;
   setHeaderSubTitle: (n?: SubTitleType) => void;
+
+  singlePost: (id: string, title: string, categories: string[], author: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
+  singlePage: (id: string, title: string, author: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
+  singleEstate: (id: string, title: string, category: string, code: string, location: string) => void;
+  errorPage: () => void;
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
@@ -61,6 +66,83 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const toggleFullContent = () => {
     setFullContent((prev) => !prev);
   };
+
+  // singlePost
+  const singlePost = (id: string, title: string, categories: string[], author: string, publishedAt: Date, rateScore: number, userRate?: number) => {
+    setBackground("bg-white");
+    setHeaderTitle(title);
+    setBreadCrump([
+      { title: "ایران اکازیون", url: "/" },
+      { title: "وبلاگ", url: "/" },
+      { title: "آموزش ها", url: "/" },
+    ]);
+    setFullContent(false);
+    setSidebar(undefined);
+    setHeaderSubTitle({
+      type: "blog",
+      category: categories.join("، "),
+      author,
+      publishedAt,
+      //
+      rating: true,
+      sharing: true,
+      report: true,
+      //
+      rateScore,
+      userRate,
+    });
+  };
+  // singlePost
+  const singlePage = (id: string, title: string, author: string, publishedAt: Date, rateScore: number, userRate?: number) => {
+    setBackground("bg-white");
+    setHeaderTitle(title);
+    setBreadCrump([
+      { title: "ایران اکازیون", url: "/" },
+      { title: "وبلاگ", url: "/" },
+      { title: "آموزش ها", url: "/" },
+    ]);
+    setFullContent(false);
+    setSidebar(undefined);
+    setHeaderSubTitle({
+      type: "page",
+      author,
+      publishedAt,
+      //
+      rating: true,
+      sharing: true,
+      report: true,
+      //
+      rateScore,
+      userRate,
+    });
+  };
+  // singlePost
+  const singleEstate = (id: string, title: string, category: string, code: string, location: string) => {
+    setBackground("bg-white");
+    setHeaderTitle(title);
+    setBreadCrump([
+      { title: "ایران اکازیون", url: "/" },
+      { title: "ویلا", url: "/" },
+      { title: "متل قو", url: "/" },
+    ]);
+    setFullContent(false);
+    setSidebar(undefined);
+    setHeaderSubTitle({
+      type: "estate",
+      code,
+      location,
+    });
+  };
+  // errorPage
+  const errorPage = () => {
+    setBackground("bg-secondary");
+    setHeaderTitle(undefined);
+    setBreadCrump(undefined);
+    setFullContent(true);
+    setSidebar(undefined);
+    setHeaderSubTitle(undefined);
+  };
+
   return (
     <WebPreviewContext.Provider
       value={{
@@ -78,6 +160,11 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
         setHeaderTitle,
         headerSubTitle,
         setHeaderSubTitle,
+        //
+        singlePost,
+        singlePage,
+        singleEstate,
+        errorPage,
       }}
     >
       {children}

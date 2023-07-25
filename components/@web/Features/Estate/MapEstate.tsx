@@ -18,7 +18,7 @@ const Map = Mapir.setToken({
   },
 });
 
-const MapEstate = () => {
+const MapEstate = ({ id }: { id: string }) => {
   return (
     <>
       <div className="relative z-10 h-full w-full overflow-hidden bg-white p-2 ps-0">

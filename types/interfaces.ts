@@ -320,3 +320,106 @@ export type Page = {
     createdBy?: User | string;
     createdAt?: Date;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ==========================
+
+
+
+
+export type WebBlogPost = {
+    _id: string;
+
+    title: string;
+    content: string;
+    excerpt: string;
+    slug: string;
+
+    image?: StorageFile;
+
+    pinned: boolean;
+    publishedAt: Date;
+
+    tags: string[];
+    categories: BlogCategory[];
+    author: User;
+};
+
+
+
+
+export type WebEstate = {
+    _id: string;
+
+    title: string;
+    content?: string;
+    excerpt?: string;
+    slug: string;
+
+    image?: StorageFile;
+    gallery?: StorageFile[];
+
+
+
+    pinned: boolean;
+    publishedAt: Date;
+
+    tags?: string[];
+
+
+    code?: string;
+    category: string;
+    type?: string;
+    documentType?: string;
+    features?: string[];
+
+    area: number;
+    price: number;
+    totalPrice: number;
+
+    description?: string;
+    canBarter?: boolean;
+
+
+    constructionYear?: number;
+    roomsCount?: number;
+    mastersCount?: number;
+    buildingArea?: number;
+    floorsCount?: number;
+    unitsCount?: number;
+    floor?: number;
+    withOldBuilding?: boolean;
+
+
+    province?: string;
+    city?: string;
+    district?: string;
+    quarter?: string;
+    alley?: string;
+    address?: string;
+    location?: [number, number] | string;
+
+    owner?: User | string;
+    office?: Office | string;
+
+    updatedAt?: Date;
+    createdBy?: User | string;
+    createdAt?: Date;
+
+    isConfirmed?: boolean;
+
+    confirmedBy?: User | string;
+    confirmedAt?: Date;
+};

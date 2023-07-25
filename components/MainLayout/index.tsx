@@ -32,7 +32,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   }, [sessionStatus]);
 
   return (
-    <body lang="fa" dir="rtl" className={"font-rubik select-none scroll-smooth bg-gray-300/50 selection:bg-yellow-200 selection:text-yellow-900 print:hidden" + (darkMode ? " dark" : "")}>
+    <body lang="fa" dir="rtl" className={"select-none scroll-smooth bg-gray-300/50 selection:bg-yellow-200 selection:text-yellow-900 print:hidden" + (darkMode ? " dark" : "")}>
       {children}
       <CompleteProfileModal />
       <RolesConflictModal />
