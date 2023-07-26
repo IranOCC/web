@@ -123,39 +123,34 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
             </>
           )}
         </div>
-        <div className="flex w-full flex-row gap-4 py-4">
-          <div className="hidden h-full md:block">
-            <div className="relative flex h-28 flex-row items-center justify-center gap-1.5 rounded-2xl bg-gray-200 px-1 text-gray-700">
+        <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
+          <div className="order-last  h-full lg:order-first">
+            <div className="relative grid h-28 min-w-[26rem] grid-cols-4 flex-row items-center justify-center rounded-2xl bg-gray-200 px-1 text-gray-700">
               {/*  */}
-              <div className="flex w-20 min-w-[5rem] max-w-[5rem] flex-col items-center justify-center gap-1.5">
+              <div className="flex flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2">
                 <span>متراژ بنا</span>
                 <Fullscreen />
                 <b className="text-center text-base font-extrabold leading-none text-black">250 مترمربع</b>
               </div>
               {/*  */}
-              <div className=" my-3 h-full border border-gray-300" />
-              {/*  */}
-              <div className="flex w-20 min-w-[5rem] max-w-[5rem] flex-col items-center justify-center gap-1.5">
+              <div className="flex flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2">
                 <span>متراژ بنا</span>
                 <Fullscreen />
                 <b className="text-center text-base font-extrabold leading-none text-black">250 مترمربع</b>
               </div>
               {/*  */}
-              <div className=" my-3 h-full border border-gray-300" />
+              <div className="flex flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2">
+                <span>متراژ بنا</span>
+                <Fullscreen />
+                <b className="text-center text-base font-extrabold leading-none text-black">250 مترمربع</b>
+              </div>{" "}
               {/*  */}
-              <div className="flex w-20 min-w-[5rem] max-w-[5rem] flex-col items-center justify-center gap-1.5">
+              <div className="flex flex-col items-center justify-center gap-1.5">
                 <span>متراژ بنا</span>
                 <Fullscreen />
                 <b className="text-center text-base font-extrabold leading-none text-black">250 مترمربع</b>
               </div>
               {/*  */}
-              <div className=" my-3 h-full border border-gray-300" />
-              {/*  */}
-              <div className="flex w-20 min-w-[5rem] max-w-[5rem] flex-col items-center justify-center gap-1.5">
-                <span>متراژ بنا</span>
-                <Fullscreen />
-                <b className="text-center text-base font-extrabold leading-none text-black">250 مترمربع</b>
-              </div>
             </div>
           </div>
           <div ref={thumbnailRef} className="keen-slider">
@@ -185,9 +180,9 @@ export default ImageGallery;
 
 function Arrow(props: { disabled: boolean; left?: boolean; onClick: (e: any) => void }) {
   return (
-    <div onClick={props.onClick} className={`${props.left ? "left-0" : "left-auto right-0"} ${props.disabled ? "cursor-not-allowed" : "cursor-pointer"} absolute flex h-full items-center justify-center`}>
-      <div className="rounded-xl bg-gray-100 p-2">
-        <svg className={`${props.disabled ? "fill-gray-200" : "fill-gray-400/80"} h-6 w-6`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <div onClick={props.onClick} className={`${props.left ? "left-0" : "left-auto right-0"} ${props.disabled ? "cursor-not-allowed" : "cursor-pointer"} absolute flex h-full items-center justify-center px-2`}>
+      <div className={`rounded-xl bg-gray-100 p-2 ${props.disabled ? "opacity-50" : ""}`}>
+        <svg className="h-6 w-6 fill-gray-400/80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           {props.left && <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />}
           {!props.left && <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />}
         </svg>
