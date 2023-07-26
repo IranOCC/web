@@ -1,11 +1,11 @@
-import { CheckBox, Input } from "@/components/@panel/Input";
+import { CheckBox, Input } from "@/components/Input";
 import { EstateCategoryFormData, IconFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/@panel/Select";
-import IconSelection from "@/components/@panel/Select/IconSelection";
-import { Button } from "@/components/@panel/Button";
+import { Select } from "@/components/Select";
+import IconSelection from "@/components/Select/IconSelection";
+import { Button } from "@/components/Button";
 import { AddEditComponentProps } from "@/components/@panel/EditAddPage";
 
 export default function IconBox({ form, loading, cancelForm }: AddEditComponentProps) {

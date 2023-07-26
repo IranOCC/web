@@ -5,8 +5,8 @@ import { ClickAwayListener, Grow, Paper, Popper } from "@mui/material";
 import { Spin } from "antd";
 import { ReactNode, RefObject, useEffect, useRef, useState } from "react";
 import { Controller, ControllerRenderProps, FieldValues, useController } from "react-hook-form";
-import ArrowDownIcon from "../../Icons/ArrowDown";
-import SearchIcon from "../../Icons/Search";
+import ArrowDownIcon from "../Icons/ArrowDown";
+import SearchIcon from "../Icons/Search";
 
 const Select = (props: IProps) => {
   const {

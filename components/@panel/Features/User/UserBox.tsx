@@ -1,9 +1,9 @@
-import { CheckBox, Input } from "@/components/@panel/Input";
+import { CheckBox, Input } from "@/components/Input";
 import { UserFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/@panel/Select";
+import { Select } from "@/components/Select";
 import LogoUploader from "@/components/Uploader/LogoUploader";
 import { AddEditComponentProps } from "../../EditAddPage";
 

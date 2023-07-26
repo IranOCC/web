@@ -11,8 +11,8 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import { useParams } from "next/navigation";
 import { toast } from "@/lib/toast";
 import Modal from "@/components/Modals";
-import { Button } from "@/components/@panel/Button";
-import { Select } from "@/components/@panel/Select";
+import { Button } from "@/components/Button";
+import { Select } from "@/components/Select";
 import OfficeAddMembersModal from "@/components/@panel/Features/Office/OfficeAddMembersModal";
 
 const columns: ColumnsType<OfficeMember> = [

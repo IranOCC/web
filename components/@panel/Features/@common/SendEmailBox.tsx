@@ -1,5 +1,5 @@
-import { Button } from "@/components/@panel/Button";
-import { Input } from "@/components/@panel/Input";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { SendEmailBoxFormData } from "@/types/formsData";

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/@panel/Button";
-import { Input } from "@/components/@panel/Input";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
 import { LoginPhoneOtpFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";

@@ -1,6 +1,6 @@
 import Modal from ".";
-import { Button } from "@/components/@panel/Button";
-import { Input } from "@/components/@panel/Input";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
 import LoginBackImage from "@/assets/images/city-bg.png";
 import { LoginPhoneOtpFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";

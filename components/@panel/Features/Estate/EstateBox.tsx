@@ -1,9 +1,9 @@
-import { CheckBox, Input } from "@/components/@panel/Input";
+import { CheckBox, Input } from "@/components/Input";
 import { EstateFormData } from "@/types/formsData";
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import TextEditor from "@/components/@panel/Input/TextEditor";
+import TextEditor from "@/components/Input/TextEditor";
 import { AddEditComponentProps } from "../../EditAddPage";
 import slugify from "slugify";
 import { Collapse } from "@mui/material";
@@ -76,7 +76,7 @@ export default function EstateBox({ form, loading, props }: AddEditComponentProp
             disabled={checkingData?.slug?.disabled}
             containerClassName={!!checkingData?.slug?.hidden ? "hidden" : ""}
           />
-          <div className="text-center text-white cursor-pointer font-bold rounded bg-orange-400 p-2" onClick={() => setOpenContent((o) => !o)}>
+          <div className="cursor-pointer rounded bg-orange-400 p-2 text-center font-bold text-white" onClick={() => setOpenContent((o) => !o)}>
             {openContent ? "عدم نمایش توضیحات عمومی" : "نمایش توضیحات عمومی"}
             {/*  */}
           </div>

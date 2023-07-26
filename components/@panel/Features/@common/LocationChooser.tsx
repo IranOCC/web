@@ -2,7 +2,7 @@ import "@/assets/css/map.css";
 import { Controller } from "react-hook-form";
 import { ReactNode, useEffect, useState } from "react";
 import Mapir from "mapir-react-typescript";
-import { Button } from "../../Button";
+import { Button } from "../../../Button";
 import { Search } from "@mui/icons-material";
 
 const API_KEY =

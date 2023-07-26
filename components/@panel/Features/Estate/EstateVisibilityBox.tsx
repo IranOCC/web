@@ -1,9 +1,9 @@
-import { CheckBox, DateTimePicker, Input } from "@/components/@panel/Input";
+import { CheckBox, DateTimePicker, Input } from "@/components/Input";
 import { EstateFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/@panel/Select";
+import { Select } from "@/components/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
 import moment from "moment";
 

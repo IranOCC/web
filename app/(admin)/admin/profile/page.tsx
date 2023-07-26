@@ -4,8 +4,8 @@ import PanelCard from "@/components/@panel/Card";
 import EmailAddressBox from "@/components/@panel/Features/@common/EmailAddressBox";
 import LocationBox from "@/components/@panel/Features/@common/LocationBox";
 import PhoneNumberBox from "@/components/@panel/Features/@common/PhoneNumberBox";
-import { Button } from "@/components/@panel/Button";
-import { Input } from "@/components/@panel/Input";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
 import LogoUploader from "@/components/Uploader/LogoUploader";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
@@ -84,7 +84,7 @@ export default function Page() {
         <div className="grid grid-cols-2 gap-4">
           <div className="col-span-full">
             <PanelCard title="پروفایل من" loading={loading}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <LogoUploader
                   //
                   control={control}
@@ -136,7 +136,7 @@ export default function Page() {
           */}
           <div className="col-span-full">
             <PanelCard className="order-last lg:order-first">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <Button
                   //
                   // className="col-span-full"

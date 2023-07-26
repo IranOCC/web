@@ -1,5 +1,5 @@
-import { Button } from "@/components/@panel/Button";
-import { CheckBox, Input } from "@/components/@panel/Input";
+import { Button } from "@/components/Button";
+import { CheckBox, Input } from "@/components/Input";
 import { OfficeFormData, UserFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";

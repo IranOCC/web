@@ -33,8 +33,8 @@ const CheckBox = (props: IProps) => {
   }
 
   return (
-    <div className={"w-full relative flex items-end flex-col" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-      <div className={"w-full relative flex items-center "}>
+    <div className={"relative flex w-full flex-col items-end" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+      <div className={"relative flex w-full items-center "}>
         <Controller
           render={({ field }) => {
             return (
@@ -44,7 +44,7 @@ const CheckBox = (props: IProps) => {
                   type="checkbox"
                   disabled={disabled || loading}
                   readOnly={readOnly || loading}
-                  className={`focus:ring-0 focus:ring-offset-0 ${disabled ? "cursor-not-allowed bg-gray-200" : "cursor-pointer bg-slate-200"} border-gray-300 rounded ${inputClass} ${className}`}
+                  className={`focus:ring-0 focus:ring-offset-0 ${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-200 cursor-pointer"} rounded border-gray-300 ${inputClass} ${className}`}
                   {...field}
                   checked={field.value}
                 />
@@ -55,7 +55,7 @@ const CheckBox = (props: IProps) => {
                       if (disabled || readOnly || loading) return;
                       field.onChange(!field.value);
                     }}
-                    className={`w-full block ms-2 text-sm text-start font-medium text-gray-500 dark:text-white whitespace-nowrap ${disabled ? "cursor-not-allowed" : "cursor-pointer"}${labelClass}`}
+                    className={`block w-full whitespace-nowrap text-sm font-medium text-gray-500 ms-2 text-start dark:text-white ${disabled ? "cursor-not-allowed" : "cursor-pointer"}${labelClass}`}
                   >
                     {label}
                   </label>
@@ -69,7 +69,7 @@ const CheckBox = (props: IProps) => {
         />
       </div>
 
-      {helperText && <p className={"w-full mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
+      {helperText && <p className={"mt-1 block w-full text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
     </div>
   );
 };

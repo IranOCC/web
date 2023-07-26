@@ -1,9 +1,9 @@
-import { Input } from "@/components/@panel/Input";
+import { Input } from "@/components/Input";
 import { InitialSettingsFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/@panel/Select";
+import { Select } from "@/components/Select";
 
 export default function InitialSettingsBox({ form, loading }: { form: any; loading?: boolean }) {
   const {
@@ -27,7 +27,7 @@ export default function InitialSettingsBox({ form, loading }: { form: any; loadi
   return (
     <>
       <PanelCard title="تنظیمات اولیه" loading={loading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 ">
           <Input
             //
             control={control}

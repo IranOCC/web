@@ -1,9 +1,9 @@
-import { Input } from "@/components/@panel/Input";
+import { Input } from "@/components/Input";
 import { EstateTypeFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { Select } from "@/components/@panel/Select";
-import IconSelection from "@/components/@panel/Select/IconSelection";
+import { Select } from "@/components/Select";
+import IconSelection from "@/components/Select/IconSelection";
 import { AddEditComponentProps } from "@/components/@panel/EditAddPage";
 import slugify from "slugify";
 
@@ -109,7 +109,7 @@ export default function EstateTypeBox({ form, loading, cancelForm }: AddEditComp
           searchable
           noSpace
         />
-        <p className="text-sm text-slate-500 mt-1 ">
+        <p className="text-slate-500 mt-1 text-sm ">
           {/*  */}
           (دسته هایی که نوع مدنظر در آن ها معتبر است. در صورتی که دسته ای انتخاب نشود این نوع در تمامی دسته ها معتبر خواهد بود)
         </p>

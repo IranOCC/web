@@ -1,9 +1,9 @@
-import { CheckBox, DateTimePicker } from "@/components/@panel/Input";
+import { CheckBox, DateTimePicker } from "@/components/Input";
 import { PageFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/@panel/Select";
+import { Select } from "@/components/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
 
 export default function PageVisibilityBox({ form, loading }: AddEditComponentProps) {

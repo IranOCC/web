@@ -1,15 +1,15 @@
-import { CheckBox, Input } from "@/components/@panel/Input";
+import { CheckBox, Input } from "@/components/Input";
 import { EstateFormData } from "@/types/formsData";
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/@panel/Select";
+import { Select } from "@/components/Select";
 
 import { AddEditComponentProps } from "../../EditAddPage";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { Alert, AlertTitle } from "@mui/material";
 import moment from "jalali-moment";
-import { Button } from "../../Button";
+import { Button } from "../../../Button";
 
 export default function EstateRegistrantBox({ form, loading, props }: AddEditComponentProps) {
   const {

@@ -1,4 +1,4 @@
-import { Button } from "@/components/@panel/Button";
+import { Button } from "@/components/Button";
 import Modal from "@/components/Modals";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 // @ts-ignore

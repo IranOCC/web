@@ -1,7 +1,7 @@
 import GridList from "@/components/@panel/GridList";
 import Tab from "@/components/Tab";
-import { Button } from "@/components/@panel/Button";
-import IconButton from "@/components/@panel/Button/IconButton";
+import { Button } from "@/components/Button";
+import IconButton from "@/components/Button/IconButton";
 import Modal from "@/components/Modals";
 import { useEffect, useState } from "react";
 import MediaHandler from ".";

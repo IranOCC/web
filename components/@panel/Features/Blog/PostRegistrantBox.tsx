@@ -1,10 +1,10 @@
 import { BlogPostFormData } from "@/types/formsData";
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { Select } from "@/components/@panel/Select";
+import { Select } from "@/components/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
 import { Alert, AlertTitle } from "@mui/material";
-import { Button } from "@/components/@panel/Button";
+import { Button } from "@/components/Button";
 import moment from "jalali-moment";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 
@@ -55,7 +55,7 @@ export default function BlogPostRegistrantBox({ form, loading, props }: AddEditC
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 mb-4">
+      <div className="mb-4 grid grid-cols-1 gap-4">
         {!!detail && (
           <>
             {detail?.isConfirmed && (

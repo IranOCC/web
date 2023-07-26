@@ -1,9 +1,9 @@
-import { CheckBox, Input } from "@/components/@panel/Input";
+import { CheckBox, Input } from "@/components/Input";
 import { EstateFormData } from "@/types/formsData";
 import { ReactElement, useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/@panel/Select";
+import { Select } from "@/components/Select";
 import { AddEditComponentProps } from "../../EditAddPage";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { EstateCategory } from "@/types/interfaces";

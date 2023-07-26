@@ -7,7 +7,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { StorageFile } from "@/types/interfaces";
 import Image from "next/image";
-import IconButton from "@/components/@panel/Button/IconButton";
+import IconButton from "@/components/Button/IconButton";
 import { Add } from "@mui/icons-material";
 
 export type GridListProps = {
@@ -84,17 +84,17 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
         {!dataSource.length && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
         {!!dataSource?.length && (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 py-2">
+            <div className="grid grid-cols-2 gap-4 py-2 md:grid-cols-3 lg:grid-cols-3">
               {/*  */}
               {dataSource.map((value: StorageFile, index) => {
                 return (
-                  <div key={value._id} tabIndex={index} className="relative overflow-hidden aspect-square ring-blue-600 ring-opacity-60 ring-offset-1 ring-offset-blue-400 focus:outline-none focus:ring-1" role="banner">
+                  <div key={value._id} tabIndex={index} className="relative aspect-square overflow-hidden ring-blue-600 ring-opacity-60 ring-offset-1 ring-offset-blue-400 focus:outline-none focus:ring-1" role="banner">
                     <ItemComponent value={value} />
                   </div>
                 );
               })}
             </div>
-            <div className="flex flex-col items-center mt-2">
+            <div className="mt-2 flex flex-col items-center">
               <Pagination
                 //
                 {...{
@@ -113,8 +113,8 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
           </>
         )}
         {(loading || fetchLoading) && (
-          <div className="w-full h-full absolute top-0 left-0">
-            <div className="flex justify-center items-center h-full bg-white/20">{<Spin />}</div>
+          <div className="absolute left-0 top-0 h-full w-full">
+            <div className="flex h-full items-center justify-center bg-white/20">{<Spin />}</div>
           </div>
         )}
       </div>

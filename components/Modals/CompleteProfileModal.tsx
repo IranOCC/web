@@ -1,6 +1,6 @@
 import Modal from ".";
-import { Button } from "@/components/@panel/Button";
-import { Input } from "@/components/@panel/Input";
+import { Button } from "@/components/Button";
+import { Input } from "@/components/Input";
 import { MyProfileFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
 import { useContext, useEffect, useRef, useState } from "react";

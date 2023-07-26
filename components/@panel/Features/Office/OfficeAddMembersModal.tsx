@@ -1,8 +1,8 @@
-import { Button } from "@/components/@panel/Button";
+import { Button } from "@/components/Button";
 import { OfficeAddMemberFormData } from "@/types/formsData";
 import { useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { Select } from "@/components/@panel/Select";
+import { Select } from "@/components/Select";
 import Modal from "@/components/Modals";
 import { AddEditComponentProps } from "../../EditAddPage";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
@@ -79,7 +79,7 @@ export default function OfficeAddMembersModal({ open, setOpen, officeID }: any) 
             searchable
             noSpace
           />
-          <div className="w-full h-72" />
+          <div className="h-72 w-full" />
           <Button
             //
             title="افزودن"

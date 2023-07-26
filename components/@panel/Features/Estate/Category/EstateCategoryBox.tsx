@@ -1,12 +1,12 @@
-import { CheckBox, Input } from "@/components/@panel/Input";
+import { CheckBox, Input } from "@/components/Input";
 import { EstateCategoryFormData } from "@/types/formsData";
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
-import { Select } from "@/components/@panel/Select";
-import IconSelection from "@/components/@panel/Select/IconSelection";
+import { Select } from "@/components/Select";
+import IconSelection from "@/components/Select/IconSelection";
 import { AddEditComponentProps } from "@/components/@panel/EditAddPage";
-import { Button } from "@/components/@panel/Button";
+import { Button } from "@/components/Button";
 import slugify from "slugify";
 
 export default function EstateCategoryBox({ form, loading, cancelForm }: AddEditComponentProps) {

@@ -386,10 +386,7 @@ export type WebEstate = {
     features?: string[];
 
     area: number;
-    price: number;
-    totalPrice: number;
 
-    description?: string;
     canBarter?: boolean;
 
 
@@ -403,23 +400,13 @@ export type WebEstate = {
     withOldBuilding?: boolean;
 
 
-    province?: string;
-    city?: string;
-    district?: string;
-    quarter?: string;
-    alley?: string;
-    address?: string;
-    location?: [number, number] | string;
+    province: string;
+    city: string;
+    district: string;
 
-    owner?: User | string;
-    office?: Office | string;
 
-    updatedAt?: Date;
-    createdBy?: User | string;
-    createdAt?: Date;
+    owner: User;
 
-    isConfirmed?: boolean;
-
-    confirmedBy?: User | string;
-    confirmedAt?: Date;
+    office: Office;
+    createdBy: User;
 };

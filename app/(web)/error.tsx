@@ -4,7 +4,7 @@ import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.c
 import { useContext, useEffect, useState } from "react";
 import BlackLogo from "@/assets/images/black-logo.png";
 import Image from "next/image";
-import { Input } from "@/components/@panel/Input";
+import { Input } from "@/components/Input";
 import Link from "next/link";
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
@@ -19,7 +19,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
   }, [error]);
 
   useEffect(() => {
-    errorPage()
+    errorPage();
   }, []);
 
   let _error = { code: 500, title: "مشکلی پیش اومده", message: error.message };

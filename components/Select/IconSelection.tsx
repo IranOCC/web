@@ -61,9 +61,9 @@ const IconSelection = (props: IProps) => {
   }, []);
 
   return (
-    <div className={"w-full relative z-10 flex items-end flex-col" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-      {label && <label className={`w-full block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
-      <div className={"w-full relative"}>
+    <div className={"relative z-10 flex w-full flex-col items-end" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+      {label && <label className={`mb-1 block w-full text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
+      <div className={"relative w-full"}>
         <Controller
           render={({ field }) => {
             return (
@@ -71,7 +71,7 @@ const IconSelection = (props: IProps) => {
                 <div className={_className}>
                   {/*  */}
                   <Tooltip title={"بدون آیکون"} arrow placement="bottom">
-                    <div onClick={() => field.onChange(null)} className={"rounded text-xs text-red-500 fill-current min-w-[1.75rem] h-7 w-7 overflow-hidden flex justify-center items-center cursor-pointer" + (!field.value ? " bg-green-200 " : " hover:bg-slate-200")}>
+                    <div onClick={() => field.onChange(null)} className={"fill-current flex h-7 w-7 min-w-[1.75rem] cursor-pointer items-center justify-center overflow-hidden rounded text-xs text-red-500" + (!field.value ? " bg-green-200 " : " hover:bg-slate-200")}>
                       NO
                     </div>
                   </Tooltip>
@@ -79,8 +79,8 @@ const IconSelection = (props: IProps) => {
                     const isActive = icon._id === field.value;
                     return (
                       <Tooltip key={index} title={icon.name} arrow placement="bottom">
-                        <div onClick={() => field.onChange(icon._id)} className={"rounded fill-current min-w-[1.75rem] h-7 w-7 overflow-hidden flex justify-center items-center cursor-pointer" + (isActive ? " bg-green-200 " : " hover:bg-slate-200")}>
-                          <div className="w-6 h-6" dangerouslySetInnerHTML={{ __html: icon.content }} />
+                        <div onClick={() => field.onChange(icon._id)} className={"fill-current flex h-7 w-7 min-w-[1.75rem] cursor-pointer items-center justify-center overflow-hidden rounded" + (isActive ? " bg-green-200 " : " hover:bg-slate-200")}>
+                          <div className="h-6 w-6" dangerouslySetInnerHTML={{ __html: icon.content }} />
                         </div>
                       </Tooltip>
                     );
@@ -95,7 +95,7 @@ const IconSelection = (props: IProps) => {
         />
       </div>
 
-      {helperText && <p className={"w-full mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
+      {helperText && <p className={"mt-1 block w-full text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
     </div>
   );
 };
