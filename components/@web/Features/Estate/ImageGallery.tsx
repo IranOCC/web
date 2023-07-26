@@ -125,7 +125,7 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
           )}
         </div>
         <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
-          <div className="order-last  h-full lg:order-first">
+          <div className="order-last h-full overflow-y-hidden lg:order-first">
             <div className="relative grid h-28 min-w-[26rem] grid-cols-4 flex-row items-center justify-center rounded-2xl bg-gray-200 px-1 text-gray-700">
               {/*  */}
               <div className="flex flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2">
@@ -157,7 +157,7 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
           <div ref={thumbnailRef} className="keen-slider">
             {items.map(({ path, title, alt }, idx) => {
               return (
-                <div key={idx} className="keen-slider__slide group relative flex aspect-square h-28 w-28 min-w-[7rem] max-w-[7rem] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl">
+                <div key={idx} className="keen-slider__slide group relative flex aspect-square h-20 w-20 min-w-[5rem] max-w-[5rem] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl md:h-28 md:w-28 md:min-w-[7rem] md:max-w-[7rem]">
                   <Image
                     //
                     src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
