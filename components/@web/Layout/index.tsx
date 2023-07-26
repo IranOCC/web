@@ -109,9 +109,6 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                   </div>
                 </div>
               )}
-              {/* <SingleEstateHeader />
-              <SinglePageHeader />
-              <SingleBlogHeader /> */}
               <div className="h-full overflow-hidden p-0 pb-20 pt-4 md:pb-4">
                 <Scrollbars
                   //

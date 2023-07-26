@@ -1,5 +1,5 @@
 import GridList from "@/components/@panel/GridList";
-import PanelTab from "@/components/@panel/Tab";
+import Tab from "@/components/Tab";
 import { Button } from "@/components/@panel/Button";
 import IconButton from "@/components/@panel/Button/IconButton";
 import Modal from "@/components/Modals";
@@ -26,12 +26,12 @@ export default function MediaLibrary({ open, setOpen, uploadPath, setSelectFiles
         {!!selected.length && (
           <>
             <div className="">
-              <div className="sticky overflow-y-hidden mb-2">
-                <div className="w-full h-20 flex items-center gap-2">
+              <div className="sticky mb-2 overflow-y-hidden">
+                <div className="flex h-20 w-full items-center gap-2">
                   {/*  */}
                   {selected.map((file, index) => {
                     return (
-                      <div key={index} className="relative overflow-hidden aspect-square h-full min-w-max" tabIndex={index}>
+                      <div key={index} className="relative aspect-square h-full min-w-max overflow-hidden" tabIndex={index}>
                         <Image
                           //
                           fill
@@ -45,7 +45,7 @@ export default function MediaLibrary({ open, setOpen, uploadPath, setSelectFiles
                             selected.splice(index, 1);
                             setSelected([...selected]);
                           }}
-                          className="absolute text-red-500 top-1 right-1 cursor-pointer hover:text-white"
+                          className="absolute right-1 top-1 cursor-pointer text-red-500 hover:text-white"
                         />
                       </div>
                     );
@@ -66,7 +66,7 @@ export default function MediaLibrary({ open, setOpen, uploadPath, setSelectFiles
           </>
         )}
 
-        <PanelTab
+        <Tab
           //
           data={[
             {
