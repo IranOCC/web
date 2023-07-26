@@ -79,8 +79,9 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
   );
 
   const adaptSize = () => {
-    const slider = instanceRef.current;
-    const thumb = thumbInstanceRef.current;
+    const slider = instanceRef.current!;
+    const thumb = thumbInstanceRef.current!;
+    // @ts-ignore
     slider.container.style.width = slider.slides[slider.track.details.rel]?.parentNode?.parentNode?.offsetWidth + "px";
     slider.container.style.height = slider.slides[slider.track.details.rel].offsetHeight + "px";
     slider.update();
