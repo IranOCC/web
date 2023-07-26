@@ -15,8 +15,7 @@ const Tab = ({ data, clx }: IProps) => {
                   clx?.button,
                   "w-full border border-gray-200 py-2.5 text-sm font-medium leading-5",
                   "focus:outline-none focus:ring-0",
-                  "text-slate-800 bg-white",
-                  selected ? ["!bg-secondary !text-white", clx?.activeButton].join(" ") : "",
+                  selected ? ["bg-secondary text-white", clx?.activeButton].join(" ") : ["text-slate-800 bg-white", clx?.notActiveButton].join(" "),
                   //
                 ].join(" ")
               }
@@ -50,5 +49,5 @@ type IProps = {
     content: ReactNode;
     disabled?: boolean;
   }[];
-  clx?: { container?: string; buttonList?: string; activeButton?: string; button?: string; panelList?: string; panel?: string };
+  clx?: { container?: string; buttonList?: string; activeButton?: string; notActiveButton?: string; button?: string; panelList?: string; panel?: string };
 };

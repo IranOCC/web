@@ -37,7 +37,12 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
             content: <p>سلام</p>,
           },
         ]}
-        clx={{ buttonList: "justify-center", button: "!w-auto px-4 !bg-white !text-black border-none", activeButton: "!font-extrabold !text-black underline underline-offset-8 decoration-secondary decoration-2" }}
+        clx={{
+          //
+          buttonList: "justify-center",
+          button: "!w-auto px-4 !bg-white !text-black border-none",
+          activeButton: "!font-extrabold !text-black underline underline-offset-8 decoration-secondary decoration-2",
+        }}
       />
       <div className="flex items-center justify-center rounded-xl bg-gray-200 p-4">
         <div className="flex w-full max-w-2xl flex-col items-center justify-between gap-2 gap-y-4 lg:flex-row">
