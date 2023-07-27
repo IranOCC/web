@@ -36,7 +36,7 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
   );
 
   return (
-    <div className="bg-gray-200 pb-20 md:bg-transparent md:px-4 md:pb-4 md:pt-4">
+    <div className="bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4 md:pt-4">
       {!!gallery?.length && <ImageGallery items={gallery} />}
       <Tab
         data={[
@@ -65,9 +65,9 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
         }}
       />
       <div className="flex items-center justify-center rounded-xl bg-gray-200 p-4">
-        <div className="flex w-full max-w-2xl flex-col items-center justify-between gap-2 gap-y-4 lg:flex-row">
+        <div className="flex w-full max-w-2xl flex-row items-center justify-between gap-2 gap-y-4">
           {/* icons */}
-          <div className="order-last grid h-full grid-cols-4 gap-2 lg:order-first lg:grid-cols-2">
+          <div className="order-first grid h-full grid-cols-1 gap-2 min-[400px]:grid-cols-2">
             {office.verified && (
               <Tooltip title="تایید شده" placement="top" arrow={false}>
                 <div role="verified" className="flex cursor-pointer items-center justify-center text-secondary">
@@ -100,21 +100,22 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
             </Tooltip>
           </div>
           {/* view */}
-          <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:w-56 lg:grid-cols-1">
-            <div className=" bg-secondary p-2 text-center">رزرو بازدید حضوری</div>
-            <div className=" bg-gray-400 p-2 text-center">رزرو بازدید آنلاین</div>
+          <div className="hidden w-56 grid-cols-1 gap-2 lg:grid">
+            <div className="bg-secondary p-2 text-center">رزرو بازدید حضوری</div>
+            <div className="bg-gray-400 p-2 text-center">رزرو بازدید آنلاین</div>
           </div>
-          <div className="flex w-full flex-row gap-2 lg:w-auto">
-            <div className="flex w-full flex-col items-center ">
+          <div className="flex w-auto flex-row gap-2">
+            <div className="flex w-full flex-col items-center justify-center ">
               <span>
                 ثبت شده توسط <b>{office.name}</b>
               </span>
               <b>{createdBy.fullName}</b>
-              <hr className="my-2 w-full border-gray-500" />
-              <span>شماره تماس</span>
-              <a className="font-bold" dir="ltr" href={`tel:${(createdBy.phone as Phone)?.value}`}>
+              <hr className="my-2 hidden w-full border-gray-500 lg:block" />
+              <span className="hidden lg:block">شماره تماس</span>
+              <a className="hidden font-bold lg:block" dir="ltr" href={`tel:${(createdBy.phone as Phone)?.value}`}>
                 {(createdBy.phone as Phone)?.value || "-"}
               </a>
+              <div className="mt-2 bg-secondary p-2 text-center lg:hidden">رزرو بازدید و تماس</div>
             </div>
             {createdBy.avatar && (
               <div className="flex items-center justify-center">
