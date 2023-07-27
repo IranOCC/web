@@ -110,7 +110,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                 </div>
               )}
               {/*   */}
-              <div className="h-full overflow-hidden p-0 pb-20 md:pb-4 md:pt-4">
+              <div className="h-full overflow-hidden">
                 <Scrollbars
                   //
                   universal

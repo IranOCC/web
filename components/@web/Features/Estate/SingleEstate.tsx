@@ -36,7 +36,7 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
   );
 
   return (
-    <div className="bg-gray-200 md:bg-transparent md:px-4">
+    <div className="bg-gray-200 pb-20 md:bg-transparent md:px-4 md:pb-4 md:pt-4">
       {!!gallery?.length && <ImageGallery items={gallery} />}
       <Tab
         data={[
