@@ -33,7 +33,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
       className="h-full bg-gray-300/50 bg-cover bg-no-repeat md:bg-[image:var(--image-url)]"
     >
       <div className="flex h-full w-full flex-col justify-center p-0 md:flex-row md:p-5">
-        <div className={"relative flex h-full w-full flex-row overflow-hidden bg-white transition-all duration-1000 md:max-w-screen-2xl md:rounded-2xl" + (isFullscreen ? " md:!max-w-full" : "")}>
+        <div className={"relative flex h-full w-full flex-row overflow-hidden bg-gray-200 transition-all duration-1000 md:max-w-screen-2xl md:rounded-2xl md:bg-white" + (isFullscreen ? " md:!max-w-full" : "")}>
           <div className={"z-[101] flex h-full w-full flex-row shadow-[-6px_0px_20px_2px_#00000040] transition-all duration-1000 md:rounded-e-2xl" + (background ? " " + background : "")}>
             <WebSideBar />
             <div className="flex flex-1 flex-col">

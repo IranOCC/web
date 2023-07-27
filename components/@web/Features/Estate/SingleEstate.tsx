@@ -36,7 +36,7 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
   );
 
   return (
-    <div className="md:px-4">
+    <div className="bg-gray-200 md:bg-transparent md:px-4">
       {!!gallery?.length && <ImageGallery items={gallery} />}
       <Tab
         data={[
@@ -55,6 +55,7 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
         ]}
         clx={{
           //
+          container: "pt-2",
           buttonList: "justify-center",
           button: "!w-auto px-4 !bg-white !text-black border-none",
           activeButton: "!font-extrabold !text-black underline underline-offset-8 decoration-secondary decoration-2",

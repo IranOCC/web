@@ -124,35 +124,38 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
             </>
           )}
         </div>
-        <div className="flex w-full flex-col gap-4 px-3 py-3 md:px-0 md:py-4 lg:flex-row">
-          <div className="relative order-last hidden h-full justify-center overflow-hidden rounded-2xl bg-gray-200 md:flex lg:order-first lg:min-w-[21.25rem] xl:min-w-[28.25rem]">
-            <div className="relative h-28 overflow-y-hidden px-1 text-gray-700">
-              <div className="flex h-full flex-row items-center">
-                {/*  */}
-                <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
-                  <span>متراژ بنا</span>
-                  <Fullscreen />
-                  <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
+        <div className="flex w-full flex-col gap-3 px-3 pb-0 pt-3 md:gap-4 md:px-0 md:pb-4 md:pt-4 lg:flex-row">
+          <div className="relative order-last -mx-3 flex h-full justify-center overflow-hidden rounded-2xl bg-white md:mx-0 md:bg-transparent lg:order-first lg:min-w-[21.25rem] xl:min-w-[28.25rem]">
+            <div className="flex w-full flex-col items-start justify-start gap-2 p-3 md:p-0">
+              <h1 className="block text-base font-bold md:hidden">متل قو</h1>
+              <div className="relative flex h-28 w-full justify-center rounded-2xl bg-gray-200 text-gray-700">
+                <div className="flex h-full flex-row items-center overflow-y-hidden rounded-2xl bg-gray-200">
+                  {/*  */}
+                  <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
+                    <span>متراژ بنا</span>
+                    <Fullscreen />
+                    <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
+                  </div>
+                  {/*  */}
+                  <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
+                    <span>متراژ بنا</span>
+                    <Fullscreen />
+                    <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
+                  </div>
+                  {/*  */}
+                  <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
+                    <span>متراژ بنا</span>
+                    <Fullscreen />
+                    <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
+                  </div>
+                  {/*  */}
+                  <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 md:min-w-[7rem]">
+                    <span>متراژ بنا</span>
+                    <Fullscreen />
+                    <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
+                  </div>
+                  {/* */}
                 </div>
-                {/*  */}
-                <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
-                  <span>متراژ بنا</span>
-                  <Fullscreen />
-                  <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
-                </div>
-                {/*  */}
-                <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
-                  <span>متراژ بنا</span>
-                  <Fullscreen />
-                  <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
-                </div>
-                {/*  */}
-                <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 md:min-w-[7rem]">
-                  <span>متراژ بنا</span>
-                  <Fullscreen />
-                  <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
-                </div>
-                {/* */}
               </div>
             </div>
           </div>
