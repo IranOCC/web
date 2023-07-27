@@ -99,11 +99,11 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
   return (
     <>
       <div className="relative flex flex-col items-center justify-center overflow-hidden">
-        <div className="relative flex h-full w-full items-center overflow-hidden rounded-xl">
+        <div className="relative flex h-full w-full items-center overflow-hidden rounded-b-2xl md:rounded-xl">
           <div ref={sliderRef} className="keen-slider">
             {items.map(({ path, title, alt }, idx) => {
               return (
-                <div key={idx} className="keen-slider__slide relative flex !h-fit !min-h-fit flex-col items-center justify-center self-end overflow-hidden rounded-xl">
+                <div key={idx} className="keen-slider__slide relative flex !h-fit !min-h-fit flex-col items-center justify-center self-end overflow-hidden">
                   <Image
                     //
                     src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
@@ -111,7 +111,7 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
                     title={title}
                     width={800}
                     height={400}
-                    className="block rounded-xl object-contain"
+                    className="block rounded-b-2xl object-contain md:rounded-xl"
                   />
                 </div>
               );
@@ -125,32 +125,32 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
           )}
         </div>
         <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
-          <div className="relative order-last flex h-full justify-center overflow-hidden rounded-2xl bg-gray-200 lg:order-first">
+          <div className="relative order-last flex h-full justify-center overflow-hidden rounded-2xl bg-gray-200 lg:order-first lg:min-w-[21.25rem] xl:min-w-[28.25rem]">
             <div className="relative h-28 overflow-y-hidden px-1 text-gray-700">
               <div className="flex h-full flex-row items-center">
                 {/*  */}
-                <div className="flex min-w-[7rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2">
+                <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
                   <span>متراژ بنا</span>
                   <Fullscreen />
-                  <b className="text-center text-base font-extrabold leading-none text-black">250 مترمربع</b>
+                  <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
                 </div>
                 {/*  */}
-                <div className="flex min-w-[7rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2">
+                <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
                   <span>متراژ بنا</span>
                   <Fullscreen />
-                  <b className="text-center text-base font-extrabold leading-none text-black">250 مترمربع</b>
+                  <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
                 </div>
                 {/*  */}
-                <div className="flex min-w-[7rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2">
+                <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
                   <span>متراژ بنا</span>
                   <Fullscreen />
-                  <b className="text-center text-base font-extrabold leading-none text-black">250 مترمربع</b>
-                </div>{" "}
+                  <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
+                </div>
                 {/*  */}
-                <div className="flex min-w-[7rem] flex-col items-center justify-center gap-1.5">
+                <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 md:min-w-[7rem]">
                   <span>متراژ بنا</span>
                   <Fullscreen />
-                  <b className="text-center text-base font-extrabold leading-none text-black">250 مترمربع</b>
+                  <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
                 </div>
                 {/* */}
               </div>
@@ -183,7 +183,7 @@ export default ImageGallery;
 
 function Arrow(props: { disabled: boolean; left?: boolean; onClick: (e: any) => void }) {
   return (
-    <div onClick={props.onClick} className={`${props.left ? "left-0" : "left-auto right-0"} ${props.disabled ? "cursor-not-allowed" : "cursor-pointer"} absolute flex h-full items-center justify-center px-1 md:px-2`}>
+    <div onClick={props.onClick} className={`${props.left ? "left-0" : "left-auto right-0"} ${props.disabled ? "cursor-not-allowed" : "cursor-pointer"} absolute hidden h-full items-center justify-center px-1 md:flex md:px-2`}>
       <div className={`rounded-md bg-gray-100 p-1 md:rounded-xl md:p-2 ${props.disabled ? "opacity-50" : ""}`}>
         <svg className="h-4 w-4 fill-gray-400/80 md:h-6 md:w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           {props.left && <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />}

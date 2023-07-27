@@ -15,26 +15,42 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
   useEffect(() => {
     singleEstate(_id, title, category, code || "-", [province, city, district].join(" - "));
   }, []);
-  useEffect(() => {
-    //
-  }, []);
+
+  const tabEq = (
+    <div className="">
+      {/*  */}
+      eq
+    </div>
+  );
+  const tabDe = (
+    <div className="">
+      {/*  */}
+      de
+    </div>
+  );
+  const tabNe = (
+    <div className="">
+      {/*  */}
+      ne
+    </div>
+  );
 
   return (
-    <>
+    <div className="md:px-4">
       {!!gallery?.length && <ImageGallery items={gallery} />}
       <Tab
         data={[
           {
             title: "امکانات",
-            content: <p>سلام</p>,
+            content: tabEq,
           },
           {
             title: "توضیحات",
-            content: <p>سلام</p>,
+            content: tabDe,
           },
           {
             title: "اماکن نزدیک",
-            content: <p>سلام</p>,
+            content: tabNe,
           },
         ]}
         clx={{
@@ -111,7 +127,7 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

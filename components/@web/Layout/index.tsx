@@ -40,7 +40,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
               <WebHeader />
 
               {headerTitle && (
-                <div className="flex flex-col gap-2 px-3">
+                <div className="hidden flex-col gap-2 px-3 md:flex">
                   <h1 className="text-lg font-bold">{headerTitle}</h1>
                   <div className="flex flex-col justify-between gap-y-1 empty:hidden lg:flex-row">
                     {headerSubTitle?.type === "estate" && <h4 className="text-sm font-bold">کد: {headerSubTitle.code || "-"}</h4>}
@@ -109,13 +109,14 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                   </div>
                 </div>
               )}
-              <div className="h-full overflow-hidden p-0 pb-20 pt-4 md:pb-4">
+              {/*   */}
+              <div className="h-full overflow-hidden p-0 pb-20 md:pb-4 md:pt-4">
                 <Scrollbars
                   //
                   universal
                   autoHide={false}
                   hideTracksWhenNotNeeded
-                  renderView={(props) => <div {...props} style={{ ...props.style, padding: "0 15px", marginLeft: props.style.marginRight, marginRight: 0 }} />}
+                  renderView={(props) => <div {...props} style={{ ...props.style, padding: 0, marginLeft: props.style.marginRight, marginRight: 0 }} />}
                   //
                   renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, right: 2, bottom: 2, top: 2, borderRadius: 0, background: "#D6D6D6", width: 2 }} />}
                   renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", width: 6, borderRadius: "20px" }} />}
