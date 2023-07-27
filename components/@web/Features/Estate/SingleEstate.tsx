@@ -125,7 +125,7 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
                   alt={(createdBy.avatar as StorageFile)?.alt}
                   width={80}
                   height={80}
-                  className="aspect-square h-20 min-h-[5rem] w-20 min-w-[5rem] rounded-full me-3"
+                  className="aspect-square h-20 min-h-[5rem] w-20 min-w-[5rem] rounded-full"
                 />
               </div>
             )}
