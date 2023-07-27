@@ -380,10 +380,10 @@ export type WebEstate = {
 
 
     code?: string;
-    category: string;
-    type?: string;
-    documentType?: string;
-    features?: string[];
+    category: EstateCategory;
+    type: EstateType;
+    documentType: EstateDocumentType;
+    features: EstateFeature[] | null;
 
     area: number;
 

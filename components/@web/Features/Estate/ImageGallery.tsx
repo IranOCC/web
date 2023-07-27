@@ -1,10 +1,11 @@
 import { useKeenSlider, KeenSliderPlugin, KeenSliderInstance } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import { MutableRefObject, useContext, useEffect, useState } from "react";
+import { MutableRefObject, ReactNode, useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { StorageFile } from "@/types/interfaces";
 import { Fullscreen, HomeMaxOutlined } from "@mui/icons-material";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
+import MarkerIcon from "@/components/Icons/MarkerIcon";
 
 function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): KeenSliderPlugin {
   return (slider) => {
@@ -47,7 +48,7 @@ const AdaptiveHeight: KeenSliderPlugin = (slider) => {
   slider.on("slideChanged", updateHeight);
 };
 
-const ImageGallery = ({ items }: { items: StorageFile[] }) => {
+const ImageGallery = ({ items, title, id, code, features, address }: { items: StorageFile[]; title: string; address: string; code?: string; id: string; features: { title: string; value: string; icon?: ReactNode }[] }) => {
   const { isFullscreen, isFullContent } = useContext(WebPreviewContext) as WebPreviewContextType;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -117,6 +118,7 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
               );
             })}
           </div>
+          {!!code && <div className="absolute bottom-3 left-3 block rounded-full bg-gray-300 px-2 py-1 font-bold text-gray-700 md:hidden">{code}</div>}
           {loaded && instanceRef.current && (
             <>
               <Arrow onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()} disabled={currentSlide === 0} />
@@ -125,38 +127,29 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
           )}
         </div>
         <div className="flex w-full flex-col gap-3 px-3 pb-0 pt-3 md:gap-4 md:px-0 md:pb-4 md:pt-4 lg:flex-row">
-          <div className="relative order-last -mx-3 flex h-full justify-center overflow-hidden rounded-2xl bg-white md:mx-0 md:bg-transparent lg:order-first lg:min-w-[21.25rem] xl:min-w-[28.25rem]">
+          <div className="relative order-last -mx-3 flex h-full justify-center overflow-hidden rounded-2xl bg-white md:mx-0 md:bg-transparent lg:order-first lg:min-w-[21.0rem]">
             <div className="flex w-full flex-col items-start justify-start gap-2 p-3 md:p-0">
-              <h1 className="block text-base font-bold md:hidden">متل قو</h1>
-              <div className="relative flex h-28 w-full justify-center rounded-2xl bg-gray-200 text-gray-700">
-                <div className="flex h-full flex-row items-center overflow-y-hidden rounded-2xl bg-gray-200">
-                  {/*  */}
-                  <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
-                    <span>متراژ بنا</span>
-                    <Fullscreen />
-                    <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
+              <h1 className="block text-base font-bold md:hidden">{title}</h1>
+              <h6 className="flex items-center gap-1 text-sm font-medium text-gray-600 md:hidden">
+                <MarkerIcon />
+                <span className="order-last lg:order-first">{address || "-"}</span>
+              </h6>
+
+              {!!features?.length && (
+                <div className="relative flex h-28 w-full justify-center rounded-2xl bg-gray-200 text-gray-700">
+                  <div className="flex h-full flex-row items-center overflow-y-hidden rounded-2xl bg-gray-200">
+                    {features.map(({ title, value, icon }, idx) => {
+                      return (
+                        <div key={idx} className={"flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 md:min-w-[7rem]" + (idx + 1 === features.length ? " border-none" : "  border-e-2")}>
+                          <span className="text-sm">{title}</span>
+                          {icon}
+                          <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">{value}</b>
+                        </div>
+                      );
+                    })}
                   </div>
-                  {/*  */}
-                  <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
-                    <span>متراژ بنا</span>
-                    <Fullscreen />
-                    <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
-                  </div>
-                  {/*  */}
-                  <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 border-e-2 md:min-w-[7rem]">
-                    <span>متراژ بنا</span>
-                    <Fullscreen />
-                    <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
-                  </div>
-                  {/*  */}
-                  <div className="flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 md:min-w-[7rem]">
-                    <span>متراژ بنا</span>
-                    <Fullscreen />
-                    <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">250 مترمربع</b>
-                  </div>
-                  {/* */}
                 </div>
-              </div>
+              )}
             </div>
           </div>
           <div ref={thumbnailRef} className="keen-slider">

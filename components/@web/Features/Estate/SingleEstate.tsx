@@ -1,9 +1,9 @@
 "use client";
 
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
-import { Phone, StorageFile, WebEstate } from "@/types/interfaces";
+import { Icon, Phone, StorageFile, WebEstate } from "@/types/interfaces";
 import Image from "next/image";
-import { useContext, useEffect } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import ImageGallery from "./ImageGallery";
 import Tab from "@/components/Tab";
 import { Verified, Favorite, ReportGmailerrorredOutlined, ShareOutlined, VerifiedTwoTone } from "@mui/icons-material";
@@ -11,38 +11,129 @@ import { Tooltip } from "antd";
 import MapEstate from "./MapEstate";
 
 const SingleEstate = ({ data }: { data: WebEstate }) => {
-  const { _id, title, slug, content, excerpt, tags, category, image, gallery, pinned, office, createdBy, publishedAt, owner, code, province, city, district } = data;
+  const {
+    //
+    _id,
+    title,
+    slug,
+    content,
+    excerpt,
+    tags,
+    category,
+    type,
+    documentType,
+    features,
+    image,
+    gallery,
+    pinned,
+    office,
+    createdBy,
+    publishedAt,
+    owner,
+    code,
+    province,
+    city,
+    district,
+
+    area,
+    buildingArea,
+    constructionYear,
+    roomsCount,
+    mastersCount,
+    canBarter,
+    floorsCount,
+    unitsCount,
+    floor,
+    withOldBuilding,
+  } = data;
   const { singleEstate } = useContext(WebPreviewContext) as WebPreviewContextType;
+
+  const _address = [province, city, district].join(" - ");
   useEffect(() => {
-    singleEstate(_id, title, category, code || "-", [province, city, district].join(" - "));
+    singleEstate(_id, title, category.title, code || "-", _address);
   }, []);
 
   const tabEq = (
-    <div className="flex flex-col">
-      <h6 className="font-bold">
-        نوع: {/*  */}
-        <span className="font-normal">فلت</span>
+    <div className="flex flex-col gap-2">
+      <h6 className="flex items-center gap-1 font-bold">
+        {!!category?.icon && <i className="h-5 w-5 fill-gray-800" dangerouslySetInnerHTML={{ __html: (category.icon as Icon).content }} />}
+        <span>{category.title}</span>
       </h6>
-      <h6 className="font-bold">
-        سند: {/*  */}
-        <span className="font-normal">مشاع</span>
+      <h6 className="flex items-center gap-1 font-bold">
+        {!!type?.icon && <i className="h-5 w-5 fill-gray-800" dangerouslySetInnerHTML={{ __html: (type.icon as Icon).content }} />}
+        <span>{type.title}</span>
       </h6>
-      <h6 className="font-bold">
-        امکانات: {/*  */}
-        <br />
-        <ul className="flex flex-row gap-3 font-normal">
-          <li>آسانسور</li>
-          <li>آسانسور</li>
-        </ul>
+      <h6 className="flex items-center gap-1 font-bold">
+        {!!documentType?.icon && <i className="h-5 w-5 fill-gray-800" dangerouslySetInnerHTML={{ __html: (documentType.icon as Icon).content }} />}
+        <span>{documentType.title}</span>
       </h6>
+      {!!features?.length && (
+        <h6 className="mt-2 font-bold">
+          امکانات: {/*  */}
+          <br />
+          <ul className="flex flex-row gap-4 font-normal">
+            {features.map(({ title, icon, slug }) => {
+              return (
+                <li key={slug} className="flex items-center gap-1">
+                  {!!icon && <i className="h-5 w-5 fill-green-500" dangerouslySetInnerHTML={{ __html: (icon as Icon).content }} />}
+                  {title}
+                </li>
+              );
+            })}
+          </ul>
+        </h6>
+      )}
     </div>
   );
   const tabDe = <div className="" dangerouslySetInnerHTML={{ __html: content || "توضیحاتی درج نشده است" }} />;
   const tabNe = <MapEstate id={_id} />;
 
+  const featuresItems: { title: string; value: string; icon: ReactNode }[] = [];
+  switch (category.slug) {
+    case "villa":
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
+      featuresItems.push({ title: "متراژ بنا", value: `${buildingArea} مترمربع`, icon: "" });
+      featuresItems.push({ title: "سال ساخت", value: `${constructionYear}`, icon: "" });
+      featuresItems.push({ title: "تعداد اتاق", value: `${roomsCount}`, icon: "" });
+      featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: "" });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      break;
+    case "apartment":
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
+      featuresItems.push({ title: "تعداد طبقات", value: `${floorsCount}`, icon: "" });
+      featuresItems.push({ title: "تعداد واحدها", value: `${unitsCount}`, icon: "" });
+      featuresItems.push({ title: "طبقه", value: `${floor}`, icon: "" });
+      featuresItems.push({ title: "تعداد خواب", value: `${roomsCount}`, icon: "" });
+      featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: "" });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      break;
+    case "commercial":
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
+      featuresItems.push({ title: "متراژ بر تجاری", value: `${buildingArea} مترمربع`, icon: "" });
+      featuresItems.push({ title: "طبقه", value: `${floor}`, icon: "" });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      break;
+    case "land":
+    case "hectare":
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
+      featuresItems.push({ title: "ساختمان قدیمی", value: `${withOldBuilding ? "دارد" : "ندارد"}`, icon: "" });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      break;
+  }
+
   return (
-    <div className="bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4 md:pt-4">
-      {!!gallery?.length && <ImageGallery items={gallery} />}
+    <div className="h-auto bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4 md:pt-4">
+      {!!gallery?.length && (
+        <ImageGallery
+          //
+          items={gallery}
+          title={title}
+          address={_address}
+          id={_id}
+          features={featuresItems}
+          code={code}
+        />
+      )}
       <Tab
         data={[
           {
@@ -67,7 +158,7 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
           activeButton: "!font-extrabold rounded-t-xl !bg-white !text-black md:underline underline-offset-8 decoration-secondary decoration-2",
           notActiveButton: "!bg-transparent",
           panelList: "bg-white md:bg-transparent !mt-0 md:!mt-2 p-3 overflow-hidden",
-          panel: "text-sm min-h-[20rem] overflow-hidden w-full h-full",
+          panel: "text-sm min-h-[20rem] overflow-x-hidden w-full h-full",
         }}
       />
       <div className="flex items-center justify-center rounded-xl bg-gray-200 p-4">
