@@ -66,8 +66,8 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
           button: "!w-full md:!w-auto px-4 !text-black !font-extrabold border-none",
           activeButton: "!font-extrabold rounded-t-xl !bg-white !text-black md:underline underline-offset-8 decoration-secondary decoration-2",
           notActiveButton: "!bg-transparent",
-          panelList: "bg-white md:bg-transparent !mt-0 md:!mt-2 overflow-hidden",
-          panel: "p-2 md:px-0 text-sm overflow-hidden w-full h-full",
+          panelList: "bg-white md:bg-transparent !mt-0 md:!mt-2 p-3 overflow-hidden",
+          panel: "text-sm min-h-[20rem] overflow-hidden w-full h-full",
         }}
       />
       <div className="flex items-center justify-center rounded-xl bg-gray-200 p-4">

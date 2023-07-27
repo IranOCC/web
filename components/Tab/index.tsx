@@ -30,9 +30,11 @@ const Tab = ({ data, clx }: IProps) => {
             <TabComponent.Panel
               //
               key={idx}
-              className={[clx?.panel, cls?.panel, "ring-offset-0 focus:outline-none focus:ring-0"].join(" ")}
+              className={[clx?.panel, cls?.panel, "relative ring-offset-0 focus:outline-none focus:ring-0"].join(" ")}
             >
-              {content}
+              <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full">
+                <div className="relative h-full w-full">{content}</div>
+              </div>
             </TabComponent.Panel>
           ))}
         </TabComponent.Panels>
