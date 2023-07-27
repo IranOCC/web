@@ -126,7 +126,11 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
       { title: "متل قو", url: "/" },
     ]);
     setFullContent(false);
-    setSidebar(undefined);
+    setSidebar({
+      small: false,
+      props: { id },
+      component: "Features/Estate/MapEstate",
+    });
     setHeaderSubTitle({
       type: "estate",
       code,

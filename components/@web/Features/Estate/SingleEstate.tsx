@@ -8,6 +8,7 @@ import ImageGallery from "./ImageGallery";
 import Tab from "@/components/Tab";
 import { Verified, Favorite, ReportGmailerrorredOutlined, ShareOutlined, VerifiedTwoTone } from "@mui/icons-material";
 import { Tooltip } from "antd";
+import MapEstate from "./MapEstate";
 
 const SingleEstate = ({ data }: { data: WebEstate }) => {
   const { _id, title, slug, content, excerpt, tags, category, image, gallery, pinned, office, createdBy, publishedAt, owner, code, province, city, district } = data;
@@ -17,23 +18,27 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
   }, []);
 
   const tabEq = (
-    <div className="">
-      {/*  */}
-      eq
+    <div className="flex flex-col">
+      <h6 className="font-bold">
+        نوع: {/*  */}
+        <span className="font-normal">فلت</span>
+      </h6>
+      <h6 className="font-bold">
+        سند: {/*  */}
+        <span className="font-normal">مشاع</span>
+      </h6>
+      <h6 className="font-bold">
+        امکانات: {/*  */}
+        <br />
+        <ul className="flex flex-row gap-3 font-normal">
+          <li>آسانسور</li>
+          <li>آسانسور</li>
+        </ul>
+      </h6>
     </div>
   );
-  const tabDe = (
-    <div className="">
-      {/*  */}
-      de
-    </div>
-  );
-  const tabNe = (
-    <div className="">
-      {/*  */}
-      ne
-    </div>
-  );
+  const tabDe = <div className="" dangerouslySetInnerHTML={{ __html: content || "توضیحاتی درج نشده است" }} />;
+  const tabNe = <MapEstate id={_id} />;
 
   return (
     <div className="bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4 md:pt-4">
@@ -41,7 +46,7 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
       <Tab
         data={[
           {
-            title: "امکانات",
+            title: "ویژگی ها",
             content: tabEq,
           },
           {
@@ -51,17 +56,18 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
           {
             title: "اماکن نزدیک",
             content: tabNe,
+            clx: { button: "block xl:hidden", panel: "block xl:hidden" },
           },
         ]}
         clx={{
           //
-          container: "pt-3 !px-0",
+          container: "py-3 !px-0",
           buttonList: "justify-between md:justify-center",
           button: "!w-full md:!w-auto px-4 !text-black !font-extrabold border-none",
           activeButton: "!font-extrabold rounded-t-xl !bg-white !text-black md:underline underline-offset-8 decoration-secondary decoration-2",
           notActiveButton: "!bg-transparent",
-          panelList: "bg-white md:bg-transparent py-2 !mt-0 md:!mt-2",
-          panel: "px-2 md:px-0",
+          panelList: "bg-white md:bg-transparent !mt-0 md:!mt-2 overflow-hidden",
+          panel: "px-2 md:px-0 text-sm",
         }}
       />
       <div className="flex items-center justify-center rounded-xl bg-gray-200 p-4">
