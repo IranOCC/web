@@ -55,10 +55,13 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
         ]}
         clx={{
           //
-          container: "pt-2",
-          buttonList: "justify-center",
-          button: "!w-auto px-4 !bg-white !text-black border-none",
-          activeButton: "!font-extrabold !text-black underline underline-offset-8 decoration-secondary decoration-2",
+          container: "pt-3 !px-0",
+          buttonList: "justify-between md:justify-center",
+          button: "!w-full md:!w-auto px-4 !text-black !font-extrabold border-none",
+          activeButton: "!font-extrabold rounded-t-xl !bg-white !text-black md:underline underline-offset-8 decoration-secondary decoration-2",
+          notActiveButton: "!bg-transparent",
+          panelList: "bg-white md:bg-transparent py-2 !mt-0 md:!mt-2",
+          panel: "px-2 md:px-0",
         }}
       />
       <div className="flex items-center justify-center rounded-xl bg-gray-200 p-4">
