@@ -98,7 +98,7 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
 
   return (
     <>
-      <div className="relative flex flex-col items-center justify-center overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center overflow-hidden bg-gray-200 md:bg-transparent">
         <div className="relative flex h-full w-full items-center overflow-hidden rounded-b-2xl md:rounded-xl">
           <div ref={sliderRef} className="keen-slider">
             {items.map(({ path, title, alt }, idx) => {
@@ -124,8 +124,8 @@ const ImageGallery = ({ items }: { items: StorageFile[] }) => {
             </>
           )}
         </div>
-        <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
-          <div className="relative order-last flex h-full justify-center overflow-hidden rounded-2xl bg-gray-200 lg:order-first lg:min-w-[21.25rem] xl:min-w-[28.25rem]">
+        <div className="flex w-full flex-col gap-4 px-3 py-3 md:px-0 md:py-4 lg:flex-row">
+          <div className="relative order-last hidden h-full justify-center overflow-hidden rounded-2xl bg-gray-200 md:flex lg:order-first lg:min-w-[21.25rem] xl:min-w-[28.25rem]">
             <div className="relative h-28 overflow-y-hidden px-1 text-gray-700">
               <div className="flex h-full flex-row items-center">
                 {/*  */}
