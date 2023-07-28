@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const data = await fetchSinglePage(params.slug);
-  const { title, tags } = data;
+  const { title, tags } = data || {};
   return {
     title,
     keywords: tags,

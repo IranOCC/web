@@ -6,7 +6,9 @@ import { useContext, useEffect } from "react";
 import WebTab from "../../Tab";
 import GalleryContent from "../@common/GalleryContent";
 
-const SinglePage = ({ data }: { data: WebPage }) => {
+const SinglePage = ({ data }: { data?: WebPage }) => {
+  if (!data) throw Error("PageNotFound");
+
   const { _id, title, slug, content, tags, publishedAt } = data;
   const { singlePage } = useContext(WebPreviewContext) as WebPreviewContextType;
   useEffect(() => {
