@@ -11,6 +11,8 @@ import { Tooltip } from "antd";
 import MapEstate from "./MapEstate";
 import ShareButton from "../@common/ShareButton";
 import ReportButton from "../@common/ReportButton";
+import FavoriteButton from "../@common/FavoriteButton";
+import VerifiedButton from "../@common/VerifiedButton";
 
 const SingleEstate = ({ data }: { data: WebEstate }) => {
   const {
@@ -166,26 +168,8 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
         <div className="flex w-full max-w-2xl flex-row items-center justify-between gap-2 gap-y-4">
           {/* icons */}
           <div className="order-first grid h-full grid-cols-1 gap-2 min-[400px]:grid-cols-2">
-            {office.verified && (
-              <Tooltip title="تایید شده" placement="top" arrow={false}>
-                <div role="verified" className="flex cursor-pointer items-center justify-center text-secondary">
-                  <Verified style={{ fontSize: 28 }} />
-                </div>
-              </Tooltip>
-            )}
-            {!office.verified && (
-              <Tooltip title="تایید نشده" placement="top" arrow={false}>
-                <div role="not-verified" className="flex cursor-pointer items-center justify-center text-gray-400/70">
-                  <Verified style={{ fontSize: 28 }} />
-                </div>
-              </Tooltip>
-            )}
-            <Tooltip title="افزودن به مورد علاقه ها" placement="top" arrow={false}>
-              <div role="add-to-favorites" className="flex cursor-pointer items-center justify-center  text-red-500">
-                {/* <FavoriteBorderOutlined style={{ fontSize: 28 }} /> */}
-                <Favorite style={{ fontSize: 28 }} />
-              </div>
-            </Tooltip>
+            <VerifiedButton isVerified={office.verified || false} />
+            <FavoriteButton isFavorite={false} />
             <ReportButton />
             <ShareButton />
           </div>

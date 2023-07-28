@@ -17,6 +17,7 @@ import { Rating } from "@mui/material";
 import moment from "jalali-moment";
 import ShareButton from "../Features/@common/ShareButton";
 import ReportButton from "../Features/@common/ReportButton";
+import RatingButton from "../Features/@common/RatingButton";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -44,7 +45,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
               {headerTitle && (
                 <div className="hidden flex-col gap-2 px-3 md:flex">
                   <h1 className="text-lg font-bold">{headerTitle}</h1>
-                  <div className="flex flex-col justify-between gap-y-1 empty:hidden lg:flex-row">
+                  <div className="flex flex-col justify-between gap-y-1 py-1 empty:hidden lg:flex-row">
                     {headerSubTitle?.type === "estate" && <h4 className="text-sm font-bold">کد: {headerSubTitle.code || "-"}</h4>}
                     {headerSubTitle?.type === "estate" && (
                       <h6 className="flex items-center gap-1 text-sm font-medium text-gray-600">
@@ -58,7 +59,6 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                         <span className="text-black">{headerSubTitle.category || "-"}</span>
                       </h6>
                     )}
-
                     {headerSubTitle?.type === "blog" && (
                       <h6 className="flex items-center gap-1 text-sm font-medium ">
                         <span className="text-gray-600">نویسنده:</span>
@@ -80,19 +80,17 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                     {(headerSubTitle?.type === "blog" || headerSubTitle?.type === "page") && (
                       <div className="flex flex-row items-stretch gap-2">
                         {headerSubTitle?.rating && (
-                          <div className="flex items-center justify-center rounded-xl bg-gray-100 p-1">
-                            <Rating
+                          <div className="flex items-center justify-center rounded-2xl bg-gray-100 p-1">
+                            <RatingButton
                               //
-                              size="small"
                               readOnly={!!headerSubTitle?.userRate}
-                              value={headerSubTitle?.rateScore || 0}
-                              onChange={(e) => {}}
+                              value={headerSubTitle?.rateScore}
                             />
                           </div>
                         )}
-                        <div className="flex items-center justify-center gap-1 rounded-xl bg-gray-100 p-1 empty:hidden">
-                          {headerSubTitle?.report && <ReportButton size={20} />}
-                          {headerSubTitle?.sharing && <ShareButton size={20} />}
+                        <div className="flex items-center justify-center gap-1 rounded-2xl bg-gray-100 p-1 empty:hidden">
+                          {headerSubTitle?.report && <ReportButton />}
+                          {headerSubTitle?.sharing && <ShareButton />}
                         </div>
                       </div>
                     )}
