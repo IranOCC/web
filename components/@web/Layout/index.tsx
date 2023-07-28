@@ -16,6 +16,7 @@ import { Tooltip } from "antd";
 import { Rating } from "@mui/material";
 import moment from "jalali-moment";
 import ShareButton from "../Features/@common/ShareButton";
+import ReportButton from "../Features/@common/ReportButton";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -90,13 +91,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                           </div>
                         )}
                         <div className="flex items-center justify-center gap-1 rounded-xl bg-gray-100 p-1 empty:hidden">
-                          {headerSubTitle?.report && (
-                            <Tooltip title="گزارش مشکل" placement="top" arrow={false}>
-                              <div role="report" className="flex cursor-pointer items-center justify-center text-gray-500">
-                                <ReportGmailerrorredOutlined style={{ fontSize: 20 }} />
-                              </div>
-                            </Tooltip>
-                          )}
+                          {headerSubTitle?.report && <ReportButton size={20} />}
                           {headerSubTitle?.sharing && <ShareButton size={20} />}
                         </div>
                       </div>

@@ -6,10 +6,11 @@ import Image from "next/image";
 import { ReactNode, useContext, useEffect } from "react";
 import ImageGallery from "./ImageGallery";
 import Tab from "@/components/Tab";
-import { Verified, Favorite, ReportGmailerrorredOutlined, ShareOutlined, VerifiedTwoTone } from "@mui/icons-material";
+import { Verified, Favorite } from "@mui/icons-material";
 import { Tooltip } from "antd";
 import MapEstate from "./MapEstate";
 import ShareButton from "../@common/ShareButton";
+import ReportButton from "../@common/ReportButton";
 
 const SingleEstate = ({ data }: { data: WebEstate }) => {
   const {
@@ -185,11 +186,7 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
                 <Favorite style={{ fontSize: 28 }} />
               </div>
             </Tooltip>
-            <Tooltip title="گزارش مشکل" placement="top" arrow={false}>
-              <div role="report" className="flex cursor-pointer items-center justify-center text-gray-500">
-                <ReportGmailerrorredOutlined style={{ fontSize: 28 }} />
-              </div>
-            </Tooltip>
+            <ReportButton />
             <ShareButton />
           </div>
           {/* view */}
