@@ -45,7 +45,7 @@ export type WebPreviewContextType = {
 
   singlePost: (id: string, title: string, categories: string[], author: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
   singlePage: (id: string, title: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
-  singleEstate: (id: string, title: string, category: string, code: string, location: string) => void;
+  singleEstate: (id: string, title: string, category: string, code: string, province: string, city: string, district: string) => void;
   errorPage: () => void;
 };
 
@@ -72,9 +72,10 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setBackground("bg-white");
     setHeaderTitle(title);
     setBreadCrump([
+      //
       { title: "ایران اکازیون", url: "/" },
-      { title: "وبلاگ", url: "/" },
-      { title: "آموزش ها", url: "/" },
+      { title: "وبلاگ" },
+      { title: categories[0] },
     ]);
     setFullContent(false);
     setSidebar({
@@ -100,10 +101,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const singlePage = (id: string, title: string, publishedAt: Date, rateScore: number, userRate?: number) => {
     setBackground("bg-white");
     setHeaderTitle(title);
-    setBreadCrump([
-      { title: "ایران اکازیون", url: "/" },
-      { title: "آموزش ها", url: "/" },
-    ]);
+    setBreadCrump([{ title: "ایران اکازیون", url: "/" }]);
     setFullContent(false);
     setSidebar({
       small: true,
@@ -120,13 +118,14 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     });
   };
   // singlePost
-  const singleEstate = (id: string, title: string, category: string, code: string, location: string) => {
+  const singleEstate = (id: string, title: string, category: string, code: string, province: string, city: string, district: string) => {
     setBackground("bg-white");
     setHeaderTitle(title);
     setBreadCrump([
+      //
       { title: "ایران اکازیون", url: "/" },
-      { title: "ویلا", url: "/" },
-      { title: "متل قو", url: "/" },
+      { title: category },
+      { title: city },
     ]);
     setFullContent(false);
     setSidebar({
@@ -137,7 +136,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setHeaderSubTitle({
       type: "estate",
       code,
-      location,
+      location: [province, city, district].join(" - "),
     });
   };
   // errorPage

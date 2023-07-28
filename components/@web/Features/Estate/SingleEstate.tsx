@@ -53,9 +53,8 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
   } = data;
   const { singleEstate } = useContext(WebPreviewContext) as WebPreviewContextType;
 
-  const _address = [province, city, district].join(" - ");
   useEffect(() => {
-    singleEstate(_id, title, category.title, code || "-", _address);
+    singleEstate(_id, title, category.title, code || "-", province, city, district);
   }, []);
 
   const tabEq = (
