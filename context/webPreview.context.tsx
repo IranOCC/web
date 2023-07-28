@@ -77,7 +77,11 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
       { title: "آموزش ها", url: "/" },
     ]);
     setFullContent(false);
-    setSidebar(undefined);
+    setSidebar({
+      small: true,
+      props: { id },
+      component: "Features/Blog/RelatedBlogs",
+    });
     setHeaderSubTitle({
       type: "blog",
       category: categories.join("، "),
@@ -98,21 +102,21 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setHeaderTitle(title);
     setBreadCrump([
       { title: "ایران اکازیون", url: "/" },
-      { title: "وبلاگ", url: "/" },
       { title: "آموزش ها", url: "/" },
     ]);
     setFullContent(false);
-    setSidebar(undefined);
+    setSidebar({
+      small: true,
+      props: { id },
+      component: "Features/Blog/RelatedBlogs",
+    });
     setHeaderSubTitle({
       type: "page",
       publishedAt,
       //
-      rating: true,
+      rating: false,
       sharing: true,
       report: true,
-      //
-      rateScore,
-      userRate,
     });
   };
   // singlePost
