@@ -101,7 +101,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const singlePage = (id: string, title: string, publishedAt: Date, rateScore: number, userRate?: number) => {
     setBackground("bg-white");
     setHeaderTitle(title);
-    setBreadCrump([{ title: "ایران اکازیون", url: "/" }]);
+    setBreadCrump(undefined);
     setFullContent(false);
     setSidebar({
       small: true,
