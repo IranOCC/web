@@ -15,6 +15,7 @@ import { ReportGmailerrorredOutlined, ShareOutlined } from "@mui/icons-material"
 import { Tooltip } from "antd";
 import { Rating } from "@mui/material";
 import moment from "jalali-moment";
+import ShareButton from "../Features/@common/ShareButton";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -96,13 +97,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                               </div>
                             </Tooltip>
                           )}
-                          {headerSubTitle?.sharing && (
-                            <Tooltip title="اشتراک گذاری" placement="top" arrow={false}>
-                              <div role="share" className="flex cursor-pointer items-center justify-center text-gray-500">
-                                <ShareOutlined style={{ fontSize: 20 }} />
-                              </div>
-                            </Tooltip>
-                          )}
+                          {headerSubTitle?.sharing && <ShareButton size={20} />}
                         </div>
                       </div>
                     )}

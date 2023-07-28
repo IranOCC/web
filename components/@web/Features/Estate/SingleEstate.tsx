@@ -9,6 +9,7 @@ import Tab from "@/components/Tab";
 import { Verified, Favorite, ReportGmailerrorredOutlined, ShareOutlined, VerifiedTwoTone } from "@mui/icons-material";
 import { Tooltip } from "antd";
 import MapEstate from "./MapEstate";
+import ShareButton from "../@common/ShareButton";
 
 const SingleEstate = ({ data }: { data: WebEstate }) => {
   const {
@@ -189,11 +190,7 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
                 <ReportGmailerrorredOutlined style={{ fontSize: 28 }} />
               </div>
             </Tooltip>
-            <Tooltip title="اشتراک گذاری" placement="top" arrow={false}>
-              <div role="share" className="flex cursor-pointer items-center justify-center text-gray-500">
-                <ShareOutlined style={{ fontSize: 28 }} />
-              </div>
-            </Tooltip>
+            <ShareButton />
           </div>
           {/* view */}
           <div className="hidden w-56 grid-cols-1 gap-2 lg:grid">
