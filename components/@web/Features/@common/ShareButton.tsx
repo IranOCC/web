@@ -10,7 +10,7 @@ const ShareButton = ({ size = 28 }: { size?: number }) => {
           if (navigator.share) {
             navigator.share({
               url: location.href,
-              title: document.title + " را در ایران اکازیون ببینید:",
+              title: document.title,
             });
           }
         }}
