@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const data = await fetchSingleBlogPost(params.slug);
-  const { title, excerpt, tags, image } = data;
+  const { title, excerpt, tags, image } = data || {};
   return {
     title,
     description: excerpt,

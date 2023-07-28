@@ -6,7 +6,9 @@ import { useContext, useEffect } from "react";
 import WebTab from "../../Tab";
 import GalleryContent from "../@common/GalleryContent";
 
-const SingleBlogPost = ({ data }: { data: WebBlogPost }) => {
+const SingleBlogPost = ({ data }: { data?: WebBlogPost }) => {
+  if (!data) throw Error("PostNotFound");
+
   const { _id, title, slug, content, excerpt, tags, categories, image, pinned, publishedAt, author } = data;
   const { singlePost } = useContext(WebPreviewContext) as WebPreviewContextType;
   useEffect(() => {

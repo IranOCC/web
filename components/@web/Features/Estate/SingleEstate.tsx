@@ -15,7 +15,9 @@ import VerifiedButton from "../@common/VerifiedButton";
 import GalleryContent from "../@common/GalleryContent";
 import WebTab from "../../Tab";
 
-const SingleEstate = ({ data }: { data: WebEstate }) => {
+const SingleEstate = ({ data }: { data?: WebEstate }) => {
+  if (!data) throw Error("PropertyNotFound");
+
   const {
     //
     _id,

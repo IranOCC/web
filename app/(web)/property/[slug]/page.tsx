@@ -4,7 +4,7 @@ import { fetchSingleEstate } from "@/lib/ssr.fetch";
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const data = await fetchSingleEstate(params.slug);
-  const { title, excerpt, tags, image, gallery } = data;
+  const { title, excerpt, tags, image, gallery } = data || {};
   return {
     title,
     description: excerpt,
