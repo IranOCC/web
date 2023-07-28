@@ -1,24 +1,16 @@
 "use client";
 
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
-import { WebBlogPost } from "@/types/interfaces";
+import { WebBlogPost, WebPage } from "@/types/interfaces";
 import { useContext, useEffect } from "react";
 import WebTab from "../../Tab";
 import GalleryContent from "../@common/GalleryContent";
 
-const SingleBlogPost = ({ data }: { data: WebBlogPost }) => {
-  const { _id, title, slug, content, excerpt, tags, categories, image, pinned, publishedAt, author } = data;
-  const { singlePost } = useContext(WebPreviewContext) as WebPreviewContextType;
+const SinglePage = ({ data }: { data: WebPage }) => {
+  const { _id, title, slug, content, tags, publishedAt } = data;
+  const { singlePage } = useContext(WebPreviewContext) as WebPreviewContextType;
   useEffect(() => {
-    singlePost(
-      _id,
-      title,
-      categories.map(({ title }) => title),
-      author.fullName || "-",
-      publishedAt,
-      0,
-      0
-    );
+    singlePage(_id, title, publishedAt, 0, 0);
   }, []);
 
   const tabDe = <div className="" dangerouslySetInnerHTML={{ __html: content || "محتویات درج نشده است" }} />;
@@ -28,7 +20,6 @@ const SingleBlogPost = ({ data }: { data: WebBlogPost }) => {
       <div className="h-auto bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4 md:pt-4">
         <GalleryContent
           //
-          items={image && [image]}
           id={_id}
         />
         <WebTab
@@ -37,10 +28,6 @@ const SingleBlogPost = ({ data }: { data: WebBlogPost }) => {
               title: "محتوا",
               content: tabDe,
             },
-            {
-              title: "دیدگاه ها",
-              content: null,
-            },
           ]}
         />
       </div>
@@ -48,4 +35,4 @@ const SingleBlogPost = ({ data }: { data: WebBlogPost }) => {
   );
 };
 
-export default SingleBlogPost;
+export default SinglePage;

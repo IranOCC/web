@@ -368,8 +368,8 @@ export type WebEstate = {
     excerpt?: string;
     slug: string;
 
-    image?: StorageFile;
-    gallery?: StorageFile[];
+    image: StorageFile;
+    gallery: StorageFile[];
 
 
 

@@ -44,7 +44,7 @@ export type WebPreviewContextType = {
   setHeaderSubTitle: (n?: SubTitleType) => void;
 
   singlePost: (id: string, title: string, categories: string[], author: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
-  singlePage: (id: string, title: string, author: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
+  singlePage: (id: string, title: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
   singleEstate: (id: string, title: string, category: string, code: string, location: string) => void;
   errorPage: () => void;
 };
@@ -93,7 +93,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     });
   };
   // singlePost
-  const singlePage = (id: string, title: string, author: string, publishedAt: Date, rateScore: number, userRate?: number) => {
+  const singlePage = (id: string, title: string, publishedAt: Date, rateScore: number, userRate?: number) => {
     setBackground("bg-white");
     setHeaderTitle(title);
     setBreadCrump([
@@ -105,7 +105,6 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setSidebar(undefined);
     setHeaderSubTitle({
       type: "page",
-      author,
       publishedAt,
       //
       rating: true,

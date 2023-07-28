@@ -45,7 +45,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
               {headerTitle && (
                 <div className="hidden flex-col gap-2 px-3 md:flex">
                   <h1 className="text-lg font-bold">{headerTitle}</h1>
-                  <div className="flex flex-col justify-between gap-y-1 py-1 empty:hidden lg:flex-row">
+                  <div className="flex flex-col justify-between gap-y-1 py-1.5 empty:hidden lg:flex-row">
                     {headerSubTitle?.type === "estate" && <h4 className="text-sm font-bold">کد: {headerSubTitle.code || "-"}</h4>}
                     {headerSubTitle?.type === "estate" && (
                       <h6 className="flex items-center gap-1 text-sm font-medium text-gray-600">
@@ -68,25 +68,23 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                     {headerSubTitle?.type === "blog" && (
                       <h6 className="flex items-center gap-1 text-sm font-medium ">
                         <span className="text-gray-600">تاریخ انتشار:</span>
-                        <span className="text-black">{moment(headerSubTitle.publishedAt).locale("fa").format("DD MMM YYYY HH:mm:ss") || "-"}</span>
+                        <span className="text-black">{moment(headerSubTitle.publishedAt).locale("fa").format("DD MMM YYYY") || "-"}</span>
                       </h6>
                     )}
                     {headerSubTitle?.type === "page" && (
                       <h6 className="flex items-center gap-1 text-sm font-medium ">
                         <span className="text-gray-600">تاریخ انتشار:</span>
-                        <span className="text-black">{moment(headerSubTitle.publishedAt).locale("fa").format("DD MMM YYYY HH:mm:ss") || "-"}</span>
+                        <span className="text-black">{moment(headerSubTitle.publishedAt).locale("fa").format("DD MMM YYYY") || "-"}</span>
                       </h6>
                     )}
                     {(headerSubTitle?.type === "blog" || headerSubTitle?.type === "page") && (
                       <div className="flex flex-row items-stretch gap-2">
                         {headerSubTitle?.rating && (
-                          <div className="flex items-center justify-center rounded-2xl bg-gray-100 p-1">
-                            <RatingButton
-                              //
-                              readOnly={!!headerSubTitle?.userRate}
-                              value={headerSubTitle?.rateScore}
-                            />
-                          </div>
+                          <RatingButton
+                            //
+                            readOnly={!!headerSubTitle?.userRate}
+                            value={headerSubTitle?.rateScore}
+                          />
                         )}
                         <div className="flex items-center justify-center gap-1 rounded-2xl bg-gray-100 p-1 empty:hidden">
                           {headerSubTitle?.report && <ReportButton />}

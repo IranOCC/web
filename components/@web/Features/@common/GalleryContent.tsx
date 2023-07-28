@@ -7,6 +7,10 @@ import { Fullscreen, HomeMaxOutlined } from "@mui/icons-material";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import MarkerIcon from "@/components/Icons/MarkerIcon";
 import Scrollbars from "react-custom-scrollbars-2";
+import moment from "jalali-moment";
+import RatingButton from "./RatingButton";
+import ReportButton from "./ReportButton";
+import ShareButton from "./ShareButton";
 
 function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): KeenSliderPlugin {
   return (slider) => {
@@ -49,8 +53,9 @@ const AdaptiveHeight: KeenSliderPlugin = (slider) => {
   slider.on("slideChanged", updateHeight);
 };
 
-const ImageGallery = ({ items, title, id, code, features, address }: { items: StorageFile[]; title: string; address: string; code?: string; id: string; features: { title: string; value: string; icon?: ReactNode }[] }) => {
-  const { isFullscreen, isFullContent } = useContext(WebPreviewContext) as WebPreviewContextType;
+const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: string; features?: { title: string; value: string; icon?: ReactNode }[] }) => {
+  const { isFullscreen, isFullContent, headerTitle, headerSubTitle } = useContext(WebPreviewContext) as WebPreviewContextType;
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
@@ -84,10 +89,10 @@ const ImageGallery = ({ items, title, id, code, features, address }: { items: St
     const slider = instanceRef.current!;
     const thumb = thumbInstanceRef.current!;
     // @ts-ignore
-    slider.container.style.width = slider.slides[slider.track.details.rel]?.parentNode?.parentNode?.offsetWidth + "px";
-    slider.container.style.height = slider.slides[slider.track.details.rel].offsetHeight + "px";
-    slider.update();
-    thumb.update();
+    if (slider) slider.container.style.width = slider.slides[slider.track.details.rel]?.parentNode?.parentNode?.offsetWidth + "px";
+    if (slider) slider.container.style.height = slider.slides[slider.track.details.rel].offsetHeight + "px";
+    if (slider) slider.update();
+    if (thumb) thumb.update();
   };
 
   useEffect(() => {
@@ -101,41 +106,77 @@ const ImageGallery = ({ items, title, id, code, features, address }: { items: St
   return (
     <>
       <div className="relative flex flex-col items-center justify-center overflow-hidden bg-gray-200 md:bg-transparent">
-        <div className="relative flex h-full w-full items-center overflow-hidden rounded-b-2xl md:rounded-xl">
-          <div ref={sliderRef} className="keen-slider">
-            {items.map(({ path, title, alt }, idx) => {
-              return (
-                <div key={idx} className="keen-slider__slide relative flex !h-fit !min-h-fit flex-col items-center justify-center self-end overflow-hidden">
-                  <Image
-                    //
-                    src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
-                    alt={alt}
-                    title={title}
-                    width={800}
-                    height={400}
-                    className="block rounded-b-2xl object-contain md:rounded-xl"
-                  />
-                </div>
-              );
-            })}
+        {!!items && (
+          <div className="relative flex h-full w-full items-center overflow-hidden rounded-b-2xl md:rounded-xl">
+            <div ref={sliderRef} className="keen-slider">
+              {items.map(({ path, title, alt }, idx) => {
+                return (
+                  <div key={idx} className="keen-slider__slide relative flex !h-fit !min-h-fit flex-col items-center justify-center self-end overflow-hidden">
+                    <Image
+                      //
+                      src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
+                      alt={alt}
+                      title={title}
+                      width={800}
+                      height={400}
+                      className="block rounded-b-2xl object-contain md:rounded-xl"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            {headerSubTitle?.type === "estate" && <div className="absolute bottom-3 left-3 block rounded-full bg-gray-300 px-2 py-1 font-bold text-gray-700 md:hidden">{headerSubTitle.code || "-"}</div>}
+            {items.length > 1 && loaded && instanceRef.current && (
+              <>
+                <Arrow onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()} disabled={currentSlide === 0} />
+                <Arrow left onClick={(e: any) => e.stopPropagation() || instanceRef.current?.next()} disabled={currentSlide === instanceRef.current.track.details.slides.length - 1} />
+              </>
+            )}
           </div>
-          {!!code && <div className="absolute bottom-3 left-3 block rounded-full bg-gray-300 px-2 py-1 font-bold text-gray-700 md:hidden">{code}</div>}
-          {loaded && instanceRef.current && (
-            <>
-              <Arrow onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()} disabled={currentSlide === 0} />
-              <Arrow left onClick={(e: any) => e.stopPropagation() || instanceRef.current?.next()} disabled={currentSlide === instanceRef.current.track.details.slides.length - 1} />
-            </>
-          )}
-        </div>
+        )}
         <div className="flex w-full flex-col gap-3 px-3 pb-0 pt-3 md:gap-4 md:px-0 md:pb-4 md:pt-4 lg:flex-row">
           <div className="relative order-last -mx-3 flex h-full justify-center overflow-hidden rounded-2xl bg-white md:mx-0 md:bg-transparent lg:order-first lg:min-w-[21.0rem]">
             <div className="flex w-full flex-col items-start justify-start gap-2 p-3 md:p-0">
-              <h1 className="block text-base font-bold md:hidden">{title}</h1>
-              <h6 className="flex items-center gap-1 text-sm font-medium text-gray-600 md:hidden">
-                <MarkerIcon />
-                <span className="order-last lg:order-first">{address || "-"}</span>
-              </h6>
-
+              <h1 className="block text-base font-bold md:hidden">{headerTitle}</h1>
+              <div className="grid w-full grid-cols-1 gap-2 min-[350px]:grid-cols-2 md:hidden">
+                {headerSubTitle?.type === "estate" && (
+                  <h6 className="col-span-full flex items-center gap-1 text-sm font-medium text-gray-600 md:hidden">
+                    <MarkerIcon />
+                    <span className="order-last lg:order-first">{headerSubTitle.location || "-"}</span>
+                  </h6>
+                )}
+                {(headerSubTitle?.type === "blog" || headerSubTitle?.type === "page") && (
+                  <>
+                    <h6 className={"flex items-center gap-1 text-sm font-medium" + (headerSubTitle?.rating ? "" : " col-span-full")}>
+                      <span className="text-gray-600">تاریخ انتشار:</span>
+                      <span className="text-black">{moment(headerSubTitle.publishedAt).locale("fa").format("DD MMM YYYY") || "-"}</span>
+                    </h6>
+                    {headerSubTitle?.rating && (
+                      <RatingButton
+                        //
+                        readOnly={!!headerSubTitle?.userRate}
+                        value={headerSubTitle?.rateScore}
+                      />
+                    )}
+                  </>
+                )}
+                {headerSubTitle?.type === "blog" && (
+                  <h6 className="flex items-center gap-1 text-sm font-medium ">
+                    <span className="text-gray-600">دسته بندی:</span>
+                    <span className="text-black">{headerSubTitle.category || "-"}</span>
+                  </h6>
+                )}
+                {headerSubTitle?.type === "blog" && (
+                  <h6 className="flex items-center gap-1 text-sm font-medium ">
+                    <span className="text-gray-600">نویسنده:</span>
+                    <span className="text-black">{headerSubTitle.author || "-"}</span>
+                  </h6>
+                )}
+                <div className="col-span-full grid grid-cols-2">
+                  {headerSubTitle?.report && <ReportButton />}
+                  {headerSubTitle?.sharing && <ShareButton />}
+                </div>
+              </div>
               {!!features?.length && (
                 <div className="relative flex h-28 w-full justify-center overflow-hidden rounded-2xl bg-gray-200 text-gray-700">
                   <Scrollbars
@@ -167,30 +208,32 @@ const ImageGallery = ({ items, title, id, code, features, address }: { items: St
               )}
             </div>
           </div>
-          <div ref={thumbnailRef} className="keen-slider">
-            {items.map(({ path, title, alt }, idx) => {
-              return (
-                <div key={idx} className="keen-slider__slide group relative flex aspect-square h-20 w-20 min-w-[5rem] max-w-[5rem] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl md:h-28 md:w-28 md:min-w-[7rem] md:max-w-[7rem]">
-                  <Image
-                    //
-                    src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
-                    alt={alt}
-                    title={title}
-                    width={112}
-                    height={112}
-                    className="block h-full rounded-xl border-2 border-transparent object-fill group-[.active]:border-secondary"
-                  />
-                </div>
-              );
-            })}
-          </div>
+          {!!items && items.length > 1 && (
+            <div ref={thumbnailRef} className="keen-slider">
+              {items.map(({ path, title, alt }, idx) => {
+                return (
+                  <div key={idx} className="keen-slider__slide group relative flex aspect-square h-20 w-20 min-w-[5rem] max-w-[5rem] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl md:h-28 md:w-28 md:min-w-[7rem] md:max-w-[7rem]">
+                    <Image
+                      //
+                      src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
+                      alt={alt}
+                      title={title}
+                      width={112}
+                      height={112}
+                      className="block h-full rounded-xl border-2 border-transparent object-fill group-[.active]:border-secondary"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </>
   );
 };
 
-export default ImageGallery;
+export default GalleryContent;
 
 function Arrow(props: { disabled: boolean; left?: boolean; onClick: (e: any) => void }) {
   return (

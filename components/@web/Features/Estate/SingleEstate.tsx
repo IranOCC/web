@@ -4,7 +4,6 @@ import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.c
 import { Icon, Phone, StorageFile, WebEstate } from "@/types/interfaces";
 import Image from "next/image";
 import { ReactNode, useContext, useEffect } from "react";
-import ImageGallery from "./ImageGallery";
 import Tab from "@/components/Tab";
 import { Verified, Favorite } from "@mui/icons-material";
 import { Tooltip } from "antd";
@@ -13,6 +12,8 @@ import ShareButton from "../@common/ShareButton";
 import ReportButton from "../@common/ReportButton";
 import FavoriteButton from "../@common/FavoriteButton";
 import VerifiedButton from "../@common/VerifiedButton";
+import GalleryContent from "../@common/GalleryContent";
+import WebTab from "../../Tab";
 
 const SingleEstate = ({ data }: { data: WebEstate }) => {
   const {
@@ -127,18 +128,13 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
 
   return (
     <div className="h-auto bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4 md:pt-4">
-      {!!gallery?.length && (
-        <ImageGallery
-          //
-          items={gallery}
-          title={title}
-          address={_address}
-          id={_id}
-          features={featuresItems}
-          code={code}
-        />
-      )}
-      <Tab
+      <GalleryContent
+        //
+        items={gallery}
+        id={_id}
+        features={featuresItems}
+      />
+      <WebTab
         data={[
           {
             title: "ویژگی ها",
@@ -153,16 +149,6 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
             content: tabNe,
           },
         ]}
-        clx={{
-          //
-          container: "py-3 !px-0",
-          buttonList: "justify-between md:justify-center",
-          button: "!w-full md:!w-auto px-4 !text-black !font-extrabold border-none",
-          activeButton: "!font-extrabold rounded-t-xl !bg-white !text-black md:underline underline-offset-8 decoration-secondary decoration-2",
-          notActiveButton: "!bg-transparent",
-          panelList: "bg-white md:bg-transparent !mt-0 md:!mt-2 p-3 overflow-hidden",
-          panel: "text-sm min-h-[20rem] overflow-x-hidden w-full h-full",
-        }}
       />
       <div className="flex items-center justify-center rounded-xl bg-gray-200 p-4">
         <div className="flex w-full max-w-2xl flex-row items-center justify-between gap-2 gap-y-4">
