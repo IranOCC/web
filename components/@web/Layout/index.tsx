@@ -118,11 +118,11 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                   hideTracksWhenNotNeeded
                   renderView={(props) => <div {...props} style={{ ...props.style, padding: 0, marginLeft: props.style.marginRight, marginRight: 0 }} />}
                   //
-                  renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, right: 2, bottom: 2, top: 2, borderRadius: 0, background: "#D6D6D6", width: 2 }} />}
-                  renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", width: 6, borderRadius: "20px" }} />}
+                  renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", bottom: 2, right: 2, left: 2, height: 2 }} />}
+                  renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", borderRadius: "20px", height: 6, bottom: 2 }} />}
                   //
-                  renderTrackVertical={(props) => <div {...props} style={{ ...props.style, right: 2, bottom: 2, top: 2, borderRadius: 0, background: "#D6D6D6", width: 2 }} />}
-                  renderThumbVertical={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", right: -2, width: 6, borderRadius: "20px" }} />}
+                  renderTrackVertical={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", right: 2, bottom: 2, top: 2, width: 2 }} />}
+                  renderThumbVertical={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", borderRadius: "20px", width: 6, right: -2 }} />}
                 >
                   {children}
                 </Scrollbars>

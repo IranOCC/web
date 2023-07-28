@@ -25,6 +25,7 @@ const MapEstate = ({ id }: { id: string }) => {
         //
         Map={Map}
         center={[51.42, 35.71]}
+        className="!h-full"
         zoom={[16]}
         userLocation
         interactive

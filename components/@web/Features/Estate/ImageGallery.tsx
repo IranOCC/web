@@ -6,6 +6,7 @@ import { StorageFile } from "@/types/interfaces";
 import { Fullscreen, HomeMaxOutlined } from "@mui/icons-material";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import MarkerIcon from "@/components/Icons/MarkerIcon";
+import Scrollbars from "react-custom-scrollbars-2";
 
 function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): KeenSliderPlugin {
   return (slider) => {
@@ -136,18 +137,32 @@ const ImageGallery = ({ items, title, id, code, features, address }: { items: St
               </h6>
 
               {!!features?.length && (
-                <div className="relative flex h-28 w-full justify-center rounded-2xl bg-gray-200 text-gray-700">
-                  <div className="flex h-full flex-row items-center overflow-y-hidden rounded-2xl bg-gray-200">
-                    {features.map(({ title, value, icon }, idx) => {
-                      return (
-                        <div key={idx} className={"flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 md:min-w-[7rem]" + (idx + 1 === features.length ? " border-none" : "  border-e-2")}>
-                          <span className="text-sm">{title}</span>
-                          {icon}
-                          <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">{value}</b>
-                        </div>
-                      );
-                    })}
-                  </div>
+                <div className="relative flex h-28 w-full justify-center overflow-hidden rounded-2xl bg-gray-200 text-gray-700">
+                  <Scrollbars
+                    //
+                    universal
+                    autoHide={false}
+                    hideTracksWhenNotNeeded
+                    renderView={(props) => <div {...props} style={{ ...props.style, padding: 0, marginLeft: props.style.marginRight, marginRight: 0 }} />}
+                    //
+                    renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", bottom: 2, right: 2, left: 2, height: 2 }} />}
+                    renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", borderRadius: "20px", height: 6, bottom: 2 }} />}
+                    //
+                    renderTrackVertical={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", right: 2, bottom: 2, top: 2, width: 2 }} />}
+                    renderThumbVertical={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", borderRadius: "20px", width: 6, right: -2 }} />}
+                  >
+                    <div className="flex h-full flex-row items-center rounded-2xl bg-gray-200">
+                      {features.map(({ title, value, icon }, idx) => {
+                        return (
+                          <div key={idx} className={"flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 md:min-w-[7rem]" + (idx + 1 === features.length ? " border-none" : "  border-e-2")}>
+                            <span className="text-sm">{title}</span>
+                            {icon}
+                            <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">{value}</b>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Scrollbars>
                 </div>
               )}
             </div>

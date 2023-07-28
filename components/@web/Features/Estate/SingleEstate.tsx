@@ -147,7 +147,6 @@ const SingleEstate = ({ data }: { data: WebEstate }) => {
           {
             title: "اماکن نزدیک",
             content: tabNe,
-            clx: { button: "block xl:hidden", panel: "block xl:hidden" },
           },
         ]}
         clx={{
