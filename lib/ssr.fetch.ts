@@ -1,4 +1,4 @@
-import { WebBlogPost, WebEstate, WebInfo, } from "@/types/interfaces";
+import { WebBlogPost, WebEstate, WebInfo, WebPage, } from "@/types/interfaces";
 
 
 export async function fetchWebInfo() {
@@ -26,5 +26,5 @@ export async function fetchSingleEstate(id_or_slug: string) {
 export async function fetchSinglePage(id_or_slug: string) {
     const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/page/" + id_or_slug, { next: { revalidate: 10 } });
     const data = await res.json();
-    return data as WebEstate;
+    return data as WebPage;
 }

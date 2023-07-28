@@ -1,7 +1,7 @@
 "use client";
 
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
-import { WebBlogPost, WebPage } from "@/types/interfaces";
+import { WebPage } from "@/types/interfaces";
 import { useContext, useEffect } from "react";
 import WebTab from "../../Tab";
 import GalleryContent from "../@common/GalleryContent";
