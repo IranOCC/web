@@ -21,3 +21,10 @@ export async function fetchSingleEstate(id_or_slug: string) {
     const data = await res.json();
     return data as WebEstate;
 }
+
+
+export async function fetchSinglePage(id_or_slug: string) {
+    const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/page/" + id_or_slug, { next: { revalidate: 10 } });
+    const data = await res.json();
+    return data as WebEstate;
+}

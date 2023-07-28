@@ -410,3 +410,18 @@ export type WebEstate = {
     office: Office;
     createdBy: User;
 };
+
+
+
+
+export type WebPage = {
+    _id: string;
+
+    title: string;
+    content: string;
+    slug: string;
+
+    publishedAt: Date;
+
+    tags: string[];
+};
