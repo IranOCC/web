@@ -135,7 +135,7 @@ const Select = (props: IProps) => {
   }, [open]);
 
   const _className = `placeholder:text-left overflow-x-hidden ${
-    disabled ? "cursor-not-allowed bg-gray-200" : "cursor-default bg-slate-100"
+    disabled ? "cursor-not-allowed bg-gray-200" : "cursor-default bg-gray-100"
   } rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start pe-8 border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className}`;
 
   return (
@@ -414,7 +414,7 @@ const FieldComponent = (props: FieldComponentType) => {
                     })}
                     {dataList.length === 0 && <SelectOption title="موردی پیدا نشد" key={-1} selected={false} />}
                   </ul>
-                  <div className={"bg-slate-50 absolute bottom-0 w-full items-center justify-center opacity-70" + (searchable ? " top-10" : "") + (dataLoading ? " flex" : " hidden")}>
+                  <div className={"bg-gray-50 absolute bottom-0 w-full items-center justify-center opacity-70" + (searchable ? " top-10" : "") + (dataLoading ? " flex" : " hidden")}>
                     <Spin />
                   </div>
                 </div>

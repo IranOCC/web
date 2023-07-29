@@ -1,7 +1,6 @@
 import GridList from "@/components/@panel/GridList";
 import Tab from "@/components/Tab";
 import { Button } from "@/components/Button";
-import IconButton from "@/components/Button/IconButton";
 import Modal from "@/components/Modals";
 import { useEffect, useState } from "react";
 import MediaHandler from ".";
@@ -84,13 +83,14 @@ export default function MediaLibrary({ open, setOpen, uploadPath, setSelectFiles
                         alt={value.alt}
                         title={value.title}
                       />
-                      <IconButton
+                      <Button
                         //
                         icon={<Add />}
                         onClick={() => {
                           setSelected((selected) => [...selected, value]);
                         }}
-                        className="!absolute bottom-2 left-2"
+                        noSpace
+                        className={`!absolute bottom-2 left-2 aspect-square h-6 !w-6 rounded-full !px-2`}
                       />
                     </>
                   )}

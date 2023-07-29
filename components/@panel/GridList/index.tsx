@@ -6,8 +6,6 @@ import { useParams, usePathname, useRouter, useSearchParams } from "next/navigat
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { StorageFile } from "@/types/interfaces";
-import Image from "next/image";
-import IconButton from "@/components/Button/IconButton";
 import { Add } from "@mui/icons-material";
 
 export type GridListProps = {

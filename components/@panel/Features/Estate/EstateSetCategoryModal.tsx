@@ -49,7 +49,7 @@ export default function EstateSetCategoryModal({ open, setOpen, setCategory }: a
                       key={index}
                     >
                       {({ checked }: { checked: boolean }) => (
-                        <div className={"bg-slate-100 text-slate-800 flex cursor-pointer items-center justify-center rounded py-6 text-center font-semibold transition-colors hover:bg-yellow-300 hover:text-white" + (checked ? " bg-yellow-300 text-white" : "")}>{title}</div>
+                        <div className={"flex cursor-pointer items-center justify-center rounded bg-gray-100 py-6 text-center font-semibold text-gray-800 transition-colors hover:bg-yellow-300 hover:text-white" + (checked ? " bg-yellow-300 text-white" : "")}>{title}</div>
                       )}
                     </RadioGroup.Option>
                   );

@@ -3,9 +3,9 @@ import { ReactNode } from "react";
 const Button = (props: PropsTypes) => {
   const { title = "", variant = "fill", onClick, icon = "", disabled = false, loading = false, fill = true, noSpace = false, type = "button", className = "", size = "default" } = props;
 
-  let sizeClass = " py-3";
-  if (size === "small") sizeClass = " py-1.5";
-  else if (size === "large") sizeClass = " py-4";
+  let sizeClass = variant === "outline" ? " py-[calc(0.75rem-1px)]" : " py-3";
+  if (size === "small") sizeClass = variant === "outline" ? " py-[calc(0.375rem-1px)]" : " py-1.5";
+  else if (size === "large") sizeClass = variant === "outline" ? " py-[calc(1rem-1px)]" : " py-4";
 
   const _className = `${className} relative flex justify-center items-center z-10
       ${
@@ -15,7 +15,7 @@ const Button = (props: PropsTypes) => {
           ? "cursor-progress " + (variant === "fill" ? "bg-disable" : "bg-transparent")
           : variant === "fill"
           ? "text-white bg-secondary from-secondary to-primary hover:bg-gradient-to-l"
-          : "text-slate-600 bg-translate border border-slate-400 hover:bg-slate-100"
+          : "text-gray-600 bg-translate border border-gray-400 hover:bg-gray-100"
       }
       font-medium rounded text-sm px-8 ${sizeClass} text-center
       ${noSpace ? " mb-0" : " mb-6"}
@@ -31,7 +31,7 @@ const Button = (props: PropsTypes) => {
       className={_className}
     >
       {loading ? (
-        <svg aria-hidden="true" role="status" className="inline w-4 h-4 ms-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg aria-hidden="true" role="status" className="inline h-4 w-4 animate-spin text-white ms-3" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
             fill="#E5E7EB"

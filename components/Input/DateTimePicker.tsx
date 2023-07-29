@@ -51,7 +51,7 @@ const DateTimePicker = (props: IProps) => {
     inputClass += " ltr:pl-32 rtl:pl-32";
   }
 
-  const _className = `${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-100"} rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className} `;
+  const _className = `${disabled ? "cursor-not-allowed bg-gray-200" : "bg-gray-100"} rounded focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className} `;
   return (
     <div className={"relative z-10 w-full" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
       {label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}

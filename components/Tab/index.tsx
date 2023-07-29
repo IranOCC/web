@@ -16,7 +16,7 @@ const Tab = ({ data, clx }: IProps) => {
                   cls?.button,
                   "w-full border border-gray-200 py-2.5 text-sm font-medium leading-5",
                   "focus:outline-none focus:ring-0",
-                  selected ? ["bg-secondary text-white", clx?.activeButton].join(" ") : ["text-slate-800 bg-white", clx?.notActiveButton].join(" "),
+                  selected ? ["bg-secondary text-white", clx?.activeButton].join(" ") : ["bg-white text-gray-800", clx?.notActiveButton].join(" "),
                   //
                 ].join(" ")
               }

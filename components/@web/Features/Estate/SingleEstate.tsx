@@ -14,6 +14,7 @@ import FavoriteButton from "../@common/FavoriteButton";
 import VerifiedButton from "../@common/VerifiedButton";
 import GalleryContent from "../@common/GalleryContent";
 import WebTab from "../../Tab";
+import WebButton from "../../Button";
 
 const SingleEstate = ({ data }: { data?: WebEstate }) => {
   if (!data) throw Error("PropertyNotFound");
@@ -162,8 +163,19 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
           </div>
           {/* view */}
           <div className="hidden w-56 grid-cols-1 gap-2 lg:grid">
-            <div className="bg-secondary p-2 text-center">رزرو بازدید حضوری</div>
-            <div className="bg-gray-400 p-2 text-center">رزرو بازدید آنلاین</div>
+            <WebButton
+              //
+              title="رزرو بازدید حضوری"
+              size="default"
+              noSpace
+            />
+            <WebButton
+              //
+              title="رزرو بازدید آنلاین"
+              size="default"
+              variant="outline"
+              noSpace
+            />
           </div>
           <div className="flex w-auto flex-row gap-2">
             <div className="flex w-full flex-col items-center justify-center ">
@@ -176,7 +188,13 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
               <a className="hidden font-bold lg:block" dir="ltr" href={`tel:${(createdBy.phone as Phone)?.value}`}>
                 {(createdBy.phone as Phone)?.value || "-"}
               </a>
-              <div className="mt-2 bg-secondary p-2 text-center lg:hidden">رزرو بازدید و تماس</div>
+              <WebButton
+                //
+                title="رزرو بازدید و تماس"
+                size="small"
+                className="mt-2 lg:hidden"
+                noSpace
+              />
             </div>
             {createdBy.avatar && (
               <div className="flex items-center justify-center">

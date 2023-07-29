@@ -109,7 +109,7 @@ export default function EstateDocumentTypeBox({ form, loading, cancelForm }: Add
           searchable
           noSpace
         />
-        <p className="text-slate-500 mt-1 text-sm ">
+        <p className="mt-1 text-sm text-gray-500 ">
           {/*  */}
           (دسته هایی که سند مدنظر در آن ها معتبر است. در صورتی که دسته ای انتخاب نشود این نوع سند در تمامی دسته ها معتبر خواهد بود)
         </p>

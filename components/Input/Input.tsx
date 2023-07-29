@@ -77,7 +77,7 @@ const Input = (props: IProps) => {
     inputClass += " ltr:pl-32 rtl:pl-32";
   }
 
-  const _className = `${disabled ? "cursor-not-allowed bg-gray-200" : "bg-slate-100"} rounded overflow-x-hidden focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className} `;
+  const _className = `${disabled ? "cursor-not-allowed bg-gray-200" : "bg-gray-100"} rounded overflow-x-hidden focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className} `;
   return (
     <div className={"relative z-10 w-full" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
       {label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
@@ -102,7 +102,7 @@ const Input = (props: IProps) => {
                                 <span key={index} className={"flex  cursor-default items-center justify-center rounded px-2 text-white" + (disabled || loading || readOnly ? " bg-disable" : " bg-secondary")}>
                                   {label}
                                   {!(disabled || loading || readOnly) && (
-                                    <div className="text-slate-100 hover:text-slate-300 cursor-pointer ps-3" onClick={() => removeItem(index)}>
+                                    <div className="text-gray-100 hover:text-gray-300 cursor-pointer ps-3" onClick={() => removeItem(index)}>
                                       ×
                                     </div>
                                   )}

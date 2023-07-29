@@ -42,8 +42,8 @@ const MediaHandler = (props: IProps) => {
 
   return (
     <>
-      <div className={"w-full relative z-10 flex flex-col items-center justify-center" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-        {label && <label className={`block mb-1 text-sm font-light text-start text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
+      <div className={"relative z-10 flex w-full flex-col items-center justify-center" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+        {label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
         {!!control && !!name ? (
           <Controller
             render={({ field }) => (
@@ -83,7 +83,7 @@ const MediaHandler = (props: IProps) => {
           />
         )}
 
-        {helperText && <p className={"mt-1 block text-sm font-light text-start text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
+        {helperText && <p className={"mt-1 block text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
       </div>
     </>
   );
@@ -190,7 +190,7 @@ const FieldComponent = (props: FieldComponentType) => {
   return (
     <>
       {showFilesList && field?.value && (
-        <div className={"relative w-full mb-2" + (!maxFile || maxFile > 3 ? " max-h-96 overflow-x-hidden" : "")}>
+        <div className={"relative mb-2 w-full" + (!maxFile || maxFile > 3 ? " max-h-96 overflow-x-hidden" : "")}>
           {/*  */}
           <div className={"grid gap-2" + (!maxFile || maxFile >= 3 ? " grid-cols-3" : maxFile === 2 ? " grid-cols-2" : " grid-cols-1")}>
             {(field?.value as StorageFile[])?.map((item, index) => {
@@ -201,7 +201,7 @@ const FieldComponent = (props: FieldComponentType) => {
                   : //
                     indexFileControl?.field.value?._id === item._id;
               return (
-                <div key={index} className="relative overflow-hidden aspect-square min-h-max cursor-pointer">
+                <div key={index} className="relative aspect-square min-h-max cursor-pointer overflow-hidden">
                   <Image
                     //
                     fill
@@ -214,17 +214,17 @@ const FieldComponent = (props: FieldComponentType) => {
                     <>
                       {!!indexFileControl && !!isMain && (
                         <>
-                          <Star className="absolute text-yellow-300 bottom-1 left-1" />
+                          <Star className="absolute bottom-1 left-1 text-yellow-300" />
                         </>
                       )}
                     </>
                   ) : (
                     <>
                       {!!indexFileControl && (
-                        <div className="absolute flex justify-center items-center bg-black/40 w-full h-full transition-opacity opacity-0 hover:opacity-100">
+                        <div className="absolute flex h-full w-full items-center justify-center bg-black/40 opacity-0 transition-opacity hover:opacity-100">
                           {/*  */}
                           {!isMain && (
-                            <div onClick={() => indexFileControl?.field.onChange(item)} className="border bg-white text-yellow-300 px-1 border-yellow-300 rounded w-auto">
+                            <div onClick={() => indexFileControl?.field.onChange(item)} className="w-auto rounded border border-yellow-300 bg-white px-1 text-yellow-300">
                               شاخص شود؟
                             </div>
                           )}
@@ -238,11 +238,11 @@ const FieldComponent = (props: FieldComponentType) => {
                           field.value.splice(index, 1);
                           field.onChange([...field.value]);
                         }}
-                        className="absolute text-red-500 top-1 right-1 cursor-pointer hover:text-gray-500"
+                        className="absolute right-1 top-1 cursor-pointer text-red-500 hover:text-gray-500"
                       />
                       {!!indexFileControl && !!isMain && (
                         <Tooltip title="شاخص">
-                          <Star className="absolute text-yellow-300 bottom-1 left-1" />
+                          <Star className="absolute bottom-1 left-1 text-yellow-300" />
                         </Tooltip>
                       )}
                     </>
@@ -254,8 +254,8 @@ const FieldComponent = (props: FieldComponentType) => {
           {/*  */}
         </div>
       )}
-      <Dragger {..._props} className="w-full h-40">
-        <p className="ant-upload-drag-icon flex justify-center items-center text-secondary">
+      <Dragger {..._props} className="h-40 w-full">
+        <p className="ant-upload-drag-icon flex items-center justify-center text-secondary">
           <Upload2Cloud />
         </p>
         <p className="ant-upload-text !text-sm font-bold">فایل ها رو به اینجا درگ کنید تا آپلود شوند یا کلیک کنید</p>
@@ -277,7 +277,7 @@ const FieldComponent = (props: FieldComponentType) => {
         )}
       </Dragger>
       {showUploadList && !!fileListState.length && (
-        <div className="w-full mt-1 relative flex flex-col max-h-64 gap-1 overflow-x-hidden">
+        <div className="relative mt-1 flex max-h-64 w-full flex-col gap-1 overflow-x-hidden">
           {fileListState.map((item, idx) => {
             let iconColor = "text-gray-500";
             let StatusIcon = LinkOutlineIcon;
@@ -308,9 +308,9 @@ const FieldComponent = (props: FieldComponentType) => {
             return (
               <>
                 <Tooltip title={statusText}>
-                  <div className={"flex items-center cursor-pointer rounded bg-slate-100 hover:bg-slate-200 p-1 " + iconColor + uploadingClass}>
+                  <div className={"flex cursor-pointer items-center rounded bg-gray-100 p-1 hover:bg-gray-200 " + iconColor + uploadingClass}>
                     {/*  */}
-                    <i className={"w-6 h-6 " + (item.status === "uploading" && " animate-spin")}>
+                    <i className={"h-6 w-6 " + (item.status === "uploading" && " animate-spin")}>
                       <StatusIcon />
                     </i>
                     <span className="text-black ms-1">{item.name}</span>
