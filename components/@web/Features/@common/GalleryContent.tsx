@@ -100,7 +100,9 @@ const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: st
   }, []);
 
   useEffect(() => {
-    setTimeout(adaptSize, 1100);
+    setTimeout(adaptSize, 700);
+    setTimeout(adaptSize, 1000);
+    setTimeout(adaptSize, 1500);
   }, [isFullscreen, isFullContent]);
 
   // const scrollbar = useRef();
@@ -225,15 +227,19 @@ function Arrow(props: { disabled: boolean; left?: boolean; onClick: (e: any) => 
 const FeaturesList = ({ items }: { items: { title: string; value: string; icon?: ReactNode }[] }) => {
   const { isFullscreen, isFullContent } = useContext(WebPreviewContext) as WebPreviewContextType;
 
-  const [featuresRef, featuresInstanceRef] = useKeenSlider<HTMLDivElement>({
-    initial: 0,
-    mode: "snap",
-    rtl: true,
-    slides: {
-      perView: "auto",
-      spacing: 0,
+  const [featuresRef, featuresInstanceRef] = useKeenSlider<HTMLDivElement>(
+    {
+      initial: 0,
+      mode: "free",
+      rtl: true,
+      rubberband: false,
+      slides: {
+        perView: "auto",
+        spacing: 0,
+      },
     },
-  });
+    [WheelControls]
+  );
 
   const adaptSize = () => {
     const slider = featuresInstanceRef.current!;
@@ -248,7 +254,9 @@ const FeaturesList = ({ items }: { items: { title: string; value: string; icon?:
   }, []);
 
   useEffect(() => {
-    setTimeout(adaptSize, 1100);
+    setTimeout(adaptSize, 700);
+    setTimeout(adaptSize, 1000);
+    setTimeout(adaptSize, 1500);
   }, [isFullscreen, isFullContent]);
 
   return (
@@ -268,4 +276,62 @@ const FeaturesList = ({ items }: { items: { title: string; value: string; icon?:
       </div>
     </div>
   );
+};
+
+const WheelControls: KeenSliderPlugin = (slider) => {
+  let touchTimeout: ReturnType<typeof setTimeout>;
+  let position: {
+    x: number;
+    y: number;
+  };
+  let wheelActive: boolean;
+
+  function dispatch(e: WheelEvent, name: string) {
+    position.x -= e.deltaX;
+    position.y -= e.deltaY;
+    slider.container.dispatchEvent(
+      new CustomEvent(name, {
+        detail: {
+          x: position.x,
+          y: position.y,
+        },
+      })
+    );
+  }
+
+  function wheelStart(e: WheelEvent) {
+    position = {
+      x: e.pageX,
+      y: e.pageY,
+    };
+    dispatch(e, "ksDragStart");
+  }
+
+  function wheel(e: WheelEvent) {
+    dispatch(e, "ksDrag");
+  }
+
+  function wheelEnd(e: WheelEvent) {
+    dispatch(e, "ksDragEnd");
+  }
+
+  function eventWheel(e: WheelEvent) {
+    e.preventDefault();
+    if (!wheelActive) {
+      wheelStart(e);
+      wheelActive = true;
+    }
+    wheel(e);
+    clearTimeout(touchTimeout);
+    touchTimeout = setTimeout(() => {
+      wheelActive = false;
+      wheelEnd(e);
+    }, 50);
+  }
+
+  slider.on("created", () => {
+    slider.container.addEventListener("wheel", eventWheel, {
+      passive: false,
+    });
+  });
 };
