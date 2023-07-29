@@ -100,7 +100,7 @@ const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: st
   }, []);
 
   useEffect(() => {
-    setTimeout(adaptSize, 1000);
+    setTimeout(adaptSize, 1100);
   }, [isFullscreen, isFullContent]);
 
   return (
