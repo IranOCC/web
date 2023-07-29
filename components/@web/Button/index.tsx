@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { ReactNode } from "react";
 
-const WebButton = (props: IProps) => {
+export const WebButton = (props: IProps) => {
   return (
     <Button
       //
@@ -10,8 +10,6 @@ const WebButton = (props: IProps) => {
     />
   );
 };
-
-export default WebButton;
 
 type IProps = {
   type?: "button" | "submit";

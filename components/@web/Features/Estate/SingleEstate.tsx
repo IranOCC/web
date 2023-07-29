@@ -14,7 +14,7 @@ import FavoriteButton from "../@common/FavoriteButton";
 import VerifiedButton from "../@common/VerifiedButton";
 import GalleryContent from "../@common/GalleryContent";
 import WebTab from "../../Tab";
-import WebButton from "../../Button";
+import { WebButton } from "../../Button";
 
 const SingleEstate = ({ data }: { data?: WebEstate }) => {
   if (!data) throw Error("PropertyNotFound");

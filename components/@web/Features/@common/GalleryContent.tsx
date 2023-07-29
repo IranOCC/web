@@ -105,8 +105,6 @@ const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: st
     setTimeout(adaptSize, 1500);
   }, [isFullscreen, isFullContent]);
 
-  // const scrollbar = useRef();
-
   return (
     <>
       <div className="relative flex flex-col items-center justify-center overflow-hidden">
