@@ -105,7 +105,7 @@ const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: st
 
   return (
     <>
-      <div className="relative flex flex-col items-center justify-center overflow-hidden bg-gray-200 md:bg-transparent">
+      <div className="relative flex flex-col items-center justify-center overflow-hidden">
         {!!items && (
           <div className="relative flex h-full w-full items-center overflow-hidden rounded-b-2xl md:rounded-xl">
             <div ref={sliderRef} className="keen-slider">
