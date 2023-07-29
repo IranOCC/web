@@ -25,16 +25,14 @@ const Tab = ({ data, clx }: IProps) => {
             </TabComponent>
           ))}
         </TabComponent.List>
-        <TabComponent.Panels className={[clx?.panelList, "mt-2 max-h-96 overflow-hidden"].join(" ")}>
+        <TabComponent.Panels className={[clx?.panelList, "mt-2"].join(" ")}>
           {data.map(({ content, clx: cls }, idx) => (
             <TabComponent.Panel
               //
               key={idx}
               className={[clx?.panel, cls?.panel, "relative ring-offset-0 focus:outline-none focus:ring-0"].join(" ")}
             >
-              <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full">
-                <div className="relative h-full w-full">{content}</div>
-              </div>
+              {content}
             </TabComponent.Panel>
           ))}
         </TabComponent.Panels>

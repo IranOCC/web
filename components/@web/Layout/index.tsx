@@ -100,7 +100,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                 <Scrollbars
                   //
                   universal
-                  autoHide={false}
+                  // autoHide={false}
                   hideTracksWhenNotNeeded
                   renderView={(props) => <div {...props} style={{ ...props.style, padding: 0, marginLeft: props.style.marginRight, marginRight: 0 }} />}
                   //

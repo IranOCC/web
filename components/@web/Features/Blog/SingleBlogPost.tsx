@@ -27,7 +27,7 @@ const SingleBlogPost = ({ data }: { data?: WebBlogPost }) => {
 
   return (
     <>
-      <div className="h-auto bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4 md:pt-4">
+      <div className="h-[calc(100%+4rem)] flex-col bg-gray-200 md:bg-transparent md:px-4">
         <GalleryContent
           //
           items={image && [image]}
@@ -45,6 +45,7 @@ const SingleBlogPost = ({ data }: { data?: WebBlogPost }) => {
             },
           ]}
         />
+        <div className="h-16 md:h-4" />
       </div>
     </>
   );
