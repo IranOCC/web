@@ -223,19 +223,33 @@ function Arrow(props: { disabled: boolean; left?: boolean; onClick: (e: any) => 
 }
 
 const FeaturesList = ({ items }: { items: { title: string; value: string; icon?: ReactNode }[] }) => {
-  const [featuresRef, featuresInstanceRef] = useKeenSlider<HTMLDivElement>(
-    {
-      initial: 0,
-      mode: "snap",
-      rtl: true,
+  const { isFullscreen, isFullContent } = useContext(WebPreviewContext) as WebPreviewContextType;
 
-      slides: {
-        perView: "auto",
-        spacing: 0,
-      },
+  const [featuresRef, featuresInstanceRef] = useKeenSlider<HTMLDivElement>({
+    initial: 0,
+    mode: "snap",
+    rtl: true,
+    slides: {
+      perView: "auto",
+      spacing: 0,
     },
-    []
-  );
+  });
+
+  const adaptSize = () => {
+    const slider = featuresInstanceRef.current!;
+    // @ts-ignore
+    if (slider) slider.container.style.width = slider.slides[slider.track.details.rel]?.parentNode?.parentNode?.offsetWidth + "px";
+    if (slider) slider.container.style.height = slider.slides[slider.track.details.rel].offsetHeight + "px";
+    if (slider) slider.update();
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", adaptSize, false);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(adaptSize, 1100);
+  }, [isFullscreen, isFullContent]);
 
   return (
     <div className="relative grid h-28 w-full justify-center rounded-2xl bg-gray-200 text-gray-700">
