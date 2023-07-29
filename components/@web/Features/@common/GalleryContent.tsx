@@ -1,6 +1,6 @@
 import { useKeenSlider, KeenSliderPlugin, KeenSliderInstance } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import { MutableRefObject, ReactNode, useContext, useEffect, useState } from "react";
+import { MutableRefObject, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { StorageFile } from "@/types/interfaces";
 import { Fullscreen, HomeMaxOutlined } from "@mui/icons-material";
@@ -61,7 +61,7 @@ const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: st
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
     {
       initial: 0,
-      mode: "free-snap",
+      mode: "snap",
       rtl: true,
       slideChanged(s) {
         setCurrentSlide(s.track.details.rel);
@@ -75,7 +75,7 @@ const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: st
   const [thumbnailRef, thumbInstanceRef] = useKeenSlider<HTMLDivElement>(
     {
       initial: 0,
-      mode: "free",
+      mode: "snap",
       rtl: true,
       slides: {
         perView: "auto",
@@ -102,6 +102,8 @@ const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: st
   useEffect(() => {
     setTimeout(adaptSize, 1100);
   }, [isFullscreen, isFullContent]);
+
+  // const scrollbar = useRef();
 
   return (
     <>
@@ -177,35 +179,7 @@ const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: st
                   {headerSubTitle?.sharing && <ShareButton />}
                 </div>
               </div>
-              {!!features?.length && (
-                <div className="relative flex h-28 w-full justify-center overflow-hidden rounded-2xl bg-gray-200 text-gray-700">
-                  <Scrollbars
-                    //
-                    universal
-                    autoHide={false}
-                    hideTracksWhenNotNeeded
-                    renderView={(props) => <div {...props} style={{ ...props.style, padding: 0, display: "grid", marginLeft: props.style.marginRight, marginRight: 0 }} />}
-                    //
-                    renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", bottom: 2, right: 2, left: 2, height: 2 }} />}
-                    renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", borderRadius: "20px", height: 6, bottom: 2 }} />}
-                    //
-                    renderTrackVertical={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", right: 2, bottom: 2, top: 2, width: 2 }} />}
-                    renderThumbVertical={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", borderRadius: "20px", width: 6, right: -2 }} />}
-                  >
-                    <div className="flex h-full flex-row items-center justify-self-center rounded-2xl bg-gray-200">
-                      {features.map(({ title, value, icon }, idx) => {
-                        return (
-                          <div key={idx} className={"flex min-w-[5.5rem] flex-col items-center justify-center gap-1.5 border-gray-400/70 md:min-w-[7rem]" + (idx + 1 === features.length ? " border-none" : "  border-e-2")}>
-                            <span className="text-sm">{title}</span>
-                            {icon}
-                            <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">{value}</b>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </Scrollbars>
-                </div>
-              )}
+              {!!features?.length && <FeaturesList items={features} />}
             </div>
           </div>
           {!!items && items.length > 1 && (
@@ -247,3 +221,37 @@ function Arrow(props: { disabled: boolean; left?: boolean; onClick: (e: any) => 
     </div>
   );
 }
+
+const FeaturesList = ({ items }: { items: { title: string; value: string; icon?: ReactNode }[] }) => {
+  const [featuresRef, featuresInstanceRef] = useKeenSlider<HTMLDivElement>(
+    {
+      initial: 0,
+      mode: "snap",
+      rtl: true,
+
+      slides: {
+        perView: "auto",
+        spacing: 0,
+      },
+    },
+    []
+  );
+
+  return (
+    <div className="relative grid h-28 w-full justify-center rounded-2xl bg-gray-200 text-gray-700">
+      <div ref={featuresRef} className="keen-slider flex h-full !w-auto flex-row items-center rounded-2xl bg-gray-200">
+        {items.map(({ title, value, icon }, idx) => {
+          return (
+            <div key={idx} className="keen-slider__slide flex min-w-[5.5rem] max-w-[5.5rem] items-center justify-center md:min-w-[7rem] md:max-w-[7rem]">
+              <div className={"flex w-full flex-col items-center justify-center gap-1.5 border-gray-400/70" + (idx + 1 === items.length ? " border-none" : "  border-e-2")}>
+                <span className="text-sm">{title}</span>
+                {icon}
+                <b className="text-center text-sm font-extrabold leading-none text-black md:text-base">{value}</b>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
