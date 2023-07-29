@@ -27,7 +27,7 @@ const SingleBlogPost = ({ data }: { data?: WebBlogPost }) => {
 
   return (
     <>
-      <div className="h-auto min-h-full bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4">
+      <div className="flex h-auto min-h-full flex-col bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4">
         <GalleryContent
           //
           items={image && [image]}

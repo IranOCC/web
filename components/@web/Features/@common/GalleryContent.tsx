@@ -75,7 +75,7 @@ const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: st
   const [thumbnailRef, thumbInstanceRef] = useKeenSlider<HTMLDivElement>(
     {
       initial: 0,
-      mode: "free-snap",
+      mode: "free",
       rtl: true,
       slides: {
         perView: "auto",
@@ -237,7 +237,7 @@ export default GalleryContent;
 
 function Arrow(props: { disabled: boolean; left?: boolean; onClick: (e: any) => void }) {
   return (
-    <div onClick={props.onClick} className={`${props.left ? "left-0" : "left-auto right-0"} ${props.disabled ? "cursor-not-allowed" : "cursor-pointer"} absolute flex h-full items-center justify-center px-1 md:px-2`}>
+    <div onClick={props.onClick} className={`${props.left ? "left-0" : "left-auto right-0"} ${props.disabled ? "cursor-not-allowed" : "cursor-pointer"} absolute flex h-full items-center justify-center px-4 md:px-2`}>
       <div className={`hidden rounded-md bg-gray-100 p-1 md:block md:rounded-xl md:p-2 ${props.disabled ? "opacity-50" : ""}`}>
         <svg className="h-4 w-4 fill-gray-400/80 md:h-6 md:w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           {props.left && <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />}
