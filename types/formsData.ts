@@ -292,3 +292,20 @@ export type PageFormData = {
 
     createdBy?: User | string;
 };
+
+
+
+
+
+
+
+
+
+// web search
+
+export type SearchEstateFormData = {
+    text: string;
+    category?: string;
+    area?: string;
+    price?: string;
+};
