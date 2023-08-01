@@ -3,6 +3,7 @@
 import EstateCard from "@/components/@web/Features/Estate/EstateCard";
 import { WebInput } from "@/components/@web/Input";
 import { WebSelect } from "@/components/@web/Select";
+import { LoadingWithoutBg } from "@/components/Loading";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { SearchEstateFormData, SendSmsBoxFormData } from "@/types/formsData";
@@ -144,6 +145,11 @@ export default function Page() {
               return <EstateCard key={estate._id} data={estate} />;
             })}
           </div>
+          {dataLoading && (
+            <div className="">
+              <LoadingWithoutBg />
+            </div>
+          )}
         </div>
       </div>
     </>
