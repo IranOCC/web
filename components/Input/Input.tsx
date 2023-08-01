@@ -25,6 +25,7 @@ const Input = (props: IProps) => {
     noSpace,
     maxLength,
     innerSubmitBtn,
+    submitIcon,
     size = "default",
     containerClassName = "",
     tagsMode,
@@ -73,8 +74,11 @@ const Input = (props: IProps) => {
   if (size === "small") sizeClass = " py-1.5";
   else if (size === "large") sizeClass = " py-4";
 
-  if (innerSubmitBtn) {
+  if (!!innerSubmitBtn) {
     inputClass += " ltr:pl-32 rtl:pl-32";
+  }
+  if (!!submitIcon) {
+    inputClass += " ltr:pl-8 rtl:pl-8";
   }
 
   const _className = `${disabled ? "cursor-not-allowed bg-gray-200" : "bg-gray-100"} rounded overflow-x-hidden focus:bg-white text-gray-900 focus:ring-0 focus:shadow-lg placeholder:text-start border${bordersClass} block flex-1 min-w-0 w-full text-sm p-2.5 ${inputClass} ${sizeClass} ${className} `;
@@ -102,7 +106,7 @@ const Input = (props: IProps) => {
                                 <span key={index} className={"flex  cursor-default items-center justify-center rounded px-2 text-white" + (disabled || loading || readOnly ? " bg-disable" : " bg-secondary")}>
                                   {label}
                                   {!(disabled || loading || readOnly) && (
-                                    <div className="text-gray-100 hover:text-gray-300 cursor-pointer ps-3" onClick={() => removeItem(index)}>
+                                    <div className="cursor-pointer text-gray-100 ps-3 hover:text-gray-300" onClick={() => removeItem(index)}>
                                       ×
                                     </div>
                                   )}
@@ -236,6 +240,11 @@ const Input = (props: IProps) => {
             <Button type="submit" title={innerSubmitBtn} noSpace size={"small"} className="h-full" loading={loading} disabled={disabled} />
           </div>
         )}
+        {submitIcon && (
+          <div className={`absolute top-0 flex h-full items-center justify-center p-2 end-0`}>
+            <button type="submit">{submitIcon}</button>
+          </div>
+        )}
         {icon && <span className={`absolute top-0 flex h-full w-12 items-center justify-center text-sm${iconClass} border-e${bordersClass}`}>{icon}</span>}
       </div>
       {helperText && <p className={"mt-1 block text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
@@ -254,6 +263,7 @@ export type IProps = {
   containerClassName?: string;
 
   icon?: ReactNode;
+  submitIcon?: ReactNode;
   multiline?: boolean;
   lines?: number;
   noResize?: boolean;
