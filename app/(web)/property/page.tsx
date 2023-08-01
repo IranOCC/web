@@ -50,18 +50,18 @@ export default function Page() {
   };
 
   const api = useAxiosAuth();
-  const [current, setCurrent] = useState(1);
+  const [current, setCurrent] = useState([1]);
   const [dataList, setDataList] = useState<WebEstate[]>([]);
   const [itemsCount, setItemsCount] = useState(0);
   const [dataLoading, setDataLoading] = useState<boolean>(false);
   const getData = async () => {
     setDataLoading(true);
     try {
-      const response = await api.get(`/estate?${searchParams?.toString()}&size=10&current=${current}`);
+      const response = await api.get(`/estate?${searchParams?.toString()}&size=10&current=${current[0]}`);
       const data = response.data as { items: WebEstate[]; total: number };
-      if (current === 1) {
-        setDataList(data.items);
-        setItemsCount(data.total);
+      if (current[0] === 1) {
+        setDataList(data?.items || []);
+        setItemsCount(data?.total || 0);
       } else {
         setDataList((d) => [...d, ...data.items]);
       }
@@ -72,7 +72,7 @@ export default function Page() {
   };
 
   useEffect(() => {
-    setCurrent(1);
+    setCurrent([1]);
   }, [searchParams]);
   useEffect(() => {
     getData();
@@ -89,7 +89,7 @@ export default function Page() {
     console.log(sh, oh, st);
     if (sh === oh + st && !dataLoading && itemsCount > dataList.length) {
       console.log("==>>>");
-      setCurrent((prev) => prev + 1);
+      setCurrent((prev) => [prev[0] + 1]);
     }
   };
   useEffect(() => {
