@@ -63,8 +63,8 @@ const EstateCard = ({ data }: { data: WebEstate }) => {
             src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + image.path}
             alt={image.alt}
             title={image.title}
-            width={800}
-            height={400}
+            width={500}
+            height={200}
             className="block w-full rounded-xl object-contain md:h-full md:max-w-xs"
           />
           <div className="flex flex-col p-2 pb-0 md:flex-row md:pb-2">
