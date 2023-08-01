@@ -125,6 +125,7 @@ export default function Page() {
                     timeoutRef.current = null;
                   }, 1000);
                 }}
+                defaultValue={searchParams?.get("search") || undefined}
                 type="search"
                 noSpace
               />
