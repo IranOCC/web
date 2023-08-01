@@ -9,8 +9,9 @@ import { SearchEstateFormData, SendSmsBoxFormData } from "@/types/formsData";
 import { WebEstate } from "@/types/interfaces";
 import { Search } from "@mui/icons-material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Timeout } from "react-number-format/types/types";
 
 export default function Page() {
   const { searchPage } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -40,8 +41,9 @@ export default function Page() {
       else $s.delete("search");
       // if (data.category) $s.set("filter", [data.search]);
       // else $s.delete("search");
-      // $s.set("filter", "های");
-      // router.push(pathname + "?" + $s.toString());
+      // $s.set("filter[category]", "های");
+      router.push(pathname + "?" + $s.toString());
+
       // if (isNew) {
       //   const { data: result } = await api.post(`/admin/${endpoint}`, data);
       //   toast.success("با موفقیت ایجاد شد");
@@ -65,7 +67,7 @@ export default function Page() {
   const getData = async () => {
     setDataLoading(true);
     try {
-      const response = await api.get(`/estate`);
+      const response = await api.get(`/estate?${searchParams?.toString()}`);
       const data = response.data as { items: WebEstate[]; total: number };
       setDataList(data?.items || []);
       setItemsCount(data?.total);
@@ -78,7 +80,8 @@ export default function Page() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [searchParams]);
+  const timeoutRef = useRef<Timeout | null>(null);
 
   return (
     <>
@@ -96,6 +99,15 @@ export default function Page() {
                 placeholder="کلمه کلیدی خود را تایپ کنید ..."
                 submitIcon={<Search />}
                 containerClassName="col-span-full"
+                onKeyDown={(e: any) => {
+                  if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                  }
+                  timeoutRef.current = setTimeout(() => {
+                    handleSubmit(onSubmit)();
+                    timeoutRef.current = null;
+                  }, 1000);
+                }}
                 type="search"
                 noSpace
               />

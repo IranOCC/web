@@ -55,22 +55,24 @@ const EstateCard = ({ data }: { data: WebEstate }) => {
   } = data;
 
   return (
-    <Link href={`/property/${slug}`}>
-      <div className="flex flex-col overflow-hidden rounded-xl bg-white p-2 md:flex-row md:bg-gray-200 md:p-0">
-        <Image
-          //
-          src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + image.path}
-          alt={image.alt}
-          title={image.title}
-          width={800}
-          height={400}
-          className="block w-full rounded-xl object-contain md:h-full md:max-w-xs"
-        />
-        <div className="flex flex-col p-2 pb-0 md:flex-row md:pb-2">
-          <h3 className="font-bold ">{title}</h3>
+    <div className="overflow-hidden rounded-xl  ">
+      <Link href={`/property/${slug}`}>
+        <div className="flex flex-col overflow-hidden rounded-xl bg-white p-2 md:flex-row md:bg-gray-200 md:p-0">
+          <Image
+            //
+            src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + image.path}
+            alt={image.alt}
+            title={image.title}
+            width={800}
+            height={400}
+            className="block w-full rounded-xl object-contain md:h-full md:max-w-xs"
+          />
+          <div className="flex flex-col p-2 pb-0 md:flex-row md:pb-2">
+            <h3 className="font-bold ">{title}</h3>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
