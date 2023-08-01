@@ -3,6 +3,7 @@
 import EstateCard from "@/components/@web/Features/Estate/EstateCard";
 import { WebInput } from "@/components/@web/Input";
 import { WebSelect } from "@/components/@web/Select";
+import LoadingIcon from "@/components/Icons/LoadingIcon";
 import { LoadingWithoutBg } from "@/components/Loading";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
@@ -114,7 +115,12 @@ export default function Page() {
                 name="search"
                 control={control}
                 placeholder="کلمه کلیدی خود را تایپ کنید ..."
-                submitIcon={<Search />}
+                submitIcon={
+                  <i className={"block h-6 w-6 text-gray-400" + (dataLoading ? " animate-spin" : "")}>
+                    {/*  */}
+                    {dataLoading ? <LoadingIcon /> : <Search />}
+                  </i>
+                }
                 containerClassName="col-span-full"
                 onKeyDown={(e: any) => {
                   if (timeoutRef.current) {
