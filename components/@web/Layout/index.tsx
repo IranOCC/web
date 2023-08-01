@@ -99,6 +99,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
               <div className="h-full overflow-hidden">
                 <Scrollbars
                   //
+                  id="main"
                   universal
                   // autoHide={false}
                   hideTracksWhenNotNeeded

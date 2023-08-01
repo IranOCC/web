@@ -44,45 +44,61 @@ export default function Page() {
       // else $s.delete("search");
       // $s.set("filter[category]", "های");
       router.push(pathname + "?" + $s.toString());
-
-      // if (isNew) {
-      //   const { data: result } = await api.post(`/admin/${endpoint}`, data);
-      //   toast.success("با موفقیت ایجاد شد");
-      //   if (redirect) router.replace(baseRoute);
-      //   else router.replace(baseRoute + result._id);
-      // } else {
-      //   await api.patch(`/admin/${endpoint}/` + (SECTION || ID), data);
-      //   toast.success("با موفقیت ویرایش شد");
-      //   if (redirect) router.replace(baseRoute);
-      //   else window.location.reload();
-      // }
     } catch (error) {
-      // handleFieldsError(error, setError);
+      //
     }
   };
 
   const api = useAxiosAuth();
+  const [current, setCurrent] = useState(1);
   const [dataList, setDataList] = useState<WebEstate[]>([]);
   const [itemsCount, setItemsCount] = useState(0);
   const [dataLoading, setDataLoading] = useState<boolean>(false);
   const getData = async () => {
     setDataLoading(true);
     try {
-      const response = await api.get(`/estate?${searchParams?.toString()}`);
+      const response = await api.get(`/estate?${searchParams?.toString()}&size=10&current=${current}`);
       const data = response.data as { items: WebEstate[]; total: number };
-      setDataList(data?.items || []);
-      setItemsCount(data?.total);
+      if (current === 1) {
+        setDataList(data.items);
+        setItemsCount(data.total);
+      } else {
+        setDataList((d) => [...d, ...data.items]);
+      }
       setDataLoading(false);
     } catch (error) {
-      //
       setDataLoading(false);
     }
   };
 
   useEffect(() => {
-    getData();
+    setCurrent(1);
   }, [searchParams]);
+  useEffect(() => {
+    getData();
+  }, [current]);
   const timeoutRef = useRef<Timeout | null>(null);
+
+  //
+  const scrollLoadingRef = useRef<any>(null);
+  const checkLoadMore = (e: any) => {
+    console.log(e);
+    const sh = e.target.scrollHeight;
+    const oh = e.target.offsetHeight;
+    const st = e.target.scrollTop;
+    console.log(sh, oh, st);
+    if (sh === oh + st && !dataLoading && itemsCount > dataList.length) {
+      console.log("==>>>");
+      setCurrent((prev) => prev + 1);
+    }
+  };
+  useEffect(() => {
+    const _main_scroll = document.getElementById("main")?.firstChild;
+    // scrollHeight === offsetHeight
+    // on scroll
+    _main_scroll?.addEventListener("scroll", checkLoadMore);
+    return () => _main_scroll?.removeEventListener("scroll", checkLoadMore);
+  }, [dataList.length, dataLoading]);
 
   return (
     <>
@@ -145,8 +161,8 @@ export default function Page() {
               return <EstateCard key={estate._id} data={estate} />;
             })}
           </div>
-          {dataLoading && (
-            <div className="">
+          {itemsCount > dataList.length && (
+            <div ref={scrollLoadingRef}>
               <LoadingWithoutBg />
             </div>
           )}
