@@ -304,7 +304,7 @@ export type PageFormData = {
 // web search
 
 export type SearchEstateFormData = {
-    text: string;
+    search: string;
     category?: string;
     area?: string;
     price?: string;

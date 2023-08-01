@@ -8,6 +8,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { SearchEstateFormData, SendSmsBoxFormData } from "@/types/formsData";
 import { WebEstate } from "@/types/interfaces";
 import { Search } from "@mui/icons-material";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -29,8 +30,18 @@ export default function Page() {
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = useForm<SearchEstateFormData>();
 
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const onSubmit = async (data: SearchEstateFormData) => {
     try {
+      const $s = new URLSearchParams(searchParams?.toString());
+      if (data.search) $s.set("search", data.search);
+      else $s.delete("search");
+      // if (data.category) $s.set("filter", [data.search]);
+      // else $s.delete("search");
+      // $s.set("filter", "های");
+      // router.push(pathname + "?" + $s.toString());
       // if (isNew) {
       //   const { data: result } = await api.post(`/admin/${endpoint}`, data);
       //   toast.success("با موفقیت ایجاد شد");
@@ -73,18 +84,19 @@ export default function Page() {
     <>
       <div className="flex h-auto min-h-full flex-col gap-2 bg-gray-200 px-3 pb-20 md:bg-transparent md:px-4 md:pb-8">
         {/*  */}
-        <div className="py-4 font-bold">{itemsCount} مورد یافت شد</div>
+        <div className="py-4 font-bold">{!!itemsCount ? `${itemsCount} مورد یافت شد` : dataLoading ? `در حال دریافت...` : `چیزی یافت نشد`}</div>
         <div className=" flex w-full flex-col gap-4 self-center">
           {/*  */}
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 gap-2 min-[350px]:grid-cols-2 md:grid-cols-3 ">
               <WebInput
                 //
-                name="text"
+                name="search"
                 control={control}
                 placeholder="کلمه کلیدی خود را تایپ کنید ..."
                 submitIcon={<Search />}
                 containerClassName="col-span-full"
+                type="search"
                 noSpace
               />
               <WebSelect
