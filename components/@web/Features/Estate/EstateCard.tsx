@@ -56,7 +56,7 @@ const EstateCard = ({ data }: { data: WebEstate }) => {
   } = data;
 
   return (
-    <div className="overflow-hidden rounded-xl  ">
+    <div className="overflow-hidden rounded-xl md:max-h-[12rem] md:min-h-[12rem]">
       <Link href={`/property/${slug}`}>
         <div className="flex flex-col gap-2 overflow-hidden rounded-xl bg-white p-2 md:flex-row md:bg-gray-200 md:p-0">
           <Image
@@ -66,11 +66,11 @@ const EstateCard = ({ data }: { data: WebEstate }) => {
             title={image.title}
             width={500}
             height={200}
-            className="block w-full rounded-xl object-contain md:h-full md:max-w-[12rem] lg:max-w-[15rem] xl:max-w-[20rem]"
+            className="block max-h-[10rem] w-full rounded-xl object-cover md:h-full md:max-h-[12rem] md:min-h-[12rem] md:max-w-[12rem] lg:max-w-[15rem] xl:max-w-[20rem]"
           />
 
           <div className="flex flex-col justify-center gap-2 md:py-3">
-            <h3 className="font-bold ">{title}</h3>
+            <h3 className="w-full truncate font-bold">{title}</h3>
             <FeaturesList data={data} isEstateCard />
           </div>
         </div>
