@@ -66,10 +66,10 @@ const EstateCard = ({ data }: { data: WebEstate }) => {
             title={image.title}
             width={500}
             height={200}
-            className="block w-full rounded-xl object-contain md:h-full md:max-w-xs"
+            className="block w-full rounded-xl object-contain md:h-full md:max-w-[12rem] lg:max-w-[15rem] xl:max-w-[20rem]"
           />
 
-          <div className="flex flex-col justify-center gap-2">
+          <div className="flex flex-col justify-center gap-2 md:py-3">
             <h3 className="font-bold ">{title}</h3>
             <FeaturesList data={data} isEstateCard />
           </div>
