@@ -4,6 +4,16 @@ import { ReactNode, useContext, useEffect } from "react";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import { Tooltip } from "antd";
 import { WebEstate } from "@/types/interfaces";
+import MeasurementIcon from "@/components/Icons/web/estate/Measurement";
+import BuildingMeasurementIcon from "@/components/Icons/web/estate/BuildingMeasurement";
+import TransferIcon from "@/components/Icons/web/estate/Transfer";
+import RoomsIcon from "@/components/Icons/web/estate/Rooms";
+import MastersIcon from "@/components/Icons/web/estate/Masters";
+import ConstructionIcon from "@/components/Icons/web/estate/Construction";
+import FloorsIcon from "@/components/Icons/web/estate/Floors";
+import UnitsIcon from "@/components/Icons/web/estate/Units";
+import FloorIcon from "@/components/Icons/web/estate/Floor";
+import OldBuildingIcon from "@/components/Icons/web/estate/OldBuilding";
 
 const FeaturesList = ({ data, isEstateCard = false }: { data: WebEstate; isEstateCard?: boolean }) => {
   const { isFullscreen, isFullContent } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -59,33 +69,33 @@ const FeaturesList = ({ data, isEstateCard = false }: { data: WebEstate; isEstat
   const featuresItems: { title: string; value: string; icon: ReactNode }[] = [];
   switch (category.slug) {
     case "villa":
-      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
-      featuresItems.push({ title: "متراژ بنا", value: `${buildingArea} مترمربع`, icon: "" });
-      featuresItems.push({ title: "سال ساخت", value: `${constructionYear}`, icon: "" });
-      featuresItems.push({ title: "تعداد اتاق", value: `${roomsCount}`, icon: "" });
-      featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: "" });
-      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
+      featuresItems.push({ title: "متراژ بنا", value: `${buildingArea} مترمربع`, icon: <BuildingMeasurementIcon /> });
+      featuresItems.push({ title: "سال ساخت", value: `${constructionYear}`, icon: <ConstructionIcon /> });
+      featuresItems.push({ title: "تعداد اتاق", value: `${roomsCount}`, icon: <RoomsIcon /> });
+      featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: <MastersIcon /> });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
       break;
     case "apartment":
-      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
-      featuresItems.push({ title: "تعداد طبقات", value: `${floorsCount}`, icon: "" });
-      featuresItems.push({ title: "تعداد واحدها", value: `${unitsCount}`, icon: "" });
-      featuresItems.push({ title: "طبقه", value: `${floor}`, icon: "" });
-      featuresItems.push({ title: "تعداد خواب", value: `${roomsCount}`, icon: "" });
-      featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: "" });
-      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
+      featuresItems.push({ title: "تعداد طبقات", value: `${floorsCount}`, icon: <FloorsIcon /> });
+      featuresItems.push({ title: "تعداد واحدها", value: `${unitsCount}`, icon: <UnitsIcon /> });
+      featuresItems.push({ title: "طبقه", value: `${floor}`, icon: <FloorIcon /> });
+      featuresItems.push({ title: "تعداد خواب", value: `${roomsCount}`, icon: <RoomsIcon /> });
+      featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: <MastersIcon /> });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
       break;
     case "commercial":
-      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
-      featuresItems.push({ title: "متراژ بر تجاری", value: `${buildingArea} مترمربع`, icon: "" });
-      featuresItems.push({ title: "طبقه", value: `${floor}`, icon: "" });
-      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
+      featuresItems.push({ title: "متراژ بر تجاری", value: `${buildingArea} مترمربع`, icon: <BuildingMeasurementIcon /> });
+      featuresItems.push({ title: "طبقه", value: `${floor}`, icon: <FloorIcon /> });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
       break;
     case "land":
     case "hectare":
-      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
-      featuresItems.push({ title: "ساختمان قدیمی", value: `${withOldBuilding ? "دارد" : "ندارد"}`, icon: "" });
-      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
+      featuresItems.push({ title: "ساختمان قدیمی", value: `${withOldBuilding ? "دارد" : "ندارد"}`, icon: <OldBuildingIcon /> });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
       break;
   }
 
@@ -98,7 +108,7 @@ const FeaturesList = ({ data, isEstateCard = false }: { data: WebEstate; isEstat
               <div className="keen-slider__slide relative flex min-w-[5.5rem] max-w-[5.5rem] items-center justify-center truncate md:min-w-[7rem] md:max-w-[7rem]">
                 <div className={"flex w-full flex-col items-center justify-center gap-1.5 border-gray-400/70" + (idx + 1 === featuresItems.length ? " border-none" : "  border-e-2")}>
                   <span className="w-full truncate px-0.5 text-center text-sm">{title}</span>
-                  {icon}
+                  <i className="relative h-8 w-8 overflow-hidden text-gray-800">{icon}</i>
                   <b className="w-full truncate px-0.5 text-center text-sm font-extrabold leading-none text-black md:text-base">{value}</b>
                 </div>
               </div>
