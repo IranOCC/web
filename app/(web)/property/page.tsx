@@ -58,7 +58,7 @@ export default function Page() {
   const getData = async () => {
     setDataLoading(true);
     try {
-      const response = await api.get(`/estate?${searchParams?.toString()}&size=10&current=${current[0]}`);
+      const response = await api.get(`/estate?size=10&current=${current[0]}${searchParams?.toString() && "&" + searchParams?.toString()}`);
       const data = response.data as { items: WebEstate[]; total: number };
       if (current[0] === 1) {
         setDataList(data?.items || []);
@@ -88,7 +88,7 @@ export default function Page() {
     const oh = e.target.offsetHeight;
     const st = e.target.scrollTop;
     console.log(sh, oh, st);
-    if (sh === oh + st && !dataLoading && itemsCount > dataList.length) {
+    if (sh - oh - st < 20 && !dataLoading && itemsCount > dataList.length) {
       console.log("==>>>");
       setCurrent((prev) => [prev[0] + 1]);
     }
@@ -103,7 +103,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex h-auto min-h-full flex-col gap-2 bg-gray-200 px-3 pb-20 md:bg-transparent md:px-4 md:pb-8">
+      <div className="flex h-auto min-h-full flex-col gap-2 bg-gray-200 px-3 pb-20 md:bg-transparent md:px-4 md:pb-4">
         {/*  */}
         <div className="py-4 font-bold">{!!itemsCount ? `${itemsCount} مورد یافت شد` : dataLoading ? `در حال دریافت...` : `چیزی یافت نشد`}</div>
         <div className=" flex w-full flex-col gap-4 self-center">
