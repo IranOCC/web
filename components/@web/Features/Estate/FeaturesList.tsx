@@ -3,9 +3,26 @@ import "keen-slider/keen-slider.min.css";
 import { ReactNode, useContext, useEffect } from "react";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import { Tooltip } from "antd";
+import { WebEstate } from "@/types/interfaces";
 
-const FeaturesList = ({ items }: { items: { title: string; value: string; icon?: ReactNode }[] }) => {
+const FeaturesList = ({ data, isEstateCard = false }: { data: WebEstate; isEstateCard?: boolean }) => {
   const { isFullscreen, isFullContent } = useContext(WebPreviewContext) as WebPreviewContextType;
+
+  const {
+    //
+    category,
+
+    area,
+    buildingArea,
+    constructionYear,
+    roomsCount,
+    mastersCount,
+    canBarter,
+    floorsCount,
+    unitsCount,
+    floor,
+    withOldBuilding,
+  } = data;
 
   const [featuresRef, featuresInstanceRef] = useKeenSlider<HTMLDivElement>(
     {
@@ -39,14 +56,47 @@ const FeaturesList = ({ items }: { items: { title: string; value: string; icon?:
     setTimeout(adaptSize, 1500);
   }, [isFullscreen, isFullContent]);
 
+  const featuresItems: { title: string; value: string; icon: ReactNode }[] = [];
+  switch (category.slug) {
+    case "villa":
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
+      featuresItems.push({ title: "متراژ بنا", value: `${buildingArea} مترمربع`, icon: "" });
+      featuresItems.push({ title: "سال ساخت", value: `${constructionYear}`, icon: "" });
+      featuresItems.push({ title: "تعداد اتاق", value: `${roomsCount}`, icon: "" });
+      featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: "" });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      break;
+    case "apartment":
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
+      featuresItems.push({ title: "تعداد طبقات", value: `${floorsCount}`, icon: "" });
+      featuresItems.push({ title: "تعداد واحدها", value: `${unitsCount}`, icon: "" });
+      featuresItems.push({ title: "طبقه", value: `${floor}`, icon: "" });
+      featuresItems.push({ title: "تعداد خواب", value: `${roomsCount}`, icon: "" });
+      featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: "" });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      break;
+    case "commercial":
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
+      featuresItems.push({ title: "متراژ بر تجاری", value: `${buildingArea} مترمربع`, icon: "" });
+      featuresItems.push({ title: "طبقه", value: `${floor}`, icon: "" });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      break;
+    case "land":
+    case "hectare":
+      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
+      featuresItems.push({ title: "ساختمان قدیمی", value: `${withOldBuilding ? "دارد" : "ندارد"}`, icon: "" });
+      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
+      break;
+  }
+
   return (
-    <div className="relative grid h-28 w-full justify-center rounded-2xl bg-gray-200 text-gray-700">
-      <div ref={featuresRef} className="keen-slider flex h-full !w-auto flex-row items-center rounded-2xl bg-gray-200">
-        {items.map(({ title, value, icon }, idx) => {
+    <div className={"group relative grid h-28 w-full justify-center rounded-2xl text-gray-700" + (isEstateCard ? " esCard bg-transparent" : " bg-gray-200")}>
+      <div ref={featuresRef} className="keen-slider flex h-full !w-auto flex-row items-center rounded-2xl bg-gray-200 group-[.esCard]:bg-transparent">
+        {featuresItems.map(({ title, value, icon }, idx) => {
           return (
             <Tooltip key={idx} title={`${title}: ${value}`} placement="bottom">
               <div className="keen-slider__slide relative flex min-w-[5.5rem] max-w-[5.5rem] items-center justify-center truncate md:min-w-[7rem] md:max-w-[7rem]">
-                <div className={"flex w-full flex-col items-center justify-center gap-1.5 border-gray-400/70" + (idx + 1 === items.length ? " border-none" : "  border-e-2")}>
+                <div className={"flex w-full flex-col items-center justify-center gap-1.5 border-gray-400/70" + (idx + 1 === featuresItems.length ? " border-none" : "  border-e-2")}>
                   <span className="w-full truncate px-0.5 text-center text-sm">{title}</span>
                   {icon}
                   <b className="w-full truncate px-0.5 text-center text-sm font-extrabold leading-none text-black md:text-base">{value}</b>

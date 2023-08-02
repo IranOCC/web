@@ -2,7 +2,7 @@ import { useKeenSlider, KeenSliderPlugin, KeenSliderInstance } from "keen-slider
 import "keen-slider/keen-slider.min.css";
 import { MutableRefObject, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { StorageFile } from "@/types/interfaces";
+import { StorageFile, WebEstate } from "@/types/interfaces";
 import { Fullscreen, HomeMaxOutlined } from "@mui/icons-material";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import MarkerIcon from "@/components/Icons/MarkerIcon";
@@ -54,7 +54,7 @@ const AdaptiveHeight: KeenSliderPlugin = (slider) => {
   slider.on("slideChanged", updateHeight);
 };
 
-const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: string; features?: { title: string; value: string; icon?: ReactNode }[] }) => {
+const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: string; estateData?: WebEstate }) => {
   const { isFullscreen, isFullContent, headerTitle, headerSubTitle } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -180,7 +180,7 @@ const GalleryContent = ({ items, id, features }: { items?: StorageFile[]; id: st
                   {headerSubTitle?.sharing && <ShareButton />}
                 </div>
               </div>
-              {!!features?.length && <FeaturesList items={features} />}
+              {!!estateData && <FeaturesList data={estateData} />}
             </div>
           </div>
           {!!items && items.length > 1 && (

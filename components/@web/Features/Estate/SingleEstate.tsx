@@ -95,46 +95,13 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
   const tabDe = <div className="" dangerouslySetInnerHTML={{ __html: content || "توضیحاتی درج نشده است" }} />;
   const tabNe = <MapEstate id={_id} />;
 
-  const featuresItems: { title: string; value: string; icon: ReactNode }[] = [];
-  switch (category.slug) {
-    case "villa":
-      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
-      featuresItems.push({ title: "متراژ بنا", value: `${buildingArea} مترمربع`, icon: "" });
-      featuresItems.push({ title: "سال ساخت", value: `${constructionYear}`, icon: "" });
-      featuresItems.push({ title: "تعداد اتاق", value: `${roomsCount}`, icon: "" });
-      featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: "" });
-      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
-      break;
-    case "apartment":
-      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
-      featuresItems.push({ title: "تعداد طبقات", value: `${floorsCount}`, icon: "" });
-      featuresItems.push({ title: "تعداد واحدها", value: `${unitsCount}`, icon: "" });
-      featuresItems.push({ title: "طبقه", value: `${floor}`, icon: "" });
-      featuresItems.push({ title: "تعداد خواب", value: `${roomsCount}`, icon: "" });
-      featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: "" });
-      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
-      break;
-    case "commercial":
-      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
-      featuresItems.push({ title: "متراژ بر تجاری", value: `${buildingArea} مترمربع`, icon: "" });
-      featuresItems.push({ title: "طبقه", value: `${floor}`, icon: "" });
-      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
-      break;
-    case "land":
-    case "hectare":
-      featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: "" });
-      featuresItems.push({ title: "ساختمان قدیمی", value: `${withOldBuilding ? "دارد" : "ندارد"}`, icon: "" });
-      featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: "" });
-      break;
-  }
-
   return (
     <div className="flex h-auto min-h-full flex-col bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4">
       <GalleryContent
         //
         items={gallery}
         id={_id}
-        features={featuresItems}
+        estateData={data}
       />
       <WebTab
         data={[
