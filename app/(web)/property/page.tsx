@@ -131,6 +131,7 @@ export default function Page() {
                     timeoutRef.current = null;
                   }, 1000);
                 }}
+                loading={dataLoading}
                 defaultValue={searchParams?.get("search") || undefined}
                 type="search"
                 noSpace
@@ -139,24 +140,28 @@ export default function Page() {
                 //
                 control={control}
                 name="category"
+                loading={dataLoading}
                 noSpace
               />
               <WebSelect
                 //
                 control={control}
                 name="category"
+                loading={dataLoading}
                 noSpace
               />
               <WebSelect
                 //
                 control={control}
                 name="category"
+                loading={dataLoading}
                 noSpace
               />
               <WebSelect
                 //
                 control={control}
                 name="category"
+                loading={dataLoading}
                 noSpace
               />
             </div>
