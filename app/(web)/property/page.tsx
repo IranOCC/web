@@ -47,20 +47,23 @@ export default function Page() {
       else $s.delete("filter[category]");
       //
       if (!!data.type?.length) {
+        $s.delete("filter[type]");
         for (let i = 0; i < data.type.length; i++) {
-          $s.set("filter[type]", data.type[i]);
+          $s.append("filter[type]", data.type[i]);
         }
       } else $s.delete("filter[type]");
       //
       if (!!data.documentType?.length) {
+        $s.delete("filter[documentType]");
         for (let i = 0; i < data.documentType.length; i++) {
-          $s.set("filter[documentType]", data.documentType[i]);
+          $s.append("filter[documentType]", data.documentType[i]);
         }
       } else $s.delete("filter[documentType]");
       //
       if (!!data.features?.length) {
+        $s.delete("filter[features]");
         for (let i = 0; i < data.features.length; i++) {
-          $s.set("filter[features]", data.features[i]);
+          $s.append("filter[features]", data.features[i]);
         }
       } else $s.delete("filter[features]");
 
@@ -72,8 +75,9 @@ export default function Page() {
       else $s.delete("filter[city]");
       //
       if (!!data.district?.length) {
+        $s.delete("filter[district]");
         for (let i = 0; i < data.district.length; i++) {
-          $s.set("filter[district]", data.district[i]);
+          $s.append("filter[district]", data.district[i]);
         }
       } else $s.delete("filter[district]");
 
