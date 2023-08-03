@@ -304,8 +304,24 @@ export type PageFormData = {
 // web search
 
 export type SearchEstateFormData = {
-    search: string;
+    search?: string;
+    // 
     category?: string;
-    area?: string;
-    price?: string;
+    // 
+    province?: string;
+    city?: string;
+    district?: string;
+    // 
+    min_area?: number;
+    max_area?: number;
+    min_total_price?: number;
+    max_total_price?: number;
+    min_price?: number;
+    max_price?: number;
+    // 
+    barter?: boolean;
+    // 
+    type?: string[];
+    documentType?: string[];
+    features?: string[];
 };

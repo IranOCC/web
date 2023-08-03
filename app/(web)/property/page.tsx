@@ -41,9 +41,28 @@ export default function Page() {
       const $s = new URLSearchParams(searchParams?.toString());
       if (data.search) $s.set("search", data.search);
       else $s.delete("search");
-      // if (data.category) $s.set("filter", [data.search]);
-      // else $s.delete("search");
-      // $s.set("filter[category]", "های");
+      //
+      if (data.category) $s.set("filter[category]", data.category);
+      else $s.delete("filter[category]");
+      //
+      if (!!data.type?.length) {
+        for (let i = 0; i < data.type.length; i++) {
+          $s.set("filter[type]", data.type[i]);
+        }
+      } else $s.delete("filter[type]");
+      //
+      if (!!data.documentType?.length) {
+        for (let i = 0; i < data.documentType.length; i++) {
+          $s.set("filter[documentType]", data.documentType[i]);
+        }
+      } else $s.delete("filter[documentType]");
+      //
+      if (!!data.features?.length) {
+        for (let i = 0; i < data.features.length; i++) {
+          $s.set("filter[features]", data.features[i]);
+        }
+      } else $s.delete("filter[features]");
+
       router.push(pathname + "?" + $s.toString());
     } catch (error) {
       //
@@ -140,29 +159,90 @@ export default function Page() {
                 //
                 control={control}
                 name="category"
-                loading={dataLoading}
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/category/autoComplete"
                 noSpace
+                onChange={(v) => handleSubmit(onSubmit)()}
+                containerClassName="col-span-full"
+                //
               />
               <WebSelect
                 //
                 control={control}
-                name="category"
-                loading={dataLoading}
+                name="type"
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/type/autoComplete"
+                filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
+                multiple
                 noSpace
+                tagsMode
+                onChange={(v) => handleSubmit(onSubmit)()}
+                //
               />
               <WebSelect
                 //
                 control={control}
-                name="category"
-                loading={dataLoading}
+                name="documentType"
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/documentType/autoComplete"
+                filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
+                multiple
                 noSpace
+                tagsMode
+                onChange={(v) => handleSubmit(onSubmit)()}
+                //
               />
               <WebSelect
                 //
                 control={control}
-                name="category"
-                loading={dataLoading}
+                name="features"
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/feature/autoComplete"
+                filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
+                multiple
                 noSpace
+                tagsMode
+                onChange={(v) => handleSubmit(onSubmit)()}
+                containerClassName="col-span-full"
+                //
+              />
+              <WebSelect
+                //
+                control={control}
+                name="province"
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/autoComplete/province"
+                multiple
+                noSpace
+                tagsMode
+                onChange={(v) => handleSubmit(onSubmit)()}
+                //
+              />
+              <WebSelect
+                //
+                control={control}
+                name="city"
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/autoComplete/city"
+                filterApi={{ province: searchParams?.get("filter[province]") || undefined }}
+                multiple
+                noSpace
+                tagsMode
+                onChange={(v) => handleSubmit(onSubmit)()}
+                //
+              />
+              <WebSelect
+                //
+                control={control}
+                name="district"
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/autoComplete/district"
+                filterApi={{ province: searchParams?.get("filter[province]") || undefined, city: searchParams?.get("filter[city]") || undefined }}
+                multiple
+                noSpace
+                tagsMode
+                onChange={(v) => handleSubmit(onSubmit)()}
+                //
               />
             </div>
           </form>
