@@ -272,7 +272,6 @@ export default function Page() {
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
               />
-
               <CheckBox
                 //
                 control={control}
@@ -283,6 +282,12 @@ export default function Page() {
                 defaultValue={searchParams?.get("filter[barter]") === "true" || undefined}
                 // onChange={(v) => handleSubmit(onSubmit)()}
               />
+              <br />
+              Price
+              <br />
+              TotalPrice
+              <br />
+              Area
             </div>
           </form>
 
