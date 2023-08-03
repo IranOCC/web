@@ -183,6 +183,7 @@ export default function Page() {
                 loading={dataLoading || isSubmitting}
                 apiPath="/tools/estate/category/autoComplete"
                 noSpace
+                defaultValue={searchParams?.get("filter[category]") || undefined}
                 onChange={(v) => handleSubmit(onSubmit)()}
                 containerClassName="col-span-full"
                 //
@@ -198,6 +199,7 @@ export default function Page() {
                 noSpace
                 showTitle
                 tagsMode
+                defaultValue={searchParams?.getAll("filter[type]") || undefined}
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
               />
@@ -212,6 +214,7 @@ export default function Page() {
                 noSpace
                 showTitle
                 tagsMode
+                defaultValue={searchParams?.getAll("filter[documentType]") || undefined}
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
               />
@@ -226,6 +229,7 @@ export default function Page() {
                 noSpace
                 showTitle
                 tagsMode
+                defaultValue={searchParams?.getAll("filter[features]") || undefined}
                 onChange={(v) => handleSubmit(onSubmit)()}
                 containerClassName="col-span-full"
                 //
@@ -237,6 +241,7 @@ export default function Page() {
                 loading={dataLoading || isSubmitting}
                 apiPath="/tools/estate/autoComplete/province"
                 noSpace
+                defaultValue={searchParams?.get("filter[province]") || undefined}
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
               />
@@ -248,6 +253,7 @@ export default function Page() {
                 apiPath="/tools/estate/autoComplete/city"
                 filterApi={{ province: searchParams?.get("filter[province]") || undefined }}
                 noSpace
+                defaultValue={searchParams?.get("filter[city]") || undefined}
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
               />
@@ -262,6 +268,7 @@ export default function Page() {
                 noSpace
                 showTitle
                 tagsMode
+                defaultValue={searchParams?.getAll("filter[district]") || undefined}
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
               />
@@ -273,6 +280,7 @@ export default function Page() {
                 loading={dataLoading || isSubmitting}
                 noSpace
                 label="قابل تهاتر"
+                defaultValue={searchParams?.get("filter[barter]") === "true" || undefined}
                 // onChange={(v) => handleSubmit(onSubmit)()}
               />
             </div>
