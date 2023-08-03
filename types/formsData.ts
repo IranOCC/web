@@ -312,12 +312,9 @@ export type SearchEstateFormData = {
     city?: string;
     district?: string[];
     // 
-    min_area?: number;
-    max_area?: number;
-    min_total_price?: number;
-    max_total_price?: number;
-    min_price?: number;
-    max_price?: number;
+    area?: [number, number];
+    total_price?: [number, number];
+    price?: [number, number];
     // 
     barter?: boolean;
     // 

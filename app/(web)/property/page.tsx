@@ -4,6 +4,7 @@ import EstateCard from "@/components/@web/Features/Estate/EstateCard";
 import { WebInput } from "@/components/@web/Input";
 import { WebSelect } from "@/components/@web/Select";
 import LoadingIcon from "@/components/Icons/LoadingIcon";
+import { CheckBox } from "@/components/Input";
 import { LoadingWithoutBg } from "@/components/Loading";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
@@ -62,6 +63,22 @@ export default function Page() {
           $s.set("filter[features]", data.features[i]);
         }
       } else $s.delete("filter[features]");
+
+      //
+      if (data.province) $s.set("filter[province]", data.province);
+      else $s.delete("filter[province]");
+      //
+      if (data.city) $s.set("filter[city]", data.city);
+      else $s.delete("filter[city]");
+      //
+      if (!!data.district?.length) {
+        for (let i = 0; i < data.district.length; i++) {
+          $s.set("filter[district]", data.district[i]);
+        }
+      } else $s.delete("filter[district]");
+
+      if (data.barter) $s.set("filter[barter]", data.barter + "");
+      else $s.delete("filter[barter]");
 
       router.push(pathname + "?" + $s.toString());
     } catch (error) {
@@ -243,6 +260,16 @@ export default function Page() {
                 tagsMode
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
+              />
+
+              <CheckBox
+                //
+                control={control}
+                name="barter"
+                loading={dataLoading || isSubmitting}
+                noSpace
+                label="قابل تهاتر"
+                // onChange={(v) => handleSubmit(onSubmit)()}
               />
             </div>
           </form>
