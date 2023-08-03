@@ -175,6 +175,7 @@ export default function Page() {
                 filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
                 multiple
                 noSpace
+                showTitle
                 tagsMode
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
@@ -188,6 +189,7 @@ export default function Page() {
                 filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
                 multiple
                 noSpace
+                showTitle
                 tagsMode
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
@@ -201,6 +203,7 @@ export default function Page() {
                 filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
                 multiple
                 noSpace
+                showTitle
                 tagsMode
                 onChange={(v) => handleSubmit(onSubmit)()}
                 containerClassName="col-span-full"
@@ -212,9 +215,7 @@ export default function Page() {
                 name="province"
                 loading={dataLoading || isSubmitting}
                 apiPath="/tools/estate/autoComplete/province"
-                multiple
                 noSpace
-                tagsMode
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
               />
@@ -225,9 +226,7 @@ export default function Page() {
                 loading={dataLoading || isSubmitting}
                 apiPath="/tools/estate/autoComplete/city"
                 filterApi={{ province: searchParams?.get("filter[province]") || undefined }}
-                multiple
                 noSpace
-                tagsMode
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //
               />
@@ -240,6 +239,7 @@ export default function Page() {
                 filterApi={{ province: searchParams?.get("filter[province]") || undefined, city: searchParams?.get("filter[city]") || undefined }}
                 multiple
                 noSpace
+                showTitle
                 tagsMode
                 onChange={(v) => handleSubmit(onSubmit)()}
                 //

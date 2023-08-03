@@ -310,7 +310,7 @@ export type SearchEstateFormData = {
     // 
     province?: string;
     city?: string;
-    district?: string;
+    district?: string[];
     // 
     min_area?: number;
     max_area?: number;
