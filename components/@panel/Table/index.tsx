@@ -178,8 +178,8 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
     }
     if (editable) {
       const spm = new URLSearchParams(searchParams?.toString());
-      spm.delete("count");
-      spm.delete("page");
+      // spm.delete("count");
+      // spm.delete("page");
       operationsItem.push({
         key: "edit",
         label: <Link href={`${baseRoute}/${id}` + (spm ? "?" + spm?.toString() : "")}>ویرایش</Link>,

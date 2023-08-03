@@ -17,7 +17,7 @@ const columns: ColumnsType<Icon> = [
     title: "آیکون",
     dataIndex: "content",
     render: (content) => {
-      return <div className="w-8 h-8" dangerouslySetInnerHTML={{ __html: content }} />;
+      return <div className="h-8 w-8 fill-green-500" dangerouslySetInnerHTML={{ __html: content }} />;
     },
   },
 ];

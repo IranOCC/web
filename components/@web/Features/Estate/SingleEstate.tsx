@@ -62,38 +62,37 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
 
   const tabEq = (
     <div className="flex flex-col gap-2">
-      <h6 className="flex items-center gap-1 font-bold">
-        {!!category?.icon && <i className="h-5 w-5 fill-gray-800" dangerouslySetInnerHTML={{ __html: (category.icon as Icon).content }} />}
+      <h6 className="flex items-center gap-1.5 font-bold">
+        {!!category?.icon && <i className="h-6 w-6 fill-gray-800" dangerouslySetInnerHTML={{ __html: (category.icon as Icon).content }} />}
         <span>{category.title}</span>
       </h6>
-      <h6 className="flex items-center gap-1 font-bold">
-        {!!type?.icon && <i className="h-5 w-5 fill-gray-800" dangerouslySetInnerHTML={{ __html: (type.icon as Icon).content }} />}
+      <h6 className="flex items-center gap-1.5 font-bold">
+        {!!type?.icon && <i className="h-6 w-6 fill-gray-800" dangerouslySetInnerHTML={{ __html: (type.icon as Icon).content }} />}
         <span>{type.title}</span>
       </h6>
-      <h6 className="flex items-center gap-1 font-bold">
-        {!!documentType?.icon && <i className="h-5 w-5 fill-gray-800" dangerouslySetInnerHTML={{ __html: (documentType.icon as Icon).content }} />}
+      <h6 className="flex items-center gap-1.5 font-bold">
+        {!!documentType?.icon && <i className="h-6 w-6 fill-gray-800" dangerouslySetInnerHTML={{ __html: (documentType.icon as Icon).content }} />}
         <span>{documentType.title}</span>
       </h6>
       {!!features?.length && (
-        <h6 className="mt-2 font-bold">
-          امکانات: {/*  */}
-          <br />
-          <ul className="flex flex-row gap-4 font-normal">
+        <div className="flex flex-col gap-2 py-4">
+          <h6 className="font-bold">امکانات: {/*  */}</h6>
+          <ul className="flex flex-row flex-wrap gap-4 font-normal">
             {features.map(({ title, icon, slug }) => {
               return (
-                <li key={slug} className="flex items-center gap-1">
+                <li key={slug} className="flex items-center gap-1.5">
                   {!!icon && <i className="h-5 w-5 fill-green-500" dangerouslySetInnerHTML={{ __html: (icon as Icon).content }} />}
                   {title}
                 </li>
               );
             })}
           </ul>
-        </h6>
+        </div>
       )}
     </div>
   );
   const tabDe = <div className="" dangerouslySetInnerHTML={{ __html: content || "توضیحاتی درج نشده است" }} />;
-  const tabNe = <MapEstate id={_id} />;
+  const tabNe = <div className="">اماکن نزدیک را اینجا میبینید</div>;
 
   return (
     <div className="flex h-auto min-h-full flex-col bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4">

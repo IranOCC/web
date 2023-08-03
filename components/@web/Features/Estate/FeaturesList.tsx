@@ -108,7 +108,7 @@ const FeaturesList = ({ data, isEstateCard = false }: { data: WebEstate; isEstat
               <div className="keen-slider__slide relative flex min-w-[5.5rem] max-w-[5.5rem] items-center justify-center truncate md:min-w-[7rem] md:max-w-[7rem]">
                 <div className={"flex w-full flex-col items-center justify-center gap-1.5 border-gray-400/70" + (idx + 1 === featuresItems.length ? " border-none" : "  border-e-2")}>
                   <span className="w-full truncate px-0.5 text-center text-sm">{title}</span>
-                  <i className="relative h-8 w-8 overflow-hidden text-gray-800">{icon}</i>
+                  <i className="relative h-7 w-7 overflow-hidden text-gray-800">{icon}</i>
                   <b className="w-full truncate px-0.5 text-center text-sm font-extrabold leading-none text-black md:text-base">{value}</b>
                 </div>
               </div>
