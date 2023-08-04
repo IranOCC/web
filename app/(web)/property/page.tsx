@@ -178,12 +178,12 @@ export default function Page() {
 
   const filters = [
     //
-    { title: "تعیین دسته و نوع", width: "10rem", filters: ["category", "type"] },
-    { title: "تعیین نوع سند", width: "9rem", filters: ["documentType"] },
-    { title: "تعیین ویژگی ها", width: "9rem", filters: ["features"] },
+    { title: "تعیین دسته و نوع", width: "9rem", filters: ["category", "type"] },
+    { title: "تعیین نوع سند", width: "8.5rem", filters: ["documentType"] },
+    { title: "تعیین ویژگی ها", width: "8.5rem", filters: ["features"] },
     { title: "تعیین موقعیت مکانی", width: "10rem", filters: ["province", "city", "district"] },
-    { title: "تعیین متراژ", width: "8rem", filters: ["area"] },
-    { title: "تعیین بازه قیمتی", width: "9rem", filters: ["price", "total_price", "barter"] },
+    { title: "تعیین متراژ", width: "7.5rem", filters: ["area"] },
+    { title: "تعیین بازه قیمتی", width: "8.5rem", filters: ["price", "total_price", "barter"] },
   ];
 
   return (
@@ -228,9 +228,10 @@ export default function Page() {
                     return (
                       <button
                         key={idx}
-                        className={`keen-slider__slide relative flex max-w-[${width}] min-w-[${width}] w-[${width}] items-center justify-center whitespace-nowrap rounded-3xl border p-1 text-sm ` + (isActive ? "border-secondary bg-disable text-white" : "border-gray-300 bg-gray-100 text-gray-700")}
+                        style={{ width: width, maxWidth: width, minWidth: width }}
+                        className={`keen-slider__slide relative flex items-center justify-center whitespace-nowrap rounded-3xl border py-1 text-sm ` + (isActive ? "border-secondary bg-disable text-white" : "border-gray-300 bg-gray-100 text-gray-700")}
                       >
-                        <span className="w-full px-4 text-center text-sm">{title}</span>
+                        <span className="w-full text-center text-sm">{title}</span>
                       </button>
                     );
                   })}
