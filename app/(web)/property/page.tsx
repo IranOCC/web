@@ -11,6 +11,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { SearchEstateFormData, SendSmsBoxFormData } from "@/types/formsData";
 import { WebEstate } from "@/types/interfaces";
 import { Search } from "@mui/icons-material";
+import { useKeenSlider } from "keen-slider/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -141,6 +142,28 @@ export default function Page() {
     return () => _main_scroll?.removeEventListener("scroll", checkLoadMore);
   }, [dataList.length, dataLoading]);
 
+  const [featuresRef, featuresInstanceRef] = useKeenSlider<HTMLDivElement>(
+    {
+      initial: 0,
+      mode: "free",
+      rtl: true,
+      rubberband: false,
+      slides: {
+        perView: "auto",
+        spacing: 10,
+      },
+    },
+    []
+  );
+
+  const filters = [
+    //
+    { title: "تعیین دسته و نوع", width: "10rem" },
+    { title: "تعیین ویژگی ها", width: "9rem" },
+    { title: "تعیین موقعیت مکانی", width: "10rem" },
+    { title: "تعیین متراژ", width: "8rem" },
+  ];
+
   return (
     <>
       <div className="flex h-auto min-h-full flex-col gap-2 bg-gray-200 px-3 pb-20 md:bg-transparent md:px-4 md:pb-4">
@@ -176,6 +199,17 @@ export default function Page() {
                 type="search"
                 noSpace
               />
+              <div className="relative col-span-full w-full">
+                <div ref={featuresRef} className="keen-slider flex h-full !w-auto flex-row items-center">
+                  {filters.map(({ title, width }, idx) => {
+                    return (
+                      <button key={idx} className={`keen-slider__slide relative flex min-w-[${width}] w-[${width}] items-center justify-center whitespace-nowrap rounded-3xl border border-gray-400 bg-gray-100 p-1 text-sm`}>
+                        <span className="w-full px-4 text-center text-sm">{title}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
               <WebSelect
                 //
                 control={control}
