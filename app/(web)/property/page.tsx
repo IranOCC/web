@@ -226,7 +226,10 @@ export default function Page() {
                   {filters.map(({ title, width, filters }, idx) => {
                     const isActive = filters.some((v) => searchParams?.has(`filter[${v}]`));
                     return (
-                      <button key={idx} className={`keen-slider__slide relative flex min-w-[${width}] w-[${width}] items-center justify-center whitespace-nowrap rounded-3xl border p-1 text-sm ` + (isActive ? "border-secondary bg-disable text-white" : "border-gray-300 bg-gray-100 text-gray-700")}>
+                      <button
+                        key={idx}
+                        className={`keen-slider__slide relative flex max-w-[${width}] min-w-[${width}] w-[${width}] items-center justify-center whitespace-nowrap rounded-3xl border p-1 text-sm ` + (isActive ? "border-secondary bg-disable text-white" : "border-gray-300 bg-gray-100 text-gray-700")}
+                      >
                         <span className="w-full px-4 text-center text-sm">{title}</span>
                       </button>
                     );
