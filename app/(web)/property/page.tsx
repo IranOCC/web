@@ -8,9 +8,10 @@ import { CheckBox } from "@/components/Input";
 import { LoadingWithoutBg } from "@/components/Loading";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
-import { SearchEstateFormData, SendSmsBoxFormData } from "@/types/formsData";
+import { usePrevious } from "@/hooks/usePrevious";
+import { SearchEstateFormData } from "@/types/formsData";
 import { WebEstate } from "@/types/interfaces";
-import { Search } from "@mui/icons-material";
+import { Cancel, Close, Search } from "@mui/icons-material";
 import { useKeenSlider } from "keen-slider/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -177,15 +178,55 @@ export default function Page() {
   }, [isFullscreen, isFullContent]);
 
   const filters = [
-    //
-    { title: "تعیین دسته و نوع", width: "9rem", filters: ["category", "type"] },
-    { title: "تعیین نوع سند", width: "8.5rem", filters: ["documentType"] },
-    { title: "تعیین ویژگی ها", width: "8.5rem", filters: ["features"] },
-    { title: "تعیین موقعیت مکانی", width: "10rem", filters: ["province", "city", "district"] },
-    { title: "تعیین متراژ", width: "7.5rem", filters: ["area"] },
-    { title: "تعیین بازه قیمتی", width: "8.5rem", filters: ["price", "total_price", "barter"] },
+    {
+      title: "تعیین دسته و نوع",
+      width: "9.5rem",
+      filters: ["category", "type"],
+      content: <div className="h-full w-full">دستههههه</div>,
+      cancelFilter: () => {},
+    },
+    {
+      //
+      title: "تعیین نوع سند",
+      width: "8.5rem",
+      filters: ["documentType"],
+      content: <div className="h-full w-full">دستههههه</div>,
+      cancelFilter: () => {},
+    },
+    {
+      //
+      title: "تعیین ویژگی ها",
+      width: "8.5rem",
+      filters: ["features"],
+      content: <div className="h-full w-full">دستههههه</div>,
+      cancelFilter: () => {},
+    },
+    {
+      //
+      title: "تعیین موقعیت مکانی",
+      width: "10.5rem",
+      filters: ["province", "city", "district"],
+      content: <div className="h-full w-full">دستههههه</div>,
+      cancelFilter: () => {},
+    },
+    {
+      //
+      title: "تعیین متراژ",
+      width: "7.5rem",
+      filters: ["area"],
+      content: <div className="h-full w-full bg-red-500">دستههههه</div>,
+      cancelFilter: () => {},
+    },
+    {
+      //
+      title: "تعیین بازه قیمتی",
+      width: "9rem",
+      filters: ["price", "total_price", "barter"],
+      content: <div className="h-full w-full">دستههههه</div>,
+      cancelFilter: () => {},
+    },
   ];
-
+  const [isOpenFilter, setOpenFilter] = useState<number | null>(null);
   return (
     <>
       <div className="flex h-auto min-h-full flex-col gap-2 bg-gray-200 px-3 pb-20 md:bg-transparent md:px-4 md:pb-4">
@@ -223,18 +264,39 @@ export default function Page() {
               />
               <div className="relative col-span-full w-full">
                 <div ref={filtersRef} className="keen-slider flex h-full !w-auto flex-row items-center">
-                  {filters.map(({ title, width, filters }, idx) => {
+                  {filters.map(({ title, width, filters, cancelFilter }, idx) => {
                     const isActive = filters.some((v) => searchParams?.has(`filter[${v}]`));
                     return (
                       <button
                         key={idx}
+                        onClick={(e) => setOpenFilter((m) => (m === idx ? null : idx))}
                         style={{ width: width, maxWidth: width, minWidth: width }}
-                        className={`keen-slider__slide relative flex items-center justify-center whitespace-nowrap rounded-3xl border py-1 text-sm ` + (isActive ? "border-secondary bg-disable text-white" : "border-gray-300 bg-gray-100 text-gray-700")}
+                        className={
+                          `keen-slider__slide relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-3xl border py-1 text-sm ` +
+                          (isActive || isOpenFilter === idx ? "border-secondary bg-secondary text-white" : "border-gray-300 bg-gray-100 text-gray-700 hover:border-secondary hover:bg-secondary hover:text-white")
+                        }
                       >
-                        <span className="w-full text-center text-sm">{title}</span>
+                        <span className="flex w-full items-center justify-center text-center text-sm">
+                          {title}
+                          {isActive && cancelFilter && (
+                            <i className="absolute left-1 cursor-pointer text-sm text-red-600" onClick={() => cancelFilter()}>
+                              <Cancel sx={{ fontSize: 16 }} />
+                            </i>
+                          )}
+                        </span>
                       </button>
                     );
                   })}
+                </div>
+              </div>
+              {/* === */}
+              <div className={"relative col-span-full overflow-hidden transition-all duration-1000" + (isOpenFilter !== null ? " h-64" : " h-0")}>
+                <i className="absolute left-0 top-0 cursor-pointer text-sm text-red-600" onClick={() => setOpenFilter(null)}>
+                  <Close sx={{ fontSize: 16 }} />
+                </i>
+                <div className="flex h-full w-full overflow-hidden rounded-lg bg-gray-200 p-1 pe-4">
+                  {isOpenFilter !== null ? filters[isOpenFilter].content : null}
+                  {/*  */}
                 </div>
               </div>
               {/* <WebSelect
