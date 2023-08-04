@@ -83,6 +83,27 @@ export default function Page() {
         }
       } else $s.delete("filter[district]");
 
+      if (!!data.area?.length) {
+        $s.delete("filter[area]");
+        for (let i = 0; i < data.area.length; i++) {
+          $s.append("filter[area]", data.area[i] + "");
+        }
+      } else $s.delete("filter[area]");
+
+      if (!!data.price?.length) {
+        $s.delete("filter[price]");
+        for (let i = 0; i < data.price.length; i++) {
+          $s.append("filter[price]", data.price[i] + "");
+        }
+      } else $s.delete("filter[price]");
+
+      if (!!data.total_price?.length) {
+        $s.delete("filter[total_price]");
+        for (let i = 0; i < data.total_price.length; i++) {
+          $s.append("filter[total_price]", data.total_price[i] + "");
+        }
+      } else $s.delete("filter[total_price]");
+
       if (data.barter) $s.set("filter[barter]", data.barter + "");
       else $s.delete("filter[barter]");
 
