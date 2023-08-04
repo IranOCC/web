@@ -231,10 +231,10 @@ export default function Page() {
     <>
       <div className="flex h-auto min-h-full flex-col bg-gray-200 px-3 pb-20 md:bg-transparent md:px-4 md:pb-4">
         {/*  */}
-        <div className="sticky top-0 z-10 bg-gray-200 py-4 font-bold">{!!itemsCount ? `${itemsCount} مورد یافت شد` : dataLoading ? `در حال دریافت...` : `چیزی یافت نشد`}</div>
+        <div className="sticky top-0 z-10 bg-gray-200 py-4 font-bold md:bg-white">{!!itemsCount ? `${itemsCount} مورد یافت شد` : dataLoading ? `در حال دریافت...` : `چیزی یافت نشد`}</div>
         <div className=" flex w-full flex-col gap-2 self-center">
           {/*  */}
-          <form onSubmit={handleSubmit(onSubmit)} className="sticky top-14 z-10 bg-gray-200">
+          <form onSubmit={handleSubmit(onSubmit)} className="sticky top-14 z-10 bg-gray-200 md:bg-white">
             <div className="grid grid-cols-1 gap-2 min-[350px]:grid-cols-2 md:grid-cols-3">
               <WebInput
                 //
@@ -294,7 +294,7 @@ export default function Page() {
                 <i className="absolute left-1 top-1 cursor-pointer text-sm text-red-600" onClick={() => setOpenFilter(null)}>
                   <Close sx={{ fontSize: 16 }} />
                 </i>
-                <div className="flex h-full w-full overflow-hidden rounded-lg bg-white/70 p-1 pe-6 empty:hidden">
+                <div className="flex h-full w-full overflow-hidden rounded-lg bg-white/70 p-1 pe-6 empty:hidden md:bg-gray-100">
                   {isOpenFilter !== null ? filters[isOpenFilter].content : null}
                   {/*  */}
                 </div>
