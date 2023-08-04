@@ -155,11 +155,13 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setHeaderTitle(undefined);
     setBreadCrump(undefined);
     setFullContent(false);
-    setSidebar({
-      small: false,
-      props: {},
-      component: "Features/Estate/MapEstate",
-    });
+    setSidebar(undefined);
+
+    // setSidebar({
+    //   small: false,
+    //   props: {},
+    //   component: "Features/Estate/MapEstate",
+    // });
     setHeaderSubTitle(undefined);
   };
 

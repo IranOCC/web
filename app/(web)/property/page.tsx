@@ -13,7 +13,7 @@ import { SearchEstateFormData } from "@/types/formsData";
 import { WebEstate } from "@/types/interfaces";
 import { Cancel, Close, Search } from "@mui/icons-material";
 import { useKeenSlider } from "keen-slider/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Timeout } from "react-number-format/types/types";
@@ -24,6 +24,7 @@ export default function Page() {
     searchPage();
   }, []);
 
+  const form = useForm<SearchEstateFormData>();
   const {
     register,
     unregister,
@@ -34,12 +35,14 @@ export default function Page() {
     handleSubmit,
     reset,
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
-  } = useForm<SearchEstateFormData>();
+  } = form;
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
   const onSubmit = async (data: SearchEstateFormData) => {
+    console.log("data", data);
+
     try {
       const $s = new URLSearchParams(searchParams?.toString());
       if (data.search) $s.set("search", data.search);
@@ -198,188 +201,24 @@ export default function Page() {
     setTimeout(adaptSize, 1500);
   }, [isFullscreen, isFullContent]);
 
-  const _filters = [
-    {
-      title: "تعیین دسته و نوع",
-      width: "9.5rem",
-      filters: ["category", "type"],
-      content: (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <WebSelect
-              //
-              control={control}
-              name="category"
-              size="small"
-              label="دسته"
-              loading={dataLoading || isSubmitting}
-              apiPath="/tools/estate/category/autoComplete"
-              searchable
-              noSpace
-              defaultValue={searchParams?.get("filter[category]") || undefined}
-              onChange={(v) => handleSubmit(onSubmit)()}
-              //
-            />
-            <WebSelect
-              //
-              control={control}
-              name="type"
-              size="small"
-              label="نوع"
-              loading={dataLoading || isSubmitting}
-              apiPath="/tools/estate/type/autoComplete"
-              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
-              searchable
-              multiple
-              noSpace
-              showTitle
-              tagsMode
-              defaultValue={searchParams?.getAll("filter[type]") || undefined}
-              onChange={(v) => handleSubmit(onSubmit)()}
-              //
-            />
-          </div>
-        </>
-      ),
-    },
-    {
-      //
-      title: "تعیین نوع سند",
-      width: "8.5rem",
-      filters: ["documentType"],
-      content: (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <WebSelect
-              //
-              control={control}
-              name="documentType"
-              size="small"
-              label="نوع سند"
-              loading={dataLoading || isSubmitting}
-              apiPath="/tools/estate/documentType/autoComplete"
-              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
-              searchable
-              multiple
-              noSpace
-              showTitle
-              tagsMode
-              defaultValue={searchParams?.getAll("filter[documentType]") || undefined}
-              onChange={(v) => handleSubmit(onSubmit)()}
-              //
-            />
-          </div>
-        </>
-      ),
-    },
-    {
-      //
-      title: "تعیین امکانات",
-      width: "8.5rem",
-      filters: ["features"],
-      content: (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <WebSelect
-              //
-              control={control}
-              name="features"
-              size="small"
-              label="امکانات"
-              loading={dataLoading || isSubmitting}
-              apiPath="/tools/estate/feature/autoComplete"
-              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
-              searchable
-              multiple
-              noSpace
-              showTitle
-              tagsMode
-              defaultValue={searchParams?.getAll("filter[features]") || undefined}
-              onChange={(v) => handleSubmit(onSubmit)()}
-              //
-            />
-          </div>
-        </>
-      ),
-    },
-    {
-      //
-      title: "تعیین موقعیت مکانی",
-      width: "10.5rem",
-      filters: ["province", "city", "district"],
-      content: (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <WebSelect
-              //
-              control={control}
-              name="province"
-              size="small"
-              label="استان"
-              loading={dataLoading || isSubmitting}
-              apiPath="/tools/estate/autoComplete/province"
-              searchable
-              noSpace
-              defaultValue={searchParams?.get("filter[province]") || undefined}
-              onChange={(v) => handleSubmit(onSubmit)()}
-              //
-            />
-            {!!searchParams?.get("filter[province]") && (
-              <WebSelect
-                //
-                control={control}
-                name="city"
-                size="small"
-                label="شهر"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/autoComplete/city"
-                filterApi={{ province: searchParams?.get("filter[province]") || undefined }}
-                searchable
-                noSpace
-                defaultValue={searchParams?.get("filter[city]") || undefined}
-                onChange={(v) => handleSubmit(onSubmit)()}
-                //
-              />
-            )}
-            {!!searchParams?.get("filter[province]") && !!searchParams?.get("filter[city]") && (
-              <WebSelect
-                //
-                control={control}
-                name="district"
-                size="small"
-                label="منطقه"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/autoComplete/district"
-                filterApi={{ province: searchParams?.get("filter[province]") || undefined, city: searchParams?.get("filter[city]") || undefined }}
-                searchable
-                multiple
-                noSpace
-                showTitle
-                tagsMode
-                defaultValue={searchParams?.getAll("filter[district]") || undefined}
-                onChange={(v) => handleSubmit(onSubmit)()}
-                //
-              />
-            )}
-          </div>
-        </>
-      ),
-    },
-    {
-      //
-      title: "تعیین متراژ",
-      width: "7.5rem",
-      filters: ["area"],
-      content: <div className="h-full w-full bg-red-500">دستههههه</div>,
-    },
-    {
-      //
-      title: "تعیین بازه قیمتی",
-      width: "9rem",
-      filters: ["price", "total_price", "barter"],
-      content: <div className="h-full w-full">دستههههه</div>,
-    },
-  ];
+  useEffect(() => {
+    const $s = new URLSearchParams(searchParams?.toString());
+    // =====
+    setValue("search", $s.get("search") || undefined);
+    // ==
+    setValue("category", $s.get("filter[category]") || undefined);
+    setValue("type", $s.getAll("filter[type]") || []);
+    // ==
+    setValue("documentType", $s.getAll("filter[documentType]") || []);
+    // ==
+    setValue("features", $s.getAll("filter[features]") || []);
+    // ==
+    setValue("province", $s.get("filter[province]") || undefined);
+    setValue("city", $s.get("filter[city]") || undefined);
+    setValue("district", $s.getAll("filter[district]") || []);
+    // ==
+  }, []);
+
   const cancelFilter = (idx: number) => {
     const $s = new URLSearchParams(searchParams?.toString());
     for (let i = 0; i < _filters[idx].filters.length; i++) {
@@ -389,6 +228,7 @@ export default function Page() {
     router.push(pathname + "?" + $s.toString());
   };
   const [isOpenFilter, setOpenFilter] = useState<number | null>(null);
+  const CompFilter = isOpenFilter === null ? (p: any) => null : _filters[isOpenFilter].Content;
   return (
     <>
       <div className="flex h-auto min-h-full flex-col bg-gray-200 px-3 pb-20 md:bg-transparent md:px-4 md:pb-4">
@@ -465,29 +305,15 @@ export default function Page() {
                   </i>
                 )}
                 <div className="flex h-full w-full rounded-lg bg-white/70 p-6 empty:hidden md:bg-gray-100">
-                  {isOpenFilter !== null ? _filters[isOpenFilter].content : null}
-                  {/*  */}
+                  <CompFilter
+                    //
+                    form={form}
+                    dataLoading={dataLoading}
+                    onSubmit={onSubmit}
+                  />
                 </div>
               </div>
               <div />
-              {/* 
-              
-              <CheckBox
-                //
-                control={control}
-                name="barter"
-                loading={dataLoading || isSubmitting}
-                noSpace
-                label="قابل تهاتر"
-                defaultValue={searchParams?.get("filter[barter]") === "true" || undefined}
-                // onChange={(v) => handleSubmit(onSubmit)()}
-              /> 
-              <br />
-              Price
-              <br />
-              TotalPrice
-              <br />
-              Area*/}
             </div>
           </form>
 
@@ -507,3 +333,256 @@ export default function Page() {
     </>
   );
 }
+
+// =============> filters
+const _filters = [
+  {
+    title: "تعیین دسته و نوع",
+    width: "9.5rem",
+    filters: ["category", "type"],
+    Content: ({ form, dataLoading, onSubmit }: any) => {
+      const { control, isSubmitting, handleSubmit } = form;
+      const searchParams = useSearchParams();
+      const timeoutRef = useRef<Timeout | null>(null);
+      return (
+        <>
+          <div className="flex w-full flex-col gap-2">
+            <WebSelect
+              //
+              control={control}
+              name="category"
+              size="small"
+              label="دسته"
+              loading={dataLoading || isSubmitting}
+              apiPath="/tools/estate/category/autoComplete"
+              searchable
+              noSpace
+              onChange={(v) => {
+                handleSubmit(onSubmit)();
+              }}
+              //
+            />
+            <WebSelect
+              //
+              control={control}
+              name="type"
+              size="small"
+              label="نوع"
+              loading={dataLoading || isSubmitting}
+              apiPath="/tools/estate/type/autoComplete"
+              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
+              searchable
+              multiple
+              noSpace
+              showTitle
+              tagsMode
+              onChange={(v) => {
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current);
+                }
+                timeoutRef.current = setTimeout(() => {
+                  handleSubmit(onSubmit)();
+                  timeoutRef.current = null;
+                }, 1000);
+              }}
+              //
+            />
+          </div>
+        </>
+      );
+    },
+  },
+  {
+    //
+    title: "تعیین نوع سند",
+    width: "8.5rem",
+    filters: ["documentType"],
+    Content: ({ form, dataLoading, onSubmit }: any) => {
+      const { control, isSubmitting, handleSubmit } = form;
+      const searchParams = useSearchParams();
+      const timeoutRef = useRef<Timeout | null>(null);
+      return (
+        <>
+          <div className="flex w-full flex-col gap-2">
+            <WebSelect
+              //
+              control={control}
+              name="documentType"
+              size="small"
+              label="نوع سند"
+              loading={dataLoading || isSubmitting}
+              apiPath="/tools/estate/documentType/autoComplete"
+              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
+              searchable
+              multiple
+              noSpace
+              showTitle
+              tagsMode
+              onChange={(v) => {
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current);
+                }
+                timeoutRef.current = setTimeout(() => {
+                  handleSubmit(onSubmit)();
+                  timeoutRef.current = null;
+                }, 1000);
+              }}
+              //
+            />
+          </div>
+        </>
+      );
+    },
+  },
+  {
+    //
+    title: "تعیین امکانات",
+    width: "8.5rem",
+    filters: ["features"],
+    Content: ({ form, dataLoading, onSubmit }: any) => {
+      const { control, isSubmitting, handleSubmit } = form;
+      const searchParams = useSearchParams();
+      const timeoutRef = useRef<Timeout | null>(null);
+      return (
+        <>
+          <div className="flex w-full flex-col gap-2">
+            <WebSelect
+              //
+              control={control}
+              name="features"
+              size="small"
+              label="امکانات"
+              loading={dataLoading || isSubmitting}
+              apiPath="/tools/estate/feature/autoComplete"
+              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
+              searchable
+              multiple
+              noSpace
+              showTitle
+              tagsMode
+              onChange={(v) => {
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current);
+                }
+                timeoutRef.current = setTimeout(() => {
+                  handleSubmit(onSubmit)();
+                  timeoutRef.current = null;
+                }, 1000);
+              }}
+              //
+            />
+          </div>
+        </>
+      );
+    },
+  },
+  {
+    //
+    title: "تعیین موقعیت مکانی",
+    width: "10.5rem",
+    filters: ["province", "city", "district"],
+    Content: ({ form, dataLoading, onSubmit }: any) => {
+      const { control, isSubmitting, handleSubmit } = form;
+      const searchParams = useSearchParams();
+      const timeoutRef = useRef<Timeout | null>(null);
+      return (
+        <>
+          <div className="flex w-full flex-col gap-2">
+            <WebSelect
+              //
+              control={control}
+              name="province"
+              size="small"
+              label="استان"
+              loading={dataLoading || isSubmitting}
+              apiPath="/tools/estate/autoComplete/province"
+              searchable
+              noSpace
+              onChange={(v) => {
+                handleSubmit(onSubmit)();
+              }}
+              //
+            />
+            {!!searchParams?.get("filter[province]") && (
+              <WebSelect
+                //
+                control={control}
+                name="city"
+                size="small"
+                label="شهر"
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/autoComplete/city"
+                filterApi={{ province: searchParams?.get("filter[province]") || undefined }}
+                searchable
+                noSpace
+                onChange={(v) => {
+                  handleSubmit(onSubmit)();
+                }}
+                //
+              />
+            )}
+            {!!searchParams?.get("filter[province]") && !!searchParams?.get("filter[city]") && (
+              <WebSelect
+                //
+                control={control}
+                name="district"
+                size="small"
+                label="منطقه"
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/autoComplete/district"
+                filterApi={{ province: searchParams?.get("filter[province]") || undefined, city: searchParams?.get("filter[city]") || undefined }}
+                searchable
+                multiple
+                noSpace
+                showTitle
+                tagsMode
+                onChange={(v) => {
+                  if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                  }
+                  timeoutRef.current = setTimeout(() => {
+                    handleSubmit(onSubmit)();
+                    timeoutRef.current = null;
+                  }, 1000);
+                }}
+                //
+              />
+            )}
+          </div>
+        </>
+      );
+    },
+  },
+  {
+    //
+    title: "تعیین متراژ",
+    width: "7.5rem",
+    filters: ["area"],
+    Content: ({ form, dataLoading, onSubmit }: any) => {
+      const { control, isSubmitting, handleSubmit } = form;
+      const searchParams = useSearchParams();
+      const timeoutRef = useRef<Timeout | null>(null);
+      return (
+        <>
+          <div className="h-full w-full bg-red-500">دستههههه</div>
+        </>
+      );
+    },
+  },
+  {
+    //
+    title: "تعیین بازه قیمتی",
+    width: "9rem",
+    filters: ["price", "total_price", "barter"],
+    Content: ({ form, dataLoading, onSubmit }: any) => {
+      const { control, isSubmitting, handleSubmit } = form;
+      const searchParams = useSearchParams();
+      const timeoutRef = useRef<Timeout | null>(null);
+      return (
+        <>
+          <div className="h-full w-full bg-red-500">دستههههه</div>
+        </>
+      );
+    },
+  },
+];
