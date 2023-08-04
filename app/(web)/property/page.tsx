@@ -229,13 +229,13 @@ export default function Page() {
   const [isOpenFilter, setOpenFilter] = useState<number | null>(null);
   return (
     <>
-      <div className="flex h-auto min-h-full flex-col gap-2 bg-gray-200 px-3 pb-20 md:bg-transparent md:px-4 md:pb-4">
+      <div className="flex h-auto min-h-full flex-col bg-gray-200 px-3 pb-20 md:bg-transparent md:px-4 md:pb-4">
         {/*  */}
-        <div className="py-4 font-bold">{!!itemsCount ? `${itemsCount} مورد یافت شد` : dataLoading ? `در حال دریافت...` : `چیزی یافت نشد`}</div>
-        <div className=" flex w-full flex-col gap-4 self-center">
+        <div className="sticky top-0 z-10 bg-gray-200 py-4 font-bold">{!!itemsCount ? `${itemsCount} مورد یافت شد` : dataLoading ? `در حال دریافت...` : `چیزی یافت نشد`}</div>
+        <div className=" flex w-full flex-col gap-2 self-center">
           {/*  */}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 gap-2 min-[350px]:grid-cols-2 md:grid-cols-3 ">
+          <form onSubmit={handleSubmit(onSubmit)} className="sticky top-14 z-10 bg-gray-200">
+            <div className="grid grid-cols-1 gap-2 min-[350px]:grid-cols-2 md:grid-cols-3">
               <WebInput
                 //
                 name="search"
@@ -291,14 +291,15 @@ export default function Page() {
               </div>
               {/* === */}
               <div className={"relative col-span-full overflow-hidden transition-all duration-1000" + (isOpenFilter !== null ? " h-64" : " h-0")}>
-                <i className="absolute left-0 top-0 cursor-pointer text-sm text-red-600" onClick={() => setOpenFilter(null)}>
+                <i className="absolute left-1 top-1 cursor-pointer text-sm text-red-600" onClick={() => setOpenFilter(null)}>
                   <Close sx={{ fontSize: 16 }} />
                 </i>
-                <div className="flex h-full w-full overflow-hidden rounded-lg bg-gray-200 p-1 pe-4">
+                <div className="flex h-full w-full overflow-hidden rounded-lg bg-white/70 p-1 pe-6 empty:hidden">
                   {isOpenFilter !== null ? filters[isOpenFilter].content : null}
                   {/*  */}
                 </div>
               </div>
+              <div />
               {/* <WebSelect
                 //
                 control={control}
