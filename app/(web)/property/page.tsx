@@ -183,7 +183,6 @@ export default function Page() {
       width: "9.5rem",
       filters: ["category", "type"],
       content: <div className="h-full w-full">دستههههه</div>,
-      cancelFilter: () => {},
     },
     {
       //
@@ -191,7 +190,6 @@ export default function Page() {
       width: "8.5rem",
       filters: ["documentType"],
       content: <div className="h-full w-full">دستههههه</div>,
-      cancelFilter: () => {},
     },
     {
       //
@@ -199,7 +197,6 @@ export default function Page() {
       width: "8.5rem",
       filters: ["features"],
       content: <div className="h-full w-full">دستههههه</div>,
-      cancelFilter: () => {},
     },
     {
       //
@@ -207,7 +204,6 @@ export default function Page() {
       width: "10.5rem",
       filters: ["province", "city", "district"],
       content: <div className="h-full w-full">دستههههه</div>,
-      cancelFilter: () => {},
     },
     {
       //
@@ -215,7 +211,6 @@ export default function Page() {
       width: "7.5rem",
       filters: ["area"],
       content: <div className="h-full w-full bg-red-500">دستههههه</div>,
-      cancelFilter: () => {},
     },
     {
       //
@@ -223,9 +218,16 @@ export default function Page() {
       width: "9rem",
       filters: ["price", "total_price", "barter"],
       content: <div className="h-full w-full">دستههههه</div>,
-      cancelFilter: () => {},
     },
   ];
+  const cancelFilter = (idx: number) => {
+    const $s = new URLSearchParams(searchParams?.toString());
+    for (let i = 0; i < _filters[idx].filters.length; i++) {
+      const ff = _filters[idx].filters[i];
+      $s.delete(`filter[${ff}]`);
+    }
+    router.push(pathname + "?" + $s.toString());
+  };
   const [isOpenFilter, setOpenFilter] = useState<number | null>(null);
   return (
     <>
@@ -267,22 +269,19 @@ export default function Page() {
                     //
                     ..._filters.filter(({ filters }) => filters.some((v) => searchParams?.has(`filter[${v}]`))),
                     ..._filters.filter(({ filters }) => !filters.some((v) => searchParams?.has(`filter[${v}]`))),
-                  ].map(({ title, width, filters, cancelFilter }, idx) => {
+                  ].map(({ title, width, filters }, idx) => {
                     const isActive = filters.some((v) => searchParams?.has(`filter[${v}]`));
                     return (
                       <button
                         key={idx}
                         onClick={(e) => setOpenFilter((m) => (m === idx ? null : idx))}
                         style={{ width: width, maxWidth: width, minWidth: width }}
-                        className={
-                          `keen-slider__slide relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-3xl border py-1 text-sm ` +
-                          (isActive || isOpenFilter === idx ? "border-secondary bg-secondary text-white" : "border-gray-300 bg-gray-100 text-gray-700 hover:border-secondary hover:bg-secondary hover:text-white")
-                        }
+                        className={`keen-slider__slide relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-3xl border py-1 text-sm ` + (isActive || isOpenFilter === idx ? "border-secondary bg-secondary text-white" : "border-gray-300 bg-gray-100 text-gray-700")}
                       >
                         <span className="flex w-full items-center justify-center text-center text-sm">
                           {title}
-                          {isActive && cancelFilter && (
-                            <i className="absolute left-1 cursor-pointer text-sm text-red-600" onClick={() => cancelFilter()}>
+                          {isActive && (
+                            <i className="absolute left-1 cursor-pointer text-sm text-red-600" onClick={() => cancelFilter(idx)}>
                               <Cancel sx={{ fontSize: 16 }} />
                             </i>
                           )}
