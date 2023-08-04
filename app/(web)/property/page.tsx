@@ -567,7 +567,7 @@ const _filters = [
       const timeoutRef = useRef<Timeout | null>(null);
       return (
         <>
-          <div className="h-full w-full bg-red-500">دستههههه</div>
+          <div className="h-full w-full">فیلتر بر اساس متراژ</div>
         </>
       );
     },
@@ -583,7 +583,7 @@ const _filters = [
       const timeoutRef = useRef<Timeout | null>(null);
       return (
         <>
-          <div className="h-full w-full bg-red-500">دستههههه</div>
+          <div className="h-full w-full">فیلتر براساس قیمت</div>
         </>
       );
     },
