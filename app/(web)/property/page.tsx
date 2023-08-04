@@ -182,28 +182,167 @@ export default function Page() {
       title: "تعیین دسته و نوع",
       width: "9.5rem",
       filters: ["category", "type"],
-      content: <div className="h-full w-full">دستههههه</div>,
+      content: (
+        <>
+          <div className="flex w-full flex-col gap-2">
+            <WebSelect
+              //
+              control={control}
+              name="category"
+              size="small"
+              label="دسته"
+              loading={dataLoading || isSubmitting}
+              apiPath="/tools/estate/category/autoComplete"
+              searchable
+              noSpace
+              defaultValue={searchParams?.get("filter[category]") || undefined}
+              onChange={(v) => handleSubmit(onSubmit)()}
+              //
+            />
+            <WebSelect
+              //
+              control={control}
+              name="type"
+              size="small"
+              label="نوع"
+              loading={dataLoading || isSubmitting}
+              apiPath="/tools/estate/type/autoComplete"
+              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
+              searchable
+              multiple
+              noSpace
+              showTitle
+              tagsMode
+              defaultValue={searchParams?.getAll("filter[type]") || undefined}
+              onChange={(v) => handleSubmit(onSubmit)()}
+              //
+            />
+          </div>
+        </>
+      ),
     },
     {
       //
       title: "تعیین نوع سند",
       width: "8.5rem",
       filters: ["documentType"],
-      content: <div className="h-full w-full">دستههههه</div>,
+      content: (
+        <>
+          <div className="flex w-full flex-col gap-2">
+            <WebSelect
+              //
+              control={control}
+              name="documentType"
+              size="small"
+              label="نوع سند"
+              loading={dataLoading || isSubmitting}
+              apiPath="/tools/estate/documentType/autoComplete"
+              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
+              searchable
+              multiple
+              noSpace
+              showTitle
+              tagsMode
+              defaultValue={searchParams?.getAll("filter[documentType]") || undefined}
+              onChange={(v) => handleSubmit(onSubmit)()}
+              //
+            />
+          </div>
+        </>
+      ),
     },
     {
       //
-      title: "تعیین ویژگی ها",
+      title: "تعیین امکانات",
       width: "8.5rem",
       filters: ["features"],
-      content: <div className="h-full w-full">دستههههه</div>,
+      content: (
+        <>
+          <div className="flex w-full flex-col gap-2">
+            <WebSelect
+              //
+              control={control}
+              name="features"
+              size="small"
+              label="امکانات"
+              loading={dataLoading || isSubmitting}
+              apiPath="/tools/estate/feature/autoComplete"
+              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
+              searchable
+              multiple
+              noSpace
+              showTitle
+              tagsMode
+              defaultValue={searchParams?.getAll("filter[features]") || undefined}
+              onChange={(v) => handleSubmit(onSubmit)()}
+              //
+            />
+          </div>
+        </>
+      ),
     },
     {
       //
       title: "تعیین موقعیت مکانی",
       width: "10.5rem",
       filters: ["province", "city", "district"],
-      content: <div className="h-full w-full">دستههههه</div>,
+      content: (
+        <>
+          <div className="flex w-full flex-col gap-2">
+            <WebSelect
+              //
+              control={control}
+              name="province"
+              size="small"
+              label="استان"
+              loading={dataLoading || isSubmitting}
+              apiPath="/tools/estate/autoComplete/province"
+              searchable
+              noSpace
+              defaultValue={searchParams?.get("filter[province]") || undefined}
+              onChange={(v) => handleSubmit(onSubmit)()}
+              //
+            />
+            {!!searchParams?.get("filter[province]") && (
+              <WebSelect
+                //
+                control={control}
+                name="city"
+                size="small"
+                label="شهر"
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/autoComplete/city"
+                filterApi={{ province: searchParams?.get("filter[province]") || undefined }}
+                searchable
+                noSpace
+                defaultValue={searchParams?.get("filter[city]") || undefined}
+                onChange={(v) => handleSubmit(onSubmit)()}
+                //
+              />
+            )}
+            {!!searchParams?.get("filter[province]") && !!searchParams?.get("filter[city]") && (
+              <WebSelect
+                //
+                control={control}
+                name="district"
+                size="small"
+                label="منطقه"
+                loading={dataLoading || isSubmitting}
+                apiPath="/tools/estate/autoComplete/district"
+                filterApi={{ province: searchParams?.get("filter[province]") || undefined, city: searchParams?.get("filter[city]") || undefined }}
+                searchable
+                multiple
+                noSpace
+                showTitle
+                tagsMode
+                defaultValue={searchParams?.getAll("filter[district]") || undefined}
+                onChange={(v) => handleSubmit(onSubmit)()}
+                //
+              />
+            )}
+          </div>
+        </>
+      ),
     },
     {
       //
@@ -265,139 +404,53 @@ export default function Page() {
               />
               <div className="relative w-full">
                 <div ref={filtersRef} className="keen-slider flex h-full !w-auto flex-row items-center">
-                  {[
-                    //
-                    ..._filters.filter(({ filters }) => filters.some((v) => searchParams?.has(`filter[${v}]`))),
-                    ..._filters.filter(({ filters }) => !filters.some((v) => searchParams?.has(`filter[${v}]`))),
-                  ].map(({ title, width, filters }, idx) => {
-                    const isActive = filters.some((v) => searchParams?.has(`filter[${v}]`));
-                    return (
-                      <button
-                        key={idx}
-                        onClick={(e) => setOpenFilter((m) => (m === idx ? null : idx))}
-                        style={{ width: width, maxWidth: width, minWidth: width }}
-                        className={`keen-slider__slide relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-3xl border py-1 text-sm ` + (isActive || isOpenFilter === idx ? "border-secondary bg-secondary text-white" : "border-gray-300 bg-gray-100 text-gray-700")}
-                      >
-                        <span className="flex w-full items-center justify-center text-center text-sm">
-                          {title}
+                  {
+                    // [
+                    //   //
+                    //   ..._filters.filter(({ filters }) => filters.some((v) => searchParams?.has(`filter[${v}]`))),
+                    //   ..._filters.filter(({ filters }) => !filters.some((v) => searchParams?.has(`filter[${v}]`))),
+                    // ]
+                    _filters.map(({ title, width, filters }, idx) => {
+                      const isActive = filters.some((v) => searchParams?.has(`filter[${v}]`));
+                      return (
+                        <button
+                          key={idx}
+                          style={{ width: width, maxWidth: width, minWidth: width }}
+                          className={`keen-slider__slide relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-3xl border text-sm ` + (isActive || isOpenFilter === idx ? "border-secondary bg-secondary text-white" : "border-gray-300 bg-gray-100 text-gray-700")}
+                        >
+                          <span
+                            //
+                            onClick={(e) => setOpenFilter((m) => (m === idx ? null : idx))}
+                            className="flex w-full flex-1 items-center justify-center py-1 text-center text-sm"
+                          >
+                            {title}
+                          </span>
                           {isActive && (
-                            <i className="absolute left-1 cursor-pointer text-sm text-red-600" onClick={() => cancelFilter(idx)}>
+                            <i className="absolute left-1 cursor-pointer text-sm text-red-600 hover:text-red-100" onClick={() => cancelFilter(idx)}>
                               <Cancel sx={{ fontSize: 16 }} />
                             </i>
                           )}
-                        </span>
-                      </button>
-                    );
-                  })}
+                        </button>
+                      );
+                    })
+                  }
                 </div>
               </div>
               {/* === */}
-              <div className={"relative col-span-full overflow-hidden transition-all duration-1000" + (isOpenFilter !== null ? " h-64" : " h-0")}>
-                <i className="absolute left-1 top-1 cursor-pointer text-sm text-red-600" onClick={() => setOpenFilter(null)}>
-                  <Close sx={{ fontSize: 16 }} />
-                </i>
-                <div className="flex h-full w-full overflow-hidden rounded-lg bg-white/70 p-1 pe-6 empty:hidden md:bg-gray-100">
+              <div className={"relative transition-all duration-1000" + (isOpenFilter !== null ? " h-64" : " h-0")}>
+                {isOpenFilter !== null && (
+                  <i className="absolute left-1 top-1 cursor-pointer text-sm text-red-600" onClick={() => setOpenFilter(null)}>
+                    <Close sx={{ fontSize: 16 }} />
+                  </i>
+                )}
+                <div className="flex h-full w-full rounded-lg bg-white/70 p-6 empty:hidden md:bg-gray-100">
                   {isOpenFilter !== null ? _filters[isOpenFilter].content : null}
                   {/*  */}
                 </div>
               </div>
               <div />
-              {/* <WebSelect
-                //
-                control={control}
-                name="category"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/category/autoComplete"
-                noSpace
-                defaultValue={searchParams?.get("filter[category]") || undefined}
-                onChange={(v) => handleSubmit(onSubmit)()}
-                containerClassName="col-span-full"
-                //
-              />
-              <WebSelect
-                //
-                control={control}
-                name="type"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/type/autoComplete"
-                filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
-                multiple
-                noSpace
-                showTitle
-                tagsMode
-                defaultValue={searchParams?.getAll("filter[type]") || undefined}
-                onChange={(v) => handleSubmit(onSubmit)()}
-                //
-              />
-              <WebSelect
-                //
-                control={control}
-                name="documentType"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/documentType/autoComplete"
-                filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
-                multiple
-                noSpace
-                showTitle
-                tagsMode
-                defaultValue={searchParams?.getAll("filter[documentType]") || undefined}
-                onChange={(v) => handleSubmit(onSubmit)()}
-                //
-              />
-              <WebSelect
-                //
-                control={control}
-                name="features"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/feature/autoComplete"
-                filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
-                multiple
-                noSpace
-                showTitle
-                tagsMode
-                defaultValue={searchParams?.getAll("filter[features]") || undefined}
-                onChange={(v) => handleSubmit(onSubmit)()}
-                containerClassName="col-span-full"
-                //
-              />
-              <WebSelect
-                //
-                control={control}
-                name="province"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/autoComplete/province"
-                noSpace
-                defaultValue={searchParams?.get("filter[province]") || undefined}
-                onChange={(v) => handleSubmit(onSubmit)()}
-                //
-              />
-              <WebSelect
-                //
-                control={control}
-                name="city"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/autoComplete/city"
-                filterApi={{ province: searchParams?.get("filter[province]") || undefined }}
-                noSpace
-                defaultValue={searchParams?.get("filter[city]") || undefined}
-                onChange={(v) => handleSubmit(onSubmit)()}
-                //
-              />
-              <WebSelect
-                //
-                control={control}
-                name="district"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/autoComplete/district"
-                filterApi={{ province: searchParams?.get("filter[province]") || undefined, city: searchParams?.get("filter[city]") || undefined }}
-                multiple
-                noSpace
-                showTitle
-                tagsMode
-                defaultValue={searchParams?.getAll("filter[district]") || undefined}
-                onChange={(v) => handleSubmit(onSubmit)()}
-                //
-              />
+              {/* 
+              
               <CheckBox
                 //
                 control={control}

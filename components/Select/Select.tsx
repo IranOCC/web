@@ -127,7 +127,7 @@ const Select = (props: IProps) => {
       if (!isFirstRenderResetApply.current) getItems();
       else isFirstRenderResetApply.current = false;
     }
-  }, [filterApi?.categories, filterApi?.province]);
+  }, [filterApi?.categories, filterApi?.province, filterApi?.city]);
 
   useEffect(() => {
     setSearch("");
@@ -414,7 +414,7 @@ const FieldComponent = (props: FieldComponentType) => {
                     })}
                     {dataList.length === 0 && <SelectOption title="موردی پیدا نشد" key={-1} selected={false} />}
                   </ul>
-                  <div className={"bg-gray-50 absolute bottom-0 w-full items-center justify-center opacity-70" + (searchable ? " top-10" : "") + (dataLoading ? " flex" : " hidden")}>
+                  <div className={"absolute bottom-0 w-full items-center justify-center bg-gray-50 opacity-70" + (searchable ? " top-10" : "") + (dataLoading ? " flex" : " hidden")}>
                     <Spin />
                   </div>
                 </div>
