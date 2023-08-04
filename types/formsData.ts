@@ -307,18 +307,19 @@ export type SearchEstateFormData = {
     search?: string;
     // 
     category?: string;
+    type?: string[];
+    documentType?: string[];
+    features?: string[];
     // 
     province?: string;
     city?: string;
     district?: string[];
     // 
     area?: [number, number];
+    // 
     total_price?: [number, number];
     price?: [number, number];
-    // 
     barter?: boolean;
     // 
-    type?: string[];
-    documentType?: string[];
-    features?: string[];
+
 };

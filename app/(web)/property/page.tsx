@@ -158,10 +158,12 @@ export default function Page() {
 
   const filters = [
     //
-    { title: "تعیین دسته و نوع", width: "10rem" },
-    { title: "تعیین ویژگی ها", width: "9rem" },
-    { title: "تعیین موقعیت مکانی", width: "10rem" },
-    { title: "تعیین متراژ", width: "8rem" },
+    { title: "تعیین دسته و نوع", width: "10rem", filters: ["category", "type"] },
+    { title: "تعیین نوع سند", width: "9rem", filters: ["documentType"] },
+    { title: "تعیین ویژگی ها", width: "9rem", filters: ["features"] },
+    { title: "تعیین موقعیت مکانی", width: "10rem", filters: ["province", "city", "district"] },
+    { title: "تعیین متراژ", width: "8rem", filters: ["area"] },
+    { title: "تعیین بازه قیمتی", width: "9rem", filters: ["price", "total_price", "barter"] },
   ];
 
   return (
@@ -202,15 +204,16 @@ export default function Page() {
               <div className="relative col-span-full w-full">
                 <div ref={featuresRef} className="keen-slider flex h-full !w-auto flex-row items-center">
                   {filters.map(({ title, width }, idx) => {
+                    const isActive = true;
                     return (
-                      <button key={idx} className={`keen-slider__slide relative flex min-w-[${width}] w-[${width}] items-center justify-center whitespace-nowrap rounded-3xl border border-gray-400 bg-gray-100 p-1 text-sm`}>
+                      <button key={idx} className={`keen-slider__slide relative flex min-w-[${width}] w-[${width}] items-center justify-center whitespace-nowrap rounded-3xl border p-1 text-sm ` + (isActive ? "border-secondary bg-disable text-white" : "border-gray-300 bg-gray-100 text-gray-700")}>
                         <span className="w-full px-4 text-center text-sm">{title}</span>
                       </button>
                     );
                   })}
                 </div>
               </div>
-              <WebSelect
+              {/* <WebSelect
                 //
                 control={control}
                 name="category"
@@ -315,13 +318,13 @@ export default function Page() {
                 label="قابل تهاتر"
                 defaultValue={searchParams?.get("filter[barter]") === "true" || undefined}
                 // onChange={(v) => handleSubmit(onSubmit)()}
-              />
+              /> 
               <br />
               Price
               <br />
               TotalPrice
               <br />
-              Area
+              Area*/}
             </div>
           </form>
 
