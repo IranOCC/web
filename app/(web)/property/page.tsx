@@ -220,12 +220,12 @@ export default function Page() {
   }, []);
 
   const cancelFilter = (idx: number) => {
-    const $s = new URLSearchParams(searchParams?.toString());
-    for (let i = 0; i < _filters[idx].filters.length; i++) {
-      const ff = _filters[idx].filters[i];
-      $s.delete(`filter[${ff}]`);
+    const _s = _filters[idx].filters;
+    for (let i = 0; i < _s.length; i++) {
+      const ff = _s[i];
+      resetField(ff as any);
     }
-    router.push(pathname + "?" + $s.toString());
+    handleSubmit(onSubmit)();
   };
   const [isOpenFilter, setOpenFilter] = useState<number | null>(null);
   const CompFilter = isOpenFilter === null ? (p: any) => null : _filters[isOpenFilter].Content;
@@ -277,7 +277,10 @@ export default function Page() {
                         <button
                           key={idx}
                           style={{ width: width, maxWidth: width, minWidth: width }}
-                          className={`keen-slider__slide relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-3xl border text-sm ` + (isActive || isOpenFilter === idx ? "border-secondary bg-secondary text-white" : "border-gray-300 bg-gray-100 text-gray-700")}
+                          className={
+                            `keen-slider__slide relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-3xl border text-sm ` +
+                            (isActive ? "border-secondary bg-secondary text-white" : "border-gray-300 text-gray-700" + (isOpenFilter === idx ? " bg-disable" : " bg-gray-100"))
+                          }
                         >
                           <span
                             //
