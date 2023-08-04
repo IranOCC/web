@@ -177,7 +177,7 @@ export default function Page() {
     setTimeout(adaptSize, 1500);
   }, [isFullscreen, isFullContent]);
 
-  const filters = [
+  const _filters = [
     {
       title: "تعیین دسته و نوع",
       width: "9.5rem",
@@ -235,7 +235,7 @@ export default function Page() {
         <div className=" flex w-full flex-col gap-2 self-center">
           {/*  */}
           <form onSubmit={handleSubmit(onSubmit)} className="sticky top-14 z-10 bg-gray-200 md:bg-white">
-            <div className="grid grid-cols-1 gap-2 min-[350px]:grid-cols-2 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-2">
               <WebInput
                 //
                 name="search"
@@ -247,7 +247,6 @@ export default function Page() {
                     {dataLoading ? <LoadingIcon /> : <Search />}
                   </i>
                 }
-                containerClassName="col-span-full"
                 onKeyDown={(e: any) => {
                   if (timeoutRef.current) {
                     clearTimeout(timeoutRef.current);
@@ -262,9 +261,13 @@ export default function Page() {
                 type="search"
                 noSpace
               />
-              <div className="relative col-span-full w-full">
+              <div className="relative w-full">
                 <div ref={filtersRef} className="keen-slider flex h-full !w-auto flex-row items-center">
-                  {filters.map(({ title, width, filters, cancelFilter }, idx) => {
+                  {[
+                    //
+                    ..._filters.filter(({ filters }) => filters.some((v) => searchParams?.has(`filter[${v}]`))),
+                    ..._filters.filter(({ filters }) => !filters.some((v) => searchParams?.has(`filter[${v}]`))),
+                  ].map(({ title, width, filters, cancelFilter }, idx) => {
                     const isActive = filters.some((v) => searchParams?.has(`filter[${v}]`));
                     return (
                       <button
@@ -295,7 +298,7 @@ export default function Page() {
                   <Close sx={{ fontSize: 16 }} />
                 </i>
                 <div className="flex h-full w-full overflow-hidden rounded-lg bg-white/70 p-1 pe-6 empty:hidden md:bg-gray-100">
-                  {isOpenFilter !== null ? filters[isOpenFilter].content : null}
+                  {isOpenFilter !== null ? _filters[isOpenFilter].content : null}
                   {/*  */}
                 </div>
               </div>
