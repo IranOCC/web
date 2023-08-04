@@ -91,6 +91,8 @@ export default function Page() {
     }
   };
 
+  const { isFullscreen, isFullContent } = useContext(WebPreviewContext) as WebPreviewContextType;
+
   const api = useAxiosAuth();
   const [current, setCurrent] = useState([1]);
   const [dataList, setDataList] = useState<WebEstate[]>([]);
@@ -142,7 +144,7 @@ export default function Page() {
     return () => _main_scroll?.removeEventListener("scroll", checkLoadMore);
   }, [dataList.length, dataLoading]);
 
-  const [featuresRef, featuresInstanceRef] = useKeenSlider<HTMLDivElement>(
+  const [filtersRef, filtersInstanceRef] = useKeenSlider<HTMLDivElement>(
     {
       initial: 0,
       mode: "free",
@@ -155,6 +157,24 @@ export default function Page() {
     },
     []
   );
+
+  const adaptSize = () => {
+    const slider = filtersInstanceRef.current!;
+    // @ts-ignore
+    if (slider) slider.container.style.width = slider.slides[slider.track.details.rel]?.parentNode?.parentNode?.offsetWidth + "px";
+    if (slider) slider.container.style.height = slider.slides[slider.track.details.rel].offsetHeight + "px";
+    if (slider) slider.update();
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", adaptSize, false);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(adaptSize, 700);
+    setTimeout(adaptSize, 1000);
+    setTimeout(adaptSize, 1500);
+  }, [isFullscreen, isFullContent]);
 
   const filters = [
     //
@@ -202,9 +222,9 @@ export default function Page() {
                 noSpace
               />
               <div className="relative col-span-full w-full">
-                <div ref={featuresRef} className="keen-slider flex h-full !w-auto flex-row items-center">
-                  {filters.map(({ title, width }, idx) => {
-                    const isActive = true;
+                <div ref={filtersRef} className="keen-slider flex h-full !w-auto flex-row items-center">
+                  {filters.map(({ title, width, filters }, idx) => {
+                    const isActive = filters.some((v) => searchParams?.has(`filter[${v}]`));
                     return (
                       <button key={idx} className={`keen-slider__slide relative flex min-w-[${width}] w-[${width}] items-center justify-center whitespace-nowrap rounded-3xl border p-1 text-sm ` + (isActive ? "border-secondary bg-disable text-white" : "border-gray-300 bg-gray-100 text-gray-700")}>
                         <span className="w-full px-4 text-center text-sm">{title}</span>
