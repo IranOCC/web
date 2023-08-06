@@ -6,7 +6,7 @@ import HomeIconSideBar from "@/components/Icons/web/sidebar/Home";
 import SearchIconSideBar from "@/components/Icons/web/sidebar/Search";
 import VipIconSideBar from "@/components/Icons/web/sidebar/Vip";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { ReactNode, useState } from "react";
 import Logo from "@/assets/images/logo.png";
 import Image from "next/image";
@@ -17,50 +17,55 @@ type ItemType = {
   index: number;
   icon: ReactNode;
   title: string;
+  isActive?: () => boolean;
   href?: string;
   className?: string;
   onClick?: () => void;
 };
 
-const items: ItemType[] = [
-  {
-    index: 0,
-    icon: <HomeIconSideBar />,
-    title: "صفحه اصلی",
-    href: "/",
-  },
-  {
-    index: 1,
-    icon: <SearchIconSideBar />,
-    title: "جستجوی پیشرفته",
-    href: "/property",
-  },
-  {
-    index: 2,
-    icon: <VipIconSideBar />,
-    title: "املاک ویژه",
-    href: "/property?filter[vip]=true",
-  },
-  {
-    index: 3,
-    icon: <BlogIconSideBar />,
-    title: "وبلاگ",
-    href: "/blog",
-  },
-  {
-    index: 4,
-    icon: <ContactIconSideBar />,
-    title: "تماس با ما",
-    href: "/contact",
-  },
-];
-
 const WebSideBar = () => {
-  //
   const [hovering, setHovering] = useState<number | null>(null);
   const pathname = usePathname();
-  const isActive = items.filter(({ href }: ItemType) => {
-    return href === pathname;
+  const searchParams = useSearchParams();
+
+  const items: ItemType[] = [
+    {
+      index: 0,
+      icon: <HomeIconSideBar />,
+      title: "صفحه اصلی",
+      href: "/",
+    },
+    {
+      index: 1,
+      icon: <SearchIconSideBar />,
+      title: "جستجوی پیشرفته",
+      href: "/property",
+      isActive: () => pathname === "/property" && !searchParams?.get("filter[vip]"),
+    },
+    {
+      index: 2,
+      icon: <VipIconSideBar />,
+      title: "املاک ویژه",
+      href: "/property?filter[vip]=true",
+      isActive: () => pathname === "/property" && !!searchParams?.get("filter[vip]"),
+    },
+    {
+      index: 3,
+      icon: <BlogIconSideBar />,
+      title: "وبلاگ",
+      href: "/blog",
+    },
+    {
+      index: 4,
+      icon: <ContactIconSideBar />,
+      title: "تماس با ما",
+      href: "/contact",
+    },
+  ];
+
+  //
+  const isActive = items.filter(({ href, isActive }: ItemType) => {
+    return !!isActive ? isActive() : pathname === href;
   });
   const y = hovering !== null ? hovering : isActive[0]?.index !== undefined ? isActive[0]?.index : -2;
   return (

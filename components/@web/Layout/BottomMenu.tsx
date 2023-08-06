@@ -3,7 +3,7 @@
 import BlogIconSideBar from "@/components/Icons/web/sidebar/Blog";
 import VipIconSideBar from "@/components/Icons/web/sidebar/Vip";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { ReactNode, useContext, useState } from "react";
 
 import HomeIconBottomMenu from "@/components/Icons/web/bottomMenu/Home";
@@ -21,6 +21,7 @@ type ItemType = {
   icon: ReactNode;
   title: string;
   href?: string;
+  isActive?: () => boolean;
   className?: string;
   hasSubMenu?: boolean;
 };
@@ -30,6 +31,7 @@ const WebBottomMenu = () => {
   const [openSub, setOpenSub] = useState<number | null>(null);
   const [hovering, setHovering] = useState<number | null>(null);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const { user, showAdminPanel, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
@@ -46,6 +48,7 @@ const WebBottomMenu = () => {
       icon: <SearchIconBottomMenu />,
       title: "جستجوی پیشرفته",
       href: "/property",
+      isActive: () => pathname === "/property" && !searchParams?.get("filter[vip]"),
       // className: "hidden min-[240px]:block",
     },
     {
@@ -53,6 +56,7 @@ const WebBottomMenu = () => {
       icon: <VipIconBottomMenu />,
       title: "املاک ویژه",
       href: "/property?filter[vip]=true",
+      isActive: () => pathname === "/property" && !!searchParams?.get("filter[vip]"),
       // className: "hidden min-[400px]:block",
     },
     {
@@ -75,8 +79,8 @@ const WebBottomMenu = () => {
   const isOpenSub = items.filter(({ index }: ItemType) => {
     return openSub === index;
   });
-  const isActive = items.filter(({ href }: ItemType) => {
-    return pathname === href;
+  const isActive = items.filter(({ href, isActive }: ItemType) => {
+    return !!isActive ? isActive() : pathname === href;
   });
   const x = hovering !== null ? hovering : isOpenSub[0]?.index !== undefined ? isOpenSub[0]?.index : isActive[0]?.index !== undefined ? isActive[0]?.index : -1;
 
