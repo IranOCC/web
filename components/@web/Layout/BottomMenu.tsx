@@ -52,7 +52,7 @@ const WebBottomMenu = () => {
       index: 2,
       icon: <VipIconBottomMenu />,
       title: "املاک ویژه",
-      href: "/property/special",
+      href: "/property?filter[vip]=true",
       // className: "hidden min-[400px]:block",
     },
     {

@@ -12,6 +12,7 @@ import { usePrevious } from "@/hooks/usePrevious";
 import { SearchEstateFormData } from "@/types/formsData";
 import { WebEstate } from "@/types/interfaces";
 import { Cancel, Close, Search } from "@mui/icons-material";
+import { Empty } from "antd";
 import { useKeenSlider } from "keen-slider/react";
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -43,80 +44,79 @@ export default function Page() {
   const onSubmit = async (data: SearchEstateFormData) => {
     console.log("data", data);
 
-    try {
-      const $s = new URLSearchParams(searchParams?.toString());
-      if (data.search) $s.set("search", data.search);
-      else $s.delete("search");
-      //
-      if (data.category) $s.set("filter[category]", data.category);
-      else $s.delete("filter[category]");
-      //
-      if (!!data.type?.length) {
-        $s.delete("filter[type]");
-        for (let i = 0; i < data.type.length; i++) {
-          $s.append("filter[type]", data.type[i]);
-        }
-      } else $s.delete("filter[type]");
-      //
-      if (!!data.documentType?.length) {
-        $s.delete("filter[documentType]");
-        for (let i = 0; i < data.documentType.length; i++) {
-          $s.append("filter[documentType]", data.documentType[i]);
-        }
-      } else $s.delete("filter[documentType]");
-      //
-      if (!!data.features?.length) {
-        $s.delete("filter[features]");
-        for (let i = 0; i < data.features.length; i++) {
-          $s.append("filter[features]", data.features[i]);
-        }
-      } else $s.delete("filter[features]");
+    const $s = new URLSearchParams(searchParams?.toString());
+    if (data.search) $s.set("search", data.search);
+    else $s.delete("search");
+    //
+    if (data.category) $s.set("filter[category]", data.category);
+    else $s.delete("filter[category]");
+    //
+    if (!!data.type?.length) {
+      $s.delete("filter[type]");
+      for (let i = 0; i < data.type.length; i++) {
+        $s.append("filter[type]", data.type[i]);
+      }
+    } else $s.delete("filter[type]");
+    //
+    if (!!data.documentType?.length) {
+      $s.delete("filter[documentType]");
+      for (let i = 0; i < data.documentType.length; i++) {
+        $s.append("filter[documentType]", data.documentType[i]);
+      }
+    } else $s.delete("filter[documentType]");
+    //
+    if (!!data.features?.length) {
+      $s.delete("filter[features]");
+      for (let i = 0; i < data.features.length; i++) {
+        $s.append("filter[features]", data.features[i]);
+      }
+    } else $s.delete("filter[features]");
 
-      //
-      if (data.province) $s.set("filter[province]", data.province);
-      else $s.delete("filter[province]");
-      //
-      if (data.city) $s.set("filter[city]", data.city);
-      else $s.delete("filter[city]");
-      //
-      if (!!data.district?.length) {
-        $s.delete("filter[district]");
-        for (let i = 0; i < data.district.length; i++) {
-          $s.append("filter[district]", data.district[i]);
-        }
-      } else $s.delete("filter[district]");
+    //
+    if (data.province) $s.set("filter[province]", data.province);
+    else $s.delete("filter[province]");
+    //
+    if (data.city) $s.set("filter[city]", data.city);
+    else $s.delete("filter[city]");
+    //
+    if (!!data.district?.length) {
+      $s.delete("filter[district]");
+      for (let i = 0; i < data.district.length; i++) {
+        $s.append("filter[district]", data.district[i]);
+      }
+    } else $s.delete("filter[district]");
 
-      if (!!data.area?.length) {
-        $s.delete("filter[area]");
-        for (let i = 0; i < data.area.length; i++) {
-          $s.append("filter[area]", data.area[i] + "");
-        }
-      } else $s.delete("filter[area]");
+    if (!!data.area?.length) {
+      $s.delete("filter[area]");
+      for (let i = 0; i < data.area.length; i++) {
+        $s.append("filter[area]", data.area[i] + "");
+      }
+    } else $s.delete("filter[area]");
 
-      if (!!data.price?.length) {
-        $s.delete("filter[price]");
-        for (let i = 0; i < data.price.length; i++) {
-          $s.append("filter[price]", data.price[i] + "");
-        }
-      } else $s.delete("filter[price]");
+    if (!!data.price?.length) {
+      $s.delete("filter[price]");
+      for (let i = 0; i < data.price.length; i++) {
+        $s.append("filter[price]", data.price[i] + "");
+      }
+    } else $s.delete("filter[price]");
 
-      if (!!data.totalPrice?.length) {
-        $s.delete("filter[totalPrice]");
-        for (let i = 0; i < data.totalPrice.length; i++) {
-          $s.append("filter[totalPrice]", data.totalPrice[i] + "");
-        }
-      } else $s.delete("filter[totalPrice]");
+    if (!!data.totalPrice?.length) {
+      $s.delete("filter[totalPrice]");
+      for (let i = 0; i < data.totalPrice.length; i++) {
+        $s.append("filter[totalPrice]", data.totalPrice[i] + "");
+      }
+    } else $s.delete("filter[totalPrice]");
 
-      if (data.barter) $s.set("filter[barter]", data.barter + "");
-      else $s.delete("filter[barter]");
+    if (data.barter) $s.set("filter[barter]", data.barter + "");
+    else $s.delete("filter[barter]");
 
-      router.push(pathname + "?" + $s.toString());
-    } catch (error) {
-      //
-    }
+    router.push(pathname + "?" + $s.toString());
+
+    setUpdate([true]);
   };
 
   const { isFullscreen, isFullContent } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const [update, setUpdate] = useState([true]);
 
   const api = useAxiosAuth();
   const [current, setCurrent] = useState([1]);
@@ -142,7 +142,7 @@ export default function Page() {
 
   useEffect(() => {
     setCurrent([1]);
-  }, [searchParams]);
+  }, [update]);
   useEffect(() => {
     getData();
   }, [current]);
@@ -217,6 +217,16 @@ export default function Page() {
     setValue("city", $s.get("filter[city]") || undefined);
     setValue("district", $s.getAll("filter[district]") || []);
     // ==
+    const $area = $s.getAll("filter[area]");
+    if (!!$area?.length) setValue("area", $area);
+
+    const $price = $s.getAll("filter[price]");
+    if (!!$price?.length) setValue("price", $price);
+
+    const $totalPrice = $s.getAll("filter[totalPrice]");
+    if (!!$totalPrice?.length) setValue("totalPrice", $totalPrice);
+    // // // //
+    setValue("barter", $s.get("filter[barter]") === "true" || undefined);
   }, []);
 
   const cancelFilter = (idx: number) => {
@@ -244,7 +254,7 @@ export default function Page() {
                 control={control}
                 placeholder="کلمه کلیدی خود را تایپ کنید ..."
                 submitIcon={
-                  <i className={"block h-6 w-6 text-gray-400" + (dataLoading ? " animate-spin" : "")}>
+                  <i className={"block h-6 w-6 text-gray-400" + (dataLoading ? " animate-spin" : "")} onClick={() => handleSubmit(onSubmit)()}>
                     {/*  */}
                     {dataLoading ? <LoadingIcon /> : <Search />}
                   </i>
@@ -322,6 +332,7 @@ export default function Page() {
 
           {/* list */}
           <div className="grid grid-cols-1 gap-4 min-[580px]:grid-cols-2 md:grid-cols-1">
+            {!dataLoading && !dataList?.length && <Empty description="چیزی پیدا نشد :(" />}
             {dataList.map((estate, idx) => {
               return <EstateCard key={estate._id} data={estate} />;
             })}
@@ -629,13 +640,7 @@ const _filters = [
               label="قابل تهاتر"
               loading={dataLoading || isSubmitting}
               onChange={(v) => {
-                if (timeoutRef.current) {
-                  clearTimeout(timeoutRef.current);
-                }
-                timeoutRef.current = setTimeout(() => {
-                  handleSubmit(onSubmit)();
-                  timeoutRef.current = null;
-                }, 1000);
+                handleSubmit(onSubmit)();
               }}
             />
           </div>

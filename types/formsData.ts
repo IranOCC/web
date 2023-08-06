@@ -315,11 +315,17 @@ export type SearchEstateFormData = {
     city?: string;
     district?: string[];
     // 
-    area?: [number, number];
+    area?: string[];
     // 
-    totalPrice?: [number, number];
-    price?: [number, number];
+    totalPrice?: string[];
+    price?: string[];
     barter?: boolean;
     // 
+};
 
+
+// web search
+
+export type SearchBlogFormData = {
+    search?: string;
 };

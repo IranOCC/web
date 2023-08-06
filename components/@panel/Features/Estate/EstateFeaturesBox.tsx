@@ -465,6 +465,7 @@ export const EstateFeaturesLandBox = ({ form, loading, props }: AddEditComponent
         filterApi={{ categories: props?.selectedCat }}
         showTitle
         noSpace
+        multiple
         defaultValue={checkingData?.features?.default}
         disabled={checkingData?.features?.disabled}
         containerClassName={["col-span-full", !!checkingData?.features?.hidden ? "hidden" : ""].join(" ")}
@@ -519,6 +520,7 @@ export const EstateFeaturesHectareBox = ({ form, loading, props }: AddEditCompon
         filterApi={{ categories: props?.selectedCat }}
         showTitle
         noSpace
+        multiple
         defaultValue={checkingData?.features?.default}
         disabled={checkingData?.features?.disabled}
         containerClassName={["col-span-full", !!checkingData?.features?.hidden ? "hidden" : ""].join(" ")}

@@ -43,6 +43,11 @@ const CheckBox = (props: IProps) => {
                   readOnly={readOnly || loading}
                   className={`focus:ring-0 focus:ring-offset-0 ${disabled ? "cursor-not-allowed bg-gray-200" : "cursor-pointer bg-gray-200"} rounded border-gray-300 ${inputClass} ${className}`}
                   {...field}
+                  onChange={(e) => {
+                    if (disabled || readOnly || loading) return;
+                    field.onChange(!field.value);
+                    if (!!onChange) onChange(!field.value);
+                  }}
                   checked={field.value}
                 />
                 {label && (
@@ -51,6 +56,7 @@ const CheckBox = (props: IProps) => {
                     onClick={() => {
                       if (disabled || readOnly || loading) return;
                       field.onChange(!field.value);
+                      if (!!onChange) onChange(!field.value);
                     }}
                     className={`block w-full whitespace-nowrap text-sm font-medium text-gray-500 ms-2 text-start dark:text-white ${disabled ? "cursor-not-allowed" : "cursor-pointer"}${labelClass}`}
                   >

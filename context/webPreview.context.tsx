@@ -48,6 +48,7 @@ export type WebPreviewContextType = {
   singleEstate: (id: string, title: string, category: string, code: string, province: string, city: string, district: string) => void;
   errorPage: () => void;
   searchPage: () => void;
+  blogPage: () => void;
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
@@ -165,6 +166,17 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setHeaderSubTitle(undefined);
   };
 
+  // searchPage
+  const blogPage = () => {
+    setBackground("bg-white");
+    setHeaderTitle(undefined);
+    setBreadCrump(undefined);
+    setFullContent(false);
+    setSidebar(undefined);
+    setSidebar(undefined);
+    setHeaderSubTitle(undefined);
+  };
+
   return (
     <WebPreviewContext.Provider
       value={{
@@ -188,6 +200,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
         singleEstate,
         errorPage,
         searchPage,
+        blogPage,
       }}
     >
       {children}

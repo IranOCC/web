@@ -347,7 +347,7 @@ export type WebBlogPost = {
     excerpt: string;
     slug: string;
 
-    image?: StorageFile;
+    image: StorageFile;
 
     pinned: boolean;
     publishedAt: Date;
@@ -355,6 +355,9 @@ export type WebBlogPost = {
     tags: string[];
     categories: BlogCategory[];
     author: User;
+
+    office: Office;
+    createdBy: User;
 };
 
 

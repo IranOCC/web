@@ -38,7 +38,7 @@ const RangeBox = (props: IProps) => {
   const getItems = async () => {
     setDataLoading(true);
     try {
-      const {data} = await api.get(apiPath!, { params: { filter: filterApi } });
+      const { data } = await api.get(apiPath!, { params: { filter: filterApi } });
       setPPS(data);
       setDataLoading(false);
     } catch (error) {}
@@ -67,7 +67,6 @@ const RangeBox = (props: IProps) => {
                     field.onChange(v);
                     if (!!onChange) onChange(v);
                   }}
-                  defaultValue={defaultValue || (!!pps?.min && !!pps?.max ? [(pps?.min, pps?.max)] : undefined)}
                   min={pps?.min}
                   max={pps?.max}
                   step={pps?.step}
@@ -81,7 +80,7 @@ const RangeBox = (props: IProps) => {
               </>
             );
           }}
-          defaultValue={defaultValue}
+          defaultValue={defaultValue || (!!pps?.min && !!pps?.max ? [(pps?.min, pps?.max)] : undefined)}
           name={name}
           control={control}
         />
