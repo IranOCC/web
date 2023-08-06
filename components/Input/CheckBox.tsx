@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const CheckBox = (props: IProps) => {
-  const { name, control, defaultValue, className = "", label, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", containerClassName = "" } = props;
+  const { name, control, defaultValue, className = "", label, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", containerClassName = "", onChange } = props;
   let { status, helperText } = props;
 
   if (error) {
@@ -89,6 +89,8 @@ export type IProps = {
   helperText?: ReactNode;
   direction?: "ltr" | "rtl";
   noSpace?: boolean;
+
+  onChange?: (value: any) => void;
 
   error?: ReactNode;
   warning?: ReactNode;

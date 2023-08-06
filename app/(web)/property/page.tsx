@@ -4,7 +4,7 @@ import EstateCard from "@/components/@web/Features/Estate/EstateCard";
 import { WebInput } from "@/components/@web/Input";
 import { WebSelect } from "@/components/@web/Select";
 import LoadingIcon from "@/components/Icons/LoadingIcon";
-import { CheckBox } from "@/components/Input";
+import { CheckBox, RangeBox } from "@/components/Input";
 import { LoadingWithoutBg } from "@/components/Loading";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
@@ -301,7 +301,7 @@ export default function Page() {
                 </div>
               </div>
               {/* === */}
-              <div className={"relative transition-all duration-1000" + (isOpenFilter !== null ? " h-64" : " h-0")}>
+              <div className={"relative transition-all" + (isOpenFilter !== null ? " h-64" : " h-0")}>
                 {isOpenFilter !== null && (
                   <i className="absolute left-1 top-1 cursor-pointer text-sm text-red-600" onClick={() => setOpenFilter(null)}>
                     <Close sx={{ fontSize: 16 }} />
@@ -567,7 +567,26 @@ const _filters = [
       const timeoutRef = useRef<Timeout | null>(null);
       return (
         <>
-          <div className="h-full w-full">فیلتر بر اساس متراژ</div>
+          <div className="flex w-full flex-col gap-2">
+            <RangeBox
+              //
+              control={control}
+              name="area"
+              label="متراژ کل"
+              valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " متر مربع"}
+              apiPath="/tools/estate/range/area"
+              loading={dataLoading || isSubmitting}
+              onChange={(v) => {
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current);
+                }
+                timeoutRef.current = setTimeout(() => {
+                  handleSubmit(onSubmit)();
+                  timeoutRef.current = null;
+                }, 1000);
+              }}
+            />
+          </div>
         </>
       );
     },
@@ -583,7 +602,43 @@ const _filters = [
       const timeoutRef = useRef<Timeout | null>(null);
       return (
         <>
-          <div className="h-full w-full">فیلتر براساس قیمت</div>
+          <div className="flex w-full flex-col gap-2">
+            <RangeBox
+              //
+              control={control}
+              name="total_price"
+              label="قیمت کل"
+              valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " تومان"}
+              apiPath="/tools/estate/range/totalPrice"
+              loading={dataLoading || isSubmitting}
+              onChange={(v) => {
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current);
+                }
+                timeoutRef.current = setTimeout(() => {
+                  handleSubmit(onSubmit)();
+                  timeoutRef.current = null;
+                }, 1000);
+              }}
+            />
+
+            <CheckBox
+              //
+              control={control}
+              name="barter"
+              label="قابل تهاتر"
+              loading={dataLoading || isSubmitting}
+              onChange={(v) => {
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current);
+                }
+                timeoutRef.current = setTimeout(() => {
+                  handleSubmit(onSubmit)();
+                  timeoutRef.current = null;
+                }, 1000);
+              }}
+            />
+          </div>
         </>
       );
     },
