@@ -317,7 +317,7 @@ export type SearchEstateFormData = {
     // 
     area?: [number, number];
     // 
-    total_price?: [number, number];
+    totalPrice?: [number, number];
     price?: [number, number];
     barter?: boolean;
     // 

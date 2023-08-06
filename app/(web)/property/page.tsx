@@ -100,12 +100,12 @@ export default function Page() {
         }
       } else $s.delete("filter[price]");
 
-      if (!!data.total_price?.length) {
-        $s.delete("filter[total_price]");
-        for (let i = 0; i < data.total_price.length; i++) {
-          $s.append("filter[total_price]", data.total_price[i] + "");
+      if (!!data.totalPrice?.length) {
+        $s.delete("filter[totalPrice]");
+        for (let i = 0; i < data.totalPrice.length; i++) {
+          $s.append("filter[totalPrice]", data.totalPrice[i] + "");
         }
-      } else $s.delete("filter[total_price]");
+      } else $s.delete("filter[totalPrice]");
 
       if (data.barter) $s.set("filter[barter]", data.barter + "");
       else $s.delete("filter[barter]");
@@ -595,7 +595,7 @@ const _filters = [
     //
     title: "تعیین بازه قیمتی",
     width: "9rem",
-    filters: ["price", "total_price", "barter"],
+    filters: ["price", "totalPrice", "barter"],
     Content: ({ form, dataLoading, onSubmit }: any) => {
       const { control, isSubmitting, handleSubmit } = form;
       const searchParams = useSearchParams();
@@ -606,7 +606,7 @@ const _filters = [
             <RangeBox
               //
               control={control}
-              name="total_price"
+              name="totalPrice"
               label="قیمت کل"
               valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " تومان"}
               apiPath="/tools/estate/range/totalPrice"

@@ -1,8 +1,5 @@
-import { ChangeEventHandler, ReactNode, useRef } from "react";
+import { ReactNode } from "react";
 import { Controller } from "react-hook-form";
-import { Button } from "../Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const CheckBox = (props: IProps) => {
   const { name, control, defaultValue, className = "", label, disabled = false, loading = false, readOnly = false, error, warning, success, direction, noSpace, size = "default", containerClassName = "", onChange } = props;
