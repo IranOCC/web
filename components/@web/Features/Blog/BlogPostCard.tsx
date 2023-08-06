@@ -1,8 +1,11 @@
 "use client";
 
+import UserIcon from "@/components/Icons/User";
 import { WebBlogPost } from "@/types/interfaces";
+import { Category } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
+import { WebButton } from "../../Button";
 
 const BlogPostCard = ({ data }: { data: WebBlogPost }) => {
   const {
@@ -19,11 +22,12 @@ const BlogPostCard = ({ data }: { data: WebBlogPost }) => {
     createdBy,
     publishedAt,
     author,
+    categories,
   } = data;
 
   return (
-    <div className="overflow-hidden rounded-xl md:max-h-[12rem] md:min-h-[12rem]">
-      <Link href={`/property/${slug}`}>
+    <div className="relative overflow-hidden rounded-xl md:max-h-[12rem] md:min-h-[12rem]">
+      <Link href={`/blog/${slug}`}>
         <div className="flex flex-col gap-2 overflow-hidden rounded-xl bg-white p-2 md:flex-row md:bg-gray-200 md:p-0">
           <Image
             //
@@ -35,8 +39,15 @@ const BlogPostCard = ({ data }: { data: WebBlogPost }) => {
             className="block max-h-[10rem] w-full rounded-xl object-cover md:h-full md:max-h-[12rem] md:min-h-[12rem] md:max-w-[12rem] lg:max-w-[15rem] xl:max-w-[20rem]"
           />
 
-          <div className="flex flex-col justify-center gap-2 md:py-3">
+          <div className="flex flex-col justify-center gap-2 md:py-3 md:pe-2">
             <h3 className="w-full truncate font-bold">{title}</h3>
+            <div className="flex gap-1 text-sm text-purple-600">
+              <Category style={{ fontSize: 16 }} /> {categories.map(({ title }) => title).join(", ")}
+            </div>
+            <p className="h-20 w-full overflow-hidden text-justify font-light">{excerpt}</p>
+            <div className="absolute bottom-2 left-2 flex items-end">
+              <WebButton title="مشاهده پست" size="small" noSpace className="shadow-[#ffffff_5px_-6px_20px_20px] md:shadow-[#e5e7eb_5px_-6px_20px_20px]" />
+            </div>
           </div>
         </div>
       </Link>
