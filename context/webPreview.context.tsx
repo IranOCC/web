@@ -49,6 +49,7 @@ export type WebPreviewContextType = {
   errorPage: () => void;
   searchPage: () => void;
   blogPage: () => void;
+  internalPage: () => void;
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
@@ -100,7 +101,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     });
   };
   // singlePost
-  const singlePage = (id: string, title: string, publishedAt: Date, rateScore: number, userRate?: number) => {
+  const singlePage = (id: string, title: string, publishedAt: Date) => {
     setBackground("bg-white");
     setHeaderTitle(title);
     setBreadCrump(undefined);
@@ -166,13 +167,22 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setHeaderSubTitle(undefined);
   };
 
-  // searchPage
-  const blogPage = () => {
+  // internalPage
+  const internalPage = () => {
     setBackground("bg-white");
     setHeaderTitle(undefined);
     setBreadCrump(undefined);
     setFullContent(false);
     setSidebar(undefined);
+    setHeaderSubTitle(undefined);
+  };
+
+  // blogPage
+  const blogPage = () => {
+    setBackground("bg-white");
+    setHeaderTitle(undefined);
+    setBreadCrump(undefined);
+    setFullContent(false);
     setSidebar(undefined);
     setHeaderSubTitle(undefined);
   };
@@ -201,6 +211,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
         errorPage,
         searchPage,
         blogPage,
+        internalPage,
       }}
     >
       {children}

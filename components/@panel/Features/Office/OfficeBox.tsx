@@ -34,6 +34,7 @@ export default function OfficeBox({ form, loading, props }: AddEditComponentProp
 
     register("verified");
     register("active");
+    register("showPublic");
   }, []);
 
   const { checkingData } = props;
@@ -96,6 +97,18 @@ export default function OfficeBox({ form, loading, props }: AddEditComponentProp
             defaultValue={checkingData?.description?.default}
             disabled={checkingData?.description?.disabled}
             containerClassName={["col-span-full", !!checkingData?.description?.hidden ? "hidden" : ""].join(" ")}
+          />
+
+          <CheckBox //
+            control={control}
+            name="showPublic"
+            label="نمایش در سایت"
+            error={errors.showPublic?.message}
+            loading={isSubmitting}
+            noSpace
+            defaultValue={checkingData?.showPublic?.default}
+            disabled={checkingData?.showPublic?.disabled}
+            containerClassName={!!checkingData?.showPublic?.hidden ? "hidden" : ""}
           />
 
           <CheckBox //

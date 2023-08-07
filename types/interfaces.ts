@@ -77,6 +77,7 @@ export interface Office {
 
     verified?: boolean;
     active?: boolean;
+    showPublic?: boolean;
     // 
     members?: User[] | string[];
 }
@@ -428,3 +429,22 @@ export type WebPage = {
 
     tags: string[];
 };
+
+
+
+export type WebOffice = {
+    _id: string;
+    name: string;
+    management: User;
+    logo?: StorageFile;
+
+    phone?: Phone | string | null;
+    email?: Email | string | null;
+
+    province?: string;
+    city?: string;
+    address?: string;
+    location?: [number, number] | string;
+
+    verified?: boolean;
+}

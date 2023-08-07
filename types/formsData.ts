@@ -88,6 +88,8 @@ export type OfficeFormData = {
     // 
     verified?: boolean;
     active?: boolean;
+
+    showPublic?: boolean;
 };
 
 export type OfficeAddMemberFormData = {
