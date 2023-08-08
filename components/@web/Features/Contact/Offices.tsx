@@ -33,8 +33,8 @@ const OfficesList = () => {
     <>
       <div className="h-20 w-full bg-red-500">
         <div className="grid grid-cols-1 gap-4">
-          {dataList.map((v) => {
-            return <OfficeCard data={v} />;
+          {dataList.map((v, idx) => {
+            return <OfficeCard key={idx} data={v} />;
           })}
         </div>
       </div>
