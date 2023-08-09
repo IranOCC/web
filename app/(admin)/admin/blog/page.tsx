@@ -19,7 +19,7 @@ const columns: ColumnsType<BlogPost> = [
       return (
         <div className="flex flex-col">
           <p>{title}</p>
-          <pre className="text-blue-400">{record.slug}</pre>
+          <pre className="max-w-full truncate text-blue-400">{record.slug}</pre>
         </div>
       );
     },
