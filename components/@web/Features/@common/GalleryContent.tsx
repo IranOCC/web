@@ -1,12 +1,10 @@
 import { useKeenSlider, KeenSliderPlugin, KeenSliderInstance } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import { MutableRefObject, ReactNode, useContext, useEffect, useRef, useState } from "react";
+import { MutableRefObject, useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { StorageFile, WebEstate } from "@/types/interfaces";
-import { Fullscreen, HomeMaxOutlined } from "@mui/icons-material";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import MarkerIcon from "@/components/Icons/MarkerIcon";
-import Scrollbars from "react-custom-scrollbars-2";
 import moment from "jalali-moment";
 import RatingButton from "./RatingButton";
 import ReportButton from "./ReportButton";
