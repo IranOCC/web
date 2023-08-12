@@ -331,3 +331,13 @@ export type SearchEstateFormData = {
 export type SearchBlogFormData = {
     search?: string;
 };
+
+
+
+
+// contact form
+export type ContactFormData = {
+    name?: string;
+    phone?: string;
+    text?: string;
+};

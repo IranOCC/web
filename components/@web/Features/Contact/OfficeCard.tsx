@@ -40,7 +40,7 @@ const OfficeCard = ({ data }: { data: WebOffice }) => {
               title={logo.title}
               width={128}
               height={128}
-              className="block aspect-square rounded-xl object-cover"
+              className="block aspect-square min-h-[128px] min-w-[128px] rounded-xl object-cover"
             />
           )}
           {!logo && (
