@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import OfficeCard from "./OfficeCard";
 import { WebOffice } from "@/types/interfaces";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { useKeenSlider } from "keen-slider/react";
 
 const OfficesList = () => {
   const api = useAxiosAuth();
@@ -29,13 +30,39 @@ const OfficesList = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
+    {
+      initial: 0,
+      mode: "snap",
+      rtl: true,
+      vertical: true,
+      slides: {
+        perView: 2,
+        spacing: 10,
+      },
+      // slideChanged(s) {
+      //   setCurrentSlide(s.track.details.rel);
+      // },
+      // created() {
+      //   setLoaded(true);
+      // },
+    },
+    []
+  );
   return (
     <>
-      <div className="h-20 w-full bg-red-500">
+      <div className="w-full">
         <div className="grid grid-cols-1 gap-4">
-          {dataList.map((v, idx) => {
-            return <OfficeCard key={idx} data={v} />;
-          })}
+          <div ref={sliderRef} className="keen-slider">
+            {dataList.map((v, idx) => {
+              return (
+                <div key={idx} className="keen-slider__slide">
+                  <OfficeCard data={v} />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>

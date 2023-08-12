@@ -5,7 +5,7 @@ import { Dropdown, Popconfirm, RadioChangeEvent } from "antd";
 import { Form, Radio, Space, Switch, Table } from "antd";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import type { ExpandableConfig, TableRowSelection } from "antd/es/table/interface";
+import type { ExpandableConfig, TablePaginationConfig, TableRowSelection } from "antd/es/table/interface";
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { DragEndEvent } from "@dnd-kit/core";
 import { DndContext } from "@dnd-kit/core";
@@ -64,7 +64,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
   const _search = searchParams?.get("search");
   const _sort = searchParams?.get("sort");
   const _page = parseInt(searchParams?.get("page") || "1");
-  const _count = parseInt(searchParams?.get("count") || defaultPageCount?.toString() || "10");
+  const _count = parseInt(searchParams?.get("count") || defaultPageCount?.toString() || "25");
 
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const handlePaginationChange = (page: number, page_size: number) => {
@@ -271,6 +271,16 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
     });
   }
 
+  const pagination: TablePaginationConfig = {
+    // showSizeChanger: true,
+    total: totalItemsCount,
+    position: ["bottomCenter"],
+    onChange: handlePaginationChange,
+    pageSize: _count,
+    current: _page,
+    pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
+  };
+
   // ##############################################
   if (sortable) {
     return (
@@ -298,17 +308,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
               expandable={expandable ? expandDetail : undefined}
               rowSelection={selectable ? rowSelection : undefined}
               scroll={scroll}
-              pagination={{
-                // showSizeChanger: true,
-                total: totalItemsCount,
-                position: ["bottomCenter"],
-                onChange: handlePaginationChange,
-                pageSize: _count,
-                current: _page,
-                defaultPageSize: defaultPageCount || 10,
-                defaultCurrent: 1,
-                pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
-              }}
+              pagination={pagination}
               columns={tableColumns}
               dataSource={dataSource}
               locale={{
@@ -334,17 +334,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
       expandable={expandable ? expandDetail : undefined}
       rowSelection={selectable ? rowSelection : undefined}
       scroll={scroll}
-      pagination={{
-        // showSizeChanger: true,
-        total: totalItemsCount,
-        position: ["bottomCenter"],
-        onChange: handlePaginationChange,
-        pageSize: _count,
-        current: _page,
-        defaultPageSize: defaultPageCount || 10,
-        defaultCurrent: 1,
-        pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
-      }}
+      pagination={pagination}
       columns={tableColumns}
       dataSource={dataSource}
       locale={{

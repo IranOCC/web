@@ -145,13 +145,13 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
           </div>
           <div className="flex w-auto flex-row gap-2">
             <div className="flex w-full flex-col items-center justify-center ">
-              <span>
+              <span className="truncate">
                 ثبت شده توسط <b>{office.name}</b>
               </span>
-              <b>{createdBy.fullName}</b>
+              <b className="truncate">{createdBy.fullName}</b>
               <hr className="my-2 hidden w-full border-gray-500 lg:block" />
               <span className="hidden lg:block">شماره تماس</span>
-              <a className="hidden font-bold lg:block" dir="ltr" href={`tel:${(createdBy.phone as Phone)?.value}`}>
+              <a className="hidden truncate font-bold lg:block" dir="ltr" href={`tel:${(createdBy.phone as Phone)?.value}`}>
                 {(createdBy.phone as Phone)?.value || "-"}
               </a>
               <WebButton

@@ -19,7 +19,7 @@ export default function Page() {
           <h1 className="relative flex w-fit justify-center pb-1 text-lg font-bold after:absolute after:bottom-0 after:h-1 after:w-[calc(100%-30px)] after:rounded-md after:bg-secondary after:content-['']">تماس با ما</h1>
         </div>
         <div className="w-full py-2">
-          <div className="flex w-full flex-col gap-3 bg-green-500">
+          <div className="flex w-full flex-col gap-3">
             {/*  */}
             <OfficesList />
             <ContactForm />
