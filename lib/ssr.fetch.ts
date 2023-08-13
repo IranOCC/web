@@ -17,7 +17,7 @@ export async function fetchBlogList(s?: URLSearchParams) {
 
 
 export async function fetchEstateList(s?: URLSearchParams) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/estate?size=10&current=${!!s ? "&" + s.toString() : ""}`, { next: { revalidate: 5 } });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/estate?size=10&current=1${!!s ? "&" + s.toString() : ""}`, { next: { revalidate: 5 } });
     const data = await res.json();
     return data as { items: WebEstate[]; total: number };
 }
