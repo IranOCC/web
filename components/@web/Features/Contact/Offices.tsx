@@ -1,50 +1,29 @@
+"use client";
+
 import "keen-slider/keen-slider.min.css";
 import { useContext, useEffect, useState } from "react";
 import OfficeCard from "./OfficeCard";
 import { WebOffice } from "@/types/interfaces";
-import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { useKeenSlider } from "keen-slider/react";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 
-const OfficesList = () => {
+const OfficesList = ({ dataList }: { dataList: WebOffice[] }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
   const { isFullscreen, isFullContent } = useContext(WebPreviewContext) as WebPreviewContextType;
-
-  const api = useAxiosAuth();
-  const [current, setCurrent] = useState([1]);
-  const [dataList, setDataList] = useState<WebOffice[]>([]);
-  const [itemsCount, setItemsCount] = useState(0);
-  const [dataLoading, setDataLoading] = useState<boolean>(false);
-  const getData = async () => {
-    setDataLoading(true);
-    try {
-      const response = await api.get(`/office?size=10&current=${current[0]}`);
-      const data = response.data as { items: WebOffice[]; total: number };
-      if (current[0] === 1) {
-        setDataList(data?.items || []);
-        setItemsCount(data?.total || 0);
-      } else {
-        setDataList((d) => [...d, ...data.items]);
-      }
-      setDataLoading(false);
-    } catch (error) {
-      setDataLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
+  const animation = { duration: 10000, easing: (t: number) => t };
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     initial: 0,
     mode: "free",
     rtl: true,
-    // loop: true,
+    renderMode: "performance",
+    loop: true,
     // vertical: true,
+
     slides: {
       perView: 2,
       spacing: 12,
     },
+
     breakpoints: {
       "(max-width: 1200px)": {
         slides: {
@@ -59,9 +38,30 @@ const OfficesList = () => {
         },
       },
     },
-    // slideChanged(s) {
-    //   setCurrentSlide(s.track.details.rel);
+    // created(s) {
+    //   const start = 0;
+    //   const end = s.slides.length - 1;
+    //   // if (s.track.details.rel === start) setTimeout(() => s.moveToIdx(end, true, animation), 500);
+    //   // if (s.track.details.rel === end) setTimeout(() => s.moveToIdx(start, true, animation), 500);
+    //   s.moveToIdx(end, true, animation);
     // },
+    updated(s) {
+      const start = 0;
+      const end = s.slides.length - 1;
+      // if (s.track.details.rel === start) setTimeout(() => s.moveToIdx(end, true, animation), 500);
+      // if (s.track.details.rel === end) setTimeout(() => s.moveToIdx(start, true, animation), 500);
+      s.moveToIdx(s.track.details.abs + end, true, animation);
+    },
+    animationEnded(s) {
+      const start = 0;
+      const end = s.slides.length - 1;
+      // if (s.track.details.rel === start) setTimeout(() => s.moveToIdx(end, true, animation), 500);
+      // if (s.track.details.rel === end) setTimeout(() => s.moveToIdx(start, true, animation), 500);
+      s.moveToIdx(s.track.details.abs + end, true, animation);
+    },
+    slideChanged(s) {
+      setCurrentSlide(s.track.details.rel);
+    },
     // created() {
     //   setLoaded(true);
     // },
@@ -87,21 +87,17 @@ const OfficesList = () => {
   return (
     <>
       <div className="relative">
-        <div className="relative h-fit w-full overflow-hidden">
-          <div className="relative min-[426px]:max-h-[300px] md:max-h-[268px]">
+        <div className="relative w-full">
+          <div className="relative">
             {!!dataList?.length && (
-              <div ref={sliderRef} className="keen-slider h-fit">
-                {dataList
-                  .filter((v, i) => i % 2 == 0)
-                  .map((v, i) => [v, dataList?.[i + 1]])
-                  .map(([v1, v2], idx) => {
-                    return (
-                      <div key={idx} className="keen-slider__slide flex min-w-[400px] flex-col gap-3 max-[425px]:min-w-0 lg:min-w-[500px]">
-                        <OfficeCard data={v1} />
-                        <OfficeCard data={v2} />
-                      </div>
-                    );
-                  })}
+              <div ref={sliderRef} className="keen-slider">
+                {dataList.map((v, idx) => {
+                  return (
+                    <div key={idx} className={`keen-slider__slide group ${currentSlide === idx ? "isActive" : ""} flex min-w-[400px] flex-col gap-3 max-[425px]:min-w-0 lg:min-w-[500px]`}>
+                      <OfficeCard data={v} />
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

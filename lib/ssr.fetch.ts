@@ -1,10 +1,18 @@
-import { WebBlogPost, WebEstate, WebInfo, WebPage, } from "@/types/interfaces";
+import { WebBlogPost, WebEstate, WebInfo, WebOffice, WebPage, } from "@/types/interfaces";
 
 
 export async function fetchWebInfo() {
     const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/setting/webInfo");
     const data = await res.json();
     return data as WebInfo;
+}
+
+
+
+export async function fetchOfficeList() {
+    const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/office?size=20&current=1", { next: { revalidate: 500 } });
+    const data = await res.json();
+    return data as { items: WebOffice[]; total: number };
 }
 
 

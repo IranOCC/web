@@ -7,6 +7,7 @@ import Link from "next/link";
 import { WebButton } from "../../Button";
 import MarkerIcon from "@/components/Icons/MarkerIcon";
 import PhoneIcon from "@/components/Icons/Phone";
+import { CSSProperties } from "react";
 
 const OfficeCard = ({ data }: { data: WebOffice }) => {
   const {
@@ -31,7 +32,10 @@ const OfficeCard = ({ data }: { data: WebOffice }) => {
     // max-w-3xl
     <div className=" relative flex w-full justify-center self-center overflow-hidden rounded-xl">
       <Link href="#" className="w-full">
-        <div className="flex h-full w-full items-center gap-2 overflow-hidden rounded-xl bg-white p-2 transition-all hover:bg-gray-100 max-[425px]:flex-col md:bg-gray-200 md:p-0 ">
+        <div
+          style={{ "--tw-shadow": "inset 0 6px 12px 0 rgb(0 0 0 / 0.15)" } as CSSProperties}
+          className="flex h-full w-full items-center gap-2 overflow-hidden rounded-xl bg-white p-2 transition-all duration-700 hover:bg-gray-100 group-[.isActive]:bg-disable group-[.isActive]:shadow-inner max-[425px]:flex-col md:bg-gray-200 md:p-0 "
+        >
           {logo && (
             <Image
               //

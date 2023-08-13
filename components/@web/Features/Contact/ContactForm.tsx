@@ -1,10 +1,19 @@
+"use client";
+
 import { ContactFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
 import { WebInput } from "../../Input";
 import { WebButton } from "../../Button";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 
 const ContactForm = () => {
+  const { internalPage } = useContext(WebPreviewContext) as WebPreviewContextType;
+
+  useEffect(() => {
+    internalPage();
+  }, []);
+
   const form = useForm<ContactFormData>();
   const {
     register,
