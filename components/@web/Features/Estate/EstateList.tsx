@@ -6,14 +6,14 @@ import { Empty } from "antd";
 import { LoadingWithoutBg } from "@/components/Loading";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
-import { WebBlogPost } from "@/types/interfaces";
-import BlogPostCard from "./BlogPostCard";
-import BlogSearchFilteringBox from "./BlogSearchFilteringBox";
+import { WebEstate } from "@/types/interfaces";
+import EstateCard from "./EstateCard";
+import EstateSearchFilteringBox from "./EstateSearchFilteringBox";
 
-const BlogList = ({ data }: { data: { items?: WebBlogPost[]; total: number } }) => {
-  const { blogPage } = useContext(WebPreviewContext) as WebPreviewContextType;
+const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) => {
+  const { searchPage } = useContext(WebPreviewContext) as WebPreviewContextType;
   useEffect(() => {
-    blogPage();
+    searchPage();
   }, []);
 
   const searchParams = useSearchParams();
@@ -22,14 +22,14 @@ const BlogList = ({ data }: { data: { items?: WebBlogPost[]; total: number } }) 
 
   const api = useAxiosAuth();
   const [current, setCurrent] = useState([0]);
-  const [dataList, setDataList] = useState<WebBlogPost[]>(data?.items || []);
+  const [dataList, setDataList] = useState<WebEstate[]>(data?.items || []);
   const [itemsCount, setItemsCount] = useState(data.total);
   const [dataLoading, setDataLoading] = useState<boolean>(false);
   const getData = async () => {
     setDataLoading(true);
     try {
-      const response = await api.get(`/blog/post?size=10&current=${current[0]}${searchParams ? `&${searchParams?.toString()}` : ""}`);
-      const data = response.data as { items: WebBlogPost[]; total: number };
+      const response = await api.get(`/estate?size=10&current=${current[0]}${searchParams ? `&${searchParams?.toString()}` : ""}`);
+      const data = response.data as { items: WebEstate[]; total: number };
       if (current[0] === 1) {
         setDataList(data?.items || []);
         setItemsCount(data?.total || 0);
@@ -69,7 +69,7 @@ const BlogList = ({ data }: { data: { items?: WebBlogPost[]; total: number } }) 
     <>
       <div className="sticky top-0 z-10 bg-gray-200 py-4 font-bold md:bg-white">{!!itemsCount ? `${itemsCount} مورد یافت شد` : dataLoading ? `در حال دریافت...` : `چیزی یافت نشد`}</div>
       <div className="flex w-full flex-col gap-2 self-center">
-        <BlogSearchFilteringBox
+        <EstateSearchFilteringBox
           //
           dataLoading={dataLoading}
           setUpdate={setUpdate}
@@ -78,7 +78,7 @@ const BlogList = ({ data }: { data: { items?: WebBlogPost[]; total: number } }) 
         <div className="grid grid-cols-1 gap-4 min-[580px]:grid-cols-2 md:grid-cols-1">
           {!dataLoading && !dataList?.length && <Empty description="چیزی پیدا نشد :(" />}
           {dataList.map((post, idx) => {
-            return <BlogPostCard key={post._id} data={post} />;
+            return <EstateCard key={post._id} data={post} />;
           })}
         </div>
         {itemsCount > dataList.length && (
@@ -91,4 +91,4 @@ const BlogList = ({ data }: { data: { items?: WebBlogPost[]; total: number } }) 
   );
 };
 
-export default BlogList;
+export default EstateList;

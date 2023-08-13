@@ -16,6 +16,13 @@ export async function fetchBlogList(s?: URLSearchParams) {
 }
 
 
+export async function fetchEstateList(s?: URLSearchParams) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/estate?size=10&current=${!!s ? "&" + s.toString() : ""}`, { next: { revalidate: 5 } });
+    const data = await res.json();
+    return data as { items: WebEstate[]; total: number };
+}
+
+
 export async function fetchOfficeList() {
     const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/office?size=20&current=1", { next: { revalidate: 500 } });
     const data = await res.json();
