@@ -86,7 +86,7 @@ const OfficesList = () => {
 
   return (
     <>
-      <div className="relative my-4 px-4">
+      <div className="relative">
         <div className="relative h-fit w-full overflow-hidden">
           <div className="relative min-[426px]:max-h-[300px] md:max-h-[268px]">
             {!!dataList?.length && (

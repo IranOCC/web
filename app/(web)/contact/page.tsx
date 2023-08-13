@@ -14,17 +14,15 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex h-auto min-h-full flex-col bg-gray-200 pb-16 pt-4 md:bg-transparent md:pb-4">
-        <div className="flex flex-col gap-2 px-4">
+      <div className="flex h-auto min-h-full flex-col bg-gray-200 px-4 pb-16 md:bg-transparent md:pb-4">
+        <div className="sticky top-0 z-20 flex flex-col gap-2 bg-white py-3">
           <h1 className="relative flex w-fit justify-center pb-1 text-lg font-bold after:absolute after:bottom-0 after:h-1 after:w-[calc(100%-30px)] after:rounded-md after:bg-secondary after:content-['']">تماس با ما</h1>
         </div>
-        <div className="w-full py-4">
-          <div className="flex w-full flex-col gap-3">
-            {/*  */}
-            <OfficesList />
-            <ContactForm />
-            {/*  */}
-          </div>
+        <div className="flex h-full w-full flex-1 flex-col justify-between gap-5 py-2">
+          {/*  */}
+          <OfficesList />
+          <ContactForm />
+          {/*  */}
         </div>
       </div>
     </>

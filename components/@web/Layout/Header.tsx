@@ -20,7 +20,7 @@ const WebHeader = () => {
   const [openSubMenu, setOpenSubMenu] = useState(false);
   return (
     <>
-      <div className="hidden flex-col text-sm md:flex z-20">
+      <div className="z-30 hidden flex-col text-sm md:flex">
         <div className="flex flex-row items-start justify-between px-4 py-4 ps-2">
           <BreadCrump />
           <div className="flex h-full flex-row gap-5">

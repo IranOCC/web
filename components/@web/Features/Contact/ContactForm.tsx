@@ -2,6 +2,7 @@ import { ContactFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
 import { WebInput } from "../../Input";
 import { WebButton } from "../../Button";
+import { useEffect } from "react";
 
 const ContactForm = () => {
   const form = useForm<ContactFormData>();
@@ -17,23 +18,51 @@ const ContactForm = () => {
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = form;
 
+  useEffect(() => {
+    register("name", {
+      required: "نام خود را وارد کنید",
+      minLength: {
+        value: 3,
+        message: "متن پیام را به درستی وارد کنید",
+      },
+    });
+    register("phone", { required: "شماره تماس را وارد کنید" });
+    register("text", {
+      required: "متن پیام را وارد کنید",
+      minLength: {
+        value: 10,
+        message: "متن پیام را به درستی وارد کنید",
+      },
+    });
+  }, []);
+
+  const onSubmit = (data: ContactFormData) => {
+    //
+  };
+
   return (
     <>
-      <div className="flex w-full max-w-md flex-col gap-4 self-center px-4">
-        {/*  */}
+      {/*  */}
+      <form onSubmit={handleSubmit(onSubmit)} className="flex w-full max-w-md flex-col gap-4 self-center">
         <WebInput
           //
           control={control}
           name="name"
           label="نام و نام خانوادگی"
           noSpace
+          error={errors.name?.message}
+          loading={isSubmitting}
         />
         <WebInput
           //
           control={control}
           name="phone"
           label="شماره تماس"
+          direction="ltr"
+          type="tel"
           noSpace
+          error={errors.phone?.message}
+          loading={isSubmitting}
         />
         <WebInput
           //
@@ -43,13 +72,16 @@ const ContactForm = () => {
           noSpace
           multiline={true}
           lines={6}
+          error={errors.text?.message}
+          loading={isSubmitting}
         />
         <WebButton
           //
+          type="submit"
           title="ارسال"
         />
-        {/*  */}
-      </div>
+      </form>
+      {/*  */}
     </>
   );
 };
