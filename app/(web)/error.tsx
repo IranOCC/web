@@ -6,6 +6,7 @@ import BlackLogo from "@/assets/images/black-logo.png";
 import Image from "next/image";
 import { Input } from "@/components/Input";
 import Link from "next/link";
+import SearchBox from "@/components/@web/Features/@common/SearchBox";
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
   const { errorPage } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -45,6 +46,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
           <h2 className="text-2xl font-bold">{_error.title}</h2>
           {!!_error.message && <h6>{_error.message}</h6>}
         </div>
+        <SearchBox />
         <Link href="/" className="p-1 font-bold text-blue-500">
           صفحه اصلی
         </Link>
