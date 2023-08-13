@@ -5,6 +5,7 @@ import { WebInput } from "@/components/@web/Input";
 import Search from "@/components/Icons/Search";
 import { SearchEstateFormData } from "@/types/formsData";
 import Image from "next/image";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 // import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
@@ -16,6 +17,41 @@ export default function Page() {
   //   internalPage();
   // }, []);
 
+  const items = [
+    {
+      title: "زمین",
+      link: "",
+    },
+    {
+      title: "ویلا",
+      link: "",
+    },
+    {
+      title: "آپارتمان",
+      link: "",
+    },
+    {
+      title: "تجاری",
+      link: "",
+    },
+    {
+      title: "ساحلی",
+      link: "",
+    },
+    {
+      title: "اجاره",
+      link: "",
+    },
+    {
+      title: "تهاتر",
+      link: "",
+    },
+    {
+      title: "معاوضه",
+      link: "",
+    },
+  ];
+
   return (
     <div className="flex h-auto min-h-full flex-col bg-gray-200 px-4 pb-16 md:bg-transparent md:pb-4">
       {/*  */}
@@ -23,11 +59,23 @@ export default function Page() {
         <Image src={Logo} alt="logo" />
         <div className="flex flex-col gap-2">
           <h1 className="text-center text-xl font-bold">املاک اکازیون</h1>
-          <h3 className="text-center text-lg font-medium">بزرگترین مرکز اطلاعات املاک شمال کشور</h3>
+          <h2 className="text-center text-lg font-medium">بزرگترین مرکز اطلاعات املاک شمال کشور</h2>
         </div>
       </div>
       <SearchBox />
-
+      <div className="flex flex-wrap justify-center gap-4 pb-4 pt-8">
+        {/*  */}
+        {items.map(({ title, link }, idx) => {
+          return (
+            <div key={idx} className="relative overflow-hidden rounded-2xl">
+              <Link href={link} role="link">
+                <h3 className="w-48 truncate bg-white px-3 py-6 text-center text-base font-semibold transition-all hover:bg-secondary sm:w-56 sm:py-8 sm:text-lg sm:font-bold md:bg-gray-200">{title}</h3>
+              </Link>
+            </div>
+          );
+        })}
+        {/*  */}
+      </div>
       {/*  */}
     </div>
   );
