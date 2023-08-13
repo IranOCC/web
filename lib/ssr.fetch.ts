@@ -9,6 +9,13 @@ export async function fetchWebInfo() {
 
 
 
+export async function fetchBlogList(s?: URLSearchParams) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog/post?size=10&current=1${!!s ? "&" + s.toString() : ""}`, { next: { revalidate: 5 } });
+    const data = await res.json();
+    return data as { items: WebBlogPost[]; total: number };
+}
+
+
 export async function fetchOfficeList() {
     const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/office?size=20&current=1", { next: { revalidate: 500 } });
     const data = await res.json();

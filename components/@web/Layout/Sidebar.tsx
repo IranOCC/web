@@ -70,16 +70,17 @@ const WebSideBar = () => {
   const y = hovering !== null ? hovering : isActive[0]?.index !== undefined ? isActive[0]?.index : -2;
   return (
     <aside className="z-10 hidden h-full w-64 flex-col justify-between bg-white rounded-e-2xl md:flex">
-      <Link href="/">
-        <div className="flex flex-col items-center gap-3 px-10 py-5">
+      <div className="flex flex-col items-center gap-3 px-10 py-5">
+        <Link href="/" className="flex flex-col items-center gap-3">
           <Image src={Logo} alt="logo" />
           <h2 className="text-lg font-bold">املاک اکازیون</h2>
-          <a href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold ">
-            <span>۰۱۱-۵۴۰۰</span>
-            <ContactIcon />
-          </a>
-        </div>
-      </Link>
+        </Link>
+        <a href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold ">
+          <span>۰۱۱-۵۴۰۰</span>
+          <ContactIcon />
+        </a>
+      </div>
+
       <div className="relative z-10 flex h-full flex-col overflow-x-hidden py-5">
         <Scrollbars
           //
