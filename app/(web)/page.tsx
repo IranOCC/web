@@ -53,7 +53,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="flex h-auto min-h-full flex-col justify-center bg-gray-200 px-4 pb-16 md:bg-transparent md:pb-4">
+    <div className="flex h-auto min-h-full flex-col items-center justify-center bg-gray-200 px-4 pb-16 md:bg-transparent md:pb-4">
       <div className="flex flex-col items-center gap-4 px-3 py-5">
         <Image src={Logo} alt="logo" />
         <div className="flex flex-col gap-2">
@@ -62,7 +62,7 @@ export default function Page() {
         </div>
       </div>
       <SearchBox />
-      <div className="flex flex-wrap justify-center gap-4 py-8">
+      <div className="flex max-w-5xl flex-wrap justify-center gap-4 py-8">
         {items.map(({ title, link }, idx) => {
           return (
             <div key={idx} className="relative overflow-hidden rounded-2xl">
