@@ -20,35 +20,35 @@ export default function Page() {
   const items = [
     {
       title: "زمین",
-      link: "",
+      link: "/property?filter[category]=645cd1554b4819ffd958c958",
     },
     {
       title: "ویلا",
-      link: "",
+      link: "/property?filter[category]=645cd0444b4819ffd958c940",
     },
     {
       title: "آپارتمان",
-      link: "",
+      link: "/property?filter[category]=645cd1214b4819ffd958c955",
     },
     {
       title: "تجاری",
-      link: "",
+      link: "/property?filter[category]=645cd1754b4819ffd958c95b",
     },
     {
       title: "ساحلی",
-      link: "",
+      link: "/property?filter[features]=645d0e6298a6fe36672b5738",
     },
     {
       title: "اجاره",
-      link: "",
+      link: "/property?filter[rent]=true",
     },
     {
       title: "تهاتر",
-      link: "",
+      link: "/property?filter[barter]=true",
     },
     {
       title: "معاوضه",
-      link: "",
+      link: "/property?filter[barter]=true",
     },
   ];
 
