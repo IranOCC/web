@@ -34,7 +34,7 @@ const OfficeCard = ({ data }: { data: WebOffice }) => {
       <Link href="#" className="w-full">
         <div
           style={{ "--tw-shadow": "inset 0 6px 12px 0 rgb(0 0 0 / 0.15)" } as CSSProperties}
-          className="flex h-full w-full items-center gap-2 overflow-hidden rounded-xl bg-white p-2 transition-all duration-700 hover:bg-gray-100 group-[.isActive]:bg-disable group-[.isActive]:shadow-inner max-[425px]:flex-col md:bg-gray-200 md:p-0 "
+          className="flex h-full w-full items-center gap-2 overflow-hidden rounded-xl bg-white p-2 transition-all duration-700 hover:bg-gray-100 group-[.isActive]:bg-yellow-200/25 group-[.isActive]:shadow-inner max-[425px]:flex-col md:bg-gray-200 md:p-0 "
         >
           {logo && (
             <Image
