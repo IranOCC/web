@@ -53,26 +53,27 @@ export default function Page() {
   ];
 
   return (
-    <div className="flex h-auto min-h-full flex-col items-center justify-center bg-gray-200 px-4 pb-16 md:bg-transparent md:pb-4">
-      <div className="flex flex-col items-center gap-4 px-3 py-5">
+    <div className="flex h-auto min-h-full flex-col items-center justify-between bg-gray-200 px-4 pb-16 md:bg-transparent md:pb-4">
+      <div className="sticky top-5 z-10 flex w-full flex-col items-center gap-4 bg-gray-200 px-3 py-5 md:bg-white">
         <Image src={Logo} alt="logo" />
         <div className="flex flex-col gap-2">
           <h1 className="text-center text-xl font-bold">املاک اکازیون</h1>
           <h2 className="text-center text-lg font-medium">بزرگترین مرکز اطلاعات املاک شمال کشور</h2>
         </div>
+        <SearchBox />
       </div>
-      <SearchBox />
       <div className="flex max-w-5xl flex-wrap justify-center gap-4 py-8">
         {items.map(({ title, link }, idx) => {
           return (
             <div key={idx} className="relative overflow-hidden rounded-2xl">
               <Link href={link} role="link">
-                <h3 className="w-48 truncate bg-white px-3 py-6 text-center text-base font-semibold transition-all hover:bg-secondary sm:w-56 sm:py-8 sm:text-lg sm:font-bold md:bg-gray-200">{title}</h3>
+                <h3 className="w-44 truncate bg-white px-3 py-6 text-center text-base font-semibold transition-all hover:bg-secondary sm:w-56 sm:py-8 sm:text-lg sm:font-bold md:bg-gray-200">{title}</h3>
               </Link>
             </div>
           );
         })}
       </div>
+      <div />
     </div>
   );
 }
