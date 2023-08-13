@@ -62,12 +62,12 @@ export default function Page() {
         </div>
         <SearchBox />
       </div>
-      <div className="flex max-w-5xl flex-wrap justify-center gap-4 py-8">
+      <div className="flex max-w-5xl flex-wrap justify-center sm:gap-4 gap-3 py-8">
         {items.map(({ title, link }, idx) => {
           return (
             <div key={idx} className="relative overflow-hidden rounded-2xl">
               <Link href={link} role="link">
-                <h3 className="w-44 truncate bg-white px-3 py-6 text-center text-base font-semibold transition-all hover:bg-secondary sm:w-56 sm:py-8 sm:text-lg sm:font-bold md:bg-gray-200">{title}</h3>
+                <h3 className="w-40 truncate bg-white px-3 py-6 text-center text-base font-semibold transition-all hover:bg-secondary sm:w-56 sm:py-8 sm:text-lg sm:font-bold md:bg-gray-200">{title}</h3>
               </Link>
             </div>
           );
