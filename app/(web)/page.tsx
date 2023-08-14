@@ -48,7 +48,7 @@ export default function Page() {
     },
     {
       title: "معاوضه",
-      link: "/property?filter[barter]=true",
+      link: "/property?filter[change]=true",
     },
   ];
 
@@ -62,7 +62,7 @@ export default function Page() {
         </div>
         <SearchBox />
       </div>
-      <div className="flex max-w-5xl flex-wrap justify-center sm:gap-4 gap-3 py-8">
+      <div className="flex max-w-5xl flex-wrap justify-center gap-3 py-8 sm:gap-4">
         {items.map(({ title, link }, idx) => {
           return (
             <div key={idx} className="relative overflow-hidden rounded-2xl">
