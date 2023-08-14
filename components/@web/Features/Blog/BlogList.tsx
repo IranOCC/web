@@ -24,7 +24,12 @@ const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } })
   const [dataList, setDataList] = useState<WebBlogPost[]>(data?.items || []);
   const [itemsCount, setItemsCount] = useState(data?.total || 0);
   const [dataLoading, setDataLoading] = useState<boolean>(false);
+  const isFirst = useRef(true);
   const getData = async () => {
+    if (isFirst.current) {
+      isFirst.current = false;
+      return true;
+    }
     setDataLoading(true);
     try {
       const response = await api.get(`/blog/post?size=10&current=${current[0]}${!!searchParams?.toString() ? `&${searchParams?.toString()}` : ""}`);

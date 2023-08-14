@@ -25,7 +25,12 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
   const [dataList, setDataList] = useState<WebEstate[]>(data?.items || []);
   const [itemsCount, setItemsCount] = useState(data.total);
   const [dataLoading, setDataLoading] = useState<boolean>(false);
+  const isFirst = useRef(true);
   const getData = async () => {
+    if (isFirst.current) {
+      isFirst.current = false;
+      return true;
+    }
     setDataLoading(true);
     try {
       const response = await api.get(`/estate?size=10&current=${current[0]}${searchParams ? `&${searchParams?.toString()}` : ""}`);
