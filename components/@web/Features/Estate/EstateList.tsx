@@ -43,8 +43,8 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
   };
 
   useEffect(() => {
-    if (!!update) setCurrent([1]);
-  }, [update]);
+    setCurrent([1]);
+  }, [searchParams, update]);
   useEffect(() => {
     if (!!current[0]) getData();
   }, [current]);

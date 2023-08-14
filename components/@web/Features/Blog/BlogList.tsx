@@ -10,25 +10,24 @@ import { WebBlogPost } from "@/types/interfaces";
 import BlogPostCard from "./BlogPostCard";
 import BlogSearchFilteringBox from "./BlogSearchFilteringBox";
 
-const BlogList = ({ data }: { data: { items?: WebBlogPost[]; total: number } }) => {
+const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } }) => {
   const { blogPage } = useContext(WebPreviewContext) as WebPreviewContextType;
   useEffect(() => {
     blogPage();
   }, []);
 
+  const [update, setUpdate] = useState([true]);
+
   const searchParams = useSearchParams();
-
-  const [update, setUpdate] = useState(false);
-
   const api = useAxiosAuth();
   const [current, setCurrent] = useState([0]);
   const [dataList, setDataList] = useState<WebBlogPost[]>(data?.items || []);
-  const [itemsCount, setItemsCount] = useState(data.total);
+  const [itemsCount, setItemsCount] = useState(data?.total || 0);
   const [dataLoading, setDataLoading] = useState<boolean>(false);
   const getData = async () => {
     setDataLoading(true);
     try {
-      const response = await api.get(`/blog/post?size=10&current=${current[0]}${searchParams ? `&${searchParams?.toString()}` : ""}`);
+      const response = await api.get(`/blog/post?size=10&current=${current[0]}${!!searchParams?.toString() ? `&${searchParams?.toString()}` : ""}`);
       const data = response.data as { items: WebBlogPost[]; total: number };
       if (current[0] === 1) {
         setDataList(data?.items || []);
@@ -43,8 +42,8 @@ const BlogList = ({ data }: { data: { items?: WebBlogPost[]; total: number } }) 
   };
 
   useEffect(() => {
-    if (!!update) setCurrent([1]);
-  }, [update]);
+    setCurrent([1]);
+  }, [searchParams, update]);
   useEffect(() => {
     if (!!current[0]) getData();
   }, [current]);

@@ -33,7 +33,6 @@ const BlogSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
     if (data.search) $s.set("search", data.search);
     else $s.delete("search");
     router.push(pathname + "?" + $s.toString());
-    setUpdate([true]);
   };
 
   useEffect(() => {
@@ -51,7 +50,7 @@ const BlogSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
           control={control}
           placeholder="کلمه کلیدی خود را تایپ کنید ..."
           submitIcon={
-            <i className={"block h-6 w-6 text-gray-400" + (dataLoading ? " animate-spin" : "")} onClick={() => handleSubmit(onSubmit)()}>
+            <i className={"block h-6 w-6 text-gray-400" + (dataLoading ? " animate-spin" : "")} onClick={() => setUpdate([true])}>
               {/*  */}
               {dataLoading ? <LoadingIcon /> : <Search />}
             </i>

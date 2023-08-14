@@ -102,8 +102,6 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
     else $s.delete("filter[barter]");
 
     router.push(pathname + "?" + $s.toString());
-
-    setUpdate([true]);
   };
 
   useEffect(() => {
@@ -187,7 +185,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
           control={control}
           placeholder="کلمه کلیدی خود را تایپ کنید ..."
           submitIcon={
-            <i className={"block h-6 w-6 text-gray-400" + (dataLoading ? " animate-spin" : "")} onClick={() => handleSubmit(onSubmit)()}>
+            <i className={"block h-6 w-6 text-gray-400" + (dataLoading ? " animate-spin" : "")} onClick={() => setUpdate([true])}>
               {/*  */}
               {dataLoading ? <LoadingIcon /> : <Search />}
             </i>
