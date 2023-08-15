@@ -10,6 +10,7 @@ import RatingButton from "./RatingButton";
 import ReportButton from "./ReportButton";
 import ShareButton from "./ShareButton";
 import FeaturesList from "../Estate/FeaturesList";
+import { RelatedTo } from "@/types/enum";
 
 function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): KeenSliderPlugin {
   return (slider) => {
@@ -52,7 +53,7 @@ const AdaptiveHeight: KeenSliderPlugin = (slider) => {
   slider.on("slideChanged", updateHeight);
 };
 
-const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: string; estateData?: WebEstate }) => {
+const GalleryContent = ({ items, id, relatedTo, estateData }: { items?: StorageFile[]; id: string; relatedTo: RelatedTo; estateData?: WebEstate }) => {
   const { isFullscreen, isFullContent, headerTitle, headerSubTitle } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   const [currentSlide, setCurrentSlide] = useState(0);

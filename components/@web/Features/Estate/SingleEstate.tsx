@@ -1,9 +1,9 @@
 "use client";
 
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
-import { Icon, Phone, StorageFile, WebEstate } from "@/types/interfaces";
+import { Icon, Office, Phone, StorageFile, User, WebEstate } from "@/types/interfaces";
 import Image from "next/image";
-import { ReactNode, useContext, useEffect } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import Tab from "@/components/Tab";
 import { Verified, Favorite } from "@mui/icons-material";
 import { Tooltip } from "antd";
@@ -15,6 +15,8 @@ import VerifiedButton from "../@common/VerifiedButton";
 import GalleryContent from "../@common/GalleryContent";
 import WebTab from "../../Tab";
 import { WebButton } from "../../Button";
+import Modal from "@/components/Modals";
+import { RelatedTo } from "@/types/enum";
 
 const SingleEstate = ({ data }: { data?: WebEstate }) => {
   if (!data) throw Error("PropertyNotFound");
@@ -60,6 +62,8 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
     singleEstate(_id, title, category.title, code || "-", province, city, district);
   }, []);
 
+  const [openReserveModal, setReserveModal] = useState(false);
+
   const tabEq = (
     <div className="flex flex-col gap-2">
       <h6 className="flex items-center gap-1.5 font-bold">
@@ -100,6 +104,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
         //
         items={gallery}
         id={_id}
+        relatedTo={RelatedTo.Estate}
         estateData={data}
       />
       <WebTab
@@ -123,7 +128,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
           {/* icons */}
           <div className="order-first grid h-full w-fit min-w-[2rem] grid-cols-1 gap-2 min-[400px]:min-w-[4rem] min-[400px]:grid-cols-2">
             <VerifiedButton isVerified={office.verified || false} />
-            <FavoriteButton isFavorite={false} />
+            <FavoriteButton isFav={false} />
             <ReportButton />
             <ShareButton />
           </div>
@@ -160,6 +165,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
                 title="رزرو بازدید و تماس"
                 size="small"
                 className="mt-2 lg:hidden"
+                onClick={() => setReserveModal(true)}
                 noSpace
               />
             </div>
@@ -178,8 +184,54 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
           </div>
         </div>
       </div>
+      <ReservationModal
+        //
+        isOpen={openReserveModal}
+        setOpen={setReserveModal}
+        office={office}
+        createdBy={createdBy}
+      />
     </div>
   );
 };
 
 export default SingleEstate;
+
+export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpen: boolean; setOpen: (a: boolean) => void; office: Office; createdBy: User }) => {
+  return (
+    <Modal
+      //
+      open={isOpen}
+      setOpen={() => setOpen(false)}
+    >
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <div className="flex w-full flex-col justify-center text-center">
+          <span className="truncate">
+            ثبت شده توسط <b>{office.name}</b>
+          </span>
+          <b className="truncate">{createdBy.fullName}</b>
+          <hr className="my-2 w-full border-gray-500" />
+          <span className="">شماره تماس</span>
+          <a className="truncate font-bold" dir="ltr" href={`tel:${(createdBy.phone as Phone)?.value}`}>
+            {(createdBy.phone as Phone)?.value || "-"}
+          </a>
+        </div>
+        <div className="grid grid-cols-1 gap-2">
+          <WebButton
+            //
+            title="رزرو بازدید حضوری"
+            size="default"
+            noSpace
+          />
+          <WebButton
+            //
+            title="رزرو بازدید آنلاین"
+            size="default"
+            variant="outline"
+            noSpace
+          />
+        </div>
+      </div>
+    </Modal>
+  );
+};

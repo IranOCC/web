@@ -1,20 +1,7 @@
 "use client";
 
-import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
-import { Icon, Phone, StorageFile, WebEstate } from "@/types/interfaces";
+import { WebEstate } from "@/types/interfaces";
 import Image from "next/image";
-import { ReactNode, useContext, useEffect } from "react";
-import Tab from "@/components/Tab";
-import { Verified, Favorite } from "@mui/icons-material";
-import { Tooltip } from "antd";
-import MapEstate from "./MapEstate";
-import ShareButton from "../@common/ShareButton";
-import ReportButton from "../@common/ReportButton";
-import FavoriteButton from "../@common/FavoriteButton";
-import VerifiedButton from "../@common/VerifiedButton";
-import GalleryContent from "../@common/GalleryContent";
-import WebTab from "../../Tab";
-import { WebButton } from "../../Button";
 import Link from "next/link";
 import FeaturesList from "./FeaturesList";
 

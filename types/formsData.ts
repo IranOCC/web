@@ -341,3 +341,10 @@ export type ContactFormData = {
     phone?: string;
     text?: string;
 };
+
+
+
+
+export type ReportFormData = {
+    text: string;
+};

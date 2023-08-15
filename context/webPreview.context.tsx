@@ -1,5 +1,6 @@
 "use client";
 
+import { RelatedTo } from "@/types/enum";
 import { Estate } from "@/types/interfaces";
 import React, { ReactNode } from "react";
 
@@ -43,6 +44,9 @@ export type WebPreviewContextType = {
   headerSubTitle?: SubTitleType;
   setHeaderSubTitle: (n?: SubTitleType) => void;
 
+  relatedTo?: RelatedTo;
+  relatedToID?: string;
+
   singlePost: (id: string, title: string, categories: string[], author: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
   singlePage: (id: string, title: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
   singleEstate: (id: string, title: string, category: string, code: string, province: string, city: string, district: string) => void;
@@ -62,6 +66,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const [isFullContent, setFullContent] = React.useState<boolean>(false);
   const [headerTitle, setHeaderTitle] = React.useState<string | undefined>(undefined);
   const [headerSubTitle, setHeaderSubTitle] = React.useState<SubTitleType | undefined>(undefined);
+  const [relatedTo, setRelatedTo] = React.useState<RelatedTo | undefined>(undefined);
+  const [relatedToID, setRelatedToID] = React.useState<string | undefined>(undefined);
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
@@ -74,6 +80,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const singlePost = (id: string, title: string, categories: string[], author: string, publishedAt: Date, rateScore: number, userRate?: number) => {
     setBackground("bg-white");
     setHeaderTitle(title);
+    setRelatedTo(RelatedTo.Post);
+    setRelatedToID(id);
     setBreadCrump([
       //
       { title: "ایران اکازیون", url: "/" },
@@ -104,6 +112,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const singlePage = (id: string, title: string, publishedAt: Date) => {
     setBackground("bg-white");
     setHeaderTitle(title);
+    setRelatedTo(RelatedTo.Page);
+    setRelatedToID(id);
     setBreadCrump(undefined);
     setFullContent(false);
     setSidebar({
@@ -120,10 +130,12 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
       report: true,
     });
   };
-  // singlePost
+  // singleEstate
   const singleEstate = (id: string, title: string, category: string, code: string, province: string, city: string, district: string) => {
     setBackground("bg-white");
     setHeaderTitle(title);
+    setRelatedTo(RelatedTo.Estate);
+    setRelatedToID(id);
     setBreadCrump([
       //
       { title: "ایران اکازیون", url: "/" },
@@ -146,6 +158,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const errorPage = () => {
     setBackground("bg-secondary");
     setHeaderTitle(undefined);
+    setRelatedTo(undefined);
+    setRelatedToID(undefined);
     setBreadCrump(undefined);
     setFullContent(true);
     setSidebar(undefined);
@@ -155,6 +169,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const searchPage = () => {
     setBackground("bg-white");
     setHeaderTitle(undefined);
+    setRelatedTo(undefined);
+    setRelatedToID(undefined);
     setBreadCrump(undefined);
     setFullContent(false);
     setSidebar(undefined);
@@ -171,6 +187,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const internalPage = () => {
     setBackground("bg-white");
     setHeaderTitle(undefined);
+    setRelatedTo(undefined);
+    setRelatedToID(undefined);
     setBreadCrump(undefined);
     setFullContent(false);
     setSidebar(undefined);
@@ -181,6 +199,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const blogPage = () => {
     setBackground("bg-white");
     setHeaderTitle(undefined);
+    setRelatedTo(undefined);
+    setRelatedToID(undefined);
     setBreadCrump(undefined);
     setFullContent(false);
     setSidebar(undefined);
@@ -212,6 +232,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
         searchPage,
         blogPage,
         internalPage,
+        relatedTo,
+        relatedToID,
       }}
     >
       {children}

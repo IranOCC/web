@@ -5,6 +5,7 @@ const ShareButton = ({ size = 28 }: { size?: number }) => {
   return (
     <Tooltip title="اشتراک گذاری" placement="top" arrow={false}>
       <div
+        //
         role="share"
         onClick={() => {
           if (navigator.share) {

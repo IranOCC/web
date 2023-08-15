@@ -5,3 +5,11 @@ export enum UserRoles {
     Author = 'Author',
     User = 'User',
 }
+
+
+
+export enum RelatedTo {
+    Post = "post",
+    Estate = "estate",
+    Page = "page"
+}
