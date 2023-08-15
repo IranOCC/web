@@ -156,8 +156,8 @@ const GalleryContent = ({ items, id, relatedTo, estateData }: { items?: StorageF
                     {headerSubTitle?.rating && (
                       <RatingButton
                         //
-                        readOnly={!!headerSubTitle?.userRate}
-                        value={headerSubTitle?.rateScore}
+                        userRate={headerSubTitle?.userRate}
+                        rate={headerSubTitle?.rateScore}
                       />
                     )}
                   </>

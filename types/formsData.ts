@@ -348,3 +348,8 @@ export type ContactFormData = {
 export type ReportFormData = {
     text: string;
 };
+
+
+export type RatingFormData = {
+    score: number;
+};

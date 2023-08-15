@@ -82,8 +82,8 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                         {headerSubTitle?.rating && (
                           <RatingButton
                             //
-                            readOnly={!!headerSubTitle?.userRate}
-                            value={headerSubTitle?.rateScore}
+                            userRate={headerSubTitle?.userRate}
+                            rate={headerSubTitle?.rateScore}
                           />
                         )}
                         <div className="flex items-center justify-center gap-1 rounded-2xl bg-gray-100 p-1 empty:hidden">

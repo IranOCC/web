@@ -34,7 +34,7 @@ const FavoriteButton = ({ isFav, size = 28 }: { isFav: boolean; size?: number })
           //
           role="remove-from-favorites"
           onClick={onSubmit}
-          className="flex h-fit w-fit cursor-pointer items-center justify-center text-red-500"
+          className="flex h-fit w-fit cursor-pointer items-center justify-center justify-self-center text-red-500"
         >
           <Favorite style={{ fontSize: size }} />
         </div>
@@ -47,7 +47,7 @@ const FavoriteButton = ({ isFav, size = 28 }: { isFav: boolean; size?: number })
         //
         role="add-to-favorites"
         onClick={onSubmit}
-        className="flex h-fit w-fit cursor-pointer items-center justify-center text-gray-500"
+        className="flex h-fit w-fit cursor-pointer items-center justify-center justify-self-center text-gray-500"
       >
         <FavoriteBorderOutlined style={{ fontSize: size }} />
       </div>
