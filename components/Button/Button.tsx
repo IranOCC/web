@@ -7,7 +7,7 @@ const Button = (props: PropsTypes) => {
   if (size === "small") sizeClass = variant === "outline" ? " py-[calc(0.375rem-1px)]" : " py-1.5";
   else if (size === "large") sizeClass = variant === "outline" ? " py-[calc(1rem-1px)]" : " py-4";
 
-  const _className = `${className} relative flex justify-center items-center z-10
+  const _className = `${className} truncate relative flex justify-center items-center z-10
       ${
         disabled
           ? "cursor-not-allowed " + (variant === "fill" ? "bg-disable" : "bg-transparent")
@@ -17,6 +17,7 @@ const Button = (props: PropsTypes) => {
           ? "text-white bg-secondary from-secondary to-primary hover:bg-gradient-to-l"
           : "text-gray-600 bg-translate border border-gray-400 hover:bg-gray-100"
       }
+      
       font-medium rounded text-sm px-8 ${sizeClass} text-center
       ${noSpace ? " mb-0" : " mb-6"}
       ${fill ? " w-full" : ""}

@@ -6,7 +6,7 @@ export const WebButton = (props: IProps) => {
     <Button
       //
       {...props}
-      className={`${props.className} rounded-2xl`}
+      className={`${!!props?.className ? props?.className : ""} rounded-2xl`}
     />
   );
 };
