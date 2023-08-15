@@ -10,7 +10,7 @@ const FavoriteButton = ({ isFavorite, size = 28 }: { isFavorite: boolean; size?:
           onClick={() => {
             //
           }}
-          className="flex cursor-pointer items-center justify-center text-red-500"
+          className="flex h-fit w-fit cursor-pointer items-center justify-center text-red-500"
         >
           <Favorite style={{ fontSize: size }} />
         </div>
@@ -24,7 +24,7 @@ const FavoriteButton = ({ isFavorite, size = 28 }: { isFavorite: boolean; size?:
         onClick={() => {
           //
         }}
-        className="flex cursor-pointer items-center justify-center text-gray-500"
+        className="flex h-fit w-fit cursor-pointer items-center justify-center text-gray-500"
       >
         <FavoriteBorderOutlined style={{ fontSize: size }} />
       </div>

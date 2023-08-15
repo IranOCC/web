@@ -212,31 +212,35 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
               //   ..._filters.filter(({ filters }) => filters.some((v) => searchParams?.has(`filter[${v}]`))),
               //   ..._filters.filter(({ filters }) => !filters.some((v) => searchParams?.has(`filter[${v}]`))),
               // ]
-              _filters.map(({ title, width, filters }, idx) => {
-                const isActive = filters.some((v) => searchParams?.has(`filter[${v}]`));
-                return (
-                  <button
-                    key={idx}
-                    style={{ width: width, maxWidth: width, minWidth: width }}
-                    className={
-                      `keen-slider__slide relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-3xl border text-sm ` + (isActive ? "border-secondary bg-secondary text-white" : "border-gray-300 text-gray-700" + (isOpenFilter === idx ? " bg-disable" : " bg-gray-100"))
-                    }
-                  >
-                    <span
-                      //
-                      onClick={(e) => setOpenFilter((m) => (m === idx ? null : idx))}
-                      className="flex w-full flex-1 items-center justify-center py-1 text-center text-sm"
+              _filters
+                // .sort(({ filters }) => {
+                //   return filters.some((v) => searchParams?.has(`filter[${v}]`)) ? 1 : -1;
+                // })
+                .map(({ title, width, filters }, idx) => {
+                  const isActive = filters.some((v) => searchParams?.has(`filter[${v}]`));
+                  return (
+                    <button
+                      key={idx}
+                      style={{ width: width, maxWidth: width, minWidth: width }}
+                      className={
+                        `keen-slider__slide relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-3xl border text-sm ` + (isActive ? "border-secondary bg-secondary text-white" : "border-gray-300 text-gray-700" + (isOpenFilter === idx ? " bg-disable" : " bg-gray-100"))
+                      }
                     >
-                      {title}
-                    </span>
-                    {isActive && (
-                      <i className="absolute left-1 cursor-pointer text-sm text-red-600 hover:text-red-100" onClick={() => cancelFilter(idx)}>
-                        <Cancel sx={{ fontSize: 16 }} />
-                      </i>
-                    )}
-                  </button>
-                );
-              })
+                      <span
+                        //
+                        onClick={(e) => setOpenFilter((m) => (m === idx ? null : idx))}
+                        className="flex w-full flex-1 items-center justify-center py-1 text-center text-sm"
+                      >
+                        {title}
+                      </span>
+                      {isActive && (
+                        <i className="absolute left-1 cursor-pointer text-sm text-red-600 hover:text-red-100" onClick={() => cancelFilter(idx)}>
+                          <Cancel sx={{ fontSize: 16 }} />
+                        </i>
+                      )}
+                    </button>
+                  );
+                })
             }
           </div>
         </div>

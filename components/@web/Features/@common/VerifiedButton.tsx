@@ -10,7 +10,7 @@ const VerifiedButton = ({ isVerified, size = 28 }: { isVerified: boolean; size?:
           onClick={() => {
             //
           }}
-          className="flex cursor-pointer items-center justify-center text-secondary"
+          className="flex h-fit w-fit cursor-pointer items-center justify-center text-secondary"
         >
           <Verified style={{ fontSize: size }} />
         </div>
@@ -24,7 +24,7 @@ const VerifiedButton = ({ isVerified, size = 28 }: { isVerified: boolean; size?:
         onClick={() => {
           //
         }}
-        className="flex cursor-pointer items-center justify-center text-gray-400/70"
+        className="flex h-fit w-fit cursor-pointer items-center justify-center text-gray-400/70"
       >
         <Verified style={{ fontSize: size }} />
       </div>

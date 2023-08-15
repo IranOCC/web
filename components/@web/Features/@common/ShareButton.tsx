@@ -14,7 +14,7 @@ const ShareButton = ({ size = 28 }: { size?: number }) => {
             });
           }
         }}
-        className="flex cursor-pointer items-center justify-center text-gray-500"
+        className="flex h-fit w-fit cursor-pointer items-center justify-center text-gray-500"
       >
         <ShareOutlined style={{ fontSize: size }} />
       </div>

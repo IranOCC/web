@@ -67,7 +67,7 @@ export default function Page() {
           return (
             <div key={idx} className="relative overflow-hidden rounded-2xl">
               <Link href={link} role="link">
-                <h3 className="w-40 truncate bg-white px-3 py-6 text-center text-base font-semibold transition-all hover:bg-secondary sm:w-56 sm:py-8 sm:text-lg sm:font-bold md:bg-gray-200">{title}</h3>
+                <h3 className="w-40 truncate bg-white px-3 py-6 text-center text-base font-semibold transition-colors duration-500 hover:bg-secondary sm:w-56 sm:py-8 sm:text-lg sm:font-bold md:bg-gray-200">{title}</h3>
               </Link>
             </div>
           );

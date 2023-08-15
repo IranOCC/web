@@ -119,9 +119,9 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
         ]}
       />
       <div className="flex items-center justify-center rounded-xl bg-gray-200 p-4">
-        <div className="flex w-full max-w-2xl flex-row items-center justify-between gap-2 gap-y-4">
+        <div className="flex w-full max-w-full flex-row items-center justify-between gap-2 gap-y-4 overflow-y-hidden md:max-w-2xl">
           {/* icons */}
-          <div className="order-first grid h-full grid-cols-1 gap-2 min-[400px]:grid-cols-2">
+          <div className="order-first grid h-full w-fit min-w-[2rem] grid-cols-1 gap-2 min-[400px]:min-w-[4rem] min-[400px]:grid-cols-2">
             <VerifiedButton isVerified={office.verified || false} />
             <FavoriteButton isFavorite={false} />
             <ReportButton />
@@ -143,8 +143,9 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
               noSpace
             />
           </div>
+          {/* created */}
           <div className="flex w-auto flex-row gap-2">
-            <div className="flex w-full flex-col items-center justify-center ">
+            <div className="flex w-full flex-col justify-center text-center">
               <span className="truncate">
                 ثبت شده توسط <b>{office.name}</b>
               </span>
@@ -163,7 +164,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
               />
             </div>
             {createdBy.avatar && (
-              <div className="flex items-center justify-center">
+              <div className="flex justify-center">
                 <Image
                   //
                   src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (createdBy.avatar as StorageFile)?.path}
