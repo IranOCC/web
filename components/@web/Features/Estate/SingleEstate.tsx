@@ -104,7 +104,6 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
         //
         items={gallery}
         id={_id}
-        relatedTo={RelatedTo.Estate}
         estateData={data}
       />
       <WebTab
