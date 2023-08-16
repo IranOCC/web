@@ -1,9 +1,8 @@
-import { ThumbDownOutlined, ThumbUpOutlined, Reply } from "@mui/icons-material";
+import { ThumbDownOutlined, ThumbUpOutlined, Reply, MarkUnreadChatAlt } from "@mui/icons-material";
 import { Badge, Button, IconButton } from "@mui/material";
 import { List, Skeleton, Avatar } from "antd";
 import moment from "jalali-moment";
 import { useState, useEffect } from "react";
-
 interface DataType {
   gender?: string;
   name: {
@@ -102,9 +101,14 @@ const BlogComments = ({ id }: { id: string }) => {
                 <div className="flex flex-col items-start gap-2">
                   <p>این صدای منه های این صدای منه وای</p>
                   <div className="flex w-full items-center justify-between">
-                    <Button startIcon={<Reply />} endIcon={"(2)"}>
-                      <b>پاسخ</b>
-                    </Button>
+                    <div className="flex flex-row gap-2">
+                      <Button startIcon={<Reply />}>
+                        <b>پاسخ</b>
+                      </Button>
+                      <Button color="warning" startIcon={<MarkUnreadChatAlt />} endIcon={"(2)"}>
+                        <b>نمایش پاسخ ها</b>
+                      </Button>
+                    </div>
                     <div className="grid grid-cols-2 gap-2">
                       <Badge
                         key={0}
