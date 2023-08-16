@@ -78,9 +78,10 @@ const BlogComments = ({ id }: { id: string }) => {
       itemLayout="horizontal"
       loadMore={loadMore}
       dataSource={list}
-      renderItem={(item) => (
+      renderItem={(item, idx) => (
         <List.Item
           //
+          key={idx}
           actions={[
             <Badge
               badgeContent={4}
