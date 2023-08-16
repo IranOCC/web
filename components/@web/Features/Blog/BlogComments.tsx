@@ -84,6 +84,7 @@ const BlogComments = ({ id }: { id: string }) => {
           key={idx}
           actions={[
             <Badge
+              key={0}
               badgeContent={4}
               showZero
               anchorOrigin={{
@@ -96,6 +97,7 @@ const BlogComments = ({ id }: { id: string }) => {
               </IconButton>
             </Badge>,
             <Badge
+              key={1}
               badgeContent={1}
               showZero
               anchorOrigin={{
