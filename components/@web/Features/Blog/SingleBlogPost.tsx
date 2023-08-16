@@ -5,6 +5,7 @@ import { WebBlogPost } from "@/types/interfaces";
 import { useContext, useEffect } from "react";
 import WebTab from "../../Tab";
 import GalleryContent from "../@common/GalleryContent";
+import BlogComments from "./BlogComments";
 
 const SingleBlogPost = ({ data }: { data?: WebBlogPost }) => {
   if (!data) throw Error("PostNotFound");
@@ -41,7 +42,7 @@ const SingleBlogPost = ({ data }: { data?: WebBlogPost }) => {
             },
             {
               title: "دیدگاه ها",
-              content: null,
+              content: <BlogComments id={_id} />,
             },
           ]}
         />
