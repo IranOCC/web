@@ -82,34 +82,6 @@ const BlogComments = ({ id }: { id: string }) => {
         <List.Item
           //
           key={idx}
-          actions={[
-            <Badge
-              key={0}
-              badgeContent={4}
-              showZero
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <IconButton color="success" size="small">
-                <ThumbUpOutlined />
-              </IconButton>
-            </Badge>,
-            <Badge
-              key={1}
-              badgeContent={1}
-              showZero
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <IconButton color="error" size="small">
-                <ThumbDownOutlined />
-              </IconButton>
-            </Badge>,
-          ]}
         >
           <Skeleton
             //
@@ -123,15 +95,45 @@ const BlogComments = ({ id }: { id: string }) => {
               avatar={<Avatar src={item.picture.large} />}
               title={
                 <div className="flex flex-row gap-2">
-                  <b>{item.name?.last}</b>|<span className="text-gray-500">{moment().locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>
+                  <b>ابی حامدی</b>|<span className="text-gray-500">{moment().locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>
                 </div>
               }
               description={
                 <div className="flex flex-col items-start gap-2">
-                  <p>Ant Design, a design language for background applications, is refined by Ant UED Team</p>
-                  <Button startIcon={<Reply />} endIcon={"(2)"}>
-                    <b>پاسخ</b>
-                  </Button>
+                  <p>این صدای منه های این صدای منه وای</p>
+                  <div className="flex w-full items-center justify-between">
+                    <Button startIcon={<Reply />} endIcon={"(2)"}>
+                      <b>پاسخ</b>
+                    </Button>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Badge
+                        key={0}
+                        badgeContent={4}
+                        showZero
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "left",
+                        }}
+                      >
+                        <IconButton color="success" size="small">
+                          <ThumbUpOutlined />
+                        </IconButton>
+                      </Badge>
+                      <Badge
+                        key={1}
+                        badgeContent={1}
+                        showZero
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "left",
+                        }}
+                      >
+                        <IconButton color="error" size="small">
+                          <ThumbDownOutlined />
+                        </IconButton>
+                      </Badge>
+                    </div>
+                  </div>
                 </div>
               }
             />
