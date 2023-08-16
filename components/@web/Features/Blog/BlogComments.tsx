@@ -106,7 +106,7 @@ const BlogComments = ({ id }: { id: string }) => {
                         <b>پاسخ</b>
                       </Button>
                       <Button color="warning" startIcon={<MarkUnreadChatAlt />} endIcon={"(2)"}>
-                        <b>نمایش پاسخ ها</b>
+                        <b>نمایش</b>
                       </Button>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
