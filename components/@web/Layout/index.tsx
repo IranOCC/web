@@ -54,25 +54,25 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                       </h6>
                     )}
                     {headerSubTitle?.type === "blog" && (
-                      <h6 className="flex items-center gap-1 text-sm font-medium ">
+                      <h6 className="flex items-center gap-1 truncate text-sm font-medium">
                         <span className="text-gray-600">دسته بندی:</span>
                         <span className="text-black">{headerSubTitle.category || "-"}</span>
                       </h6>
                     )}
                     {headerSubTitle?.type === "blog" && (
-                      <h6 className="flex items-center gap-1 text-sm font-medium ">
+                      <h6 className="flex items-center gap-1 truncate text-sm font-medium ">
                         <span className="text-gray-600">نویسنده:</span>
                         <span className="text-black">{headerSubTitle.author || "-"}</span>
                       </h6>
                     )}
                     {headerSubTitle?.type === "blog" && (
-                      <h6 className="flex items-center gap-1 text-sm font-medium ">
+                      <h6 className="flex items-center gap-1 truncate text-sm font-medium ">
                         <span className="text-gray-600">تاریخ انتشار:</span>
                         <span className="text-black">{moment(headerSubTitle.publishedAt).locale("fa").format("DD MMM YYYY") || "-"}</span>
                       </h6>
                     )}
                     {headerSubTitle?.type === "page" && (
-                      <h6 className="flex items-center gap-1 text-sm font-medium ">
+                      <h6 className="flex items-center gap-1 truncate text-sm font-medium ">
                         <span className="text-gray-600">تاریخ انتشار:</span>
                         <span className="text-black">{moment(headerSubTitle.publishedAt).locale("fa").format("DD MMM YYYY") || "-"}</span>
                       </h6>
@@ -103,7 +103,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                   universal
                   // autoHide={false}
                   hideTracksWhenNotNeeded
-                  renderView={(props) => <div {...props} style={{ ...props.style, padding: 0, marginLeft: props.style.marginRight, marginRight: 0 }} />}
+                  renderView={(props) => <div {...props} style={{ ...props.style, padding: 0, scrollBehavior: "smooth", marginLeft: props.style.marginRight, marginRight: 0 }} />}
                   //
                   renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", zIndex: 10, bottom: 2, right: 2, left: 2, height: 2 }} />}
                   renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", borderRadius: "20px", height: 6, bottom: 2 }} />}

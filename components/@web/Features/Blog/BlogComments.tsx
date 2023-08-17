@@ -3,6 +3,13 @@ import { Badge, Button, IconButton } from "@mui/material";
 import { List, Skeleton, Avatar } from "antd";
 import moment from "jalali-moment";
 import { useState, useEffect } from "react";
+import { WebInput } from "../../Input";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { toast } from "@/lib/toast";
+import { CommentFormData } from "@/types/formsData";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { WebButton } from "../../Button";
 interface DataType {
   gender?: string;
   name: {
@@ -70,82 +77,192 @@ const BlogComments = ({ id }: { id: string }) => {
       </div>
     ) : null;
 
+  const router = useRouter();
+  const onReplyTo = () => {
+    router.push("#commentform");
+  };
+
   return (
-    <List
-      className="demo-loadmore-list"
-      loading={initLoading}
-      itemLayout="horizontal"
-      loadMore={loadMore}
-      dataSource={list}
-      renderItem={(item, idx) => (
-        <List.Item
-          //
-          key={idx}
-        >
-          <Skeleton
+    <>
+      <CommentForm />
+      <List
+        className="demo-loadmore-list"
+        loading={initLoading}
+        itemLayout="horizontal"
+        loadMore={loadMore}
+        dataSource={list}
+        renderItem={(item, idx) => (
+          <List.Item
             //
-            avatar
-            title={false}
-            loading={item.loading}
-            active
+            key={idx}
           >
-            <List.Item.Meta
+            <Skeleton
               //
-              avatar={<Avatar src={item.picture.large} />}
-              title={
-                <div className="flex flex-row gap-2">
-                  <b>ابی حامدی</b>|<span className="text-gray-500">{moment().locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>
-                </div>
-              }
-              description={
-                <div className="flex flex-col items-start gap-2">
-                  <p>این صدای منه های این صدای منه وای</p>
-                  <div className="flex w-full items-center justify-between">
-                    <div className="flex flex-row gap-2">
-                      <Button startIcon={<Reply />}>
-                        <b>پاسخ</b>
-                      </Button>
-                      <Button color="warning" startIcon={<MarkUnreadChatAlt />} endIcon={"(2)"}>
-                        <b>نمایش</b>
-                      </Button>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <Badge
-                        key={0}
-                        badgeContent={4}
-                        showZero
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "left",
-                        }}
-                      >
-                        <IconButton color="success" size="small">
-                          <ThumbUpOutlined />
-                        </IconButton>
-                      </Badge>
-                      <Badge
-                        key={1}
-                        badgeContent={1}
-                        showZero
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "left",
-                        }}
-                      >
-                        <IconButton color="error" size="small">
-                          <ThumbDownOutlined />
-                        </IconButton>
-                      </Badge>
+              avatar
+              title={false}
+              loading={item.loading}
+              active
+            >
+              <List.Item.Meta
+                //
+                avatar={<Avatar src={item.picture.large} />}
+                title={
+                  <div className="flex flex-row gap-2">
+                    <b>ابی حامدی</b>|<span className="text-gray-500">{moment().locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>
+                  </div>
+                }
+                description={
+                  <div className="flex flex-col items-start gap-2">
+                    <p>این صدای منه های این صدای منه وای</p>
+                    <div className="flex w-full items-center justify-between">
+                      <div className="flex flex-row gap-2">
+                        <Button startIcon={<Reply />} onClick={() => onReplyTo()}>
+                          <b>پاسخ</b>
+                        </Button>
+                        <Button color="warning" startIcon={<MarkUnreadChatAlt />} endIcon={"(2)"}>
+                          <b>نمایش</b>
+                        </Button>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <Badge
+                          key={0}
+                          badgeContent={4}
+                          showZero
+                          anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "left",
+                          }}
+                        >
+                          <IconButton color="success" size="small">
+                            <ThumbUpOutlined />
+                          </IconButton>
+                        </Badge>
+                        <Badge
+                          key={1}
+                          badgeContent={1}
+                          showZero
+                          anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "left",
+                          }}
+                        >
+                          <IconButton color="error" size="small">
+                            <ThumbDownOutlined />
+                          </IconButton>
+                        </Badge>
+                      </div>
                     </div>
                   </div>
-                </div>
-              }
-            />
-          </Skeleton>
-        </List.Item>
-      )}
-    />
+                }
+              />
+            </Skeleton>
+          </List.Item>
+        )}
+      />
+    </>
   );
 };
 
 export default BlogComments;
+
+const CommentForm = () => {
+  const form = useForm<CommentFormData>();
+  const {
+    register,
+    unregister,
+    resetField,
+    setValue,
+    setError,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
+  } = form;
+
+  const api = useAxiosAuth();
+  const onSubmit = async (data: CommentFormData) => {
+    try {
+      await api.post(`/report/`, data);
+      toast.success("با تشکر از شما! گزارش شما با موفقیت ثبت شد و پس از بازنگری اصلاحات انجام خواهد شد");
+      onClose();
+    } catch (error) {
+      onClose();
+    }
+  };
+
+  const onClose = () => {
+    resetField("name");
+    resetField("phone");
+    resetField("sendUnknown");
+    resetField("content");
+  };
+
+  useEffect(() => {
+    register("name", {
+      //
+      required: "نام الزامی است",
+    });
+    register("phone", {
+      //
+      required: "شماره تماس الزامی است",
+    });
+    register("content", {
+      //
+      required: "متن گزارش الزامی است",
+      minLength: { value: 10, message: "حداقل باید 10 کاراکتر باشد" },
+      maxLength: { value: 1000, message: "حداکثر باید 1000 کاراکتر باشد" },
+    });
+  }, []);
+
+  return (
+    <>
+      <div className="relative grid grid-cols-1 gap-3 md:grid-cols-2">
+        <div className="absolute -top-[3.25rem] w-full" id="commentform" />
+        <a href="#commentform" className="col-span-full">
+          <h3 className="text-sm font-bold">ثبت دیدگاه جدید</h3>
+        </a>
+        <WebInput
+          //
+          control={control}
+          name="name"
+          placeholder="نام"
+          error={errors.name?.message}
+          disabled={isLoading || isSubmitting}
+          noSpace
+          containerClassName="col-span-1"
+        />
+        <WebInput
+          //
+          control={control}
+          name="phone"
+          placeholder="شماره تماس"
+          error={errors.phone?.message}
+          disabled={isLoading || isSubmitting}
+          noSpace
+          containerClassName="col-span-1"
+        />
+        <WebInput
+          //
+          control={control}
+          name="content"
+          placeholder="دیدگاه"
+          error={errors.content?.message}
+          disabled={isLoading || isSubmitting}
+          multiline
+          lines={4}
+          noSpace
+          containerClassName="col-span-full"
+        />
+        <WebButton
+          //
+          type="submit"
+          title="ارسال"
+          size="default"
+          disabled={isLoading || isSubmitting}
+          noSpace
+        />
+        <hr className="col-span-full" />
+      </div>
+    </>
+  );
+};

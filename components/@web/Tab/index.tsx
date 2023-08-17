@@ -7,7 +7,7 @@ const WebTab = ({ data }: IProps) => {
       data={data}
       clx={{
         container: "py-3 !px-0 flex-1 flex flex-col",
-        buttonList: "justify-between sticky top-0 z-10 bg-gray-200 md:bg-white md:justify-center",
+        buttonList: "justify-between sticky top-0 z-20 bg-gray-200  md:bg-white md:justify-center",
         button: "!w-full md:!w-auto px-4 !text-black !font-extrabold border-none",
         activeButton: "!font-extrabold rounded-t-xl !bg-white !text-black md:underline underline-offset-8 decoration-secondary decoration-2",
         notActiveButton: "!bg-transparent",

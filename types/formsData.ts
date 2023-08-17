@@ -353,3 +353,11 @@ export type ReportFormData = {
 export type RatingFormData = {
     score: number;
 };
+
+
+export type CommentFormData = {
+    name: string;
+    phone: string;
+    sendUnknown: boolean;
+    content: string;
+};

@@ -128,7 +128,7 @@ const MenuItem = ({ index, icon, title, href, className, onClick, setHovering }:
     <Link href={href || "#"} onClick={onClick} className={"z-[1] w-full" + (className ? " " + className : "")} onMouseEnter={() => setHovering(index)} onMouseLeave={() => setHovering(null)}>
       <div className="flex h-[4.5rem] w-full flex-row items-center gap-2 p-6 font-bold transition-all text-start">
         {icon}
-        <span>{title}</span>
+        <span className="truncate">{title}</span>
       </div>
     </Link>
   );
