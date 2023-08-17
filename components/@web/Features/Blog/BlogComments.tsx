@@ -236,6 +236,13 @@ const CommentForm = () => {
           control={control}
           name="phone"
           placeholder="شماره تماس"
+          direction="ltr"
+          type="tel"
+          patternFormatProps={{
+            format: "###########",
+            allowEmptyFormatting: false,
+            mask: " ",
+          }}
           error={errors.phone?.message}
           disabled={isLoading || isSubmitting}
           noSpace
