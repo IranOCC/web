@@ -270,7 +270,7 @@ const CommentsList = () => {
                           <b>نمایش</b>
                         </Button>
                       </div>
-                      <div className="grid grid-cols-2 gap-2">
+                      {/* <div className="grid grid-cols-2 gap-2">
                         <Badge
                           key={0}
                           badgeContent={4}
@@ -297,7 +297,7 @@ const CommentsList = () => {
                             <ThumbDownOutlined />
                           </IconButton>
                         </Badge>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 }
