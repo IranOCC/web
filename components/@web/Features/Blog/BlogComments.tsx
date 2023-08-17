@@ -237,7 +237,9 @@ const CommentsList = () => {
         itemLayout="horizontal"
         loadMore={loadMore}
         dataSource={list}
-        locale={{ emptyText: <Empty description="تاکنون نظری ثبت نشده است" children="اولین شخصی باشید که نظر می دهید" /> }}
+        locale={{ emptyText: <Empty description="تاکنون نظری ثبت نشده است" >
+        اولین شخصی باشید که نظر می دهید
+        </Empty> }}
         renderItem={(item, idx) => (
           <List.Item
             //
