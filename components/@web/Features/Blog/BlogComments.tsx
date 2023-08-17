@@ -181,17 +181,17 @@ const CommentsList = ({ id }: { id: string }) => {
   const [data, setData] = useState<DataType[]>([]);
   const [list, setList] = useState<DataType[]>([]);
   const [current, setCurrent] = useState<number>(1);
-  const [total, setTotal] = useState<number>(1);
+  const [total, setTotal] = useState<number>(0);
 
   const api = useAxiosAuth();
   const getInitData = async () => {
     const _params = { current: 1, size };
     try {
-      const { data } = await api.get(`/blog/comment/${id}`, { params: _params });
+      const { data: res } = await api.get(`/blog/comment/${id}`, { params: _params });
       setInitLoading(false);
-      setTotal(data.total);
-      setData(data.items);
-      setList(data.items);
+      setTotal(res?.total || 0);
+      setData(res?.items || []);
+      setList(res?.items || []);
     } catch (error) {
       //
     }
@@ -202,8 +202,8 @@ const CommentsList = ({ id }: { id: string }) => {
   const getMoreData = async () => {
     const _params = { current: current + 1, size };
     try {
-      const { data } = await api.get(`/blog/comment/${id}`, { params: _params });
-      const newData = data.concat(data.items);
+      const { data: res } = await api.get(`/blog/comment/${id}`, { params: _params });
+      const newData = data.concat(res?.items || []);
       setData(newData);
       setList(newData);
       setLoading(false);
@@ -250,7 +250,10 @@ const CommentsList = ({ id }: { id: string }) => {
 
   return (
     <>
-      <hr />
+      <hr className="my-2" />
+      <a className="col-span-full py-2">
+        <h3 className="text-sm font-bold">دیدگاه ها ({total.toLocaleString("fa")})</h3>
+      </a>
       <List
         className="demo-loadmore-list"
         loading={initLoading}
