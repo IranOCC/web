@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { WebButton } from "../../Button";
 import Link from "next/link";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
-import { Phone } from "@/types/interfaces";
+import { Phone, User } from "@/types/interfaces";
 
 type IProps = { id: string; openNewComments: boolean; onlyUsersNewComments: boolean; showComments: boolean; showUnconfirmedComments: boolean };
 const BlogComments = ({ id, openNewComments, onlyUsersNewComments, showComments, showUnconfirmedComments }: IProps) => {
@@ -157,19 +157,12 @@ const CommentForm = ({ id, onlyUsers }: { id: string; onlyUsers: boolean }) => {
 };
 
 interface DataType {
-  gender?: string;
-  name: {
-    title?: string;
-    first?: string;
-    last?: string;
-  };
-  email?: string;
-  picture: {
-    large?: string;
-    medium?: string;
-    thumbnail?: string;
-  };
-  nat?: string;
+  name: string;
+  content: string;
+  pinned: boolean;
+  createdAt: string;
+  createdBy?: User;
+  _id: string;
   loading: boolean;
 }
 
@@ -244,7 +237,7 @@ const CommentsList = ({ id }: { id: string }) => {
     ) : null;
 
   const router = useRouter();
-  const onReplyTo = () => {
+  const onReplyTo = (id: string) => {
     router.push("#commentform");
   };
 
@@ -275,18 +268,18 @@ const CommentsList = ({ id }: { id: string }) => {
             >
               <List.Item.Meta
                 //
-                avatar={<Avatar src={item.picture.large} />}
+                avatar={<Avatar />}
                 title={
                   <div className="flex flex-row gap-2">
-                    <b>ابی حامدی</b>|<span className="text-gray-500">{moment().locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>
+                    <b>{item.name}</b>|<span className="text-gray-500">{moment(item.createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>
                   </div>
                 }
                 description={
                   <div className="flex flex-col items-start gap-2">
-                    <p>این صدای منه های این صدای منه وای</p>
+                    <p>{item.content}</p>
                     <div className="flex w-full items-center justify-between">
                       <div className="flex flex-row gap-2">
-                        <Button startIcon={<Reply />} onClick={() => onReplyTo()}>
+                        <Button startIcon={<Reply />} onClick={() => onReplyTo(item._id)}>
                           <b>پاسخ</b>
                         </Button>
                         {/*
