@@ -173,44 +173,64 @@ interface DataType {
   loading: boolean;
 }
 
-const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
+const size = 3;
 
 const CommentsList = ({ id }: { id: string }) => {
   const [initLoading, setInitLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<DataType[]>([]);
   const [list, setList] = useState<DataType[]>([]);
+  const [current, setCurrent] = useState<number>(1);
+  const [total, setTotal] = useState<number>(1);
 
+  const api = useAxiosAuth();
+  const getInitData = async () => {
+    const _params = { current: 1, size };
+    try {
+      const { data } = await api.get(`/blog/comment/${id}`, { params: _params });
+      setInitLoading(false);
+      setTotal(data.total);
+      setData(data.items);
+      setList(data.items);
+    } catch (error) {
+      //
+    }
+  };
   useEffect(() => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        setInitLoading(false);
-        setData(res.results);
-        setList(res.results);
-      });
+    getInitData();
   }, []);
+  const getMoreData = async () => {
+    const _params = { current: current + 1, size };
+    try {
+      const { data } = await api.get(`/blog/comment/${id}`, { params: _params });
+      const newData = data.concat(data.items);
+      setData(newData);
+      setList(newData);
+      setLoading(false);
+      setCurrent((prev) => prev + 1);
+      window.dispatchEvent(new Event("resize"));
+    } catch (error) {
+      //
+    }
+  };
 
-  const onLoadMore = () => {
-    setLoading(true);
-    setList(data.concat([...new Array(count)].map(() => ({ loading: true, name: {}, picture: {} }))));
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        const newData = data.concat(res.results);
-        setData(newData);
-        setList(newData);
-        setLoading(false);
-        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-        // In real scene, you can using public method of react-virtualized:
-        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-        window.dispatchEvent(new Event("resize"));
-      });
+  const getReply = async () => {
+    const _params = { current: 1, size: 10, replyTo: "" };
+    // try {
+    //   const { data } = await api.get(`/blog/comment/${id}`, { params: _params });
+    //   const newData = data.concat(data.items);
+    //   setData(newData);
+    //   setList(newData);
+    //   setLoading(false);
+    //   setCurrent((prev) => prev + 1);
+    //   window.dispatchEvent(new Event("resize"));
+    // } catch (error) {
+    //   //
+    // }
   };
 
   const loadMore =
-    !initLoading && !loading ? (
+    !initLoading && !loading && total > data.length ? (
       <div
         style={{
           textAlign: "center",
@@ -219,7 +239,7 @@ const CommentsList = ({ id }: { id: string }) => {
           lineHeight: "32px",
         }}
       >
-        <Button onClick={onLoadMore}>موارد بیشتر ...</Button>
+        <Button onClick={getMoreData}>موارد بیشتر ...</Button>
       </div>
     ) : null;
 
@@ -266,9 +286,11 @@ const CommentsList = ({ id }: { id: string }) => {
                         <Button startIcon={<Reply />} onClick={() => onReplyTo()}>
                           <b>پاسخ</b>
                         </Button>
+                        {/*
                         <Button color="warning" startIcon={<MarkUnreadChatAlt />} endIcon={"(2)"}>
                           <b>نمایش</b>
                         </Button>
+                        */}
                       </div>
                       {/* <div className="grid grid-cols-2 gap-2">
                         <Badge
