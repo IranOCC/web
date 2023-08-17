@@ -358,6 +358,6 @@ export type RatingFormData = {
 export type CommentFormData = {
     name: string;
     phone: string;
-    sendUnknown: boolean;
     content: string;
+    replyTo: string;
 };

@@ -18,15 +18,15 @@ type IProps = { id: string; openNewComments: boolean; onlyUsersNewComments: bool
 const BlogComments = ({ id, openNewComments, onlyUsersNewComments, showComments, showUnconfirmedComments }: IProps) => {
   return (
     <>
-      {openNewComments ? <CommentForm onlyUsers={onlyUsersNewComments} /> : <Empty description="در این لحظه امکان دریافت نظرات وجود ندارد" />}
-      {showComments ? <CommentsList /> : null}
+      {openNewComments ? <CommentForm id={id} onlyUsers={onlyUsersNewComments} /> : <Empty description="در این لحظه امکان دریافت نظرات وجود ندارد" />}
+      {showComments ? <CommentsList id={id} /> : null}
     </>
   );
 };
 
 export default BlogComments;
 
-const CommentForm = ({ onlyUsers }: { onlyUsers: boolean }) => {
+const CommentForm = ({ id, onlyUsers }: { id: string; onlyUsers: boolean }) => {
   const { user, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const form = useForm<CommentFormData>();
@@ -45,8 +45,8 @@ const CommentForm = ({ onlyUsers }: { onlyUsers: boolean }) => {
   const api = useAxiosAuth();
   const onSubmit = async (data: CommentFormData) => {
     try {
-      await api.post(`/blog/comment/`, data);
-      toast.success("با تشکر از شما! گزارش شما با موفقیت ثبت شد و پس از بازنگری اصلاحات انجام خواهد شد");
+      await api.post(`/blog/comment/${id}`, data);
+      toast.success("نظر شما ثبت شد");
       onClose();
     } catch (error) {
       onClose();
@@ -56,8 +56,8 @@ const CommentForm = ({ onlyUsers }: { onlyUsers: boolean }) => {
   const onClose = () => {
     resetField("name");
     resetField("phone");
-    resetField("sendUnknown");
     resetField("content");
+    resetField("replyTo");
   };
 
   useEffect(() => {
@@ -176,20 +176,20 @@ interface DataType {
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
 
-const CommentsList = () => {
+const CommentsList = ({ id }: { id: string }) => {
   const [initLoading, setInitLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<DataType[]>([]);
   const [list, setList] = useState<DataType[]>([]);
 
   useEffect(() => {
-    // fetch(fakeDataUrl)
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     setInitLoading(false);
-    //     setData(res.results);
-    //     setList(res.results);
-    //   });
+    fetch(fakeDataUrl)
+      .then((res) => res.json())
+      .then((res) => {
+        setInitLoading(false);
+        setData(res.results);
+        setList(res.results);
+      });
   }, []);
 
   const onLoadMore = () => {
@@ -237,9 +237,7 @@ const CommentsList = () => {
         itemLayout="horizontal"
         loadMore={loadMore}
         dataSource={list}
-        locale={{ emptyText: <Empty description="تاکنون نظری ثبت نشده است" >
-        اولین شخصی باشید که نظر می دهید
-        </Empty> }}
+        locale={{ emptyText: <Empty description="تاکنون نظری ثبت نشده است">اولین شخصی باشید که نظر می دهید</Empty> }}
         renderItem={(item, idx) => (
           <List.Item
             //
