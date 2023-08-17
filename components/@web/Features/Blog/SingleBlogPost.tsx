@@ -42,7 +42,16 @@ const SingleBlogPost = ({ data }: { data?: WebBlogPost }) => {
             },
             {
               title: "دیدگاه ها",
-              content: <BlogComments id={_id} />,
+              content: (
+                <BlogComments
+                  //
+                  id={_id}
+                  openNewComments={true}
+                  onlyUsersNewComments={true}
+                  showComments={false}
+                  showUnconfirmedComments={true}
+                />
+              ),
             },
           ]}
         />

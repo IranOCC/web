@@ -8,10 +8,11 @@ import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUse
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import CompleteProfileModal from "../Modals/CompleteProfileModal";
 import RolesConflictModal from "../Modals/RolesConflictModal";
+import Loading from "../Loading";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { darkMode } = useContext(ThemeContext) as ThemeContextType;
-  const { hideLoading } = useContext(LoadingContext) as LoadingContextType;
+  const { hideLoading, isLoading } = useContext(LoadingContext) as LoadingContextType;
   const { setUser } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const { status: sessionStatus } = useSession();
@@ -33,7 +34,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <body lang="fa" dir="rtl" className={"select-none scroll-smooth bg-gray-300/50 selection:bg-yellow-200 selection:text-yellow-900 print:hidden" + (darkMode ? " dark" : "")}>
-      {children}
+      {isLoading ? <Loading /> : children}
       <CompleteProfileModal />
       <RolesConflictModal />
     </body>

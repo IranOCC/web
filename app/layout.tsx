@@ -48,10 +48,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
               <LoadingProvider initial={{ loading: true }}>
                 <CurrentUserProvider>
                   <html className={IRANSansX.className}>
-                    <MainLayout>
-                      {children}
-                      <Loading />
-                    </MainLayout>
+                    <MainLayout>{children}</MainLayout>
                   </html>
                 </CurrentUserProvider>
               </LoadingProvider>
@@ -63,6 +60,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   );
 }
 
-export function reportWebVitals(metric: any) {
-  console.log(metric);
-}
+// export function reportWebVitals(metric: any) {
+//   console.log(metric);
+// }

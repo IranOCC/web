@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, ReactNode, useEffect } from "react";
-import { Dropdown, Popconfirm, RadioChangeEvent } from "antd";
+import { Dropdown, Empty, Popconfirm, RadioChangeEvent } from "antd";
 import { Form, Radio, Space, Switch, Table } from "antd";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import type { ColumnsType, TableProps } from "antd/es/table";
@@ -312,7 +312,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
               columns={tableColumns}
               dataSource={dataSource}
               locale={{
-                emptyText: "اطلاعاتی یافت نشد",
+                emptyText: <Empty description="موردی پیدا نشد" />,
               }}
             />
           </SortableContext>
@@ -338,7 +338,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
       columns={tableColumns}
       dataSource={dataSource}
       locale={{
-        emptyText: "اطلاعاتی یافت نشد",
+        emptyText: <Empty description="موردی پیدا نشد" />,
       }}
     />
   );
