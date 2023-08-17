@@ -48,8 +48,8 @@ const SingleBlogPost = ({ data }: { data?: WebBlogPost }) => {
                   id={_id}
                   openNewComments={true}
                   onlyUsersNewComments={true}
-                  showComments={false}
-                  showUnconfirmedComments={true}
+                  showComments={true}
+                  showUnconfirmedComments={false}
                 />
               ),
             },
