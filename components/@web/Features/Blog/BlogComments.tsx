@@ -208,7 +208,7 @@ const CommentForm = () => {
     });
     register("content", {
       //
-      required: "متن گزارش الزامی است",
+      required: "متن نظر الزامی است",
       minLength: { value: 10, message: "حداقل باید 10 کاراکتر باشد" },
       maxLength: { value: 1000, message: "حداکثر باید 1000 کاراکتر باشد" },
     });
@@ -216,60 +216,62 @@ const CommentForm = () => {
 
   return (
     <>
-      <div className="relative grid grid-cols-1 gap-3 md:grid-cols-2">
-        <div className="absolute -top-[3.25rem] w-full" id="commentform" />
-        <a href="#commentform" className="col-span-full">
-          <h3 className="text-sm font-bold">ثبت دیدگاه جدید</h3>
-        </a>
-        <WebInput
-          //
-          control={control}
-          name="name"
-          placeholder="نام"
-          error={errors.name?.message}
-          disabled={isLoading || isSubmitting}
-          noSpace
-          containerClassName="col-span-1"
-        />
-        <WebInput
-          //
-          control={control}
-          name="phone"
-          placeholder="شماره تماس"
-          direction="ltr"
-          type="tel"
-          patternFormatProps={{
-            format: "###########",
-            allowEmptyFormatting: false,
-            mask: " ",
-          }}
-          error={errors.phone?.message}
-          disabled={isLoading || isSubmitting}
-          noSpace
-          containerClassName="col-span-1"
-        />
-        <WebInput
-          //
-          control={control}
-          name="content"
-          placeholder="دیدگاه"
-          error={errors.content?.message}
-          disabled={isLoading || isSubmitting}
-          multiline
-          lines={4}
-          noSpace
-          containerClassName="col-span-full"
-        />
-        <WebButton
-          //
-          type="submit"
-          title="ارسال"
-          size="default"
-          disabled={isLoading || isSubmitting}
-          noSpace
-        />
-        <hr className="col-span-full" />
-      </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="relative grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div className="absolute -top-[3.25rem] w-full" id="commentform" />
+          <a href="#commentform" className="col-span-full">
+            <h3 className="text-sm font-bold">ثبت دیدگاه جدید</h3>
+          </a>
+          <WebInput
+            //
+            control={control}
+            name="name"
+            placeholder="نام"
+            error={errors.name?.message}
+            disabled={isLoading || isSubmitting}
+            noSpace
+            containerClassName="col-span-1"
+          />
+          <WebInput
+            //
+            control={control}
+            name="phone"
+            placeholder="شماره تماس"
+            direction="ltr"
+            type="tel"
+            patternFormatProps={{
+              format: "###########",
+              allowEmptyFormatting: false,
+              mask: " ",
+            }}
+            error={errors.phone?.message}
+            disabled={isLoading || isSubmitting}
+            noSpace
+            containerClassName="col-span-1"
+          />
+          <WebInput
+            //
+            control={control}
+            name="content"
+            placeholder="دیدگاه"
+            error={errors.content?.message}
+            disabled={isLoading || isSubmitting}
+            multiline
+            lines={4}
+            noSpace
+            containerClassName="col-span-full"
+          />
+          <WebButton
+            //
+            type="submit"
+            title="ارسال"
+            size="default"
+            disabled={isLoading || isSubmitting}
+            noSpace
+          />
+          <hr className="col-span-full" />
+        </div>
+      </form>
     </>
   );
 };
