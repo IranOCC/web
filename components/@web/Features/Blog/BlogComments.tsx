@@ -159,11 +159,11 @@ const CommentForm = ({ id, onlyUsers }: { id: string; onlyUsers: boolean }) => {
 interface DataType {
   name: string;
   content: string;
-  pinned: boolean;
+  pinned?: boolean;
   createdAt: string;
   createdBy?: User;
   _id: string;
-  loading: boolean;
+  loading?: boolean;
 }
 
 const size = 3;
@@ -194,6 +194,7 @@ const CommentsList = ({ id }: { id: string }) => {
   }, []);
   const getMoreData = async () => {
     setLoading(true);
+    setList(data.concat([...new Array(size)].map(() => ({ loading: true, name: "", content: "", createdAt: "", _id: "" }))));
     const _params = { current: current + 1, size };
     try {
       const { data: res } = await api.get(`/blog/comment/${id}`, { params: _params });
