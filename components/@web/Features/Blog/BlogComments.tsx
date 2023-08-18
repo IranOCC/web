@@ -278,7 +278,7 @@ const CommentsList = ({ id }: { id: string }) => {
                 }
                 description={
                   <div className="flex flex-col items-start gap-2">
-                    <p>{item.content}</p>
+                    <p className="text-black">{item.content}</p>
                     <div className="flex w-full items-center justify-between">
                       <div className="flex flex-row gap-2">
                         <Button startIcon={<Reply />} onClick={() => onReplyTo(item._id)}>
