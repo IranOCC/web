@@ -169,7 +169,7 @@ interface DataType {
 const size = 3;
 
 const CommentsList = ({ id }: { id: string }) => {
-  const [initLoading, setInitLoading] = useState(false);
+  const [initLoading, setInitLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<DataType[]>([]);
   const [list, setList] = useState<DataType[]>([]);
@@ -193,6 +193,7 @@ const CommentsList = ({ id }: { id: string }) => {
     getInitData();
   }, []);
   const getMoreData = async () => {
+    setLoading(true);
     const _params = { current: current + 1, size };
     try {
       const { data: res } = await api.get(`/blog/comment/${id}`, { params: _params });

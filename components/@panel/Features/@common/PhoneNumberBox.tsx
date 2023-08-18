@@ -21,10 +21,10 @@ export default function PhoneNumberBox({ form, loading, props, allowVerify = tru
 
   useEffect(() => {
     register("phone.value", {
-      //pattern: {
+      // pattern: {
       //  value: /^(0|\+98)([1-9])([0-9]{9})$/,
       //  message: "شماره معتبر نیست",
-      //},
+      // },
     });
   }, []);
 
