@@ -16,24 +16,38 @@ import { Phone, User } from "@/types/interfaces";
 
 type IProps = { id: string; openNewComments: boolean; onlyUsersNewComments: boolean; showComments: boolean; showUnconfirmedComments: boolean };
 const BlogComments = ({ id, openNewComments, onlyUsersNewComments, showComments, showUnconfirmedComments }: IProps) => {
-  const [update, setUpdate] = useState([true])
-  const [replyTo, setReplyTo] = useState<DataType | null>(null)
-  
+  const [update, setUpdate] = useState([true]);
+  const [replyTo, setReplyTo] = useState<DataType | null>(null);
+
   return (
     <>
-      {openNewComments ? <CommentForm 
-      // 
-      id={id} replyTo={replyTo} setUpdate={setUpdate} onlyUsers={onlyUsersNewComments} setReplyTo={setReplyTo} /> : <Empty description="در این لحظه امکان دریافت نظرات وجود ندارد" />}
-      {showComments ? <CommentsList
-      // 
-      id={id} setReplyTo={setReplyTo} update={update} /> : null}
+      {openNewComments ? (
+        <CommentForm
+          //
+          id={id}
+          replyTo={replyTo}
+          setUpdate={setUpdate}
+          onlyUsers={onlyUsersNewComments}
+          setReplyTo={setReplyTo}
+        />
+      ) : (
+        <Empty description="در این لحظه امکان دریافت نظرات وجود ندارد" />
+      )}
+      {showComments ? (
+        <CommentsList
+          //
+          id={id}
+          setReplyTo={setReplyTo}
+          update={update}
+        />
+      ) : null}
     </>
   );
 };
 
 export default BlogComments;
 
-const CommentForm = ({ id, onlyUsers, setUpdate,replyTo,setReplyTo }: { id: string; onlyUsers: boolean;setUpdate: (d:any)=>void;replyTo: DataType | null,setReplyTo: (d:DataType| null)=>void }) => {
+const CommentForm = ({ id, onlyUsers, setUpdate, replyTo, setReplyTo }: { id: string; onlyUsers: boolean; setUpdate: (d: any) => void; replyTo: DataType | null; setReplyTo: (d: DataType | null) => void }) => {
   const { user, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const form = useForm<CommentFormData>();
@@ -51,7 +65,7 @@ const CommentForm = ({ id, onlyUsers, setUpdate,replyTo,setReplyTo }: { id: stri
 
   const api = useAxiosAuth();
   const onSubmit = async (data: CommentFormData) => {
-    if(!!replyTo) data.replyTo = replyTo._id
+    if (!!replyTo) data.replyTo = replyTo._id;
     try {
       await api.post(`/blog/comment/${id}`, data);
       toast.success("نظر شما ثبت شد");
@@ -62,12 +76,12 @@ const CommentForm = ({ id, onlyUsers, setUpdate,replyTo,setReplyTo }: { id: stri
   };
 
   const onClose = () => {
-    setUpdate([true])
+    setUpdate([true]);
     resetField("name");
     resetField("phone");
     resetField("content");
     resetField("replyTo");
-    setReplyTo(null)
+    setReplyTo(null);
   };
 
   useEffect(() => {
@@ -109,20 +123,27 @@ const CommentForm = ({ id, onlyUsers, setUpdate,replyTo,setReplyTo }: { id: stri
         <div className="relative grid grid-cols-1 gap-3 md:grid-cols-2">
           <div className="absolute -top-[3.25rem] w-full" id="commentform" />
           <a href="#commentform" className="col-span-full py-2">
-            <h3 className="text-sm font-bold flex items-center gap-1">
-              {replyTo ? 
-              <>
-              <i className="text-gray-400"><Reply /></i>
-              پاسخ به نظر <span className="text-blue-400">{replyTo?.name}</span>
-              <button type="button" onClick={()=>setReplyTo(null)} className="text-gray-200 hover:text-red-500 transation-all"><Cancel fontSize="small"/></button>
-              </>
-                : 
+            <h3 className="flex items-center gap-1 text-sm font-bold">
+              {replyTo ? (
                 <>
-                <i className="text-gray-400"><Chat /></i>
-                ثبت دیدگاه جدید
-                </>}
+                  <i className="text-gray-400">
+                    <Reply />
+                  </i>
+                  پاسخ به نظر <span className="text-blue-400">{replyTo?.name}</span>
+                  <button type="button" onClick={() => setReplyTo(null)} className="transation-all text-gray-200 hover:text-red-500">
+                    <Cancel fontSize="small" />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <i className="text-gray-400">
+                    <Chat />
+                  </i>
+                  ثبت دیدگاه جدید
+                </>
+              )}
             </h3>
-            {replyTo && <div className="bg-blue-100 mt-2 border-gray-900 w-full p-2 text-black/75 text-sm rounded-lg truncate">{replyTo.content}</div>}
+            {replyTo && <div className="mt-2 w-full truncate rounded-lg border-gray-900 bg-blue-100 p-2 text-sm text-black/75">{replyTo.content}</div>}
           </a>
           <WebInput
             //
@@ -187,11 +208,12 @@ interface DataType {
   createdBy?: User;
   _id: string;
   loading?: boolean;
+  responses?: string[];
 }
 
 const size = 3;
 
-const CommentsList = ({ id,update,setReplyTo }: { id: string;update: any, setReplyTo: (d:DataType)=>void }) => {
+const CommentsList = ({ id, update, setReplyTo }: { id: string; update: any; setReplyTo: (d: DataType) => void }) => {
   const [initLoading, setInitLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<DataType[]>([]);
@@ -263,7 +285,7 @@ const CommentsList = ({ id,update,setReplyTo }: { id: string;update: any, setRep
 
   const router = useRouter();
   const onReplyTo = (data: DataType) => {
-    setReplyTo(data)
+    setReplyTo(data);
     router.push("#commentform");
   };
 
@@ -308,9 +330,11 @@ const CommentsList = ({ id,update,setReplyTo }: { id: string;update: any, setRep
                         <Button startIcon={<Reply />} onClick={() => onReplyTo(item)}>
                           <b>پاسخ</b>
                         </Button>
-                        {/* <Button color="success" startIcon={<MarkUnreadChatAlt />} endIcon={"(2)"}>
-                          <b>نمایش</b>
-                        </Button> */}
+                        {!!item.responses?.length && (
+                          <Button color="success" startIcon={<MarkUnreadChatAlt />} endIcon={"(2)"}>
+                            <b>نمایش ({item.responses.length.toLocaleString("fa")})</b>
+                          </Button>
+                        )}
                       </div>
                       {/* <div className="grid grid-cols-2 gap-2">
                         <Badge
