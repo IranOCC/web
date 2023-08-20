@@ -208,7 +208,7 @@ interface DataType {
   createdBy?: User;
   _id: string;
   loading?: boolean;
-  responses?: string[];
+  responses?: DataType[];
 }
 
 const size = 3;
@@ -223,6 +223,7 @@ const CommentsList = ({ id, update, setReplyTo }: { id: string; update: any; set
 
   const api = useAxiosAuth();
   const getInitData = async () => {
+    setInitLoading(true);
     const _params = { current: 1, size };
     try {
       const { data: res } = await api.get(`/blog/comment/${id}`, { params: _params });
@@ -239,7 +240,7 @@ const CommentsList = ({ id, update, setReplyTo }: { id: string; update: any; set
   }, [update]);
   const getMoreData = async () => {
     setLoading(true);
-    setList(data.concat([...new Array(size)].map(() => ({ loading: true, name: "", content: "", createdAt: "", _id: "" }))));
+    setList(data.concat([...new Array(size)].map(() => ({ loading: true, name: "", content: "", createdAt: "", _id: "", responses: [] }))));
     const _params = { current: current + 1, size };
     try {
       const { data: res } = await api.get(`/blog/comment/${id}`, { params: _params });
@@ -254,19 +255,34 @@ const CommentsList = ({ id, update, setReplyTo }: { id: string; update: any; set
     }
   };
 
-  const getReply = async () => {
-    const _params = { current: 1, size: 10, replyTo: "" };
-    // try {
-    //   const { data } = await api.get(`/blog/comment/${id}`, { params: _params });
-    //   const newData = data.concat(data.items);
-    //   setData(newData);
-    //   setList(newData);
-    //   setLoading(false);
-    //   setCurrent((prev) => prev + 1);
-    //   window.dispatchEvent(new Event("resize"));
-    // } catch (error) {
-    //   //
-    // }
+  const getReply = async (item: DataType) => {
+    setLoading(true);
+    let index = -1;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i]._id === item._id) {
+        index = i;
+        break;
+      }
+    }
+    //
+    if (index !== -1) return;
+
+    data[index].responses = [...new Array(size)].map(() => ({ loading: true, name: "", content: "", createdAt: "", _id: "", responses: [] }));
+    setList([...data]);
+
+    const _params = { current: current + 1, size, replyTo: item._id };
+    try {
+      const { data: res } = await api.get(`/blog/comment/${id}`, { params: _params });
+      const newData = data;
+      newData[index].responses = (res?.items || []).map(() => ({ loading: true, name: "", content: "", createdAt: "", _id: "", responses: [] }));
+      setData([...newData]);
+      setList([...newData]);
+      setLoading(false);
+      setCurrent((prev) => prev + 1);
+      window.dispatchEvent(new Event("resize"));
+    } catch (error) {
+      //
+    }
   };
 
   const loadMore =
@@ -331,8 +347,8 @@ const CommentsList = ({ id, update, setReplyTo }: { id: string; update: any; set
                           <b>پاسخ</b>
                         </Button>
                         {!!item.responses?.length && (
-                          <Button color="success" startIcon={<MarkUnreadChatAlt />} endIcon={"(2)"}>
-                            <b>نمایش ({item.responses.length.toLocaleString("fa")})</b>
+                          <Button color="success" startIcon={<MarkUnreadChatAlt />} onClick={() => getReply(item)}>
+                            <b>پاسخ ها ({item.responses.length.toLocaleString("fa")})</b>
                           </Button>
                         )}
                       </div>
