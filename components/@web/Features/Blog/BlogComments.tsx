@@ -20,7 +20,7 @@ const BlogComments = ({ id, openNewComments, onlyUsersNewComments, showComments,
   const [replyTo, setReplyTo] = useState<DataType | null>(null);
   const { user, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
-  const canWriteComment = openNewComments && (onlyUsersNewComments ? !isLogin : !onlyUsersNewComments);
+  const canWriteComment = openNewComments && (onlyUsersNewComments ? isLogin : true);
 
   return (
     <>
@@ -69,6 +69,7 @@ const CommentForm = ({ id, canWriteComment, setUpdate, replyTo, setReplyTo }: { 
 
   const api = useAxiosAuth();
   const onSubmit = async (data: CommentFormData) => {
+    if (!canWriteComment) return;
     if (!!replyTo) data.replyTo = replyTo._id;
     try {
       await api.post(`/blog/comment/${id}`, data);
@@ -105,7 +106,7 @@ const CommentForm = ({ id, canWriteComment, setUpdate, replyTo, setReplyTo }: { 
     });
   }, []);
 
-  if (canWriteComment) {
+  if (!canWriteComment) {
     return (
       <>
         <Empty
@@ -155,7 +156,8 @@ const CommentForm = ({ id, canWriteComment, setUpdate, replyTo, setReplyTo }: { 
             name="name"
             placeholder="نام"
             error={errors.name?.message}
-            disabled={isLoading || isSubmitting || isLogin}
+            disabled={isLogin}
+            loading={isLoading || isSubmitting}
             defaultValue={user?.fullName || ""}
             noSpace
             containerClassName="col-span-1"
@@ -173,7 +175,8 @@ const CommentForm = ({ id, canWriteComment, setUpdate, replyTo, setReplyTo }: { 
               mask: " ",
             }}
             error={errors.phone?.message}
-            disabled={isLoading || isSubmitting || isLogin}
+            disabled={isLogin}
+            loading={isLoading || isSubmitting}
             defaultValue={(!!(user?.phone as Phone)?.value && `0${(user?.phone as Phone)?.value?.substring(3)}`) || ""}
             noSpace
             containerClassName="col-span-1"
@@ -184,7 +187,7 @@ const CommentForm = ({ id, canWriteComment, setUpdate, replyTo, setReplyTo }: { 
             name="content"
             placeholder="دیدگاه"
             error={errors.content?.message}
-            disabled={isLoading || isSubmitting}
+            loading={isLoading || isSubmitting}
             multiline
             lines={4}
             noSpace
@@ -195,7 +198,7 @@ const CommentForm = ({ id, canWriteComment, setUpdate, replyTo, setReplyTo }: { 
             type="submit"
             title="ارسال"
             size="default"
-            disabled={isLoading || isSubmitting}
+            loading={isLoading || isSubmitting}
             noSpace
           />
         </div>
