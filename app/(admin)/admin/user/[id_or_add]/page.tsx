@@ -72,6 +72,11 @@ export default function Page() {
   const beforeSubmit = (data: UserFormData) => {
     if (!(data.phone as Phone)?.value) {
       data.phone = undefined;
+    } else {
+      data.phone = {
+        ...(data.phone as Phone),
+        value: (data.phone as Phone).value.replaceAll(" ", ""),
+      };
     }
     if (!(data.email as Email)?.value) {
       data.email = undefined;
