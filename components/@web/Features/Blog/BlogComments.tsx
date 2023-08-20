@@ -18,6 +18,9 @@ type IProps = { id: string; openNewComments: boolean; onlyUsersNewComments: bool
 const BlogComments = ({ id, openNewComments, onlyUsersNewComments, showComments, showUnconfirmedComments }: IProps) => {
   const [update, setUpdate] = useState([true]);
   const [replyTo, setReplyTo] = useState<DataType | null>(null);
+  const { user, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
+
+  const canWriteComment = openNewComments && (onlyUsersNewComments ? !isLogin : !onlyUsersNewComments);
 
   return (
     <>
@@ -27,7 +30,7 @@ const BlogComments = ({ id, openNewComments, onlyUsersNewComments, showComments,
           id={id}
           replyTo={replyTo}
           setUpdate={setUpdate}
-          onlyUsers={onlyUsersNewComments}
+          canWriteComment={canWriteComment}
           setReplyTo={setReplyTo}
         />
       ) : (
@@ -39,6 +42,7 @@ const BlogComments = ({ id, openNewComments, onlyUsersNewComments, showComments,
           id={id}
           setReplyTo={setReplyTo}
           update={update}
+          canWriteComment={canWriteComment}
         />
       ) : null}
     </>
@@ -47,7 +51,7 @@ const BlogComments = ({ id, openNewComments, onlyUsersNewComments, showComments,
 
 export default BlogComments;
 
-const CommentForm = ({ id, onlyUsers, setUpdate, replyTo, setReplyTo }: { id: string; onlyUsers: boolean; setUpdate: (d: any) => void; replyTo: DataType | null; setReplyTo: (d: DataType | null) => void }) => {
+const CommentForm = ({ id, canWriteComment, setUpdate, replyTo, setReplyTo }: { id: string; canWriteComment: boolean; setUpdate: (d: any) => void; replyTo: DataType | null; setReplyTo: (d: DataType | null) => void }) => {
   const { user, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const form = useForm<CommentFormData>();
@@ -101,7 +105,7 @@ const CommentForm = ({ id, onlyUsers, setUpdate, replyTo, setReplyTo }: { id: st
     });
   }, []);
 
-  if (onlyUsers && !isLogin) {
+  if (canWriteComment) {
     return (
       <>
         <Empty
@@ -213,7 +217,7 @@ interface DataType {
 
 const size = 3;
 
-const CommentsList = ({ id, update, setReplyTo }: { id: string; update: any; setReplyTo: (d: DataType) => void }) => {
+const CommentsList = ({ id, update, canWriteComment, setReplyTo }: { id: string; canWriteComment: boolean; update: any; setReplyTo: (d: DataType) => void }) => {
   const [initLoading, setInitLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<DataType[]>([]);
@@ -301,6 +305,7 @@ const CommentsList = ({ id, update, setReplyTo }: { id: string; update: any; set
 
   const router = useRouter();
   const onReplyTo = (data: DataType) => {
+    if (!canWriteComment) return;
     setReplyTo(data);
     router.push("#commentform");
   };
@@ -343,9 +348,11 @@ const CommentsList = ({ id, update, setReplyTo }: { id: string; update: any; set
                     <p className="text-black">{item.content}</p>
                     <div className="flex w-full items-center justify-between">
                       <div className="flex flex-row gap-2">
-                        <Button startIcon={<Reply />} onClick={() => onReplyTo(item)}>
-                          <b>پاسخ</b>
-                        </Button>
+                        {canWriteComment && (
+                          <Button startIcon={<Reply />} onClick={() => onReplyTo(item)}>
+                            <b>پاسخ</b>
+                          </Button>
+                        )}
                         {!!item.responses?.length && (
                           <Button color="success" startIcon={<MarkUnreadChatAlt />} onClick={() => getReply(item)}>
                             <b>پاسخ ها ({item.responses.length.toLocaleString("fa")})</b>
