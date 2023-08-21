@@ -60,7 +60,11 @@ const OfficeCard = ({ data }: { data: WebOffice }) => {
             </h6>
             <h6 className="col-span-full flex items-center gap-1 text-sm font-medium text-gray-600">
               <PhoneIcon />
-              <span className="truncate">{(phone as Phone)?.value || "-"}</span>
+              <a href={`tel:${(phone as Phone)?.value || "-"}`}>
+                <span dir="ltr" className="truncate">
+                  {(phone as Phone)?.value || "-"}
+                </span>
+              </a>
             </h6>
           </div>
         </div>
