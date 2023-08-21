@@ -70,14 +70,19 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
         {!!category?.icon && <i className="h-6 w-6 fill-gray-800" dangerouslySetInnerHTML={{ __html: (category.icon as Icon).content }} />}
         <span>{category.title}</span>
       </h6>
-      <h6 className="flex items-center gap-1.5 font-bold">
-        {!!type?.icon && <i className="h-6 w-6 fill-gray-800" dangerouslySetInnerHTML={{ __html: (type.icon as Icon).content }} />}
-        <span>{type.title}</span>
-      </h6>
-      <h6 className="flex items-center gap-1.5 font-bold">
-        {!!documentType?.icon && <i className="h-6 w-6 fill-gray-800" dangerouslySetInnerHTML={{ __html: (documentType.icon as Icon).content }} />}
-        <span>{documentType.title}</span>
-      </h6>
+
+      {!!type && (
+        <h6 className="flex items-center gap-1.5 font-bold">
+          {!!type?.icon && <i className="h-6 w-6 fill-gray-800" dangerouslySetInnerHTML={{ __html: (type.icon as Icon).content }} />}
+          <span>{type?.title}</span>
+        </h6>
+      )}
+      {!!documentType && (
+        <h6 className="flex items-center gap-1.5 font-bold">
+          {!!documentType?.icon && <i className="h-6 w-6 fill-gray-800" dangerouslySetInnerHTML={{ __html: (documentType.icon as Icon).content }} />}
+          <span>{documentType?.title}</span>
+        </h6>
+      )}
       {!!features?.length && (
         <div className="flex flex-col gap-2 py-4">
           <h6 className="font-bold">امکانات: {/*  */}</h6>
