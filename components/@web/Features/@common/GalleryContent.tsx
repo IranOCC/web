@@ -112,7 +112,7 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
             <div ref={sliderRef} className="keen-slider">
               {items.map(({ path, title, alt }, idx) => {
                 return (
-                  <div key={idx} className="keen-slider__slide relative flex !h-fit !min-h-fit flex-col items-center justify-center self-end overflow-hidden">
+                  <div key={idx} className="keen-slider__slide  relative flex !h-fit max-h-[20rem] !min-h-fit flex-col items-center justify-center self-end overflow-hidden md:max-h-[30rem]">
                     <Image
                       //
                       src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
@@ -148,7 +148,7 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                 )}
                 {(headerSubTitle?.type === "blog" || headerSubTitle?.type === "page") && (
                   <>
-                    <h6 className={"flex truncate items-center gap-1 text-sm font-medium" + (headerSubTitle?.rating ? "" : " col-span-full")}>
+                    <h6 className={"flex items-center gap-1 truncate text-sm font-medium" + (headerSubTitle?.rating ? "" : " col-span-full")}>
                       <span className="text-gray-600">تاریخ انتشار:</span>
                       <span className="text-black">{moment(headerSubTitle.publishedAt).locale("fa").format("DD MMM YYYY") || "-"}</span>
                     </h6>
@@ -162,13 +162,13 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                   </>
                 )}
                 {headerSubTitle?.type === "blog" && (
-                  <h6 className="flex truncate items-center gap-1 text-sm font-medium ">
+                  <h6 className="flex items-center gap-1 truncate text-sm font-medium ">
                     <span className="text-gray-600">دسته بندی:</span>
                     <span className="text-black">{headerSubTitle.category || "-"}</span>
                   </h6>
                 )}
                 {headerSubTitle?.type === "blog" && (
-                  <h6 className="flex truncate items-center gap-1 text-sm font-medium ">
+                  <h6 className="flex items-center gap-1 truncate text-sm font-medium ">
                     <span className="text-gray-600">نویسنده:</span>
                     <span className="text-black">{headerSubTitle.author || "-"}</span>
                   </h6>

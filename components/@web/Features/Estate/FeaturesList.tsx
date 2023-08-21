@@ -69,33 +69,33 @@ const FeaturesList = ({ data, isEstateCard = false }: { data: WebEstate; isEstat
   const featuresItems: { title: string; value: string; icon: ReactNode }[] = [];
   switch (category.slug) {
     case "villa":
-      if (area !== undefined || area !== null) featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
-      if (buildingArea !== undefined || buildingArea !== null) featuresItems.push({ title: "متراژ بنا", value: `${buildingArea} مترمربع`, icon: <BuildingMeasurementIcon /> });
-      if (constructionYear !== undefined || constructionYear !== null) featuresItems.push({ title: "سال ساخت", value: `${constructionYear}`, icon: <ConstructionIcon /> });
-      if (roomsCount !== undefined || roomsCount !== null) featuresItems.push({ title: "تعداد اتاق", value: `${roomsCount}`, icon: <RoomsIcon /> });
-      if (mastersCount !== undefined || mastersCount !== null) featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: <MastersIcon /> });
-      if (canBarter !== undefined || canBarter !== null) featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
+      if (area !== undefined && area !== null) featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
+      if (buildingArea !== undefined && buildingArea !== null) featuresItems.push({ title: "متراژ بنا", value: `${buildingArea} مترمربع`, icon: <BuildingMeasurementIcon /> });
+      if (constructionYear !== undefined && constructionYear !== null) featuresItems.push({ title: "سال ساخت", value: `${constructionYear}`, icon: <ConstructionIcon /> });
+      if (roomsCount !== undefined && roomsCount !== null) featuresItems.push({ title: "تعداد اتاق", value: `${roomsCount}`, icon: <RoomsIcon /> });
+      if (mastersCount !== undefined && mastersCount !== null) featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: <MastersIcon /> });
+      if (canBarter !== undefined && canBarter !== null) featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
       break;
     case "apartment":
-      if (area !== undefined || area !== null) featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
-      if (floorsCount !== undefined || floorsCount !== null) featuresItems.push({ title: "تعداد طبقات", value: `${floorsCount}`, icon: <FloorsIcon /> });
-      if (unitsCount !== undefined || unitsCount !== null) featuresItems.push({ title: "تعداد واحدها", value: `${unitsCount}`, icon: <UnitsIcon /> });
-      if (floor !== undefined || floor !== null) featuresItems.push({ title: "طبقه", value: `${floor}`, icon: <FloorIcon /> });
-      if (roomsCount !== undefined || roomsCount !== null) featuresItems.push({ title: "تعداد خواب", value: `${roomsCount}`, icon: <RoomsIcon /> });
-      if (mastersCount !== undefined || mastersCount !== null) featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: <MastersIcon /> });
-      if (canBarter !== undefined || canBarter !== null) featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
+      if (area !== undefined && area !== null) featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
+      if (floorsCount !== undefined && floorsCount !== null) featuresItems.push({ title: "تعداد طبقات", value: `${floorsCount}`, icon: <FloorsIcon /> });
+      if (unitsCount !== undefined && unitsCount !== null) featuresItems.push({ title: "تعداد واحدها", value: `${unitsCount}`, icon: <UnitsIcon /> });
+      if (floor !== undefined && floor !== null) featuresItems.push({ title: "طبقه", value: `${floor}`, icon: <FloorIcon /> });
+      if (roomsCount !== undefined && roomsCount !== null) featuresItems.push({ title: "تعداد خواب", value: `${roomsCount}`, icon: <RoomsIcon /> });
+      if (mastersCount !== undefined && mastersCount !== null) featuresItems.push({ title: "تعداد مستر", value: `${mastersCount}`, icon: <MastersIcon /> });
+      if (canBarter !== undefined && canBarter !== null) featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
       break;
     case "commercial":
-      if (area !== undefined || area !== null) featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
-      if (buildingArea !== undefined || buildingArea !== null) featuresItems.push({ title: "متراژ بر تجاری", value: `${buildingArea} مترمربع`, icon: <BuildingMeasurementIcon /> });
-      if (floor !== undefined || floor !== null) featuresItems.push({ title: "طبقه", value: `${floor}`, icon: <FloorIcon /> });
-      if (canBarter !== undefined || canBarter !== null) featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
+      if (area !== undefined && area !== null) featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
+      if (buildingArea !== undefined && buildingArea !== null) featuresItems.push({ title: "متراژ بر تجاری", value: `${buildingArea} مترمربع`, icon: <BuildingMeasurementIcon /> });
+      if (floor !== undefined && floor !== null) featuresItems.push({ title: "طبقه", value: `${floor}`, icon: <FloorIcon /> });
+      if (canBarter !== undefined && canBarter !== null) featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
       break;
     case "land":
     case "hectare":
-      if (area !== undefined || area !== null) featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
-      if (withOldBuilding !== undefined || withOldBuilding !== null) featuresItems.push({ title: "ساختمان قدیمی", value: `${withOldBuilding ? "دارد" : "ندارد"}`, icon: <OldBuildingIcon /> });
-      if (canBarter !== undefined || canBarter !== null) featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
+      if (area !== undefined && area !== null) featuresItems.push({ title: "متراژ کل", value: `${area} مترمربع`, icon: <MeasurementIcon /> });
+      if (withOldBuilding !== undefined && withOldBuilding !== null) featuresItems.push({ title: "ساختمان قدیمی", value: `${withOldBuilding ? "دارد" : "ندارد"}`, icon: <OldBuildingIcon /> });
+      if (canBarter !== undefined && canBarter !== null) featuresItems.push({ title: "قابل تهاتر", value: `${canBarter ? "می باشد" : "نمی باشد"}`, icon: <TransferIcon /> });
       break;
   }
 
