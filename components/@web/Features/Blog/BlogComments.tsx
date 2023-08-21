@@ -291,10 +291,6 @@ const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo
     }
   };
 
-  const getReply = async (item: DataType) => {
-    //
-  };
-
   const loadMore =
     !initLoading && !loading && total > data.length ? (
       <div
@@ -343,14 +339,14 @@ const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo
                   <Avatar
                     src={item?.createdBy?.avatar && <Image src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (item?.createdBy?.avatar as StorageFile).path} alt={(item?.createdBy?.avatar as StorageFile).alt} width={100} height={100} className="aspect-square" />}
                     style={{ background: stc(item?.createdBy?.fullName || item.name) }}
-                    className="align-middle"
+                    className="!border-none align-middle"
                   >
                     {(item?.createdBy?.fullName || item.name).slice(0, 1)}
                   </Avatar>
                 }
                 title={
                   <div className="flex flex-row gap-2">
-                    <b>{item?.createdBy?.fullName || item.name}</b>|<span className="text-gray-500">{"--"}</span>
+                    <b>{item?.createdBy?.fullName || item.name}</b>|<span className="text-gray-500">{item?.createdAt && moment(item.createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>
                   </div>
                 }
                 description={
