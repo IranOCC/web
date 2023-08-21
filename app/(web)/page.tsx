@@ -1,6 +1,7 @@
 // "use client";
 import Logo from "@/assets/images/logo.png";
 import SearchBox from "@/components/@web/Features/@common/SearchBox";
+import ClientSide from "@/components/@web/Features/Home/ClientSide";
 import { WebInput } from "@/components/@web/Input";
 import Search from "@/components/Icons/Search";
 import { SearchEstateFormData } from "@/types/formsData";
@@ -8,15 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
-// import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
-// import { useContext, useEffect } from "react";
-
 export default function Page() {
-  // const { internalPage } = useContext(WebPreviewContext) as WebPreviewContextType;
-  // useEffect(() => {
-  //   internalPage();
-  // }, []);
-
   const items = [
     {
       title: "زمین",
@@ -73,6 +66,7 @@ export default function Page() {
           );
         })}
       </div>
+      <ClientSide />
       <div />
     </div>
   );

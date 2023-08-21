@@ -285,7 +285,7 @@ const CommentsList = ({ id, update, canWriteComment, setReplyTo }: { id: string;
       setData([...newData]);
       setList([...newData]);
       setLoading(false);
-      setCurrent((prev) => prev + 1);
+      // setCurrent((prev) => prev + 1);
       window.dispatchEvent(new Event("resize"));
     } catch (error) {
       //
