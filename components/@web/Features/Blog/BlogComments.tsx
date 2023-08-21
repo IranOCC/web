@@ -12,7 +12,9 @@ import { useRouter } from "next/navigation";
 import { WebButton } from "../../Button";
 import Link from "next/link";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
-import { Phone, User } from "@/types/interfaces";
+import { Phone, StorageFile, User } from "@/types/interfaces";
+import stc from "string-to-color";
+import Image from "next/image";
 
 type IProps = { id: string; openNewComments: boolean; onlyUsersNewComments: boolean; showComments: boolean; showUnconfirmedComments: boolean };
 const BlogComments = ({ id, openNewComments, onlyUsersNewComments, showComments, showUnconfirmedComments }: IProps) => {
@@ -221,21 +223,47 @@ interface DataType {
 const size = 3;
 
 const CommentsList = ({ id, update, canWriteComment, setReplyTo }: { id: string; canWriteComment: boolean; update: any; setReplyTo: (d: DataType) => void }) => {
+  const [count, setCount] = useState<number>(0);
+
+  const api = useAxiosAuth();
+
+  return (
+    <>
+      <hr className="my-2" />
+      <a className="col-span-full py-2">
+        <h3 className="text-sm font-bold">دیدگاه ها ({count.toLocaleString("fa")})</h3>
+      </a>
+      <CommentsListData
+        //
+        postID={id}
+        update={update}
+        canWriteComment={canWriteComment}
+        setReplyTo={setReplyTo}
+        setCount={setCount}
+      />
+    </>
+  );
+};
+
+const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo, setCount }: { postID: string; canWriteComment: boolean; replyTo?: string; update: any; setReplyTo: (d: DataType) => void; setCount: (d: number) => void }) => {
   const [initLoading, setInitLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<DataType[]>([]);
   const [list, setList] = useState<DataType[]>([]);
   const [current, setCurrent] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
+  const [showReply, setShowReply] = useState(false);
 
   const api = useAxiosAuth();
+
   const getInitData = async () => {
     setInitLoading(true);
-    const _params = { current: 1, size };
+    const _params = { current: 1, size, filter: { replyTo } };
     try {
-      const { data: res } = await api.get(`/blog/comment/${id}`, { params: _params });
+      const { data: res } = await api.get(`/blog/comment/${postID}`, { params: _params });
       setInitLoading(false);
       setTotal(res?.total || 0);
+      setCount(res?.total || 0);
       setData(res?.items || []);
       setList(res?.items || []);
     } catch (error) {
@@ -245,12 +273,13 @@ const CommentsList = ({ id, update, canWriteComment, setReplyTo }: { id: string;
   useEffect(() => {
     getInitData();
   }, [update]);
+
   const getMoreData = async () => {
     setLoading(true);
     setList(data.concat([...new Array(size)].map(() => ({ loading: true, name: "", content: "", createdAt: "", _id: "", responses: [] }))));
-    const _params = { current: current + 1, size };
+    const _params = { current: current + 1, size, filter: { replyTo } };
     try {
-      const { data: res } = await api.get(`/blog/comment/${id}`, { params: _params });
+      const { data: res } = await api.get(`/blog/comment/${postID}`, { params: _params });
       const newData = data.concat(res?.items || []);
       setData(newData);
       setList(newData);
@@ -263,33 +292,7 @@ const CommentsList = ({ id, update, canWriteComment, setReplyTo }: { id: string;
   };
 
   const getReply = async (item: DataType) => {
-    setLoading(true);
-    let index = -1;
-    for (let i = 0; i < data.length; i++) {
-      if (data[i]._id === item._id) {
-        index = i;
-        break;
-      }
-    }
     //
-    if (index !== -1) return;
-
-    data[index].responses = [...new Array(size)].map(() => ({ loading: true, name: "", content: "", createdAt: "", _id: "", responses: [] }));
-    setList([...data]);
-
-    const _params = { current: current + 1, size, replyTo: item._id };
-    try {
-      const { data: res } = await api.get(`/blog/comment/${id}`, { params: _params });
-      const newData = data;
-      newData[index].responses = (res?.items || []).map(() => ({ loading: true, name: "", content: "", createdAt: "", _id: "", responses: [] }));
-      setData([...newData]);
-      setList([...newData]);
-      setLoading(false);
-      // setCurrent((prev) => prev + 1);
-      window.dispatchEvent(new Event("resize"));
-    } catch (error) {
-      //
-    }
   };
 
   const loadMore =
@@ -315,10 +318,6 @@ const CommentsList = ({ id, update, canWriteComment, setReplyTo }: { id: string;
 
   return (
     <>
-      <hr className="my-2" />
-      <a className="col-span-full py-2">
-        <h3 className="text-sm font-bold">دیدگاه ها ({total.toLocaleString("fa")})</h3>
-      </a>
       <List
         className="demo-loadmore-list"
         loading={initLoading}
@@ -340,10 +339,18 @@ const CommentsList = ({ id, update, canWriteComment, setReplyTo }: { id: string;
             >
               <List.Item.Meta
                 //
-                avatar={<Avatar />}
+                avatar={
+                  <Avatar
+                    src={item?.createdBy?.avatar && <Image src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (item?.createdBy?.avatar as StorageFile).path} alt={(item?.createdBy?.avatar as StorageFile).alt} width={100} height={100} className="aspect-square" />}
+                    style={{ background: stc(item?.createdBy?.fullName || item.name) }}
+                    className="align-middle"
+                  >
+                    {(item?.createdBy?.fullName || item.name).slice(0, 1)}
+                  </Avatar>
+                }
                 title={
                   <div className="flex flex-row gap-2">
-                    <b>{item.name}</b>|<span className="text-gray-500">{"--"}</span>
+                    <b>{item?.createdBy?.fullName || item.name}</b>|<span className="text-gray-500">{"--"}</span>
                   </div>
                 }
                 description={
@@ -357,40 +364,25 @@ const CommentsList = ({ id, update, canWriteComment, setReplyTo }: { id: string;
                           </Button>
                         )}
                         {!!item.responses?.length && (
-                          <Button color="success" startIcon={<MarkUnreadChatAlt />} onClick={() => getReply(item)}>
-                            <b>پاسخ ها ({item.responses.length.toLocaleString("fa")})</b>
+                          <Button color="success" startIcon={<MarkUnreadChatAlt />} onClick={() => setShowReply((pv) => !pv)}>
+                            <b>{showReply ? `پنهان کردن پاسخ ها` : `پاسخ ها (${item.responses.length.toLocaleString("fa")})`}</b>
                           </Button>
                         )}
                       </div>
-                      {/* <div className="grid grid-cols-2 gap-2">
-                        <Badge
-                          key={0}
-                          badgeContent={4}
-                          showZero
-                          anchorOrigin={{
-                            vertical: "bottom",
-                            horizontal: "left",
-                          }}
-                        >
-                          <IconButton color="success" size="small">
-                            <ThumbUpOutlined />
-                          </IconButton>
-                        </Badge>
-                        <Badge
-                          key={1}
-                          badgeContent={1}
-                          showZero
-                          anchorOrigin={{
-                            vertical: "bottom",
-                            horizontal: "left",
-                          }}
-                        >
-                          <IconButton color="error" size="small">
-                            <ThumbDownOutlined />
-                          </IconButton>
-                        </Badge>
-                      </div> */}
                     </div>
+                    {!!item.responses?.length && showReply && (
+                      <div className="w-full">
+                        <CommentsListData
+                          //
+                          postID={postID}
+                          update={update}
+                          canWriteComment={canWriteComment}
+                          replyTo={item._id}
+                          setReplyTo={setReplyTo}
+                          setCount={setCount}
+                        />
+                      </div>
+                    )}
                   </div>
                 }
               />
