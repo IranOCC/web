@@ -1,6 +1,6 @@
 import { useKeenSlider, KeenSliderPlugin, KeenSliderInstance } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import { MutableRefObject, useContext, useEffect, useState } from "react";
+import { MutableRefObject, useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { StorageFile, WebEstate } from "@/types/interfaces";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
@@ -98,10 +98,17 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
     window.addEventListener("resize", adaptSize, false);
   }, []);
 
+  // const isFirst = useRef(true);
   useEffect(() => {
+    // if (isFirst.current) {
+    //   isFirst.current = false;
+    //   return;
+    // }
     setTimeout(adaptSize, 700);
     setTimeout(adaptSize, 1000);
     setTimeout(adaptSize, 1500);
+    setTimeout(adaptSize, 2000);
+    setTimeout(adaptSize, 2500);
   }, [isFullscreen, isFullContent]);
 
   return (
