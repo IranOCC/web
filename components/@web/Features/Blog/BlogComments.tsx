@@ -84,8 +84,8 @@ const CommentForm = ({ id, canWriteComment, setUpdate, replyTo, setReplyTo }: { 
 
   const onClose = () => {
     setUpdate([true]);
-    resetField("name");
-    resetField("phone");
+    resetField("name", { keepDirty: true, defaultValue: user?.fullName || "" });
+    resetField("phone", { keepDirty: true, defaultValue: (!!(user?.phone as Phone)?.value && `0${(user?.phone as Phone)?.value?.substring(3)}`) || "" });
     resetField("content");
     resetField("replyTo");
     setReplyTo(null);
