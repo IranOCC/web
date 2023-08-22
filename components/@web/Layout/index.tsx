@@ -103,7 +103,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                   universal
                   // autoHide={false}
                   hideTracksWhenNotNeeded
-                  renderView={(props) => <div {...props} style={{ ...props.style, padding: 0, scrollBehavior: "smooth", marginLeft: props.style.marginRight, marginRight: 0 }} />}
+                  renderView={(props) => <div {...props} id="mainScroll" style={{ ...props.style, padding: 0, scrollBehavior: "smooth", marginLeft: props.style.marginRight, marginRight: 0 }} />}
                   //
                   renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", zIndex: 10, bottom: 2, right: 2, left: 2, height: 2 }} />}
                   renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", borderRadius: "20px", height: 6, bottom: 2 }} />}
@@ -119,7 +119,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
 
           {/* SIDEBAR:::: only show upper xl size */}
           <div className={"relative h-full w-0 transition-all duration-1000 xl:flex" + (!isFullContent && !!sidebar ? (sidebar?.small ? " xl:w-[32rem]" : " xl:w-[32rem] 2xl:w-[64rem]") : "")}>
-            <div className="absolute top-4 z-[100] end-4">
+            <div className="absolute end-4 top-4 z-[100]">
               <div
                 //
                 onClick={toggleFullscreen}
@@ -130,7 +130,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
               </div>
             </div>
             {!!SideBarComponent && (
-              <div className="absolute h-full w-[calc(100%+1.5rem)] overflow-hidden -start-6">
+              <div className="absolute -start-6 h-full w-[calc(100%+1.5rem)] overflow-hidden">
                 <div className="sidebar-component h-full w-full overflow-hidden">
                   <SideBarComponent {...(sidebar?.props || {})} />
                 </div>
