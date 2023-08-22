@@ -138,19 +138,23 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
           </div>
           {/* view */}
           <div className="hidden w-56 grid-cols-1 gap-2 lg:grid">
-            <WebButton
-              //
-              title="رزرو بازدید حضوری"
-              size="default"
-              noSpace
-            />
-            <WebButton
-              //
-              title="رزرو بازدید آنلاین"
-              size="default"
-              variant="outline"
-              noSpace
-            />
+            <a href={`tel:${(createdBy.phone as Phone)?.value}`}>
+              <WebButton
+                //
+                title="رزرو بازدید حضوری"
+                size="default"
+                noSpace
+              />
+            </a>
+            <a href={`tel:${(createdBy.phone as Phone)?.value}`}>
+              <WebButton
+                //
+                title="رزرو بازدید آنلاین"
+                size="default"
+                variant="outline"
+                noSpace
+              />
+            </a>
           </div>
           {/* created */}
           <div className="flex w-auto flex-row gap-2">
@@ -221,19 +225,23 @@ export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpe
           </a>
         </div>
         <div className="grid grid-cols-1 gap-2">
-          <WebButton
-            //
-            title="رزرو بازدید حضوری"
-            size="default"
-            noSpace
-          />
-          <WebButton
-            //
-            title="رزرو بازدید آنلاین"
-            size="default"
-            variant="outline"
-            noSpace
-          />
+          <a href={`tel:${(createdBy.phone as Phone)?.value}`}>
+            <WebButton
+              //
+              title="رزرو بازدید حضوری"
+              size="default"
+              noSpace
+            />
+          </a>
+          <a href={`tel:${(createdBy.phone as Phone)?.value}`}>
+            <WebButton
+              //
+              title="رزرو بازدید آنلاین"
+              size="default"
+              variant="outline"
+              noSpace
+            />
+          </a>
         </div>
       </div>
     </Modal>
