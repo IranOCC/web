@@ -13,8 +13,11 @@ const RatingButton = ({ rate, userRate }: { rate?: number; userRate?: number }) 
 
   const api = useAxiosAuth();
   const onSubmit = async (data: RatingFormData) => {
+    if (!relatedTo || !relatedToID) return;
+    data.relatedTo = relatedTo;
+    data.relatedToID = relatedToID;
     try {
-      const r = await api.post(`/rating/${relatedTo}/${relatedToID}`, data);
+      const r = await api.post(`/rating`, data);
       toast.success("امتیاز شما ثبت شد");
       setDisabled(true);
       setScore(r.data.rate);

@@ -354,8 +354,8 @@ export type ReportFormData = {
 
 
 export type RatingFormData = {
-    relatedTo: RelatedTo,
-    relatedToID: string,
+    relatedTo?: RelatedTo,
+    relatedToID?: string,
     score: number;
 };
 
