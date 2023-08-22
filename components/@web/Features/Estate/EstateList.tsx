@@ -20,52 +20,12 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
 
   const searchParams = useSearchParams();
 
-  const [update, setUpdate] = useState(false);
-
   const api = useAxiosAuth();
-  // const [pageSuccess, setPageSuccess] = useState(0);
+  const [update, setUpdate] = useState(false);
   const [current, setCurrent] = useState([0]);
   const [dataList, setDataList] = useState<WebEstate[]>(data?.items || []);
   const [itemsCount, setItemsCount] = useState(data.total);
   const [dataLoading, setDataLoading] = useState<boolean>(false);
-  // const isFirst = useRef(true);
-  // const getData = async () => {
-  //   // if (isFirst.current) {
-  //   //   isFirst.current = false;
-  //   //   return true;
-  //   // }
-  //   setDataLoading(true);
-  //   try {
-  //     const response = await api.get(`/estate?size=10&current=${current[0]}${!!searchParams?.toString() ? `&${searchParams?.toString()}` : ""}`);
-  //     const data = response.data as { items: WebEstate[]; total: number };
-  //     if (current[0] === 1) {
-  //       setDataList(data?.items || []);
-  //       setItemsCount(data?.total || 0);
-  //     } else {
-  //       setDataList((d) => [...d, ...data.items]);
-  //     }
-  //     setDataLoading(false);
-  //     setPageSuccess(current[0]);
-  //   } catch (error) {
-  //     setDataLoading(false);
-  //   }
-  // };
-
-  //
-  // const scrollLoadingRef = useRef<any>(null);
-  // const checkLoadMore = (e: any) => {
-  //   const sh = e.target.scrollHeight;
-  //   const oh = e.target.offsetHeight;
-  //   const st = e.target.scrollTop;
-  //   if (sh - oh - st < 20 && !dataLoading && itemsCount > dataList.length && pageSuccess === current[0]) {
-  //     setCurrent([pageSuccess + 1]);
-  //   }
-  // };
-  // useEffect(() => {
-  //   const _main_scroll = document.getElementById("main")?.firstChild;
-  //   _main_scroll?.addEventListener("scroll", checkLoadMore);
-  //   return () => _main_scroll?.removeEventListener("scroll", checkLoadMore);
-  // }, [dataList.length, dataLoading, itemsCount, pageSuccess]);
 
   const getData = async () => {
     setDataLoading(true);
@@ -108,7 +68,6 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
         {/* list */}
         <div className="flex flex-col gap-4">
           {!dataLoading && !dataList?.length && <Empty description="چیزی پیدا نشد :(" />}
-
           <div>
             <InfiniteScroll
               //
@@ -116,7 +75,6 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
               next={loadMoreData}
               hasMore={dataList.length < itemsCount}
               loader={<LoadingWithoutBg />}
-              endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
               scrollableTarget="mainScroll"
             >
               <div className="grid grid-cols-1 gap-4 min-[580px]:grid-cols-2 md:grid-cols-1">

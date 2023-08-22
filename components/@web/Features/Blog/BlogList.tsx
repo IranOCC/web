@@ -9,6 +9,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { WebBlogPost } from "@/types/interfaces";
 import BlogPostCard from "./BlogPostCard";
 import BlogSearchFilteringBox from "./BlogSearchFilteringBox";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } }) => {
   const { blogPage } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -16,21 +17,16 @@ const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } })
     blogPage();
   }, []);
 
-  const [update, setUpdate] = useState([true]);
-
   const searchParams = useSearchParams();
   const api = useAxiosAuth();
-  const [pageSuccess, setPageSuccess] = useState(0);
+
+  const [update, setUpdate] = useState(false);
   const [current, setCurrent] = useState([0]);
   const [dataList, setDataList] = useState<WebBlogPost[]>(data?.items || []);
   const [itemsCount, setItemsCount] = useState(data?.total || 0);
   const [dataLoading, setDataLoading] = useState<boolean>(false);
-  const isFirst = useRef(true);
+
   const getData = async () => {
-    if (isFirst.current) {
-      isFirst.current = false;
-      return true;
-    }
     setDataLoading(true);
     try {
       const response = await api.get(`/blog/post?size=10&current=${current[0]}${!!searchParams?.toString() ? `&${searchParams?.toString()}` : ""}`);
@@ -42,7 +38,6 @@ const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } })
         setDataList((d) => [...d, ...data.items]);
       }
       setDataLoading(false);
-      setPageSuccess(current[0]);
     } catch (error) {
       setDataLoading(false);
     }
@@ -51,25 +46,14 @@ const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } })
   useEffect(() => {
     setCurrent([1]);
   }, [searchParams, update]);
-  useEffect(() => {
-    if (pageSuccess < current[0] && !dataLoading) getData();
-  }, [current]);
 
-  //
-  const scrollLoadingRef = useRef<any>(null);
-  const checkLoadMore = (e: any) => {
-    const sh = e.target.scrollHeight;
-    const oh = e.target.offsetHeight;
-    const st = e.target.scrollTop;
-    if (sh - oh - st < 20 && itemsCount > dataList.length) {
-      setCurrent([pageSuccess + 1]);
-    }
+  const loadMoreData = () => {
+    setCurrent((prev) => [prev[0] + 1]);
   };
+
   useEffect(() => {
-    const _main_scroll = document.getElementById("main")?.firstChild;
-    _main_scroll?.addEventListener("scroll", checkLoadMore);
-    return () => _main_scroll?.removeEventListener("scroll", checkLoadMore);
-  }, [dataList.length, dataLoading]);
+    if (!!current[0]) getData();
+  }, [current]);
 
   return (
     <>
@@ -81,17 +65,25 @@ const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } })
           setUpdate={setUpdate}
         />
         {/* list */}
-        <div className="grid grid-cols-1 gap-4 min-[580px]:grid-cols-2 md:grid-cols-1">
+        <div className="flex flex-col gap-4">
           {!dataLoading && !dataList?.length && <Empty description="چیزی پیدا نشد :(" />}
-          {dataList.map((post, idx) => {
-            return <BlogPostCard key={post._id} data={post} />;
-          })}
-        </div>
-        {itemsCount > dataList.length && (
-          <div ref={scrollLoadingRef}>
-            <LoadingWithoutBg />
+          <div>
+            <InfiniteScroll
+              //
+              dataLength={dataList.length}
+              next={loadMoreData}
+              hasMore={dataList.length < itemsCount}
+              loader={<LoadingWithoutBg />}
+              scrollableTarget="mainScroll"
+            >
+              <div className="grid grid-cols-1 gap-4 min-[580px]:grid-cols-2 md:grid-cols-1">
+                {dataList.map((post, idx) => {
+                  return <BlogPostCard key={post._id} data={post} />;
+                })}
+              </div>
+            </InfiniteScroll>
           </div>
-        )}
+        </div>
       </div>
     </>
   );
