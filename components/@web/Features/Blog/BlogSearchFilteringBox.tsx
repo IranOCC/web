@@ -42,7 +42,7 @@ const BlogSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="sticky top-14 z-10 bg-gray-200 md:bg-white">
+    <form onSubmit={handleSubmit(onSubmit)} className="sticky top-14 z-20 bg-gray-200 md:bg-white">
       <div className="grid grid-cols-1 gap-2">
         <WebInput
           //

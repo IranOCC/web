@@ -29,16 +29,17 @@ const BlogPostCard = ({ data }: { data: WebBlogPost }) => {
     <div className="relative overflow-hidden rounded-xl md:max-h-[12rem] md:min-h-[12rem]">
       <Link href={`/blog/${slug}`}>
         <div className="flex flex-col gap-2 overflow-hidden rounded-xl bg-white p-2 md:flex-row md:bg-gray-200 md:p-0">
-          <Image
-            //
-            src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + image.path}
-            alt={image.alt}
-            title={image.title}
-            width={500}
-            height={200}
-            className="block max-h-[10rem] w-full rounded-xl object-cover md:h-full md:max-h-[12rem] md:min-h-[12rem] md:max-w-[12rem] lg:max-w-[15rem] xl:max-w-[20rem]"
-          />
-
+          {!!image && (
+            <Image
+              //
+              src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + image.path}
+              alt={image.alt}
+              title={image.title}
+              width={500}
+              height={200}
+              className="block max-h-[10rem] w-full rounded-xl object-cover md:h-full md:max-h-[12rem] md:min-h-[12rem] md:max-w-[12rem] lg:max-w-[15rem] xl:max-w-[20rem]"
+            />
+          )}
           <div className="flex flex-col justify-center gap-2 md:py-3 md:pe-2">
             <h3 className="w-full truncate font-bold">{title}</h3>
             <div className="flex gap-1 text-sm text-purple-600">
