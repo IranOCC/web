@@ -1,3 +1,4 @@
+import { RelatedTo } from "./enum";
 import { Email, Phone, User, StorageFile, Office, Icon, EstateCategory, SelectDataType, BlogCategory } from "./interfaces";
 
 export type LoginPhoneOtpFormData = {
@@ -346,11 +347,15 @@ export type ContactFormData = {
 
 
 export type ReportFormData = {
-    text: string;
+    relatedTo: RelatedTo,
+    relatedToID: string,
+    content: string;
 };
 
 
 export type RatingFormData = {
+    relatedTo: RelatedTo,
+    relatedToID: string,
     score: number;
 };
 

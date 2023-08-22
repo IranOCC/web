@@ -54,8 +54,11 @@ export const ReportModal = ({ isOpen, setOpen }: { isOpen: boolean; setOpen: (a:
 
   const api = useAxiosAuth();
   const onSubmit = async (data: ReportFormData) => {
+    if (!relatedTo || !relatedToID) return;
+    data.relatedTo = relatedTo;
+    data.relatedToID = relatedToID;
     try {
-      await api.post(`/report/${relatedTo}/${relatedToID}`, data);
+      await api.post(`/issue/report`, data);
       toast.success("با تشکر از شما! گزارش شما با موفقیت ثبت شد و پس از بازنگری اصلاحات انجام خواهد شد");
       onClose();
     } catch (error) {
@@ -65,11 +68,11 @@ export const ReportModal = ({ isOpen, setOpen }: { isOpen: boolean; setOpen: (a:
 
   const onClose = () => {
     setOpen(false);
-    resetField("text");
+    resetField("content");
   };
 
   useEffect(() => {
-    register("text", {
+    register("content", {
       //
       required: "متن گزارش الزامی است",
       minLength: { value: 10, message: "حداقل باید 10 کاراکتر باشد" },
@@ -90,9 +93,9 @@ export const ReportModal = ({ isOpen, setOpen }: { isOpen: boolean; setOpen: (a:
             <WebInput
               //
               control={control}
-              name="text"
+              name="content"
               placeholder="متن گزارش"
-              error={errors.text?.message}
+              error={errors.content?.message}
               disabled={isLoading || isSubmitting}
               multiline
               lines={4}

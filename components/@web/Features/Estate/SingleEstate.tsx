@@ -16,7 +16,6 @@ import GalleryContent from "../@common/GalleryContent";
 import WebTab from "../../Tab";
 import { WebButton } from "../../Button";
 import Modal from "@/components/Modals";
-import { RelatedTo } from "@/types/enum";
 
 const SingleEstate = ({ data }: { data?: WebEstate }) => {
   if (!data) throw Error("PropertyNotFound");

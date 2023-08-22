@@ -80,7 +80,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const singlePost = (id: string, title: string, categories: string[], author: string, publishedAt: Date, rateScore: number, userRate?: number) => {
     setBackground("bg-white");
     setHeaderTitle(title);
-    setRelatedTo(RelatedTo.Post);
+    setRelatedTo(RelatedTo.Blog);
     setRelatedToID(id);
     setBreadCrump([
       //
@@ -134,7 +134,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const singleEstate = (id: string, title: string, category: string, code: string, province: string, city: string, district: string) => {
     setBackground("bg-white");
     setHeaderTitle(title);
-    setRelatedTo(RelatedTo.Estate);
+    setRelatedTo(RelatedTo.Property);
     setRelatedToID(id);
     setBreadCrump([
       //

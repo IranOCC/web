@@ -9,7 +9,10 @@ export enum UserRoles {
 
 
 export enum RelatedTo {
-    Post = "post",
-    Estate = "estate",
-    Page = "page"
+    Unspecific = 'unspecific',
+    User = 'user',
+    Office = 'office',
+    Property = 'property',
+    Blog = 'blog',
+    Page = 'page',
 }

@@ -112,16 +112,18 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
             <div ref={sliderRef} className="keen-slider">
               {items.map(({ path, title, alt }, idx) => {
                 return (
-                  <div key={idx} className="keen-slider__slide  relative flex !h-fit max-h-[20rem] !min-h-fit flex-col items-center justify-center self-end overflow-hidden md:max-h-[30rem]">
-                    <Image
-                      //
-                      src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
-                      alt={alt}
-                      title={title}
-                      width={800}
-                      height={400}
-                      className="block rounded-b-2xl object-contain md:rounded-xl"
-                    />
+                  <div key={idx} className="keen-slider__slide relative flex !h-fit max-h-[20rem] !min-h-fit flex-col items-center justify-center self-end overflow-hidden rounded-b-2xl md:max-h-[30rem] md:rounded-xl">
+                    <div className="overflow-hidden rounded-b-2xl md:rounded-xl ">
+                      <Image
+                        //
+                        src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + path}
+                        alt={alt}
+                        title={title}
+                        width={800}
+                        height={400}
+                        className="block rounded-b-2xl object-contain md:rounded-xl"
+                      />
+                    </div>
                   </div>
                 );
               })}
