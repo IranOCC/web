@@ -28,13 +28,13 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
   const [dataLoading, setDataLoading] = useState<boolean>(false);
   const isFirst = useRef(true);
   const getData = async () => {
-    if (isFirst.current) {
-      isFirst.current = false;
-      return true;
-    }
+    // if (isFirst.current) {
+    //   isFirst.current = false;
+    //   return true;
+    // }
     setDataLoading(true);
     try {
-      const response = await api.get(`/estate?size=10&current=${current[0]}${searchParams ? `&${searchParams?.toString()}` : ""}`);
+      const response = await api.get(`/estate?size=10&current=${current[0]}${!!searchParams?.toString() ? `&${searchParams?.toString()}` : ""}`);
       const data = response.data as { items: WebEstate[]; total: number };
       if (current[0] === 1) {
         setDataList(data?.items || []);
@@ -53,7 +53,7 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
     setCurrent([1]);
   }, [searchParams, update]);
   useEffect(() => {
-    if (!!current[0]) getData();
+    if (pageSuccess < current[0] && !dataLoading) getData();
   }, [current]);
 
   //
@@ -62,7 +62,7 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
     const sh = e.target.scrollHeight;
     const oh = e.target.offsetHeight;
     const st = e.target.scrollTop;
-    if (sh - oh - st < 20 && !dataLoading && itemsCount > dataList.length && pageSuccess === current[0]) {
+    if (sh - oh - st < 20 && itemsCount > dataList.length) {
       setCurrent([pageSuccess + 1]);
     }
   };
@@ -70,7 +70,7 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
     const _main_scroll = document.getElementById("main")?.firstChild;
     _main_scroll?.addEventListener("scroll", checkLoadMore);
     return () => _main_scroll?.removeEventListener("scroll", checkLoadMore);
-  }, [dataList.length, dataLoading]);
+  }, [dataList.length]);
 
   return (
     <>

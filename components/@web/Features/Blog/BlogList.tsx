@@ -52,7 +52,7 @@ const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } })
     setCurrent([1]);
   }, [searchParams, update]);
   useEffect(() => {
-    if (!!current[0]) getData();
+    if (pageSuccess < current[0] && !dataLoading) getData();
   }, [current]);
 
   //
@@ -61,7 +61,7 @@ const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } })
     const sh = e.target.scrollHeight;
     const oh = e.target.offsetHeight;
     const st = e.target.scrollTop;
-    if (sh - oh - st < 20 && !dataLoading && itemsCount > dataList.length && pageSuccess === current[0]) {
+    if (sh - oh - st < 20 && itemsCount > dataList.length) {
       setCurrent([pageSuccess + 1]);
     }
   };
