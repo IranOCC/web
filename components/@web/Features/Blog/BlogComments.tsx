@@ -245,7 +245,7 @@ const CommentsList = ({ id, update, canWriteComment, setReplyTo }: { id: string;
   );
 };
 
-const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo, setCount }: { postID: string; canWriteComment: boolean; replyTo?: string; update: any; setReplyTo: (d: DataType) => void; setCount: (d: number) => void }) => {
+const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo, setCount }: { postID: string; canWriteComment: boolean; replyTo?: string; update: any; setReplyTo: (d: DataType) => void; setCount?: (d: number) => void }) => {
   const [initLoading, setInitLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<DataType[]>([]);
@@ -263,7 +263,7 @@ const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo
       const { data: res } = await api.get(`/blog/comment/${postID}`, { params: _params });
       setInitLoading(false);
       setTotal(res?.total || 0);
-      setCount(res?.total || 0);
+      if (!!setCount) setCount(res?.total || 0);
       setData(res?.items || []);
       setList(res?.items || []);
     } catch (error) {
