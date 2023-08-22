@@ -21,6 +21,7 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
   const [update, setUpdate] = useState(false);
 
   const api = useAxiosAuth();
+  const [pageSuccess, setPageSuccess] = useState(0);
   const [current, setCurrent] = useState([0]);
   const [dataList, setDataList] = useState<WebEstate[]>(data?.items || []);
   const [itemsCount, setItemsCount] = useState(data.total);
@@ -42,6 +43,7 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
         setDataList((d) => [...d, ...data.items]);
       }
       setDataLoading(false);
+      setPageSuccess(current[0]);
     } catch (error) {
       setDataLoading(false);
     }
@@ -60,7 +62,7 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
     const sh = e.target.scrollHeight;
     const oh = e.target.offsetHeight;
     const st = e.target.scrollTop;
-    if (sh - oh - st < 20 && !dataLoading && itemsCount > dataList.length) {
+    if (sh - oh - st < 20 && !dataLoading && itemsCount > dataList.length && pageSuccess === current[0]) {
       setCurrent((prev) => [prev[0] + 1]);
     }
   };
