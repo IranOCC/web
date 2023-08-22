@@ -62,7 +62,7 @@ const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } })
     const oh = e.target.offsetHeight;
     const st = e.target.scrollTop;
     if (sh - oh - st < 20 && !dataLoading && itemsCount > dataList.length && pageSuccess === current[0]) {
-      setCurrent((prev) => [prev[0] + 1]);
+      setCurrent([pageSuccess + 1]);
     }
   };
   useEffect(() => {
