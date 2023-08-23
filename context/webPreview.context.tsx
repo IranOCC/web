@@ -49,7 +49,7 @@ export type WebPreviewContextType = {
 
   singlePost: (id: string, title: string, categories: string[], author: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
   singlePage: (id: string, title: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
-  singleEstate: (id: string, title: string, category: string, code: string, province: string, city: string, district: string) => void;
+  singleEstate: (id: string, title: string, category: string, province: string, city: string, district: string, code?: string) => void;
   errorPage: () => void;
   searchPage: () => void;
   blogPage: () => void;
@@ -131,7 +131,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     });
   };
   // singleEstate
-  const singleEstate = (id: string, title: string, category: string, code: string, province: string, city: string, district: string) => {
+  const singleEstate = (id: string, title: string, category: string, province: string, city: string, district: string, code?: string) => {
     setBackground("bg-white");
     setHeaderTitle(title);
     setRelatedTo(RelatedTo.Property);

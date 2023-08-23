@@ -60,7 +60,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
   const { singleEstate } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   useEffect(() => {
-    singleEstate(_id, title, category.title, code || "-", province, city, district);
+    singleEstate(_id, title, category.title, province, city, district, code);
   }, []);
 
   const [openReserveModal, setReserveModal] = useState(false);

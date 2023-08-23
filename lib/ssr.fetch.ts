@@ -14,7 +14,7 @@ export async function fetchWebInfo() {
 
 export async function fetchBlogList(s?: URLSearchParams) {
     const session = await getServerSession(authOptions);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog/post?size=10&current=1${!!s ? "&" + s.toString() : ""}`, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 5 } });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog/post?size=10&current=1${!!s ? "&" + s.toString() : ""}`, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 1 } });
     const data = await res.json();
     return data as { items: WebBlogPost[]; total: number };
 }
@@ -22,7 +22,7 @@ export async function fetchBlogList(s?: URLSearchParams) {
 
 export async function fetchEstateList(s?: URLSearchParams) {
     const session = await getServerSession(authOptions);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/estate?size=10&current=1${!!s ? "&" + s.toString() : ""}`, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 5 } });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/estate?size=10&current=1${!!s ? "&" + s.toString() : ""}`, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 1 } });
     const data = await res.json();
     return data as { items: WebEstate[]; total: number };
 }
@@ -40,7 +40,7 @@ export async function fetchOfficeList() {
 
 export async function fetchSingleEstate(id_or_slug: string) {
     const session = await getServerSession(authOptions);
-    const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/estate/" + id_or_slug, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 10 } });
+    const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/estate/" + id_or_slug, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 1 } });
     try {
         const data = await res.json();
         return data as WebEstate;
@@ -51,7 +51,7 @@ export async function fetchSingleEstate(id_or_slug: string) {
 
 export async function fetchSingleBlogPost(id_or_slug: string) {
     const session = await getServerSession(authOptions);
-    const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/blog/post/" + id_or_slug, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 10 } });
+    const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/blog/post/" + id_or_slug, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 1 } });
     try {
         const data = await res.json();
         return data as WebBlogPost;
@@ -62,7 +62,7 @@ export async function fetchSingleBlogPost(id_or_slug: string) {
 
 export async function fetchSinglePage(id_or_slug: string) {
     const session = await getServerSession(authOptions);
-    const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/page/" + id_or_slug, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 10 } });
+    const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/page/" + id_or_slug, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 1 } });
     try {
         const data = await res.json();
         return data as WebPage;

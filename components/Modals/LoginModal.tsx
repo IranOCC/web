@@ -107,6 +107,7 @@ const LoginModal = () => {
       //
       setOpen={setShowLoginModal}
       open={showLoginModal && !isLogin}
+      closeButton={false}
       whiteClose
     >
       <div className="absolute left-0 top-0 h-40 w-full overflow-hidden bg-secondary">
