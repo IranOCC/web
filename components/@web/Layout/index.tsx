@@ -105,10 +105,10 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                   hideTracksWhenNotNeeded
                   renderView={(props) => <div {...props} id="mainScroll" style={{ ...props.style, padding: 0, scrollBehavior: "smooth", marginLeft: props.style.marginRight, marginRight: 0 }} />}
                   //
-                  renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", zIndex: 10, bottom: 2, right: 2, left: 2, height: 2 }} />}
+                  renderTrackHorizontal={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", zIndex: 20, bottom: 2, right: 2, left: 2, height: 2 }} />}
                   renderThumbHorizontal={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", borderRadius: "20px", height: 6, bottom: 2 }} />}
                   //
-                  renderTrackVertical={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", zIndex: 10, right: 2, bottom: 2, top: 2, width: 2 }} />}
+                  renderTrackVertical={(props) => <div {...props} style={{ ...props.style, borderRadius: 0, background: "#D6D6D6", zIndex: 20, right: 2, bottom: 2, top: 2, width: 2 }} />}
                   renderThumbVertical={(props) => <div {...props} style={{ ...props.style, background: "#BEBEBE", borderRadius: "20px", width: 6, right: -2 }} />}
                 >
                   {children}
