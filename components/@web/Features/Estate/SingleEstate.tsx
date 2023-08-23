@@ -54,6 +54,8 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
     unitsCount,
     floor,
     withOldBuilding,
+
+    isFavorite,
   } = data;
   const { singleEstate } = useContext(WebPreviewContext) as WebPreviewContextType;
 
@@ -131,7 +133,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
           {/* icons */}
           <div className="order-first grid h-full w-fit min-w-[2rem] grid-cols-1 gap-2 min-[400px]:min-w-[4rem] min-[400px]:grid-cols-2">
             <VerifiedButton isVerified={office.verified || false} />
-            <FavoriteButton isFav={false} />
+            <FavoriteButton isFav={isFavorite} />
             <ReportButton />
             <ShareButton />
           </div>

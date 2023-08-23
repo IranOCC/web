@@ -413,6 +413,8 @@ export type WebEstate = {
 
     office: Office;
     createdBy: User;
+
+    isFavorite: boolean;
 };
 
 
