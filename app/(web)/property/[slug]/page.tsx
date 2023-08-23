@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 import SingleEstate from "@/components/@web/Features/Estate/SingleEstate";
 import { fetchSingleEstate } from "@/lib/ssr.fetch";
+import { getSession } from "next-auth/react";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const data = await fetchSingleEstate(params.slug);
