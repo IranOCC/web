@@ -4,19 +4,21 @@ import { Input } from "@/components/Input";
 import LoginBackImage from "@/assets/images/city-bg.png";
 import { LoginPhoneOtpFormData } from "@/types/formsData";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
-import axios from "@/lib/axios";
+import { useContext, useEffect, useState } from "react";
+import axios, { handleFieldsError } from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import PhoneIcon from "@/components/Icons/Phone";
 import QrcodeIcon from "@/components/Icons/Qrcode";
 import { useCountdown } from "@/hooks/useCountdown";
 import moment from "moment";
-import { Session } from "@/types/interfaces";
+import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 
-const ModalPath = "auth";
-const LoginModal = ({ session }: { session: Session | null }) => {
+const LoginModal = () => {
+  const { data: session } = useSession();
+  const { showLoginModal, setShowLoginModal, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
+
   const {
     register,
     unregister,
@@ -36,6 +38,7 @@ const LoginModal = ({ session }: { session: Session | null }) => {
   const isStep2 = phoneSet?.length !== undefined;
 
   const sendOtp = async (data: LoginPhoneOtpFormData) => {
+    data.phone = data.phone.replaceAll(" ", "");
     try {
       const response = await axios.post("/auth/phoneOtp", data);
       toast.success("کد با موفقیت ارسال شد");
@@ -46,10 +49,18 @@ const LoginModal = ({ session }: { session: Session | null }) => {
       router.replace(url);
       setSendAgainTime(moment().add(2, "minutes").toDate());
       return true;
-    } catch (error) {}
+    } catch (error) {
+      handleFieldsError(error, setError);
+      setError("phone", {
+        type: "manual",
+        message: "خطایی رخ داده است",
+      });
+    }
   };
   const loginByOtp = async (data: LoginPhoneOtpFormData) => {
-    const result: any = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });
+    data.token = data.token.replaceAll(" ", "");
+    const result = await signIn("otp", { ...data, callbackUrl: "/", redirect: false });
+    // @ts-ignore
     if (result?.ok) {
       toast.success("با موفقیت وارد شدید!");
       const callbackUrl = searchParams?.get("callbackUrl");
@@ -64,9 +75,6 @@ const LoginModal = ({ session }: { session: Session | null }) => {
   };
 
   useEffect(() => {
-    if (searchParams?.get("modal") === ModalPath) {
-      if (session) window.location.href = "/";
-    }
     reset({ phone: isStep2 ? phoneSet : "" });
   }, [searchParams]);
 
@@ -93,15 +101,20 @@ const LoginModal = ({ session }: { session: Session | null }) => {
     await sendOtp({ phone: phoneSet } as LoginPhoneOtpFormData);
   };
 
-  if (session) return null;
+  // if (session) return null;
   return (
-    <Modal path={ModalPath} whiteClose>
-      <div className={`absolute left-0 top-0 h-40 w-full overflow-hidden bg-blue-500`}>
+    <Modal
+      //
+      setOpen={setShowLoginModal}
+      open={showLoginModal && !isLogin}
+      whiteClose
+    >
+      <div className={`absolute left-0 top-0 h-40 w-full overflow-hidden bg-secondary`}>
         <img src={LoginBackImage.src} />
         <div className="absolute left-0 top-0  h-full w-full" />
       </div>
       <div className="mt-40">
-        <h2 className="mb-2 text-center font-bold text-blue-500">ورود یا عضویت</h2>
+        <h2 className="mb-2 text-center font-bold text-secondary">ورود یا عضویت</h2>
         <form onSubmit={handleSubmit(isStep2 ? loginByOtp : sendOtp)}>
           <Input
             /* */
@@ -112,12 +125,18 @@ const LoginModal = ({ session }: { session: Session | null }) => {
             disabled={isSubmitSuccessful || isStep2}
             loading={isSubmitting}
             direction="ltr"
+            type="tel"
             noSpace
             icon={<PhoneIcon />}
+            patternFormatProps={{
+              format: isStep2 ? "+## ### ### ####" : "+98 9## ### ####",
+              allowEmptyFormatting: true,
+              mask: "_",
+            }}
           />
           {isStep2 && (
             <>
-              <span className="mb-6 mt-2 block w-full cursor-pointer text-center text-sm font-medium text-blue-500" onClick={editNumber}>
+              <span className="mb-6 mt-2 block w-full cursor-pointer select-none text-center text-sm font-medium text-secondary" onClick={editNumber}>
                 ویرایش شماره
               </span>
               <Input
@@ -126,13 +145,19 @@ const LoginModal = ({ session }: { session: Session | null }) => {
                 name="token"
                 label="کد ارسالی"
                 error={errors.token?.message}
-                loading={isSubmitting}
+                loading={isSubmitting || isLoading || isValidating}
                 direction="ltr"
+                type="tel"
                 noSpace
                 icon={<QrcodeIcon />}
                 className="text-center tracking-wider"
+                patternFormatProps={{
+                  format: "# # # # # #",
+                  allowEmptyFormatting: true,
+                  mask: "_",
+                }}
               />
-              <span className={`mt-2 block w-full text-center text-sm font-medium ${countDown > 0 ? "cursor-not-allowed text-gray-500" : "cursor-pointer text-blue-500"}`} onClick={sendOtpAgain}>
+              <span className={`mt-2 block w-full select-none text-center text-sm font-medium ${countDown > 0 ? "cursor-not-allowed text-gray-500" : "cursor-pointer text-secondary"}`} onClick={sendOtpAgain}>
                 ارسال مجدد {countDown > 0 && "(" + moment.duration(countDown, "milliseconds").asSeconds().toFixed() + ")"}
               </span>
             </>
@@ -146,6 +171,9 @@ const LoginModal = ({ session }: { session: Session | null }) => {
             loading={isSubmitSuccessful || isSubmitting || isLoading || isValidating}
           />
         </form>
+        <span className="mt-5 block cursor-pointer select-none p-1 text-center text-sm font-medium text-blue-500" onClick={() => setShowLoginModal(false)}>
+          انصراف
+        </span>
       </div>
     </Modal>
   );

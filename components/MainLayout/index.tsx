@@ -9,6 +9,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import CompleteProfileModal from "../Modals/CompleteProfileModal";
 import RolesConflictModal from "../Modals/RolesConflictModal";
 import Loading from "../Loading";
+import LoginModal from "../Modals/LoginModal";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { darkMode } = useContext(ThemeContext) as ThemeContextType;
@@ -37,6 +38,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
       {isLoading ? <Loading /> : children}
       <CompleteProfileModal />
       <RolesConflictModal />
+      <LoginModal />
     </body>
   );
 };

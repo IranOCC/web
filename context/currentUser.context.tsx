@@ -9,6 +9,9 @@ export type CurrentUserContextType = {
   user: User | null;
   roles?: UserRoles[];
   isLogin: boolean;
+  showLoginModal: boolean;
+  setShowLoginModal: (e: boolean) => void;
+
   showAdminPanel: boolean;
   isSuperAdmin: boolean;
   isAdmin: boolean;
@@ -26,6 +29,7 @@ export const CurrentUserContext = React.createContext<CurrentUserContextType | n
 export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
   const { data: session } = useSession();
   const [currentUser, _setCurrentUser] = React.useState<User | null>(null);
+  const [showLoginModal, setShowLoginModal] = React.useState<boolean>(false);
 
   // const _sUser = session?.user as User;
   const value = {
@@ -39,6 +43,8 @@ export const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
     isAuthor: !!currentUser?.roles.includes(UserRoles.Author),
     isUser: !!currentUser?.roles.includes(UserRoles.User),
     setUser: _setCurrentUser,
+    showLoginModal,
+    setShowLoginModal,
   };
 
   return (

@@ -133,7 +133,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
           {/* icons */}
           <div className="order-first grid h-full w-fit min-w-[2rem] grid-cols-1 gap-2 min-[400px]:min-w-[4rem] min-[400px]:grid-cols-2">
             <VerifiedButton isVerified={office.verified || false} />
-            <FavoriteButton isFav={isFavorite} />
+            <FavoriteButton isFav={isFavorite || false} />
             <ReportButton />
             <ShareButton />
           </div>

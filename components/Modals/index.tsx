@@ -22,7 +22,6 @@ type IProps = {
 
   closeButton?: boolean;
   whiteClose?: boolean;
-  path?: string;
 
   open?: boolean;
   setOpen?: any;
@@ -32,30 +31,19 @@ type IProps = {
   loading?: boolean;
 };
 
-export default function Modal({ path, paddingChildren = true, open, setOpen, title, children, footerButton, closeButton = true, whiteClose = false, className = "", loading }: IProps) {
+export default function Modal({ paddingChildren = true, open, setOpen, title, children, footerButton, closeButton = true, whiteClose = false, className = "", loading }: IProps) {
   const cancelButtonRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const modal = searchParams?.get("modal");
-
   const [_open, _setOpen] = useState(false);
   const openHandler = (status: boolean) => {
-    if (path) {
-      if (status) {
-        router.push("?modal=" + path);
-      } else {
-        router.back();
-      }
-    } else {
-      if (setOpen) setOpen(status);
-    }
+    if (setOpen) setOpen(status);
   };
   useEffect(() => {
-    if (path) _setOpen(modal === path);
-    else _setOpen(!!open);
-  }, [pathname, searchParams, open]);
+    _setOpen(!!open);
+  }, [open]);
 
   return (
     <Transition.Root show={_open} as={Fragment}>
@@ -78,7 +66,7 @@ export default function Modal({ path, paddingChildren = true, open, setOpen, tit
               <Dialog.Panel className={"relative w-full transform overflow-hidden bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:rounded-lg" + " " + className}>
                 <div className="bg-white px-4 pb-4 pt-4">
                   {closeButton && (
-                    <div className={"absolute z-10 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full end-4" + (whiteClose ? " text-white" : " text-secondary")} onClick={() => setOpen(false)}>
+                    <div className={"absolute end-4 z-10 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full" + (whiteClose ? " text-white" : " text-secondary")} onClick={() => setOpen(false)}>
                       <FontAwesomeIcon icon={faXmark} size="lg" />
                     </div>
                   )}
@@ -90,15 +78,12 @@ export default function Modal({ path, paddingChildren = true, open, setOpen, tit
                         </Dialog.Title>
                       )}
                       <div className={"relative max-h-[calc(100vh-8rem)] overflow-x-hidden " + (paddingChildren ? "p-2" : "")}>
-                        {/*  */}
                         {!!loading && (
                           <div className="flex items-center justify-center py-10">
                             <Spin />
                           </div>
                         )}
                         {children}
-
-                        {/*  */}
                       </div>
                     </div>
                   </div>
