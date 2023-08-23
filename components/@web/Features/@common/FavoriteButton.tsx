@@ -14,11 +14,11 @@ const FavoriteButton = ({ isFav, size = 28 }: { isFav: boolean; size?: number })
   const onSubmit = async () => {
     try {
       if (isFavorite) {
-        await api.post(`/estate/favorite/add/${relatedToID}`);
+        await api.post(`/estate/favorite/${relatedToID}`);
         toast.success("در لیست مورد علاقه ها قرار گرفت");
         setFavorite(true);
       } else {
-        await api.post(`/estate/favorite/remove/${relatedToID}`);
+        await api.delete(`/estate/favorite/${relatedToID}`);
         toast.success("از لیست حذف شد");
         setFavorite(false);
       }
