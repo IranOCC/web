@@ -245,7 +245,7 @@ const CommentsList = ({ id, update, canWriteComment, setReplyTo }: { id: string;
   );
 };
 
-const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo, setCount }: { postID: string; canWriteComment: boolean; replyTo?: string; update: any; setReplyTo: (d: DataType) => void; setCount?: (d: number) => void }) => {
+const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo, setCount }: { postID: string; canWriteComment: boolean; replyTo?: string; update: any; setReplyTo?: (d: DataType) => void; setCount?: (d: number) => void }) => {
   const [initLoading, setInitLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<DataType[]>([]);
@@ -307,7 +307,7 @@ const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo
 
   const router = useRouter();
   const onReplyTo = (data: DataType) => {
-    if (!canWriteComment) return;
+    if (!canWriteComment || !setReplyTo) return;
     setReplyTo(data);
     router.push("#commentform");
   };
@@ -354,7 +354,7 @@ const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo
                     <p className="text-black">{item.content}</p>
                     <div className="flex w-full items-center justify-between">
                       <div className="flex flex-row gap-2">
-                        {canWriteComment && (
+                        {canWriteComment && setReplyTo && (
                           <Button startIcon={<Reply />} onClick={() => onReplyTo(item)}>
                             <b>پاسخ</b>
                           </Button>
@@ -374,8 +374,6 @@ const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo
                           update={update}
                           canWriteComment={canWriteComment}
                           replyTo={item._id}
-                          setReplyTo={setReplyTo}
-                          setCount={setCount}
                         />
                       </div>
                     )}
