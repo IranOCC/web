@@ -252,7 +252,7 @@ const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo
   const [list, setList] = useState<DataType[]>([]);
   const [current, setCurrent] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
-  const [showReply, setShowReply] = useState(false);
+  const [showReply, setShowReply] = useState<string[]>([]);
 
   const api = useAxiosAuth();
 
@@ -360,13 +360,26 @@ const CommentsListData = ({ postID, update, replyTo, canWriteComment, setReplyTo
                           </Button>
                         )}
                         {!!item.responses?.length && (
-                          <Button color="success" startIcon={<MarkUnreadChatAlt />} onClick={() => setShowReply((pv) => !pv)}>
-                            <b>{showReply ? `پنهان کردن پاسخ ها` : `پاسخ ها (${item.responses.length.toLocaleString("fa")})`}</b>
+                          <Button
+                            //
+                            color="success"
+                            startIcon={<MarkUnreadChatAlt />}
+                            onClick={() => {
+                              if (showReply.includes(item._id)) {
+                                const iddx = showReply.indexOf(item._id);
+                                showReply.splice(iddx, 1);
+                                setShowReply([...showReply]);
+                              } else {
+                                setShowReply((prev) => [...prev, item._id]);
+                              }
+                            }}
+                          >
+                            <b>{showReply.includes(item._id) ? `پنهان کردن پاسخ ها` : `پاسخ ها (${item.responses.length.toLocaleString("fa")})`}</b>
                           </Button>
                         )}
                       </div>
                     </div>
-                    {!!item.responses?.length && showReply && (
+                    {!!item.responses?.length && showReply.includes(item._id) && (
                       <div className="w-full">
                         <CommentsListData
                           //
