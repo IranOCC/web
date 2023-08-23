@@ -67,10 +67,12 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
 
   const tabEq = (
     <div className="flex flex-col gap-2">
-      <h6 className="flex items-center gap-1.5 font-bold">
-        {!!category?.icon && <i className="h-6 w-6 fill-gray-800" dangerouslySetInnerHTML={{ __html: (category.icon as Icon).content }} />}
-        <span>{category.title}</span>
-      </h6>
+      {category && (
+        <h6 className="flex items-center gap-1.5 font-bold">
+          {!!category?.icon && <i className="h-6 w-6 fill-gray-800" dangerouslySetInnerHTML={{ __html: (category.icon as Icon).content }} />}
+          <span>{category?.title}</span>
+        </h6>
+      )}
 
       {!!type && (
         <h6 className="flex items-center gap-1.5 font-bold">
@@ -132,14 +134,14 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
         <div className="flex w-full max-w-full flex-row items-center justify-between gap-2 gap-y-4 overflow-y-hidden md:max-w-2xl">
           {/* icons */}
           <div className="order-first grid h-full w-fit min-w-[2rem] grid-cols-1 gap-2 min-[400px]:min-w-[4rem] min-[400px]:grid-cols-2">
-            <VerifiedButton isVerified={office.verified || false} />
+            <VerifiedButton isVerified={office?.verified || false} />
             <FavoriteButton isFav={isFavorite || false} />
             <ReportButton />
             <ShareButton />
           </div>
           {/* view */}
           <div className="hidden w-56 grid-cols-1 gap-2 lg:grid">
-            <a href={`tel:${(createdBy.phone as Phone)?.value}`}>
+            <a href={`tel:${(createdBy?.phone as Phone)?.value || "-"}`}>
               <WebButton
                 //
                 title="رزرو بازدید حضوری"
@@ -147,7 +149,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
                 noSpace
               />
             </a>
-            <a href={`tel:${(createdBy.phone as Phone)?.value}`}>
+            <a href={`tel:${(createdBy?.phone as Phone)?.value || "-"}`}>
               <WebButton
                 //
                 title="رزرو بازدید آنلاین"
@@ -161,13 +163,13 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
           <div className="flex w-auto flex-row gap-2">
             <div className="flex w-full flex-col justify-center text-center">
               <span className="truncate">
-                ثبت شده توسط <b>{office.name}</b>
+                ثبت شده توسط <b>{office?.name || "-"}</b>
               </span>
-              <b className="truncate">{createdBy.fullName}</b>
+              <b className="truncate">{createdBy?.fullName || "-"}</b>
               <hr className="my-2 hidden w-full border-gray-500 lg:block" />
               <span className="hidden lg:block">شماره تماس</span>
-              <a className="hidden truncate font-bold lg:block" dir="ltr" href={`tel:${(createdBy.phone as Phone)?.value}`}>
-                {(createdBy.phone as Phone)?.value || "-"}
+              <a className="hidden truncate font-bold lg:block" dir="ltr" href={`tel:${(createdBy?.phone as Phone)?.value || "-"}`}>
+                {(createdBy?.phone as Phone)?.value || "-"}
               </a>
               <WebButton
                 //
@@ -178,11 +180,11 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
                 noSpace
               />
             </div>
-            {createdBy.avatar && (
+            {!!createdBy?.avatar && (
               <div className="flex justify-center">
                 <Image
                   //
-                  src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (createdBy.avatar as StorageFile)?.path}
+                  src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (createdBy?.avatar as StorageFile)?.path}
                   alt={(createdBy.avatar as StorageFile)?.alt}
                   width={80}
                   height={80}
@@ -216,7 +218,7 @@ export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpe
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <div className="flex w-full flex-col justify-center text-center">
           <span className="truncate">
-            ثبت شده توسط <b>{office.name}</b>
+            ثبت شده توسط <b>{office?.name}</b>
           </span>
           <b className="truncate">{createdBy.fullName}</b>
           <hr className="my-2 w-full border-gray-500" />

@@ -70,7 +70,7 @@ export default function Modal({ paddingChildren = true, open, setOpen, title, ch
                       <FontAwesomeIcon icon={faXmark} size="lg" />
                     </div>
                   )}
-                  <div className={closeButton ? "mt-8" : "mt-0" + " sm:flex sm:items-start"}>
+                  <div className={(closeButton ? "mt-8" : "mt-0") + " sm:flex sm:items-start"}>
                     <div className="block w-full text-center sm:text-start">
                       {title && (
                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">

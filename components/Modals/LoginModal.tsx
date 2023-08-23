@@ -109,7 +109,7 @@ const LoginModal = () => {
       open={showLoginModal && !isLogin}
       whiteClose
     >
-      <div className={`absolute left-0 top-0 h-40 w-full overflow-hidden bg-secondary`}>
+      <div className="absolute left-0 top-0 h-40 w-full overflow-hidden bg-secondary">
         <img src={LoginBackImage.src} />
         <div className="absolute left-0 top-0  h-full w-full" />
       </div>
