@@ -165,7 +165,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
               <span className="truncate">
                 ثبت شده توسط <b>{office?.name || "-"}</b>
               </span>
-              <b className="truncate">{createdBy?.fullName || "-"}</b>
+              <b className="truncate">{(createdBy?.firstName + " " + createdBy?.lastName).trim() || "-"}</b>
               <hr className="my-2 hidden w-full border-gray-500 lg:block" />
               <span className="hidden lg:block">شماره تماس</span>
               <a className="hidden truncate font-bold lg:block" dir="ltr" href={`tel:${(createdBy?.phone as Phone)?.value || "-"}`}>
@@ -218,17 +218,17 @@ export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpe
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <div className="flex w-full flex-col justify-center text-center">
           <span className="truncate">
-            ثبت شده توسط <b>{office?.name}</b>
+            ثبت شده توسط <b>{office?.name || "-"}</b>
           </span>
-          <b className="truncate">{createdBy.fullName}</b>
+          <b className="truncate">{(createdBy?.firstName + " " + createdBy?.lastName).trim() || "-"}</b>
           <hr className="my-2 w-full border-gray-500" />
           <span className="">شماره تماس</span>
-          <a className="truncate font-bold" dir="ltr" href={`tel:${(createdBy.phone as Phone)?.value}`}>
-            {(createdBy.phone as Phone)?.value || "-"}
+          <a className="truncate font-bold" dir="ltr" href={`tel:${(createdBy.phone as Phone)?.value || "-"}`}>
+            {(createdBy?.phone as Phone)?.value || "-"}
           </a>
         </div>
         <div className="grid grid-cols-1 gap-2">
-          <a href={`tel:${(createdBy.phone as Phone)?.value}`}>
+          <a href={`tel:${(createdBy?.phone as Phone)?.value || "-"}`}>
             <WebButton
               //
               title="رزرو بازدید حضوری"
@@ -236,7 +236,7 @@ export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpe
               noSpace
             />
           </a>
-          <a href={`tel:${(createdBy.phone as Phone)?.value}`}>
+          <a href={`tel:${(createdBy.phone as Phone)?.value || "-"}`}>
             <WebButton
               //
               title="رزرو بازدید آنلاین"
