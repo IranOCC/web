@@ -135,7 +135,7 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                 );
               })}
             </div>
-            {headerSubTitle?.type === "estate" && <div className="absolute bottom-3 left-3 block rounded-full bg-gray-300 px-2 py-1 font-bold text-gray-700 md:hidden">{headerSubTitle.code || "-"}</div>}
+            {headerSubTitle?.type === "estate" && headerSubTitle.code && <div className="absolute bottom-3 left-3 block rounded-full bg-gray-300 px-2 py-1 font-bold text-gray-700 md:hidden">{headerSubTitle.code || "-"}</div>}
             {items.length > 1 && loaded && instanceRef.current && (
               <>
                 <Arrow onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()} disabled={currentSlide === 0} />
