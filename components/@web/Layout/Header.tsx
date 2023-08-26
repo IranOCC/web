@@ -12,6 +12,9 @@ import { signOut } from "next-auth/react";
 import BreadCrump from "./BreadCrump";
 import FullContentExitIcon from "@/components/Icons/web/FullContentExit";
 import FullContentIcon from "@/components/Icons/web/FullContent";
+import Logo from "@/assets/images/logo.png";
+import Image from "next/image";
+import ContactIcon from "@/components/Icons/web/Contact";
 
 const WebHeader = () => {
   const { toggleFullscreen, isFullscreen, toggleFullContent, isFullContent, sidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -82,6 +85,23 @@ const WebHeader = () => {
               {!!sidebar && isFullContent && <FullContentExitIcon />}
               {!!sidebar && !isFullContent && <FullContentIcon />}
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="z-30 flex flex-col text-sm md:hidden">
+        <div className="flex w-full gap-3 bg-white px-6 py-3 drop-shadow-xl">
+          <Link href="/" className="flex flex-col items-center gap-3">
+            <Image src={Logo} alt="logo" className="w-32" />
+          </Link>
+          <div className="flex w-full flex-row items-center justify-end gap-2">
+            <Link href="/contact" className="flex flex-row items-center justify-center gap-2 rounded-lg bg-secondary p-1 text-sm text-white">
+              <span>تماس با ما</span>
+              <ContactIcon />
+            </Link>
+            {/* <Link href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-sm">
+              <span>۰۱۱-۵۴۰۰</span>
+            </Link> */}
           </div>
         </div>
       </div>

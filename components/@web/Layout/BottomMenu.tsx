@@ -15,6 +15,7 @@ import BlogIconBottomMenu from "@/components/Icons/web/bottomMenu/Blog";
 import VipIconBottomMenu from "@/components/Icons/web/bottomMenu/Vip";
 import { ClickAwayListener } from "@mui/material";
 import { signOut } from "next-auth/react";
+import ContactIconSideBar from "@/components/Icons/web/sidebar/Contact";
 
 type ItemType = {
   index: number;
@@ -41,7 +42,6 @@ const WebBottomMenu = () => {
       icon: <HomeIconBottomMenu />,
       title: "صفحه اصلی",
       href: "/",
-      // className: "hidden min-[180px]:block",
     },
     {
       index: 1,
@@ -49,7 +49,6 @@ const WebBottomMenu = () => {
       title: "جستجوی پیشرفته",
       href: "/property",
       isActive: () => pathname === "/property" && !searchParams?.get("filter[vip]"),
-      // className: "hidden min-[240px]:block",
     },
     {
       index: 2,
@@ -57,15 +56,19 @@ const WebBottomMenu = () => {
       title: "املاک ویژه",
       href: "/property?filter[vip]=true",
       isActive: () => pathname === "/property" && !!searchParams?.get("filter[vip]"),
-      // className: "hidden min-[400px]:block",
     },
     {
       index: 3,
       icon: <BlogIconBottomMenu />,
       title: "وبلاگ",
       href: "/blog",
-      // className: "hidden min-[320px]:block",
     },
+    // {
+    //   index: 4,
+    //   icon: <ContactIconSideBar />,
+    //   title: "تماس با ما",
+    //   href: "/contact",
+    // },
     {
       index: 4,
       icon: <UserIconBottomMenu />,
@@ -133,7 +136,7 @@ const WebBottomMenu = () => {
             <div
               //
               style={{ "--trX": `${-3.5 * x - 0.5}rem` } as React.CSSProperties}
-              className="absolute z-0 hidden aspect-square h-full translate-x-[var(--trX)] rounded-2xl bg-secondary transition-transform start-0 min-[180px]:block"
+              className="absolute start-0 z-0 hidden aspect-square h-full translate-x-[var(--trX)] rounded-2xl bg-secondary transition-transform min-[180px]:block"
             />
           </div>
         </div>

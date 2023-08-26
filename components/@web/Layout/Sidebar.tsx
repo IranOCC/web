@@ -69,7 +69,7 @@ const WebSideBar = () => {
   });
   const y = hovering !== null ? hovering : isActive[0]?.index !== undefined ? isActive[0]?.index : -2;
   return (
-    <aside className="z-10 hidden h-full w-64 flex-col justify-between bg-white rounded-e-2xl md:flex">
+    <aside className="z-10 hidden h-full w-64 flex-col justify-between rounded-e-2xl bg-white md:flex">
       <div className="flex flex-col items-center gap-3 px-10 py-5">
         <Link href="/" className="flex flex-col items-center gap-3">
           <Image src={Logo} alt="logo" />
@@ -126,7 +126,7 @@ export default WebSideBar;
 const MenuItem = ({ index, icon, title, href, className, onClick, setHovering }: ItemType & { setHovering: (d: number | null) => void }) => {
   return (
     <Link href={href || "#"} onClick={onClick} className={"z-[1] w-full" + (className ? " " + className : "")} onMouseEnter={() => setHovering(index)} onMouseLeave={() => setHovering(null)}>
-      <div className="flex h-[4.5rem] w-full flex-row items-center gap-2 p-6 font-bold transition-all text-start">
+      <div className="flex h-[4.5rem] w-full flex-row items-center gap-2 p-6 text-start font-bold transition-all">
         {icon}
         <span className="truncate">{title}</span>
       </div>
