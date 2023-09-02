@@ -52,7 +52,6 @@ export default function Page() {
           <h2 className="text-center text-lg font-medium">بزرگترین مرکز اطلاعات املاک شمال کشور</h2>
         </div>
         <SearchBox />
-        <Button>Click me</Button>
       </div>
       <div className="flex max-w-5xl flex-wrap justify-center gap-3 py-8 sm:gap-4">
         {items.map(({ title, link }, idx) => {
