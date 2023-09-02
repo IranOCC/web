@@ -17,7 +17,8 @@ import Image from "next/image";
 import ContactIcon from "@/components/Icons/web/Contact";
 
 const WebHeader = () => {
-  const { toggleFullscreen, isFullscreen, toggleFullContent, isFullContent, sidebar } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { toggleFullscreen, isFullscreen, toggleFullContent, isFullContent, sidebar, setContactModalOpen } = useContext(WebPreviewContext) as WebPreviewContextType;
+
   const { user, showAdminPanel, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   const [openSubMenu, setOpenSubMenu] = useState(false);
@@ -95,10 +96,10 @@ const WebHeader = () => {
             <Image src={Logo} alt="logo" className="w-32" />
           </Link>
           <div className="flex w-full flex-row items-center justify-end gap-2">
-            <Link href="/contact" className="flex flex-row items-center justify-center gap-2 rounded-lg bg-secondary p-1 text-sm text-white">
+            <div onClick={() => setContactModalOpen(true)} className="flex flex-row items-center justify-center gap-2 rounded-lg bg-secondary p-1 text-sm text-white">
               <span>تماس با ما</span>
               <ContactIcon />
-            </Link>
+            </div>
             {/* <Link href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-sm">
               <span>۰۱۱-۵۴۰۰</span>
             </Link> */}

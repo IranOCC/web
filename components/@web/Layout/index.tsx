@@ -18,6 +18,7 @@ import moment from "jalali-moment";
 import ShareButton from "../Features/@common/ShareButton";
 import ReportButton from "../Features/@common/ReportButton";
 import RatingButton from "../Features/@common/RatingButton";
+import ContactUsModal from "@/components/Modals/ContactUsModal";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -141,6 +142,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
 
         <WebBottomMenu />
       </div>
+      <ContactUsModal />
     </main>
   );
 };

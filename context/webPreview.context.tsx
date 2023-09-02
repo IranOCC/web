@@ -32,6 +32,9 @@ export type WebPreviewContextType = {
   isFullContent: boolean;
   toggleFullContent: () => void;
 
+  contactModalOpen: boolean;
+  setContactModalOpen: (n: boolean) => void;
+
   breadCrump?: { title: string; url?: string }[];
   setBreadCrump: (n?: { title: string; url?: string }[] | undefined) => void;
 
@@ -68,6 +71,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const [headerSubTitle, setHeaderSubTitle] = React.useState<SubTitleType | undefined>(undefined);
   const [relatedTo, setRelatedTo] = React.useState<RelatedTo | undefined>(undefined);
   const [relatedToID, setRelatedToID] = React.useState<string | undefined>(undefined);
+
+  const [contactModalOpen, setContactModalOpen] = React.useState<boolean>(false);
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
@@ -234,6 +239,9 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
         internalPage,
         relatedTo,
         relatedToID,
+        //
+        contactModalOpen,
+        setContactModalOpen,
       }}
     >
       {children}

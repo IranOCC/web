@@ -7,11 +7,12 @@ import SearchIconSideBar from "@/components/Icons/web/sidebar/Search";
 import VipIconSideBar from "@/components/Icons/web/sidebar/Vip";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import Logo from "@/assets/images/logo.png";
 import Image from "next/image";
 import ContactIcon from "@/components/Icons/web/Contact";
 import Scrollbars from "react-custom-scrollbars-2";
+import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 
 type ItemType = {
   index: number;
@@ -27,6 +28,8 @@ const WebSideBar = () => {
   const [hovering, setHovering] = useState<number | null>(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const { setContactModalOpen } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   const items: ItemType[] = [
     {
@@ -75,10 +78,10 @@ const WebSideBar = () => {
           <Image src={Logo} alt="logo" />
           <h2 className="text-lg font-bold">املاک اکازیون</h2>
         </Link>
-        <a href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold ">
+        <div onClick={() => setContactModalOpen(true)} className="flex cursor-pointer flex-row justify-center gap-1 p-1 text-lg font-bold transition-colors hover:text-secondary ">
           <span>۰۱۱-۵۴۰۰</span>
           <ContactIcon />
-        </a>
+        </div>
       </div>
 
       <div className="relative z-10 flex h-full flex-col overflow-x-hidden py-5">
