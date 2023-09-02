@@ -1,10 +1,5 @@
 import Modal from ".";
-import { useContext, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
-import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
-import { Alert, AlertTitle } from "@mui/material";
-import { User } from "@/types/interfaces";
+import { useContext } from "react";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import ContactIcon from "../Icons/web/Contact";
 import Link from "next/link";

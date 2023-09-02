@@ -10,6 +10,7 @@ import CompleteProfileModal from "../Modals/CompleteProfileModal";
 import RolesConflictModal from "../Modals/RolesConflictModal";
 import Loading from "../Loading";
 import LoginModal from "../Modals/LoginModal";
+import { NextUIProvider } from "@nextui-org/react";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { darkMode } = useContext(ThemeContext) as ThemeContextType;
@@ -35,10 +36,12 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <body lang="fa" dir="rtl" className={"select-none scroll-smooth bg-gray-300/50 selection:bg-yellow-200 selection:text-yellow-900 print:hidden" + (darkMode ? " dark" : "")}>
-      {isLoading ? <Loading /> : children}
-      <CompleteProfileModal />
-      <RolesConflictModal />
-      <LoginModal />
+      <NextUIProvider className="h-full">
+        {isLoading ? <Loading /> : children}
+        <CompleteProfileModal />
+        <RolesConflictModal />
+        <LoginModal />
+      </NextUIProvider>
     </body>
   );
 };

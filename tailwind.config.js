@@ -1,3 +1,5 @@
+const { nextui } = require("@nextui-org/react");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -5,6 +7,7 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./node_modules/flowbite-react/**/*.js",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     colors: {
@@ -17,7 +20,37 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-rtl'),
-    require("flowbite/plugin")
+    require("flowbite/plugin"),
+    nextui({
+      themes: {
+        light: {
+          colors: {
+            primary: {
+              DEFAULT: "#ffe600",
+            },
+            secondary: {
+              DEFAULT: "#ffc700",
+            },
+            disable: {
+              DEFAULT: "#ffe600a6",
+            },
+          },
+        },
+        dark: {
+          colors: {
+            primary: {
+              DEFAULT: "#ffe600",
+            },
+            secondary: {
+              DEFAULT: "#ffc700",
+            },
+            disable: {
+              DEFAULT: "#ffe600a6",
+            },
+          },
+        },
+      }
+    })
   ],
 }
 

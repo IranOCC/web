@@ -1,13 +1,11 @@
-// "use client";
+"use client";
+
 import Logo from "@/assets/images/logo.png";
 import SearchBox from "@/components/@web/Features/@common/SearchBox";
 import ClientSide from "@/components/@web/Features/Home/ClientSide";
-import { WebInput } from "@/components/@web/Input";
-import Search from "@/components/Icons/Search";
-import { SearchEstateFormData } from "@/types/formsData";
+import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
 
 export default function Page() {
   const items = [
@@ -47,13 +45,14 @@ export default function Page() {
 
   return (
     <div className="flex h-auto min-h-full flex-col items-center justify-between bg-gray-200 px-4 pb-16 md:bg-transparent md:pb-4">
-      <div className="sticky top-5 z-10 flex w-full flex-col items-center gap-4 bg-gray-200 px-3 py-5 md:bg-white">
+      <div className="sticky top-0 z-10 flex w-full flex-col items-center gap-4 bg-gray-200 px-3 py-5 pt-5 md:bg-white">
         <Image src={Logo} alt="logo" />
         <div className="flex flex-col gap-2">
           <h1 className="text-center text-xl font-bold">املاک اکازیون</h1>
           <h2 className="text-center text-lg font-medium">بزرگترین مرکز اطلاعات املاک شمال کشور</h2>
         </div>
         <SearchBox />
+        <Button>Click me</Button>
       </div>
       <div className="flex max-w-5xl flex-wrap justify-center gap-3 py-8 sm:gap-4">
         {items.map(({ title, link }, idx) => {
