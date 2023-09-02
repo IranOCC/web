@@ -24,14 +24,14 @@ const ContactUsModal = () => {
       setOpen={setContactModalOpen}
       title="با ایران اکازیون در تماس باشید..."
     >
-      <div className="flex flex-col">
-        <Link href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold ">
+      <div dir="ltr" className="flex flex-col items-start">
+        <Link href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold outline-none transition-colors hover:text-secondary">
+          <ContactIcon />
           <span>۰۱۱-۵۴۰۰</span>
-          <ContactIcon />
         </Link>
-        <Link href="tel:0998 912 1906" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold ">
-          <span>۰۹۹۸۹۱۲۱۹۰۶</span>
+        <Link href="tel:0912 190 6047" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold outline-none transition-colors hover:text-secondary">
           <ContactIcon />
+          <span>۰۹۱۲ ۱۹۰ ۶۰۴۷</span>
         </Link>
       </div>
     </Modal>
