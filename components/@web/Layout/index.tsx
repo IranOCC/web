@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useContext, useEffect } from "react";
+import { ReactNode, useContext } from "react";
 import WebSideBar from "./Sidebar";
 import WebHeader from "./Header";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
@@ -11,14 +11,12 @@ import dynamic from "next/dynamic";
 import { LoadingWithoutBg } from "@/components/Loading";
 import Scrollbars from "react-custom-scrollbars-2";
 import MarkerIcon from "@/components/Icons/MarkerIcon";
-import { ReportGmailerrorredOutlined, ShareOutlined } from "@mui/icons-material";
-import { Tooltip } from "antd";
-import { Rating } from "@mui/material";
 import moment from "jalali-moment";
 import ShareButton from "../Features/@common/ShareButton";
 import ReportButton from "../Features/@common/ReportButton";
 import RatingButton from "../Features/@common/RatingButton";
 import ContactUsModal from "@/components/Modals/ContactUsModal";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -36,6 +34,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
       style={{ "--image-url": `url(/assets/images/web-bg.png)` } as React.CSSProperties}
       className="h-full bg-gray-300/50 bg-cover bg-no-repeat md:bg-[image:var(--image-url)]"
     >
+      <GoogleAnalytics trackPageViews />
       <div className="flex h-full w-full flex-col justify-center p-0 md:flex-row md:p-5">
         <div className={"relative flex h-full w-full flex-row overflow-hidden bg-gray-200 transition-all duration-1000 md:max-w-screen-2xl md:rounded-2xl md:bg-white" + (isFullscreen ? " md:!max-w-full" : "")}>
           <div className={"z-[101] flex h-full w-full flex-row shadow-[-6px_0px_20px_2px_#00000040] transition-all duration-1000 md:rounded-e-2xl" + (background ? " " + background : "")}>
