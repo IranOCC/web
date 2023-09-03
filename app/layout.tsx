@@ -11,7 +11,6 @@ import { WebInfoProvider } from "@/context/webInfo.context";
 import { LoadingProvider } from "@/context/loading.context";
 import AntdProvider from "@/components/Providers/AntdProvider";
 import AuthProvider from "@/components/Providers/AuthProvider";
-// import NextUiProvider from "@/components/Providers/NextUiProvider";
 
 import { fetchWebInfo } from "@/lib/ssr.fetch";
 
@@ -42,21 +41,19 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <AntdProvider style={{ fontFamily: IRANSansX.style }}>
       <MuiProvider style={{ fontFamily: IRANSansX.style }}>
-        {/* <NextUiProvider> */}
-          <AuthProvider>
-            <WebInfoProvider initial={webInfo}>
-              <ThemeProvider initial={{ dark: false }}>
-                <LoadingProvider initial={{ loading: true }}>
-                  <CurrentUserProvider>
-                    <html className={IRANSansX.className}>
-                      <MainLayout>{children}</MainLayout>
-                    </html>
-                  </CurrentUserProvider>
-                </LoadingProvider>
-              </ThemeProvider>
-            </WebInfoProvider>
-          </AuthProvider>
-        {/* </NextUiProvider> */}
+        <AuthProvider>
+          <WebInfoProvider initial={webInfo}>
+            <ThemeProvider initial={{ dark: false }}>
+              <LoadingProvider initial={{ loading: true }}>
+                <CurrentUserProvider>
+                  <html className={IRANSansX.className}>
+                    <MainLayout>{children}</MainLayout>
+                  </html>
+                </CurrentUserProvider>
+              </LoadingProvider>
+            </ThemeProvider>
+          </WebInfoProvider>
+        </AuthProvider>
       </MuiProvider>
     </AntdProvider>
   );

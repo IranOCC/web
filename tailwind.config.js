@@ -24,7 +24,9 @@ module.exports = {
     nextui({
       themes: {
         light: {
+
           colors: {
+            background: "rgb(229 231 235)",
             primary: {
               DEFAULT: "#ffe600",
             },
@@ -38,6 +40,7 @@ module.exports = {
         },
         dark: {
           colors: {
+            background: "rgb(229 231 235)",
             primary: {
               DEFAULT: "#ffe600",
             },
@@ -54,3 +57,18 @@ module.exports = {
   ],
 }
 
+/*
+
+
+background-attachment: scroll;
+background-clip: border-box;
+background-color: rgba(209, 213, 219, 0.5);
+background-image: none;
+background-origin: padding-box;
+background-position-x: 0%;
+background-position-y: 0%;
+background-repeat-x: repeat;
+background-repeat-y: repeat;
+background-size: auto;
+
+*/

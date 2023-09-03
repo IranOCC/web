@@ -14,7 +14,7 @@ const PanelHeader = () => {
   const { user } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   return (
-    <header className="sticky top-0 z-50 bg-gray-200 p-4">
+    <header className="sticky top-0 z-50 bg-background p-4">
       <div className="relative flex h-full w-full items-center justify-end gap-2 rounded-lg ">
         {/* */}
         <Tooltip title="مشاهده وبسایت" arrow placement="bottom">
