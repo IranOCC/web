@@ -48,7 +48,7 @@ export const periodType = [
   { label: "ماهانه", value: "monthly" },
 ];
 
-const IconWrapper = ({ children, className }) => <div className={cn(className, "flex h-7 w-7 items-center justify-center rounded-small")}>{children}</div>;
+const IconWrapper = ({ children, className }: any) => <div className={cn(className, "flex h-7 w-7 items-center justify-center rounded-small")}>{children}</div>;
 
 export const TodayUsers = () => {
   return (
