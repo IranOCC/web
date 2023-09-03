@@ -31,8 +31,8 @@ export const OfficesPostsStatistics = () => {
 
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
-      <CardHeader className="z-10 relative flex flex-col items-start gap-2">
-        <h4 className="truncate text-base font-bold">آمار فعالیت پست های شعبات</h4>
+      <CardHeader className="relative z-10 flex flex-col items-start gap-2">
+        <h4 className="truncate text-base font-bold">آمار پست های شعبات</h4>
       </CardHeader>
       {mode === "barchart" && (
         <BarChartMode
@@ -110,8 +110,8 @@ export const OfficesEstatesStatistics = () => {
 
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
-      <CardHeader className="z-10 relative flex flex-col items-start gap-2">
-        <h4 className="truncate text-base font-bold">آمار فعالیت ملک های شعبات</h4>
+      <CardHeader className="relative z-10 flex flex-col items-start gap-2">
+        <h4 className="truncate text-base font-bold">آمار ملک های شعبات</h4>
       </CardHeader>
       {mode === "barchart" && (
         <BarChartMode
