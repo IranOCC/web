@@ -91,7 +91,7 @@ export const SessionsStatistics = () => {
         <h4 className="truncate text-base font-bold">آمار بازدیدها</h4>
         <Listbox
           aria-label="Detail"
-          className="absolute end-3 max-w-[96px] gap-0 divide-y divide-default-300/50 overflow-hidden rounded-medium bg-black/70 p-0 text-white opacity-50 shadow-small transition-all hover:max-w-[280px] hover:opacity-100 dark:divide-default-100/80"
+          className="absolute end-3 max-w-[96px] gap-0 divide-y divide-default-300/50 overflow-hidden rounded-medium bg-black/70 p-0 text-white opacity-50 shadow-small transition-all hover:max-w-[260px] hover:opacity-100 dark:divide-default-100/80"
           itemClasses={{
             base: "px-3 first:rounded-t-medium last:rounded-b-medium rounded-none gap-3 h-12 data-[hover=true]:bg-default-100/80",
           }}
