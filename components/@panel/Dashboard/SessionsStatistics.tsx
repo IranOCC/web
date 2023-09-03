@@ -1,8 +1,10 @@
 import { Button, Card, CardFooter, Image, CardHeader, Tabs, Tab } from "@nextui-org/react";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, LineChart, Tooltip, ResponsiveContainer, Line, Legend } from "recharts";
 import { Select, SelectSection, SelectItem } from "@nextui-org/react";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import { cn } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
+import { useState, Key } from "react";
 
 const data = [
   {
@@ -42,30 +44,54 @@ const data = [
   },
 ];
 
-export const periodType = [
-  { label: "روزانه", value: "daily" },
-  { label: "هفتگی", value: "weekly" },
-  { label: "ماهانه", value: "monthly" },
-];
+export const SessionsStatistics = () => {
+  const [loading, setLoading] = useState(false);
+  const [period, setPeriod] = useState<Key>("daily");
+  const [data, setData] = useState([
+    {
+      name: "1402/06/05",
+      google: 22,
+      total: 74,
+    },
+    {
+      name: "1402/06/06",
+      google: 33,
+      total: 92,
+    },
+    {
+      name: "1402/06/07",
+      google: 31,
+      total: 82,
+    },
+    {
+      name: "1402/06/08",
+      google: 27,
+      total: 78,
+    },
+    {
+      name: "1402/06/09",
+      google: 24,
+      total: 68,
+    },
+    {
+      name: "1402/06/10",
+      google: 21,
+      total: 75,
+    },
+    {
+      name: "1402/06/11",
+      google: 33,
+      total: 83,
+    },
+  ]);
 
-const IconWrapper = ({ children, className }: any) => <div className={cn(className, "flex h-7 w-7 items-center justify-center rounded-small")}>{children}</div>;
-
-export const TodayUsers = () => {
   return (
-    <Card isFooterBlurred className="h-96 w-full bg-black/80">
-      <CardHeader className="absolute top-0 z-10 flex-col items-start gap-2">
-        <h4 className="absolute flex justify-center gap-2 self-end text-xl font-medium text-white">
-          <Tabs color="secondary" radius="full" size="sm">
-            <Tab key="daily" title="روزانه" />
-            <Tab key="weekly" title="هفتگی" />
-            <Tab key="monthly" title="ماهانه" />
-          </Tabs>
-          {/*  */}
-        </h4>
+    <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
+      <CardHeader className="relative z-10 flex flex-col items-start gap-2">
+        <h4 className="truncate text-base font-bold">آمار بازدیدها</h4>
         <Listbox
-          aria-label="User Menu"
-          onAction={(key) => alert(key)}
-          className="max-w-[96px] gap-0 divide-y divide-default-300/50 overflow-visible rounded-medium bg-content1 p-0 shadow-small transition-all hover:max-w-[200px] dark:divide-default-100/80"
+          aria-label="Detail"
+          className="absolute end-3 max-w-[96px] gap-0 divide-y divide-default-300/50 overflow-hidden rounded-medium bg-black/70 p-0 text-white opacity-50 shadow-small transition-all hover:max-w-[280px] hover:opacity-100 dark:divide-default-100/80"
           itemClasses={{
             base: "px-3 first:rounded-t-medium last:rounded-b-medium rounded-none gap-3 h-12 data-[hover=true]:bg-default-100/80",
           }}
@@ -98,7 +124,7 @@ export const TodayUsers = () => {
           </ListboxItem>
           <ListboxItem
             key="today-users"
-            endContent={<b className="text-lg text-gray-800">17</b>}
+            endContent={<b className="text-lg">17</b>}
             startContent={
               <IconWrapper className="bg-warning/10 text-warning">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
@@ -107,57 +133,64 @@ export const TodayUsers = () => {
               </IconWrapper>
             }
           >
-            کاربران امروز
+            بازدیدکنندگان امروز
           </ListboxItem>
         </Listbox>
       </CardHeader>
-
-      <div dir="ltr" className="h-full w-full p-2">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            width={500}
-            height={400}
-            data={data}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            {/* <CartesianGrid strokeDasharray="3 3" /> */}
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Area type="monotone" dataKey="tot" name="کل کاربران" stackId="1" stroke="rgb(245, 165, 36)" fill="rgba(245, 165, 36, 0.1)" />
-            <Area type="monotone" dataKey="ggl" name="ورودی گوگل" stackId="1" stroke="rgb(243, 18, 96)" fill="rgba(243, 18, 96, 0.1)" />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
-
-      {/* <Image removeWrapper alt="Card example background" className="z-0 h-full w-full -translate-y-6 scale-125 object-cover" src="https://api.zl50.ir/storage/images/1693656164%205430.jpg" /> */}
-      {/* 
-      
-      
-      
-      */}
-      {/* <CardFooter className="border-zinc-100/50 bottom-0 z-10 justify-between border-t-1 bg-white/30">
-        <Select
+      <LineChartMode
+        data={data}
+        items={[
+          { name: "گوگل'", key: "google", fill: "rgb(243, 18, 96)" },
+          { name: "همه", key: "total", fill: "rgb(245, 165, 36)" },
+        ]}
+      />
+      <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
+        <Tabs
           //
-          dir="rtl"
-          items={periodType}
-          labelPlacement="outside"
+          selectedKey={period}
+          onSelectionChange={setPeriod}
+          color="secondary"
+          radius="full"
           size="sm"
-          label="دوره زمانی"
-          placeholder="نوع دوره زمانی را انتخاب کنید"
-          className="max-w-xs"
         >
-          {(period) => <SelectItem key={period.value}>{period.label}</SelectItem>}
-        </Select>
-        <Button className="text-tiny" color="primary" radius="full" size="sm">
-          نمایش جدولی
-        </Button>
-      </CardFooter> */}
+          <Tab key="daily" title="روزانه" />
+          <Tab key="weekly" title="هفتگی" />
+          <Tab key="monthly" title="ماهانه" />
+        </Tabs>
+      </CardFooter>
+      <div className="absolute right-0 top-0 z-20 hidden h-full w-full items-center justify-center bg-white/60 group-[.is-loading]:flex">
+        <Spinner />
+      </div>
     </Card>
+  );
+};
+
+const IconWrapper = ({ children, className }: any) => <div className={cn(className, "flex h-7 w-7 items-center justify-center rounded-small")}>{children}</div>;
+
+const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
+  return (
+    <div dir="ltr" className="w-full">
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart
+          width={500}
+          height={300}
+          data={data}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 0,
+            bottom: 20,
+          }}
+        >
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip wrapperClassName="text-right text-sm" />
+          <Legend />
+          {items.map(({ key, name, fill }) => (
+            <Line type="monotone" key={key} dataKey={key} name={name} stroke={fill} activeDot={{ r: 6 }} />
+          ))}
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
