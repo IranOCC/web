@@ -3,14 +3,14 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Bar, LineChart, Cell, Sec
 import { Spinner } from "@nextui-org/react";
 import { Key, useState } from "react";
 
-export const OfficesPostsStatistics = () => {
+export const UsersPostsStatistics = () => {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState<Key>("countseries");
 
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
       <CardHeader className="relative z-10 flex flex-col items-center justify-start gap-2 sm:flex-row">
-        <h4 className="truncate text-base font-bold">آمار پست های شعبات</h4>
+        <h4 className="truncate text-base font-bold">آمار پست های کاربران</h4>
         <Tabs
           //
           selectedKey={type}
@@ -48,14 +48,14 @@ export const OfficesPostsStatistics = () => {
   );
 };
 
-export const OfficesEstatesStatistics = () => {
+export const UsersEstatesStatistics = () => {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState<Key>("countseries");
 
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
       <CardHeader className="relative z-10 flex flex-col items-center justify-start gap-2 sm:flex-row">
-        <h4 className="truncate text-base font-bold">آمار ملک های شعبات</h4>
+        <h4 className="truncate text-base font-bold">آمار ملک های کاربران</h4>
         <Tabs
           //
           selectedKey={type}
@@ -160,22 +160,22 @@ const CountSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => vo
   const [mode, setMode] = useState<Key>("barchart");
   const [data, setData] = useState([
     {
-      name: "دفتر یک",
+      name: "رسول احمدی فر",
       total: 6,
       confirmed: 2,
     },
     {
-      name: "دفتر دو",
+      name: "محمدرضا حقیقی",
       total: 2,
       confirmed: 2,
     },
     {
-      name: "دفتر سه",
+      name: "پرویز حقیقی",
       total: 7,
       confirmed: 4,
     },
     {
-      name: "دفتر چهار",
+      name: "راموس پرانوس",
       total: 4,
       confirmed: 3,
     },

@@ -1,9 +1,10 @@
 "use client";
 
 import { OfficesPostsStatistics, OfficesEstatesStatistics } from "@/components/@panel/Dashboard/OfficesStatistics";
-import { PostsStatistics,EstatesStatistics } from "@/components/@panel/Dashboard/ContentStatistics";
+import { PostsStatistics, EstatesStatistics } from "@/components/@panel/Dashboard/ContentStatistics";
 import { SessionsStatistics } from "@/components/@panel/Dashboard/SessionsStatistics";
 import { Alert } from "@mui/material";
+import { UsersPostsStatistics, UsersEstatesStatistics } from "@/components/@panel/Dashboard/UsersStatistics";
 
 export default function Page({ searchParams }: any) {
   const { warning, error, info } = searchParams;
@@ -31,6 +32,12 @@ export default function Page({ searchParams }: any) {
           <div className="col-span-full lg:col-span-6">
             <OfficesEstatesStatistics />
           </div>
+          <div className="col-span-full lg:col-span-6">
+            <UsersPostsStatistics />
+          </div>
+          <div className="col-span-full lg:col-span-6">
+            <UsersEstatesStatistics />
+          </div>
         </div>
       </div>
     </>
@@ -53,24 +60,6 @@ export default function Page({ searchParams }: any) {
 //             تعداد کاربر فعال
 //             {/*  */}
 //           </div>
-//           <div className="order-3 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg lg:col-span-3">
-//             تعداد املاک ثبت شده
-//             {/*  */}
-//           </div>
-//           <div className="order-4 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg lg:col-span-3">
-//             تعداد پست های ثبت شده
-//             {/*  */}
-//           </div>
-//           {/* ==== */}
-//           <div className="order-5 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:col-span-2 lg:col-span-6">
-//             تعداد ملک در انتظار تایید
-//             {/*  */}
-//           </div>
-//           <div className="order-6 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:col-span-2 lg:col-span-6">
-//             تعداد ملک تایید شده
-//             {/*  */}
-//           </div>
-//           {/* ==== */}
 //           <div className="order-7 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg lg:col-span-3">
 //             ایجنت های برتر
 //             {/*  */}
