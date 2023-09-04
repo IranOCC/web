@@ -27,8 +27,10 @@ export const UsersPostsStatistics = () => {
         <TimeSeriesType
           setLoading={setLoading}
           items={[
-            { name: "همه", key: "total", fill: "#FFBB28" },
-            { name: "تایید شده", key: "confirmed", fill: "#FF8042" },
+            { name: "رسول احمدی فر", key: "1", fill: "#0088FE" },
+            { name: "محمدرضا حقیقی", key: "2", fill: "#00C49F" },
+            { name: "پرویز حقیقی", key: "3", fill: "#FFBB28" },
+            { name: "راموس پرانوس", key: "4", fill: "#FFBB28" },
           ]}
         />
       )}
@@ -72,8 +74,10 @@ export const UsersEstatesStatistics = () => {
         <TimeSeriesType
           setLoading={setLoading}
           items={[
-            { name: "همه", key: "total", fill: "#0088FE" },
-            { name: "تایید شده", key: "confirmed", fill: "#00C49F" },
+            { name: "رسول احمدی فر", key: "1", fill: "#0088FE" },
+            { name: "محمدرضا حقیقی", key: "2", fill: "#00C49F" },
+            { name: "پرویز حقیقی", key: "3", fill: "#FFBB28" },
+            { name: "راموس پرانوس", key: "4", fill: "#FFBB28" },
           ]}
         />
       )}
@@ -100,38 +104,52 @@ const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => voi
   const [data, setData] = useState([
     {
       name: "1402/06/05",
-      confirmed: 22,
-      total: 74,
+      "1": 32,
+      "2": 74,
+      "3": 14,
+      "4": 44,
     },
     {
       name: "1402/06/06",
-      confirmed: 33,
-      total: 92,
+      "1": 22,
+      "2": 51,
+      "3": 11,
+      "4": 27,
     },
     {
       name: "1402/06/07",
-      confirmed: 31,
-      total: 82,
+      "1": 42,
+      "2": 36,
+      "3": 22,
+      "4": 46,
     },
     {
       name: "1402/06/08",
-      confirmed: 27,
-      total: 78,
+      "1": 32,
+      "2": 16,
+      "3": 27,
+      "4": 16,
     },
     {
       name: "1402/06/09",
-      confirmed: 24,
-      total: 68,
+      "1": 42,
+      "2": 36,
+      "3": 22,
+      "4": 46,
     },
     {
       name: "1402/06/10",
-      confirmed: 21,
-      total: 75,
+      "1": 32,
+      "2": 16,
+      "3": 27,
+      "4": 16,
     },
     {
       name: "1402/06/11",
-      confirmed: 33,
-      total: 83,
+      "1": 42,
+      "2": 46,
+      "3": 24,
+      "4": 26,
     },
   ]);
 
