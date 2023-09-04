@@ -5,6 +5,8 @@ import { PostsStatistics, EstatesStatistics } from "@/components/@panel/Dashboar
 import { SessionsStatistics } from "@/components/@panel/Dashboard/SessionsStatistics";
 import { Alert } from "@mui/material";
 import { UsersPostsStatistics, UsersEstatesStatistics } from "@/components/@panel/Dashboard/UsersStatistics";
+import { PostsViewsStatistics } from "@/components/@panel/Dashboard/PostsViewsStatistics";
+import { EstatesViewsStatistics } from "@/components/@panel/Dashboard/EstatesViewsStatistics";
 
 export default function Page({ searchParams }: any) {
   const { warning, error, info } = searchParams;
@@ -38,6 +40,12 @@ export default function Page({ searchParams }: any) {
           <div className="col-span-full lg:col-span-6">
             <UsersEstatesStatistics />
           </div>
+          <div className="col-span-full lg:col-span-6">
+            <PostsViewsStatistics />
+          </div>
+          <div className="col-span-full lg:col-span-6">
+            <EstatesViewsStatistics />
+          </div>
         </div>
       </div>
     </>
@@ -60,27 +68,7 @@ export default function Page({ searchParams }: any) {
 //             تعداد کاربر فعال
 //             {/*  */}
 //           </div>
-//           <div className="order-7 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg lg:col-span-3">
-//             ایجنت های برتر
-//             {/*  */}
-//           </div>
-//           <div className="order-9 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:col-span-2 lg:order-8 lg:col-span-6">
-//             شعبات برتر
-//             {/*  */}
-//           </div>
-//           <div className="order-8 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg lg:order-9 lg:col-span-3">
-//             نویسنده های برتر
-//             {/*  */}
-//           </div>
 //           {/* ==== */}
-//           <div className="order-10 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:col-span-2 lg:col-span-4">
-//             ملک های پر بازدید
-//             {/*  */}
-//           </div>
-//           <div className="order-11 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:col-span-2 lg:col-span-4">
-//             پست های پر بازدید
-//             {/*  */}
-//           </div>
 //           <div className="order-12 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:col-span-2 lg:col-span-4">
 //             آخرین نظرات
 //             {/*  */}

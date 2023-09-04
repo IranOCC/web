@@ -6,8 +6,8 @@ import { cn } from "@nextui-org/react";
 import { Spinner } from "@nextui-org/react";
 import { useState, Key } from "react";
 
-export const SessionsStatistics = () => {
-  const [loading, setLoading] = useState(false);
+export const EstatesViewsStatistics = () => {
+  const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState<Key>("daily");
   const [data, setData] = useState([
     {
@@ -50,8 +50,8 @@ export const SessionsStatistics = () => {
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
       <CardHeader className="relative z-10 flex flex-col items-start gap-2">
-        <h4 className="truncate text-base font-bold">آمار بازدیدها</h4>
-        <Listbox
+        <h4 className="truncate text-base font-bold">آمار بازدید ملک ها</h4>
+        {/* <Listbox
           aria-label="Detail"
           className="absolute end-3 max-w-[96px] gap-0 divide-y divide-default-300/50 overflow-hidden rounded-medium bg-black/70 p-0 text-white opacity-50 shadow-small transition-all hover:max-w-[260px] hover:opacity-100 dark:divide-default-100/80"
           itemClasses={{
@@ -97,7 +97,7 @@ export const SessionsStatistics = () => {
           >
             بازدیدکنندگان امروز
           </ListboxItem>
-        </Listbox>
+        </Listbox> */}
       </CardHeader>
       <LineChartMode
         data={data}
