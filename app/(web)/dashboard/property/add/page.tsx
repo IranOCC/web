@@ -22,7 +22,7 @@ export default function Page() {
   return (
     <div className="flex h-auto min-h-full flex-col items-center justify-between bg-gray-200 px-4 pb-16 md:bg-transparent md:pb-4">
       <div className="flex flex-row flex-wrap gap-4 py-5">
-        <Card className="relative flex-[1_150px] overflow-hidden" shadow="md" isPressable isHoverable>
+        <Card className="relative flex-[1_175px] overflow-hidden" shadow="md" isPressable isHoverable>
           <Link href="/dashboard/property/add" className="h-full w-full">
             <CardBody className="flex flex-col justify-center gap-2 truncate">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="h-8 w-8">
@@ -32,7 +32,7 @@ export default function Page() {
             </CardBody>
           </Link>
         </Card>
-        <Card className="relative flex-[1_150px] overflow-hidden" shadow="md" isPressable isHoverable>
+        <Card className="relative flex-[1_175px] overflow-hidden" shadow="md" isPressable isHoverable>
           <Link href="/dashboard/property" className="h-full w-full">
             <CardBody className="flex flex-col justify-center gap-2 truncate">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="h-8 w-8">
@@ -42,7 +42,7 @@ export default function Page() {
             </CardBody>
           </Link>
         </Card>
-        <Card className="relative flex-[1_150px] overflow-hidden" shadow="md" isPressable isHoverable>
+        <Card className="relative flex-[1_175px] overflow-hidden" shadow="md" isPressable isHoverable>
           <Link href="/dashboard/favorites" className="h-full w-full">
             <CardBody className="flex flex-col justify-center gap-2 truncate">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="h-8 w-8">
@@ -52,7 +52,7 @@ export default function Page() {
             </CardBody>
           </Link>
         </Card>
-        <Card className="relative flex-[1_150px] overflow-hidden" shadow="md" isPressable isHoverable>
+        <Card className="relative flex-[1_175px] overflow-hidden" shadow="md" isPressable isHoverable>
           <Link href="/dashboard/profile" className="h-full w-full">
             <CardBody className="flex flex-col justify-center gap-2 truncate">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="h-8 w-8">
@@ -62,7 +62,7 @@ export default function Page() {
             </CardBody>
           </Link>
         </Card>
-        <Card className="relative flex-[1_150px] overflow-hidden" shadow="md" isPressable isHoverable onPress={() => signOut()}>
+        <Card className="relative flex-[1_175px] overflow-hidden" shadow="md" isPressable isHoverable onPress={() => signOut()}>
           <Link href="#" className="h-full w-full">
             <CardBody className="flex flex-col justify-center gap-2 text-red-500">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="h-8 w-8">
