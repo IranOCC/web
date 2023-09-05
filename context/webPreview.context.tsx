@@ -57,6 +57,7 @@ export type WebPreviewContextType = {
   searchPage: () => void;
   blogPage: () => void;
   internalPage: () => void;
+  dashboardPage: (title: string) => void;
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
@@ -212,6 +213,24 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setHeaderSubTitle(undefined);
   };
 
+  // singlePost
+  const dashboardPage = (title: string) => {
+    setBackground("bg-white");
+    setHeaderTitle(title);
+    setRelatedTo(undefined);
+    setRelatedToID(undefined);
+    setBreadCrump([
+      { title: "ایران اکازیون", url: "/" },
+      { title: "داشبورد من", url: "/dashboard" },
+    ]);
+    setFullContent(false);
+    setSidebar({
+      small: false,
+      component: "Features/Dashboard/DashboardSideBar",
+    });
+    setHeaderSubTitle(undefined);
+  };
+
   return (
     <WebPreviewContext.Provider
       value={{
@@ -230,6 +249,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
         headerSubTitle,
         setHeaderSubTitle,
         //
+        dashboardPage,
         singlePost,
         singlePage,
         singleEstate,

@@ -4,7 +4,8 @@ import { Select, SelectSection, SelectItem } from "@nextui-org/react";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import { cn } from "@nextui-org/react";
 import { Spinner } from "@nextui-org/react";
-import { useState, Key } from "react";
+import { useState, Key, useEffect } from "react";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 
 export const SessionsStatistics = () => {
   const [loading, setLoading] = useState(false);
@@ -46,6 +47,22 @@ export const SessionsStatistics = () => {
       total: 83,
     },
   ]);
+
+  const api = useAxiosAuth();
+  const getData = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/admin/dashboard/session?period=${period}`);
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, [period]);
 
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>

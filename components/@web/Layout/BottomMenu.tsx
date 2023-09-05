@@ -89,7 +89,7 @@ const WebBottomMenu = () => {
 
   return (
     <ClickAwayListener onClickAway={() => setOpenSub(null)}>
-      <aside className={"absolute bottom-0 z-[102] flex w-full flex-col justify-end overflow-x-auto overflow-y-hidden rounded-t-3xl bg-white px-3 py-3 shadow-[-1px_-3px_20px_0px_rgba(0,0,0,38%)] transition-all md:hidden" + (openSub !== null ? " h-40" : " h-16")}>
+      <aside className={"absolute bottom-0 z-[102] flex w-full flex-col justify-end overflow-x-auto overflow-y-hidden rounded-t-3xl bg-white px-3 py-3 shadow-[-1px_-3px_20px_0px_rgba(0,0,0,38%)] transition-all md:hidden" + (openSub !== null ? " h-48" : " h-16")}>
         {openSub === 4 && (
           <>
             <div className="mb-3 w-full flex-1">
@@ -104,10 +104,16 @@ const WebBottomMenu = () => {
                     <Link href="/dashboard">داشبورد من</Link>
                   </li>
                   <li className="transition-colors hover:text-secondary">
-                    <Link href="/dashboard/profile">پروفایل</Link>
+                    <Link href="/dashboard/property/add">ثبت ملک جدید</Link>
+                  </li>
+                  <li className="transition-colors hover:text-secondary">
+                    <Link href="/dashboard/property">املاک من</Link>
                   </li>
                   <li className="transition-colors hover:text-secondary">
                     <Link href="/dashboard/favorites">علاقه مندی ها</Link>
+                  </li>
+                  <li className="transition-colors hover:text-secondary">
+                    <Link href="/dashboard/profile">پروفایل</Link>
                   </li>
                   <li className="transition-colors hover:text-secondary">
                     <Link href="#" onClick={() => signOut()}>

@@ -1,9 +1,6 @@
-"use client";
-
 import Logo from "@/assets/images/logo.png";
 import SearchBox from "@/components/@web/Features/@common/SearchBox";
 import ClientSide from "@/components/@web/Features/Home/ClientSide";
-import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -48,8 +45,8 @@ export default function Page() {
       <div className="sticky top-0 z-10 flex w-full flex-col items-center gap-4 bg-gray-200 px-3 py-5 pt-5 md:bg-white">
         <Image src={Logo} alt="logo" />
         <div className="flex flex-col gap-2">
-          <h1 className="text-center text-xl font-bold">املاک اکازیون</h1>
-          <h2 className="text-center text-lg font-medium">بزرگترین مرکز اطلاعات املاک شمال کشور</h2>
+          <h1 className="text-center text-xl font-extrabold">املاک اکازیون</h1>
+          <h2 className="text-center text-lg font-bold">بزرگترین مرکز اطلاعات املاک شمال کشور</h2>
         </div>
         <SearchBox />
       </div>

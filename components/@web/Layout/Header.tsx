@@ -44,14 +44,15 @@ const WebHeader = () => {
                           <Link href="/admin">پنل مدیریت</Link>
                         </li>
                       )}
+
                       <li className="py-0.5 transition-colors hover:text-secondary">
                         <Link href="/dashboard">داشبورد من</Link>
                       </li>
                       <li className="py-0.5 transition-colors hover:text-secondary">
-                        <Link href="/dashboard/profile">پروفایل</Link>
+                        <Link href="/dashboard/property/add">ثبت ملک جدید</Link>
                       </li>
                       <li className="py-0.5 transition-colors hover:text-secondary">
-                        <Link href="/dashboard/favorites">علاقه مندی ها</Link>
+                        <Link href="/dashboard/property">املاک من</Link>
                       </li>
                       <li className="py-0.5 transition-colors hover:text-secondary">
                         <Link href="#" onClick={() => signOut()}>
