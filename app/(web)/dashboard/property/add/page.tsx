@@ -68,7 +68,7 @@ export default function Page() {
         <Button
           //
           color="secondary"
-          variant="flat"
+          variant="shadow"
         >
           ثبت
         </Button>
