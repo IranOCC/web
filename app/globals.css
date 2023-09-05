@@ -37,3 +37,22 @@ input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
     display: none;
 }
+
+
+
+
+.relative input {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+.relative textarea {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
