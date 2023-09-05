@@ -29,13 +29,6 @@ export default function Page() {
           label="عنوان ملک"
           maxLength={200}
         />
-        <Textarea
-          //
-          className="col-span-full"
-          type="text"
-          variant="faded"
-          label="توضیحات"
-        />
         <NumericFormat
           //
           className="col-span-full"
@@ -84,6 +77,13 @@ export default function Page() {
           <Tab title="در دست اقدام" />
           <Tab title="بدون سند" />
         </Tabs>
+        <Textarea
+          //
+          className="col-span-full"
+          type="text"
+          variant="faded"
+          label="توضیحات"
+        />
         <Button
           //
           color="secondary"
