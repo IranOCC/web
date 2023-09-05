@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <div className="flex h-auto min-h-full flex-col items-center justify-between bg-gray-200 px-4 pb-16 md:bg-transparent md:pb-4">
       <div className="grid grid-cols-1 gap-3 py-5 lg:grid-cols-2">
-        <Tabs color="secondary" classNames={{ tabList: "bg-white" }} placeholder="دسته ملک" variant="bordered" className="col-span-full">
+        <Tabs color="secondary" fullWidth size="lg" classNames={{ tabList: "bg-white" }} placeholder="دسته ملک" variant="bordered" className="col-span-full">
           <Tab title="ویلا" />
           <Tab title="آپارتمان" />
           <Tab title="تجاری" />
@@ -57,13 +57,13 @@ export default function Page() {
           thousandsGroupStyle="thousand"
           thousandSeparator=","
         />
-        <Tabs color="secondary" classNames={{ tabList: "bg-white" }} placeholder="نوع ملک" variant="bordered" className="col-span-full">
+        <Tabs color="secondary" fullWidth size="lg" classNames={{ tabList: "bg-white" }} placeholder="نوع ملک" variant="bordered" className="col-span-full">
           <Tab title="فلت" />
           <Tab title="دوبلکس" />
           <Tab title="تریپلکس" />
           <Tab title="طبقات جداگانه" />
         </Tabs>
-        <Tabs color="secondary" classNames={{ tabList: "bg-white" }} placeholder="نوع سند" variant="bordered" className="col-span-full">
+        <Tabs color="secondary" fullWidth size="lg" classNames={{ tabList: "bg-white" }} placeholder="نوع سند" variant="bordered" className="col-span-full">
           <Tab title="تک برگ" />
           <Tab title="شش دانگ" />
           <Tab title="بنجاق" />
