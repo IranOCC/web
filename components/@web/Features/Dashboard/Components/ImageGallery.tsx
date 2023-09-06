@@ -2,7 +2,7 @@ import Upload2Cloud from "@/components/Icons/Upload2Cloud";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { SelectDataType } from "@/types/interfaces";
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ScrollShadow, Spinner, Tab, Tabs } from "@nextui-org/react";
+import { Button, Chip, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ScrollShadow, Spinner, Tab, Tabs } from "@nextui-org/react";
 import { Upload, UploadProps } from "antd";
 import { useSession } from "next-auth/react";
 import { Key, useState, useEffect } from "react";
@@ -59,26 +59,27 @@ export const ImageGallery = () => {
   return (
     <>
       <div className="grid h-full w-full grid-cols-1 content-between justify-center gap-3">
-        <ScrollShadow>
-          <div className="text-center">
-            {/*  */}
+        <ScrollShadow hideScrollBar className="flex justify-center">
+          <Chip
+            //
+            color="default"
+            variant="flat"
+          >
             هیچ تصویری انتخاب نشده است
-          </div>
+          </Chip>
         </ScrollShadow>
         <Dragger {..._props} className="grid h-full w-full gap-1">
           <p className="ant-upload-drag-icon flex items-center justify-center text-secondary">
             <Upload2Cloud />
           </p>
           <p className="ant-upload-text !text-sm font-bold">تصاویر رو به اینجا درگ کنید تا آپلود شوند یا کلیک کنید</p>
-          <Button
+          <Chip
             //
             color="secondary"
             variant="flat"
-            disabled
-            // onPress={() => setOpen(true)}
           >
             آپلود تصاویر
-          </Button>
+          </Chip>
         </Dragger>
       </div>
     </>
