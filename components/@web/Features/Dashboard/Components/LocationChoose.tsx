@@ -74,7 +74,6 @@ export const LocationChoose = ({ control }: { control: Control<EstateFormData, a
                     center={center}
                     zoom={[16]}
                     userLocation
-                    // className={"mb-2 overflow-hidden rounded"}
                     onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
                     interactive
                     hash
