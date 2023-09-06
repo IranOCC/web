@@ -64,7 +64,7 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
   return (
     <>
       <div className="relative flex flex-col gap-2">
-        <Chip radius="sm" color="default" className="h-12 text-right">
+        <Chip radius="sm" color="default" className="h-12 w-full max-w-none text-right">
           {/*  */}
           برای ثبت موقعیت روی نقشه کلیک کنید تا نشانه گر ظاهر شود
         </Chip>
