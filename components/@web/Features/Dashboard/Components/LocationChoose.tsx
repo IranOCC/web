@@ -95,7 +95,7 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
                     Map={Map}
                     center={center}
                     zoom={[16]}
-                    className="!h-[396px]"
+                    className="!h-[396px] !w-full"
                     userLocation
                     onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
                     interactive
