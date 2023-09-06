@@ -75,6 +75,7 @@ const WebBottomMenu = () => {
       title: isLogin ? "حساب کاربری" : "ورود/عضویت",
       href: isLogin ? "/dashboard" : "/auth",
       hasSubMenu: !!isLogin,
+      isActive: () => !!pathname && pathname.includes("/dashboard"),
       // className: "hidden min-[180px]:block",
     },
   ];
@@ -109,12 +110,14 @@ const WebBottomMenu = () => {
                   <li className="transition-colors hover:text-secondary">
                     <Link href="/dashboard/property">املاک من</Link>
                   </li>
+                  {/* 
                   <li className="transition-colors hover:text-secondary">
                     <Link href="/dashboard/favorites">علاقه مندی ها</Link>
                   </li>
                   <li className="transition-colors hover:text-secondary">
                     <Link href="/dashboard/profile">پروفایل</Link>
                   </li>
+                   */}
                   <li className="transition-colors hover:text-secondary">
                     <Link href="#" onClick={() => signOut()}>
                       خروج
