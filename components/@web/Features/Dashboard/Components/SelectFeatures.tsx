@@ -34,7 +34,7 @@ export const SelectFeatures = ({ label, placeholder, filterApi, isMulti = false 
       selectionMode={isMulti ? "multiple" : "single"}
       variant="faded"
       isMultiline={isMulti}
-      classNames={{ value: "text-right", selectorIcon: "left-3 right-auto" }}
+      classNames={{ value: "text-right", spinner: "right-auto left-3", selectorIcon: "left-3 right-auto" }}
       renderValue={
         !isMulti
           ? undefined

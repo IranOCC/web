@@ -49,73 +49,78 @@ export default function AddPropertyForm() {
         selected={category}
         setSelected={setCategory}
       />
-      <Input
-        //
-        className="col-span-full"
-        type="text"
-        variant="faded"
-        label="عنوان ملک"
-        maxLength={200}
-      />
-      <NumericFormat
-        //
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="متراژ کل"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
-      />
-      <NumericFormat
-        //
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="قیمت کل"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
-        thousandsGroupStyle="thousand"
-        thousandSeparator=","
-      />
       {category && (
         <>
-          <SwitchTabs
-            //
-            placeholder="نوع ملک"
-            endpoint="/tools/estate/type/autoComplete"
-            control={control}
-            name="type"
-            filterApi={{ categories: category }}
-          />
-          <SwitchTabs
-            //
-            placeholder="نوع سند"
-            endpoint="/tools/estate/documentType/autoComplete"
-            control={control}
-            name="documentType"
-            filterApi={{ categories: category }}
-          />
-          <Textarea
-            //
-            className="col-span-full"
-            type="text"
-            variant="faded"
-            label="توضیحات"
-          />
-          <Switch
-            //
-            className="col-span-full"
-            placeholder="قابل تهاتر"
-            dir="ltr"
-          >
-            قابل تهاتر
-          </Switch>
+          <Card className="col-span-full">
+            <CardBody className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
+              <Input
+                //
+                className="col-span-full"
+                type="text"
+                variant="faded"
+                label="عنوان ملک"
+                maxLength={200}
+              />
+              <NumericFormat
+                //
+                type="tel"
+                variant="faded"
+                labelPlacement="inside"
+                label="متراژ کل"
+                dir="ltr"
+                customInput={Input}
+                allowNegative={false}
+                allowLeadingZeros={false}
+                decimalScale={0}
+              />
+              <NumericFormat
+                //
+                type="tel"
+                variant="faded"
+                labelPlacement="inside"
+                label="قیمت کل"
+                dir="ltr"
+                customInput={Input}
+                allowNegative={false}
+                allowLeadingZeros={false}
+                decimalScale={0}
+                thousandsGroupStyle="thousand"
+                thousandSeparator=","
+              />
+
+              <SwitchTabs
+                //
+                placeholder="نوع ملک"
+                endpoint="/tools/estate/type/autoComplete"
+                control={control}
+                name="type"
+                filterApi={{ categories: category }}
+              />
+              <SwitchTabs
+                //
+                placeholder="نوع سند"
+                endpoint="/tools/estate/documentType/autoComplete"
+                control={control}
+                name="documentType"
+                filterApi={{ categories: category }}
+              />
+              <Textarea
+                //
+                className="col-span-full"
+                type="text"
+                variant="faded"
+                label="توضیحات"
+              />
+              <Switch
+                //
+                className="col-span-full"
+                placeholder="قابل تهاتر"
+                dir="ltr"
+              >
+                قابل تهاتر
+              </Switch>
+            </CardBody>
+          </Card>
           <Card>
             <CardBody className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
               <Villa category={category} />
