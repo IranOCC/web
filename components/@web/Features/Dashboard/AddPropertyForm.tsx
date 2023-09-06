@@ -136,8 +136,8 @@ export default function AddPropertyForm() {
             </CardBody>
           </Card>
           <Card className="col-span-full">
-            <CardBody className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
-              <LocationChoose />
+            <CardBody className="relative grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
+              <LocationChoose control={control} />
             </CardBody>
           </Card>
           <div />
