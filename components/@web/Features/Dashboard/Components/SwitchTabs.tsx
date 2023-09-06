@@ -5,7 +5,7 @@ import { Key, useState, useEffect } from "react";
 import { Controller } from "react-hook-form";
 
 export const SwitchTabs = ({ className, control, name, endpoint, placeholder, selected, setSelected, filterApi }: { className?: string; control: any; name: string; endpoint: string; placeholder: string; selected?: Key; setSelected?: (a: Key) => void; filterApi?: any }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<SelectDataType[]>([]);
   const api = useAxiosAuth();
   useEffect(() => {
@@ -25,7 +25,7 @@ export const SwitchTabs = ({ className, control, name, endpoint, placeholder, se
 
   if (loading) {
     return (
-      <div className="flex h-12 items-center justify-center">
+      <div className="flex h-12 w-full items-center justify-center">
         <Spinner size="sm" />
       </div>
     );

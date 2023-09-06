@@ -285,6 +285,11 @@ const LocationProvince = ({ form, setProvince }: { form: UseFormReturn<EstateFor
           value: true,
           message: "استان الزامی است",
         },
+        validate: {
+          isValidProvince: (value) => {
+            return ["مازندران", "گیلان", "گلستان"].includes(value || "") ? undefined : "تا اطلاع ثانوی فقط امکان ثبت استان های شمالی کشور مقدور می باشد";
+          },
+        },
       }}
     />
   );

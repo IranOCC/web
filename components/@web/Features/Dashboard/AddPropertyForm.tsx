@@ -38,7 +38,7 @@ export default function AddPropertyForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid w-full grid-cols-1 gap-3 px-4 py-5 lg:grid-cols-2">
         <SwitchTabs
           //
@@ -77,6 +77,10 @@ export default function AddPropertyForm() {
                     required: {
                       value: true,
                       message: "عنوان الزامی است",
+                    },
+                    minLength: {
+                      value: 10,
+                      message: "حداقل باید 10 کاراکتر باشد",
                     },
                   }}
                 />
@@ -130,6 +134,7 @@ export default function AddPropertyForm() {
                         thousandsGroupStyle="thousand"
                         thousandSeparator=","
                         {...field}
+                        description="قیمت به تومان وارد شود"
                         isRequired
                         classNames={{ errorMessage: "text-right" }}
                         errorMessage={errors.totalPrice?.message}
