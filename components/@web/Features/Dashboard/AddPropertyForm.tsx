@@ -215,7 +215,7 @@ export default function AddPropertyForm() {
             </Card>
             <Card>
               <CardBody>
-                <ImageGallery />
+                <ImageGallery form={form} />
               </CardBody>
             </Card>
             <Card className="col-span-full">
