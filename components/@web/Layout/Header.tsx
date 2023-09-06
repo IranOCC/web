@@ -96,9 +96,9 @@ const WebHeader = () => {
           <Link href="/" className="flex flex-col items-center gap-3">
             <Image src={Logo} alt="logo" className="w-32" />
           </Link>
-          <div className="flex w-full flex-row items-center justify-end gap-2">
+          <div className="flex w-full flex-row items-center justify-end gap-2 truncate">
             <div onClick={() => setContactModalOpen(true)} className="flex flex-row items-center justify-center gap-2 rounded-lg bg-secondary p-1 text-sm text-white">
-              <span>تماس با ما</span>
+              <span className=" ">تماس با ما</span>
               <ContactIcon />
             </div>
             {/* <Link href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-sm">
