@@ -7,7 +7,7 @@ import { NumericFormat } from "react-number-format";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { SelectDataType } from "@/types/interfaces";
 import { EstateFormData } from "@/types/formsData";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, UseFormReturn, useForm } from "react-hook-form";
 import React from "react";
 import { useInfiniteScroll } from "@nextui-org/use-infinite-scroll";
 import { usePokemonList } from "@/hooks/useGetList";
@@ -226,11 +226,11 @@ export default function AddPropertyForm() {
             </Card>
             <Card>
               <CardBody className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
-                <Villa category={category} />
-                <Apartment category={category} />
-                <Commercial category={category} />
-                <Land category={category} />
-                <Hectare category={category} />
+                <Villa form={form} category={category} />
+                <Apartment form={form} category={category} />
+                <Commercial form={form} category={category} />
+                <Land form={form} category={category} />
+                <Hectare form={form} category={category} />
               </CardBody>
             </Card>
             <Card>
@@ -265,62 +265,150 @@ export default function AddPropertyForm() {
 //
 //
 
-const Villa = ({ category }: { category: Key }) => {
+const Villa = ({ form, category }: { form: UseFormReturn<EstateFormData, any, undefined>; category: Key }) => {
+  const {
+    register,
+    unregister,
+    resetField,
+    setValue,
+    setError,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
+  } = form;
+
   if (category !== "645cd0444b4819ffd958c940") return null;
 
   return (
     <>
-      <NumericFormat
-        //
-        className="col-span-1"
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="سال ساخت"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="constructionYear"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              className="col-span-1"
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="سال ساخت"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.constructionYear?.message}
+              validationState={!!errors.constructionYear?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
-      <NumericFormat
-        //
-        className="col-span-1"
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="زیر بنا"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="buildingArea"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              className="col-span-1"
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="زیر بنا"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.buildingArea?.message}
+              validationState={!!errors.buildingArea?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
-      <NumericFormat
-        //
-        className="col-span-1"
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="تعداد اتاق"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="roomsCount"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              className="col-span-1"
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="تعداد اتاق"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.roomsCount?.message}
+              validationState={!!errors.roomsCount?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
-      <NumericFormat
-        //
-        className="col-span-1"
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="تعداد مستر"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="mastersCount"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              className="col-span-1"
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="تعداد مستر"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.mastersCount?.message}
+              validationState={!!errors.mastersCount?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
       <SelectFeatures
         //
@@ -333,75 +421,182 @@ const Villa = ({ category }: { category: Key }) => {
   );
 };
 
-const Apartment = ({ category }: { category: Key }) => {
+const Apartment = ({ form, category }: { form: UseFormReturn<EstateFormData, any, undefined>; category: Key }) => {
+  const {
+    register,
+    unregister,
+    resetField,
+    setValue,
+    setError,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
+  } = form;
+
   if (category !== "645cd1214b4819ffd958c955") return null;
 
   return (
     <>
-      <NumericFormat
-        //
-        className="col-span-1"
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="تعداد خواب"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="roomsCount"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              className="col-span-1"
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="تعداد خواب"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.roomsCount?.message}
+              validationState={!!errors.roomsCount?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
-      <NumericFormat
-        //
-        className="col-span-1"
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="تعداد مستر"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="mastersCount"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              className="col-span-1"
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="تعداد مستر"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.mastersCount?.message}
+              validationState={!!errors.mastersCount?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
-      <NumericFormat
-        //
-        className="col-span-1"
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="تعداد کل طبقات"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="floorsCount"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              className="col-span-1"
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="تعداد کل طبقات"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.floorsCount?.message}
+              validationState={!!errors.floorsCount?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
-      <NumericFormat
-        //
-        className="col-span-1"
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="تعداد کل واحدها"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="unitsCount"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              className="col-span-1"
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="تعداد کل واحدها"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.unitsCount?.message}
+              validationState={!!errors.unitsCount?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
-      <NumericFormat
-        //
-        className="col-span-full"
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="طبقه"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="floor"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              className="col-span-full"
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="طبقه"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.floor?.message}
+              validationState={!!errors.floor?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
       <SelectFeatures
         //
@@ -414,40 +609,102 @@ const Apartment = ({ category }: { category: Key }) => {
   );
 };
 
-const Commercial = ({ category }: { category: Key }) => {
+const Commercial = ({ form, category }: { form: UseFormReturn<EstateFormData, any, undefined>; category: Key }) => {
+  const {
+    register,
+    unregister,
+    resetField,
+    setValue,
+    setError,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
+  } = form;
+
   if (category !== "645cd1754b4819ffd958c95b") return null;
 
   return (
     <>
-      <NumericFormat
-        //
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="متراژ بر تجاری"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="buildingArea"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="متراژ بر تجاری"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.buildingArea?.message}
+              validationState={!!errors.buildingArea?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
-      <NumericFormat
-        //
-        type="tel"
-        variant="faded"
-        labelPlacement="inside"
-        label="طبقه ملک"
-        dir="ltr"
-        customInput={Input}
-        allowNegative={false}
-        allowLeadingZeros={false}
-        decimalScale={0}
+      <Controller
+        control={control}
+        name="floor"
+        render={({ field }) => {
+          return (
+            <NumericFormat
+              //
+              type="tel"
+              variant="faded"
+              labelPlacement="inside"
+              label="طبقه ملک"
+              dir="ltr"
+              customInput={Input}
+              allowNegative={false}
+              allowLeadingZeros={false}
+              decimalScale={0}
+              {...field}
+              isRequired
+              classNames={{ errorMessage: "text-right" }}
+              errorMessage={errors.floor?.message}
+              validationState={!!errors.floor?.message ? "invalid" : "valid"}
+            />
+          );
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "الزامی است",
+          },
+        }}
       />
     </>
   );
 };
 
-const Land = ({ category }: { category: Key }) => {
+const Land = ({ form, category }: { form: UseFormReturn<EstateFormData, any, undefined>; category: Key }) => {
+  const {
+    register,
+    unregister,
+    resetField,
+    setValue,
+    setError,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
+  } = form;
+
   if (category !== "645cd1554b4819ffd958c958") return null;
 
   return (
@@ -470,7 +727,19 @@ const Land = ({ category }: { category: Key }) => {
   );
 };
 
-const Hectare = ({ category }: { category: Key }) => {
+const Hectare = ({ form, category }: { form: UseFormReturn<EstateFormData, any, undefined>; category: Key }) => {
+  const {
+    register,
+    unregister,
+    resetField,
+    setValue,
+    setError,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
+  } = form;
+
   if (category !== "645cd1844b4819ffd958c95e") return null;
 
   return (
