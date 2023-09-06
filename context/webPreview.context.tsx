@@ -57,7 +57,7 @@ export type WebPreviewContextType = {
   searchPage: () => void;
   blogPage: () => void;
   internalPage: () => void;
-  dashboardPage: (title: string) => void;
+  dashboardPage: () => void;
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
@@ -214,9 +214,9 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   };
 
   // singlePost
-  const dashboardPage = (title: string) => {
+  const dashboardPage = () => {
     setBackground("bg-white");
-    setHeaderTitle(title);
+    setHeaderTitle(undefined);
     setRelatedTo(undefined);
     setRelatedToID(undefined);
     setBreadCrump([
