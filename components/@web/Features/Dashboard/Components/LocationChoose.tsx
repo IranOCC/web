@@ -37,7 +37,7 @@ const searchLocation = (params: any) => {
 
 export const LocationChoose = ({ control }: { control: Control<EstateFormData, any> }) => {
   const [province, setProvince] = useState<Selection>(new Set([]));
-  const [center, setCenter] = useState([0, 0]);
+  const [center, setCenter] = useState([36.699735, 51.196246]);
   return (
     <>
       <div className="relative min-h-[15rem] overflow-hidden">
@@ -47,24 +47,23 @@ export const LocationChoose = ({ control }: { control: Control<EstateFormData, a
               async function setMarkerAndAddress(data: number[]) {
                 // if (loading || readOnly || disabled) return;
                 field.onChange([data[1], data[0]].join(","));
-                // setCenter([data[0], data[1]]);
-                // if (!!getAddress) {
-                //   const url = `https://map.ir/reverse/no?lat=${data[1]}&lon=${data[0]}`;
-                //   const response = await fetch(url, {
-                //     headers: { "Content-Type": "application/json", "x-api-key": API_KEY },
-                //   });
-                //   const _data = await response.json();
-                //   getAddress(_data);
-                // }
+                setCenter([data[0], data[1]]);
+
+                const url = `https://map.ir/reverse/no?lat=${data[1]}&lon=${data[0]}`;
+                const response = await fetch(url, {
+                  headers: { "Content-Type": "application/json", "x-api-key": API_KEY },
+                });
+                const _data = await response.json();
+                // getAddress(_data);
               }
 
               // convert to array
               let value: number[] | null = null;
-              // if (!!field.value) {
-              //   const m = field.value.split(",").map((v: string) => +v);
-              //   // (***)
-              //   value = [m[1], m[0]];
-              // }
+              if (!!field.value) {
+                const m = (field.value as string).split(",").map((v: string) => +v);
+                // (***)
+                value = [m[1], m[0]];
+              }
 
               return (
                 <>
@@ -90,14 +89,6 @@ export const LocationChoose = ({ control }: { control: Control<EstateFormData, a
                       />
                     )}
                   </Mapir>
-                  {/* <SearchBox
-                  //
-                  setMarkerPosition={(data: number[]) => {
-                    setMarkerAndAddress(data);
-                  }}
-                />
-                {!!value && <Button noSpace title="نمایش موقعیت ثبت شده" onClick={() => setCenter(value!)} />}
-                {!value && <Button noSpace title="بر روی نقشه کلیک کنید" disabled />} */}
                 </>
               );
             }}
