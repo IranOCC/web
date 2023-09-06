@@ -53,9 +53,9 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
   return (
     <>
       <div className="relative flex flex-col gap-2">
-        <Chip radius="sm" color="default" className="h-12 w-full max-w-none text-right">
+        <Chip radius="sm" color="default" className={`h-12 w-full max-w-none text-right ${!!errors.location?.message ? "text-danger" : ""}`}>
           {/*  */}
-          برای ثبت موقعیت روی نقشه کلیک کنید تا نشانه گر ظاهر شود
+          {!!errors.location?.message ? errors.location?.message : "برای ثبت موقعیت روی نقشه کلیک کنید تا نشانه گر ظاهر شود"}
         </Chip>
         <div className="relative h-[348px] overflow-hidden rounded-lg">
           <div className="absolute h-full w-full overflow-hidden rounded-lg">
