@@ -34,123 +34,125 @@ export default function AddPropertyForm() {
   } = form;
 
   const onSubmit = async (data: EstateFormData) => {
-    alert("hey");
+    console.log(data);
   };
 
   return (
-    <div className="grid w-full grid-cols-1 gap-3 px-4 py-5 lg:grid-cols-2">
-      <SwitchTabs
-        //
-        className="col-span-full"
-        control={control}
-        name="category"
-        placeholder="دسته ملک"
-        endpoint="/tools/estate/category/autoComplete"
-        selected={category}
-        setSelected={setCategory}
-      />
-      {category && (
-        <>
-          <Card className="col-span-full">
-            <CardBody className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
-              <Input
-                //
-                className="col-span-full"
-                type="text"
-                variant="faded"
-                label="عنوان ملک"
-                maxLength={200}
-              />
-              <NumericFormat
-                //
-                type="tel"
-                variant="faded"
-                labelPlacement="inside"
-                label="متراژ کل"
-                dir="ltr"
-                customInput={Input}
-                allowNegative={false}
-                allowLeadingZeros={false}
-                decimalScale={0}
-              />
-              <NumericFormat
-                //
-                type="tel"
-                variant="faded"
-                labelPlacement="inside"
-                label="قیمت کل"
-                dir="ltr"
-                customInput={Input}
-                allowNegative={false}
-                allowLeadingZeros={false}
-                decimalScale={0}
-                thousandsGroupStyle="thousand"
-                thousandSeparator=","
-              />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="grid w-full grid-cols-1 gap-3 px-4 py-5 lg:grid-cols-2">
+        <SwitchTabs
+          //
+          className="col-span-full"
+          control={control}
+          name="category"
+          placeholder="دسته ملک"
+          endpoint="/tools/estate/category/autoComplete"
+          selected={category}
+          setSelected={setCategory}
+        />
+        {category && (
+          <>
+            <Card className="col-span-full">
+              <CardBody className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
+                <Input
+                  //
+                  className="col-span-full"
+                  type="text"
+                  variant="faded"
+                  label="عنوان ملک"
+                  maxLength={200}
+                />
+                <NumericFormat
+                  //
+                  type="tel"
+                  variant="faded"
+                  labelPlacement="inside"
+                  label="متراژ کل"
+                  dir="ltr"
+                  customInput={Input}
+                  allowNegative={false}
+                  allowLeadingZeros={false}
+                  decimalScale={0}
+                />
+                <NumericFormat
+                  //
+                  type="tel"
+                  variant="faded"
+                  labelPlacement="inside"
+                  label="قیمت کل"
+                  dir="ltr"
+                  customInput={Input}
+                  allowNegative={false}
+                  allowLeadingZeros={false}
+                  decimalScale={0}
+                  thousandsGroupStyle="thousand"
+                  thousandSeparator=","
+                />
 
-              <SwitchTabs
-                //
-                placeholder="نوع ملک"
-                endpoint="/tools/estate/type/autoComplete"
-                control={control}
-                name="type"
-                filterApi={{ categories: category }}
-              />
-              <SwitchTabs
-                //
-                placeholder="نوع سند"
-                endpoint="/tools/estate/documentType/autoComplete"
-                control={control}
-                name="documentType"
-                filterApi={{ categories: category }}
-              />
-              <Textarea
-                //
-                className="col-span-full"
-                type="text"
-                variant="faded"
-                label="توضیحات"
-              />
-              <Switch
-                //
-                className="col-span-full"
-                placeholder="قابل تهاتر"
-                dir="ltr"
-              >
-                قابل تهاتر
-              </Switch>
-            </CardBody>
-          </Card>
-          <Card>
-            <CardBody className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
-              <Villa category={category} />
-              <Apartment category={category} />
-              <Commercial category={category} />
-              <Land category={category} />
-              <Hectare category={category} />
-            </CardBody>
-          </Card>
-          <Card>
-            <CardBody>
-              <ImageGallery />
-            </CardBody>
-          </Card>
-          <Card className="col-span-full">
-            <CardBody className="relative grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
-              <LocationChoose control={control} />
-            </CardBody>
-          </Card>
-          <div />
-          <Button
-            //
-            color="secondary"
-            variant="shadow"
-          >
-            ثبت
-          </Button>
-        </>
-      )}
-    </div>
+                <SwitchTabs
+                  //
+                  placeholder="نوع ملک"
+                  endpoint="/tools/estate/type/autoComplete"
+                  control={control}
+                  name="type"
+                  filterApi={{ categories: category }}
+                />
+                <SwitchTabs
+                  //
+                  placeholder="نوع سند"
+                  endpoint="/tools/estate/documentType/autoComplete"
+                  control={control}
+                  name="documentType"
+                  filterApi={{ categories: category }}
+                />
+                <Textarea
+                  //
+                  className="col-span-full"
+                  type="text"
+                  variant="faded"
+                  label="توضیحات"
+                />
+                <Switch
+                  //
+                  className="col-span-full"
+                  placeholder="قابل تهاتر"
+                  dir="ltr"
+                >
+                  قابل تهاتر
+                </Switch>
+              </CardBody>
+            </Card>
+            <Card>
+              <CardBody className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
+                <Villa category={category} />
+                <Apartment category={category} />
+                <Commercial category={category} />
+                <Land category={category} />
+                <Hectare category={category} />
+              </CardBody>
+            </Card>
+            <Card>
+              <CardBody>
+                <ImageGallery />
+              </CardBody>
+            </Card>
+            <Card className="col-span-full">
+              <CardBody className="relative grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
+                <LocationChoose form={form} />
+              </CardBody>
+            </Card>
+            <div />
+            <Button
+              //
+              color="secondary"
+              variant="shadow"
+            >
+              ثبت
+            </Button>
+          </>
+        )}
+      </div>
+    </form>
   );
 }
 
