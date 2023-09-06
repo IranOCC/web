@@ -183,14 +183,6 @@ export default function AddPropertyForm() {
                       />
                     );
                   }}
-                  rules={
-                    {
-                      // required: {
-                      //   value: true,
-                      //   message: "قیمت کل الزامی است",
-                      // },
-                    }
-                  }
                 />
                 <Controller
                   control={control}
@@ -204,23 +196,11 @@ export default function AddPropertyForm() {
                         dir="ltr"
                         {...field}
                         value={field.value?.toString() || ""}
-
-                        // classNames={{ de: "text-right" }}
-                        // errorMessage={errors.canBarter?.message}
-                        // validationState={!!errors.canBarter?.message ? "invalid" : "valid"}
                       >
                         قابل تهاتر
                       </Switch>
                     );
                   }}
-                  rules={
-                    {
-                      // required: {
-                      //   value: true,
-                      //   message: "قیمت کل الزامی است",
-                      // },
-                    }
-                  }
                 />
               </CardBody>
             </Card>
@@ -412,6 +392,7 @@ const Villa = ({ form, category }: { form: UseFormReturn<EstateFormData, any, un
       />
       <SelectFeatures
         //
+        form={form}
         filterApi={{ categories: category }}
         label="ویژگی ها"
         placeholder="ویزگی ها را انتخاب کنید"
@@ -600,6 +581,7 @@ const Apartment = ({ form, category }: { form: UseFormReturn<EstateFormData, any
       />
       <SelectFeatures
         //
+        form={form}
         filterApi={{ categories: category }}
         label="ویژگی ها"
         placeholder="ویزگی ها را انتخاب کنید"
@@ -711,18 +693,29 @@ const Land = ({ form, category }: { form: UseFormReturn<EstateFormData, any, und
     <>
       <SelectFeatures
         //
+        form={form}
         filterApi={{ categories: category }}
         label="نوع بافت"
         placeholder="نوع بافت را انتخاب کنید"
       />
-      <Switch
-        //
-        className="col-span-full"
-        placeholder="دارای ساختمان قدیمی"
-        dir="ltr"
-      >
-        دارای ساختمان قدیمی
-      </Switch>
+      <Controller
+        control={control}
+        name="withOldBuilding"
+        render={({ field }) => {
+          return (
+            <Switch
+              //
+              className="col-span-full"
+              placeholder="دارای ساختمان قدیمی"
+              dir="ltr"
+              {...field}
+              value={field.value?.toString() || ""}
+            >
+              دارای ساختمان قدیمی
+            </Switch>
+          );
+        }}
+      />
     </>
   );
 };
@@ -746,18 +739,29 @@ const Hectare = ({ form, category }: { form: UseFormReturn<EstateFormData, any, 
     <>
       <SelectFeatures
         //
+        form={form}
         filterApi={{ categories: category }}
         label="نوع بافت"
         placeholder="نوع بافت را انتخاب کنید"
       />
-      <Switch
-        //
-        className="col-span-full"
-        placeholder="دارای ساختمان قدیمی"
-        dir="ltr"
-      >
-        دارای ساختمان قدیمی
-      </Switch>
+      <Controller
+        control={control}
+        name="withOldBuilding"
+        render={({ field }) => {
+          return (
+            <Switch
+              //
+              className="col-span-full"
+              placeholder="دارای ساختمان قدیمی"
+              dir="ltr"
+              {...field}
+              value={field.value?.toString() || ""}
+            >
+              دارای ساختمان قدیمی
+            </Switch>
+          );
+        }}
+      />
     </>
   );
 };
