@@ -60,6 +60,12 @@ export const SwitchTabs = ({ className, control, name, endpoint, placeholder, se
           </Tabs>
         );
       }}
+      rules={{
+        required: {
+          value: true,
+          message: "الزامی است",
+        },
+      }}
     />
   );
 };

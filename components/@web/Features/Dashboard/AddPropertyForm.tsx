@@ -204,6 +204,7 @@ export default function AddPropertyForm() {
                         dir="ltr"
                         {...field}
                         value={field.value?.toString() || ""}
+
                         // classNames={{ de: "text-right" }}
                         // errorMessage={errors.canBarter?.message}
                         // validationState={!!errors.canBarter?.message ? "invalid" : "valid"}
