@@ -54,41 +54,96 @@ export default function AddPropertyForm() {
           <>
             <Card className="col-span-full">
               <CardBody className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
-                <Input
-                  //
-                  className="col-span-full"
-                  type="text"
-                  variant="faded"
-                  label="عنوان ملک"
-                  maxLength={200}
+                <Controller
+                  control={control}
+                  name="title"
+                  render={({ field }) => {
+                    return (
+                      <Input
+                        //
+                        className="col-span-full"
+                        type="text"
+                        variant="faded"
+                        label="عنوان"
+                        {...field}
+                        isRequired
+                        classNames={{ errorMessage: "text-right" }}
+                        errorMessage={errors.title?.message}
+                        validationState={!!errors.title?.message ? "invalid" : "valid"}
+                      />
+                    );
+                  }}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "عنوان الزامی است",
+                    },
+                  }}
                 />
-                <NumericFormat
-                  //
-                  type="tel"
-                  variant="faded"
-                  labelPlacement="inside"
-                  label="متراژ کل"
-                  dir="ltr"
-                  customInput={Input}
-                  allowNegative={false}
-                  allowLeadingZeros={false}
-                  decimalScale={0}
+                <Controller
+                  control={control}
+                  name="area"
+                  render={({ field }) => {
+                    return (
+                      <NumericFormat
+                        //
+                        type="tel"
+                        variant="faded"
+                        labelPlacement="inside"
+                        label="متراژ کل"
+                        dir="ltr"
+                        customInput={Input}
+                        allowNegative={false}
+                        allowLeadingZeros={false}
+                        decimalScale={0}
+                        {...field}
+                        isRequired
+                        classNames={{ errorMessage: "text-right" }}
+                        errorMessage={errors.area?.message}
+                        validationState={!!errors.area?.message ? "invalid" : "valid"}
+                      />
+                    );
+                  }}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "متراژ کل الزامی است",
+                    },
+                  }}
                 />
-                <NumericFormat
-                  //
-                  type="tel"
-                  variant="faded"
-                  labelPlacement="inside"
-                  label="قیمت کل"
-                  dir="ltr"
-                  customInput={Input}
-                  allowNegative={false}
-                  allowLeadingZeros={false}
-                  decimalScale={0}
-                  thousandsGroupStyle="thousand"
-                  thousandSeparator=","
+                <Controller
+                  control={control}
+                  name="totalPrice"
+                  render={({ field }) => {
+                    return (
+                      <NumericFormat
+                        //
+                        type="tel"
+                        variant="faded"
+                        labelPlacement="inside"
+                        label="قیمت کل"
+                        dir="ltr"
+                        customInput={Input}
+                        allowNegative={false}
+                        allowLeadingZeros={false}
+                        decimalScale={0}
+                        thousandsGroupStyle="thousand"
+                        thousandSeparator=","
+                        {...field}
+                        isRequired
+                        classNames={{ errorMessage: "text-right" }}
+                        errorMessage={errors.totalPrice?.message}
+                        validationState={!!errors.totalPrice?.message ? "invalid" : "valid"}
+                      />
+                    );
+                  }}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "قیمت کل الزامی است",
+                    },
+                  }}
                 />
-
                 <SwitchTabs
                   //
                   placeholder="نوع ملک"
@@ -105,21 +160,62 @@ export default function AddPropertyForm() {
                   name="documentType"
                   filterApi={{ categories: category }}
                 />
-                <Textarea
-                  //
-                  className="col-span-full"
-                  type="text"
-                  variant="faded"
-                  label="توضیحات"
+                <Controller
+                  control={control}
+                  name="description"
+                  render={({ field }) => {
+                    return (
+                      <Textarea
+                        //
+                        className="col-span-full"
+                        type="text"
+                        variant="faded"
+                        label="توضیحات"
+                        {...field}
+                        classNames={{ errorMessage: "text-right" }}
+                        errorMessage={errors.description?.message}
+                        validationState={!!errors.description?.message ? "invalid" : "valid"}
+                      />
+                    );
+                  }}
+                  rules={
+                    {
+                      // required: {
+                      //   value: true,
+                      //   message: "قیمت کل الزامی است",
+                      // },
+                    }
+                  }
                 />
-                <Switch
-                  //
-                  className="col-span-full"
-                  placeholder="قابل تهاتر"
-                  dir="ltr"
-                >
-                  قابل تهاتر
-                </Switch>
+                <Controller
+                  control={control}
+                  name="canBarter"
+                  render={({ field }) => {
+                    return (
+                      <Switch
+                        //
+                        className="col-span-full"
+                        placeholder="قابل تهاتر"
+                        dir="ltr"
+                        {...field}
+                        value={field.value?.toString() || ""}
+                        // classNames={{ de: "text-right" }}
+                        // errorMessage={errors.canBarter?.message}
+                        // validationState={!!errors.canBarter?.message ? "invalid" : "valid"}
+                      >
+                        قابل تهاتر
+                      </Switch>
+                    );
+                  }}
+                  rules={
+                    {
+                      // required: {
+                      //   value: true,
+                      //   message: "قیمت کل الزامی است",
+                      // },
+                    }
+                  }
+                />
               </CardBody>
             </Card>
             <Card>
@@ -142,8 +238,10 @@ export default function AddPropertyForm() {
               </CardBody>
             </Card>
             <div />
+
             <Button
               //
+              type="submit"
               color="secondary"
               variant="shadow"
             >

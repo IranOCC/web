@@ -24,17 +24,6 @@ const Map = Mapir.setToken({
   },
 });
 
-const searchLocation = (params: any) => {
-  return fetch(`https://map.ir/search/v2/`, {
-    method: "POST",
-    headers: {
-      "x-api-key": API_KEY,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(params),
-  });
-};
-
 export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, any, undefined> }) => {
   const [province, setProvince] = useState<Selection>(new Set([]));
   const [center, setCenter] = useState([51.196246, 36.699735]);
@@ -123,13 +112,19 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
               }}
               name="location"
               control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: "موقعیت باید انتخاب شود",
+                },
+              }}
             />
           </div>
         </div>
       </div>
       <div className="grid grid-cols-1 gap-3">
-        <LocationProvince control={control} setProvince={setProvince} />
-        <LocationCity control={control} province={province} />
+        <LocationProvince form={form} setProvince={setProvince} />
+        <LocationCity form={form} province={province} />
         <Controller
           control={control}
           name="district"
@@ -142,8 +137,18 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
                 variant="faded"
                 label="منطقه"
                 {...field}
+                isRequired
+                classNames={{ errorMessage: "text-right" }}
+                errorMessage={errors.district?.message}
+                validationState={!!errors.district?.message ? "invalid" : "valid"}
               />
             );
+          }}
+          rules={{
+            required: {
+              value: true,
+              message: "منطقه الزامی است",
+            },
           }}
         />
         <Controller
@@ -158,8 +163,18 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
                 variant="faded"
                 label="محله"
                 {...field}
+                isRequired
+                classNames={{ errorMessage: "text-right" }}
+                errorMessage={errors.quarter?.message}
+                validationState={!!errors.quarter?.message ? "invalid" : "valid"}
               />
             );
+          }}
+          rules={{
+            required: {
+              value: true,
+              message: "منطقه الزامی است",
+            },
           }}
         />
         <Controller
@@ -174,6 +189,9 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
                 variant="faded"
                 label="کوچه"
                 {...field}
+                classNames={{ errorMessage: "text-right" }}
+                errorMessage={errors.alley?.message}
+                validationState={!!errors.alley?.message ? "invalid" : "valid"}
               />
             );
           }}
@@ -190,6 +208,9 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
                 variant="faded"
                 label="آدرس"
                 {...field}
+                classNames={{ errorMessage: "text-right" }}
+                errorMessage={errors.address?.message}
+                validationState={!!errors.address?.message ? "invalid" : "valid"}
               />
             );
           }}
@@ -199,7 +220,7 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
   );
 };
 
-const LocationProvince = ({ control, setProvince }: { control: Control<EstateFormData, any>; setProvince: any }) => {
+const LocationProvince = ({ form, setProvince }: { form: UseFormReturn<EstateFormData, any, undefined>; setProvince: any }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<SelectDataType[]>([]);
   const api = useAxiosAuth();
@@ -218,6 +239,18 @@ const LocationProvince = ({ control, setProvince }: { control: Control<EstateFor
     get();
   }, []);
 
+  const {
+    register,
+    unregister,
+    resetField,
+    setValue,
+    setError,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
+  } = form;
+
   return (
     <Controller
       control={control}
@@ -232,24 +265,35 @@ const LocationProvince = ({ control, setProvince }: { control: Control<EstateFor
             placeholder="استان را انتخاب کنید"
             selectionMode="single"
             variant="faded"
-            classNames={{ value: "text-right", spinner: "right-auto left-3", selectorIcon: "left-3 right-auto" }}
+            classNames={{ value: "text-right", errorMessage: "text-right", spinner: "right-auto left-3", selectorIcon: "left-3 right-auto" }}
             onSelectionChange={(v: Selection) => {
               setProvince(v);
               field.onChange(v);
             }}
             selectedKeys={field.value}
+            {...field}
+            isRequired
+            errorMessage={errors.province?.message}
+            validationState={!!errors.province?.message ? "invalid" : "valid"}
           >
             {(item: SelectDataType) => <SelectItem key={item.value}>{item.title}</SelectItem>}
           </Select>
         );
       }}
+      rules={{
+        required: {
+          value: true,
+          message: "استان الزامی است",
+        },
+      }}
     />
   );
 };
 
-const LocationCity = ({ control, province }: { control: Control<EstateFormData, any>; province?: any }) => {
+const LocationCity = ({ form, province }: { form: UseFormReturn<EstateFormData, any, undefined>; province?: any }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<SelectDataType[]>([]);
+
   const api = useAxiosAuth();
   useEffect(() => {
     const get = async () => {
@@ -266,6 +310,18 @@ const LocationCity = ({ control, province }: { control: Control<EstateFormData, 
     get();
   }, [province]);
 
+  const {
+    register,
+    unregister,
+    resetField,
+    setValue,
+    setError,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
+  } = form;
+
   return (
     <Controller
       control={control}
@@ -280,13 +336,21 @@ const LocationCity = ({ control, province }: { control: Control<EstateFormData, 
             placeholder="شهر را انتخاب کنید"
             selectionMode="single"
             variant="faded"
-            classNames={{ value: "text-right", spinner: "right-auto left-3", selectorIcon: "left-3 right-auto" }}
-            onSelectionChange={field.onChange}
-            selectedKeys={field.value}
+            classNames={{ value: "text-right", errorMessage: "text-right", spinner: "right-auto left-3", selectorIcon: "left-3 right-auto" }}
+            {...field}
+            isRequired
+            errorMessage={errors.city?.message}
+            validationState={!!errors.city?.message ? "invalid" : "valid"}
           >
             {(item: SelectDataType) => <SelectItem key={item.value}>{item.title}</SelectItem>}
           </Select>
         );
+      }}
+      rules={{
+        required: {
+          value: true,
+          message: "شهر الزامی است",
+        },
       }}
     />
   );
