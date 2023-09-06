@@ -63,62 +63,68 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
 
   return (
     <>
-      <div className="relative h-[396px] overflow-hidden rounded-lg">
-        <div className="absolute h-full w-full overflow-hidden rounded-lg">
-          <Controller
-            render={({ field }) => {
-              async function setMarkerAndAddress(data: number[]) {
-                // if (loading || readOnly || disabled) return;
-                field.onChange([data[1], data[0]].join(","));
-                setCenter([data[0], data[1]]);
+      <div className="relative flex flex-col gap-2">
+        <Chip radius="sm" color="default" className="h-12 text-right">
+          {/*  */}
+          برای ثبت موقعیت روی نقشه کلیک کنید تا نشانه گر ظاهر شود
+        </Chip>
+        <div className="relative h-[348px] overflow-hidden rounded-lg">
+          <div className="absolute h-full w-full overflow-hidden rounded-lg">
+            <Controller
+              render={({ field }) => {
+                async function setMarkerAndAddress(data: number[]) {
+                  // if (loading || readOnly || disabled) return;
+                  field.onChange([data[1], data[0]].join(","));
+                  setCenter([data[0], data[1]]);
 
-                const url = `https://map.ir/reverse/no?lat=${data[1]}&lon=${data[0]}`;
-                const response = await fetch(url, {
-                  headers: { "Content-Type": "application/json", "x-api-key": API_KEY },
-                });
-                const _data = await response.json();
-                getAddress(_data);
-              }
+                  const url = `https://map.ir/reverse/no?lat=${data[1]}&lon=${data[0]}`;
+                  const response = await fetch(url, {
+                    headers: { "Content-Type": "application/json", "x-api-key": API_KEY },
+                  });
+                  const _data = await response.json();
+                  getAddress(_data);
+                }
 
-              // convert to array
-              let value: number[] | null = null;
-              if (!!field.value) {
-                const m = (field.value as string).split(",").map((v: string) => +v);
-                // (***)
-                value = [m[1], m[0]];
-              }
+                // convert to array
+                let value: number[] | null = null;
+                if (!!field.value) {
+                  const m = (field.value as string).split(",").map((v: string) => +v);
+                  // (***)
+                  value = [m[1], m[0]];
+                }
 
-              return (
-                <>
-                  <Mapir
-                    //
-                    Map={Map}
-                    center={center}
-                    zoom={[16]}
-                    className="!h-[396px] !w-full"
-                    userLocation
-                    onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
-                    interactive
-                    hash
-                  >
-                    {/* zoom */}
-                    <Mapir.ZoomControl position="bottom-right" />
-                    {/* marker */}
-                    {!!value && (
-                      <Mapir.Marker
-                        //
-                        coordinates={value}
-                        anchor="bottom"
-                        Image={"https://map.ir/css/images/marker-default-yellow.svg"}
-                      />
-                    )}
-                  </Mapir>
-                </>
-              );
-            }}
-            name="location"
-            control={control}
-          />
+                return (
+                  <>
+                    <Mapir
+                      //
+                      Map={Map}
+                      center={center}
+                      zoom={[16]}
+                      className="!h-[348px] !w-full"
+                      userLocation
+                      onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
+                      interactive
+                      hash
+                    >
+                      {/* zoom */}
+                      <Mapir.ZoomControl position="bottom-right" />
+                      {/* marker */}
+                      {!!value && (
+                        <Mapir.Marker
+                          //
+                          coordinates={value}
+                          anchor="bottom"
+                          Image={"https://map.ir/css/images/marker-default-yellow.svg"}
+                        />
+                      )}
+                    </Mapir>
+                  </>
+                );
+              }}
+              name="location"
+              control={control}
+            />
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-1 gap-3">
