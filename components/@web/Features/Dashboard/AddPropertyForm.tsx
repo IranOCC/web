@@ -38,7 +38,7 @@ export default function AddPropertyForm() {
   };
 
   return (
-    <div className="grid w-full grid-cols-1 gap-3 py-5 lg:grid-cols-2">
+    <div className="grid w-full grid-cols-1 gap-3 px-4 py-5 lg:grid-cols-2">
       <SwitchTabs
         //
         className="col-span-full"

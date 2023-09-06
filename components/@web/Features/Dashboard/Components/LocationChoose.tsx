@@ -80,7 +80,7 @@ const LocationProvince = ({ setProvince }: { setProvince: any }) => {
     <Select
       //
       isLoading={loading}
-      items={data}
+      items={[data[23], data[25], data[26]]}
       label="استان"
       placeholder="استان را انتخاب کنید"
       selectionMode="single"
