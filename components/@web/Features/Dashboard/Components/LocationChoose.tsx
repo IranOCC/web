@@ -40,7 +40,7 @@ export const LocationChoose = ({ control }: { control: Control<EstateFormData, a
   const [center, setCenter] = useState([0, 0]);
   return (
     <>
-      <div className="relative overflow-hidden">
+      <div className="relative min-h-[15rem] overflow-hidden">
         <div className="absolute h-full w-full overflow-hidden rounded-lg">
           <Controller
             render={({ field }) => {
@@ -74,7 +74,7 @@ export const LocationChoose = ({ control }: { control: Control<EstateFormData, a
                     center={center}
                     zoom={[16]}
                     userLocation
-                    className={"mb-2 !h-[30rem] !w-full overflow-hidden rounded"}
+                    // className={"mb-2 overflow-hidden rounded"}
                     onClick={(m: any, e: any) => setMarkerAndAddress([e.lngLat.lng, e.lngLat.lat])}
                     interactive
                     hash
