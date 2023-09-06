@@ -69,7 +69,7 @@ export const SelectFeatures = ({ form, label, placeholder, filterApi, isMulti = 
                   }
             }
             {...field}
-            isRequired
+            isRequired={!isMulti}
             errorMessage={errors.features?.message}
             validationState={!!errors.features?.message ? "invalid" : "valid"}
           >
@@ -79,8 +79,8 @@ export const SelectFeatures = ({ form, label, placeholder, filterApi, isMulti = 
       }}
       rules={{
         required: {
-          value: true,
-          message: "شهر الزامی است",
+          value: !isMulti,
+          message: "الزامی است",
         },
       }}
     />

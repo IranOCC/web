@@ -14,6 +14,7 @@ import LoadingIcon from "@/components/Icons/LoadingIcon";
 import ErrorIcon from "@/components/Icons/ErrorIcon";
 import Image from "next/image";
 import { Cancel, Star } from "@mui/icons-material";
+import { Chip } from "@nextui-org/react";
 
 const MediaHandler = (props: IProps) => {
   const { name, control, defaultValue, maxFile, indexFileName, showUploadList = true, showFilesList = false, onChange, uploaderField = "image", fromLibrary, disabled = false, loading = false, label, noSpace, containerClassName = "", error, warning, success, uploadPath } = props;
@@ -42,8 +43,8 @@ const MediaHandler = (props: IProps) => {
 
   return (
     <>
-      <div className={"relative z-10 flex w-full flex-col items-center justify-center" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-        {label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
+      <div className={"relative z-10 flex h-full w-full flex-col items-center justify-center" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
+        {label && <label className={`mb-1 block text-start text-sm font-light text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
         {!!control && !!name ? (
           <Controller
             render={({ field }) => (
@@ -83,7 +84,7 @@ const MediaHandler = (props: IProps) => {
           />
         )}
 
-        {helperText && <p className={"mt-1 block text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
+        {helperText && <p className={"mt-1 block text-start text-sm font-light text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
       </div>
     </>
   );
@@ -275,6 +276,15 @@ const FieldComponent = (props: FieldComponentType) => {
             {/*  */}
           </p>
         )}
+        {!fromLibrary && (
+          <Chip
+            //
+            color="secondary"
+            variant="flat"
+          >
+            آپلود تصاویر
+          </Chip>
+        )}
       </Dragger>
       {showUploadList && !!fileListState.length && (
         <div className="relative mt-1 flex max-h-64 w-full flex-col gap-1 overflow-x-hidden">
@@ -313,7 +323,7 @@ const FieldComponent = (props: FieldComponentType) => {
                     <i className={"h-6 w-6 " + (item.status === "uploading" && " animate-spin")}>
                       <StatusIcon />
                     </i>
-                    <span className="text-black ms-1">{item.name}</span>
+                    <span className="ms-1 text-black">{item.name}</span>
                   </div>
                 </Tooltip>
               </>
