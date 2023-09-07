@@ -34,7 +34,7 @@ export default function AddPropertyForm() {
 
   const api = useAxiosAuth();
   const onSubmit = async (data: EstateFormData) => {
-    data.totalPrice = parseInt(data.totalPrice.replaceAll(",",""))
+    data.totalPrice = parseInt((data.totalPrice as string).replaceAll(",",""))
     data.price = Math.round(data.totalPrice / parseInt(data.area))
     console.log(data);
     setOpenResult(true);
