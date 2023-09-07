@@ -77,7 +77,7 @@ export default function Page() {
               hideScrollBar
               size={0}
               orientation="horizontal"
-              className="sticky top-[55px] z-20 flex w-full gap-2 bg-white py-2"
+              className="sticky top-[55px] z-20 flex w-full gap-2 bg-gray-200 py-2 md:bg-white"
             >
               <Chip
                 //
