@@ -33,14 +33,14 @@ export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpe
             )}
             {!!createdBy && (
               <>
-                <div className="flex w-full flex-col justify-center text-center">
-                   <Avatar
-                  //
-                  src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (createdBy?.avatar as StorageFile)?.path}
-                  className="h-20 w-20"
-                  showFallback
-                  name={(createdBy?.firstName + " " + createdBy?.lastName).trim()}
-                />
+                <div className="flex w-full flex-col items-center justify-center text-center">
+                  <Avatar
+                    //
+                    src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (createdBy?.avatar as StorageFile)?.path}
+                    className="h-20 w-20"
+                    showFallback
+                    name={(createdBy?.firstName + " " + createdBy?.lastName).trim()}
+                  />
                   <span className="truncate">
                     ثبت شده توسط <b>{office?.name || "-"}</b>
                   </span>
@@ -57,7 +57,7 @@ export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpe
                 </div>
                 {createdBy?.phone && (
                   <>
-                    <div className="grid grid-cols-1 gap-2">
+                    <div className="flex flex-col justify-end gap-2">
                       <a href={`tel:${(createdBy?.phone as Phone)?.value || "-"}`}>
                         <WebButton
                           //
