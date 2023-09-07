@@ -15,7 +15,8 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { handleFieldsError } from "@/lib/axios";
 
 export default function AddPropertyForm() {
-  const [category, setCategory] = useState<Key>("");
+  const [category, setCategory] = useState<Key>("")
+  const [isOpenResult, setOpenResult] = useState(false);
 
   //
   const form = useForm<EstateFormData>();
@@ -34,14 +35,15 @@ export default function AddPropertyForm() {
   const api = useAxiosAuth();
   const onSubmit = async (data: EstateFormData) => {
     console.log(data);
+    setOpenResult(true);
     try {
       await api.post(`/estate`, data);
-      setTimeout(() => (window.location.href = "/dashboard"), 2000);
+      setTimeout(() => window.location.href = "/dashboard", 2000);
     } catch (error) {
       console.log("Error", error);
       handleFieldsError(error, setError);
       setError("root", { message: "خطایی وجود دارد" });
-      setTimeout(() => (window.location.href = "/dashboard"), 2000);
+      setTimeout(() => window.location.href = "/dashboard", 2000);
     }
   };
 
@@ -249,7 +251,7 @@ export default function AddPropertyForm() {
       <Modal
         //
         backdrop="blur"
-        isOpen={isLoading || isSubmitting || isValidating || isSubmitted || isSubmitSuccessful}
+        isOpen={isOpenResult}
         isDismissable={false}
         isKeyboardDismissDisabled={true}
         hideCloseButton
