@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Empty } from "antd";
+import { Empty, Tooltip } from "antd";
 import { LoadingWithoutBg } from "@/components/Loading";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
@@ -11,6 +11,7 @@ import EstateCard from "./EstateCard";
 import EstateSearchFilteringBox from "./EstateSearchFilteringBox";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Divider, List, Skeleton } from "antd";
+import { Visibility, Call, FavoriteBorderOutlined } from "@mui/icons-material";
 
 const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) => {
   const { searchPage } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -79,7 +80,7 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
             >
               <div className="grid grid-cols-1 gap-4 min-[580px]:grid-cols-2 md:grid-cols-1">
                 {dataList.map((post, idx) => {
-                  return <EstateCard key={post._id} data={post} />;
+                  return <EstateCard key={post._id} data={post} tools={<PropertyTools />} />;
                 })}
               </div>
             </InfiniteScroll>
@@ -91,3 +92,40 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
 };
 
 export default EstateList;
+
+const PropertyTools = () => {
+  return (
+    <>
+      <Tooltip title="مشاهده" placement="top" arrow={false}>
+        <div
+          //
+          role="view"
+          // onClick={onSubmit}
+          className="flex h-fit w-fit cursor-pointer items-center justify-center justify-self-center text-green-500"
+        >
+          <Visibility style={{ fontSize: 28 }} />
+        </div>
+      </Tooltip>
+      <Tooltip title="رزرو بازدید" placement="top">
+        <div
+          //
+          role="reservation"
+          // onClick={onSubmit}
+          className="flex h-fit w-fit cursor-pointer items-center justify-center justify-self-center text-blue-500"
+        >
+          <Call style={{ fontSize: 28 }} />
+        </div>
+      </Tooltip>
+      <Tooltip title="افزودن به لیست" placement="top" arrow={false}>
+        <div
+          //
+          role="add-to-favorites"
+          // onClick={onSubmit}
+          className="flex h-fit w-fit cursor-pointer items-center justify-center justify-self-center text-red-500"
+        >
+          <FavoriteBorderOutlined style={{ fontSize: 28 }} />
+        </div>
+      </Tooltip>
+    </>
+  );
+};
