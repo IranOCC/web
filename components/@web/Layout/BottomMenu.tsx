@@ -4,7 +4,7 @@ import BlogIconSideBar from "@/components/Icons/web/sidebar/Blog";
 import VipIconSideBar from "@/components/Icons/web/sidebar/Vip";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 
 import HomeIconBottomMenu from "@/components/Icons/web/bottomMenu/Home";
 import SearchIconBottomMenu from "@/components/Icons/web/bottomMenu/Search";
@@ -80,6 +80,10 @@ const WebBottomMenu = () => {
     },
   ];
 
+  useEffect(() => {
+    setOpenSub(null);
+  }, [pathname]);
+
   const isOpenSub = items.filter(({ index }: ItemType) => {
     return openSub === index;
   });
@@ -97,28 +101,28 @@ const WebBottomMenu = () => {
               <div className="h-full">
                 <ul className="grid grid-cols-2 gap-1 p-2 text-sm font-bold">
                   {showAdminPanel && (
-                    <li className="transition-colors hover:text-secondary">
+                    <li className="transition-colors">
                       <Link href="/admin">پنل مدیریت</Link>
                     </li>
                   )}
-                  <li className="transition-colors hover:text-secondary">
+                  <li className="transition-colors">
                     <Link href="/dashboard">داشبورد من</Link>
                   </li>
-                  <li className="transition-colors hover:text-secondary">
+                  <li className="transition-colors">
                     <Link href="/dashboard/property/add">ثبت ملک جدید</Link>
                   </li>
-                  <li className="transition-colors hover:text-secondary">
+                  <li className="transition-colors">
                     <Link href="/dashboard/property">املاک من</Link>
                   </li>
                   {/* 
-                  <li className="transition-colors hover:text-secondary">
+                  <li className="transition-colors">
                     <Link href="/dashboard/favorites">علاقه مندی ها</Link>
                   </li>
-                  <li className="transition-colors hover:text-secondary">
+                  <li className="transition-colors">
                     <Link href="/dashboard/profile">پروفایل</Link>
                   </li>
                    */}
-                  <li className="transition-colors hover:text-secondary">
+                  <li className="transition-colors">
                     <Link href="#" onClick={() => signOut()}>
                       خروج
                     </Link>
