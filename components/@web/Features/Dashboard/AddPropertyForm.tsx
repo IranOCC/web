@@ -264,7 +264,7 @@ export default function AddPropertyForm() {
             <>
               <ModalBody>
                 <div className="flex w-full flex-col items-center justify-center gap-2 py-5">
-                  {!isSubmitted && (
+                  {(isLoading || isSubmitting || isValidating) && (
                     <Spinner
                       //
                       size="lg"
@@ -273,7 +273,7 @@ export default function AddPropertyForm() {
                       color="secondary"
                     />
                   )}
-                  {isSubmitted && isSubmitSuccessful && (
+                  {!(isLoading || isSubmitting || isValidating) && isSubmitted && isSubmitSuccessful && (
                     <>
                       <div className="text-color-500 flex flex-col items-center justify-center gap-2 rounded-md bg-green-100 p-2 text-green-500">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-10 w-10" fill="currentColor">
@@ -283,7 +283,7 @@ export default function AddPropertyForm() {
                       <span className="text-center">ملک شما با موفقیت ثبت شد و پس از تایید منتشر خواهد شد</span>
                     </>
                   )}
-                  {isSubmitted && !isSubmitSuccessful && (
+                  {!(isLoading || isSubmitting || isValidating) && isSubmitted && !isSubmitSuccessful && (
                     <>
                       <div className="text-color-500 flex flex-col items-center justify-center gap-2 rounded-md bg-red-100 p-2 text-red-500">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-10 w-10" fill="currentColor">
