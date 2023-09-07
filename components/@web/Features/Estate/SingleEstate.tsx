@@ -16,6 +16,8 @@ import GalleryContent from "../@common/GalleryContent";
 import WebTab from "../../Tab";
 import { WebButton } from "../../Button";
 import Modal from "@/components/Modals";
+import { ReservationModal } from "./ReservationModal";
+import { Avatar } from "@nextui-org/react";
 
 const SingleEstate = ({ data }: { data?: WebEstate }) => {
   if (!data) throw Error("PropertyNotFound");
@@ -182,13 +184,12 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
             </div>
             {!!createdBy?.avatar && (
               <div className="flex justify-center">
-                <Image
+                <Avatar
                   //
                   src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (createdBy?.avatar as StorageFile)?.path}
-                  alt={(createdBy.avatar as StorageFile)?.alt}
-                  width={80}
-                  height={80}
-                  className="aspect-square h-20 min-h-[5rem] w-20 min-w-[5rem] rounded-full"
+                  className="h-20 w-20"
+                  showFallback
+                  name={(createdBy?.firstName + " " + createdBy?.lastName).trim()}
                 />
               </div>
             )}
@@ -207,46 +208,3 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
 };
 
 export default SingleEstate;
-
-export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpen: boolean; setOpen: (a: boolean) => void; office: Office; createdBy: User }) => {
-  return (
-    <Modal
-      //
-      open={isOpen}
-      setOpen={() => setOpen(false)}
-    >
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <div className="flex w-full flex-col justify-center text-center">
-          <span className="truncate">
-            ثبت شده توسط <b>{office?.name || "-"}</b>
-          </span>
-          <b className="truncate">{(createdBy?.firstName + " " + createdBy?.lastName).trim() || "-"}</b>
-          <hr className="my-2 w-full border-gray-500" />
-          <span className="">شماره تماس</span>
-          <a className="truncate font-bold" dir="ltr" href={`tel:${(createdBy.phone as Phone)?.value || "-"}`}>
-            {(createdBy?.phone as Phone)?.value || "-"}
-          </a>
-        </div>
-        <div className="grid grid-cols-1 gap-2">
-          <a href={`tel:${(createdBy?.phone as Phone)?.value || "-"}`}>
-            <WebButton
-              //
-              title="رزرو بازدید حضوری"
-              size="default"
-              noSpace
-            />
-          </a>
-          <a href={`tel:${(createdBy.phone as Phone)?.value || "-"}`}>
-            <WebButton
-              //
-              title="رزرو بازدید آنلاین"
-              size="default"
-              variant="outline"
-              noSpace
-            />
-          </a>
-        </div>
-      </div>
-    </Modal>
-  );
-};

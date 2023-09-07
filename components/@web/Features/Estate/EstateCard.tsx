@@ -10,7 +10,7 @@ import FavoriteButton from "../@common/FavoriteButton";
 import { Call, FavoriteBorderOutlined, Visibility } from "@mui/icons-material";
 import { Tooltip } from "antd";
 
-const EstateCard = ({ data, tools, toolsClassName="" }: { data: WebEstate; tools?: ReactNode; toolsClassName?: string }) => {
+const EstateCard = ({ data, tools, toolsClassName = "" }: { data: WebEstate; tools?: (data: WebEstate) => ReactNode; toolsClassName?: string }) => {
   const {
     //
     _id,
@@ -119,10 +119,10 @@ const EstateCard = ({ data, tools, toolsClassName="" }: { data: WebEstate; tools
             //
             onMouseEnter={!tools ? undefined : onMouseEnter}
             onMouseLeave={!tools ? undefined : onMouseLeave}
-            className={`absolute left-0 mt-4 h-[calc(100%-16px)] w-28 overflow-hidden rounded-bl-xl rounded-tl-3xl bg-secondary/40 ${toolsClassName}`}
+            className={`absolute left-0 mt-4 h-[calc(100%-16px)] w-32 overflow-hidden rounded-bl-xl rounded-br-xl rounded-tl-3xl bg-secondary/40 ${toolsClassName}`}
           >
             <div className="float-left flex h-full w-14 flex-col items-center justify-center gap-3 p-3">
-              {tools}
+              {tools(data)}
               {/*  */}
             </div>
           </div>

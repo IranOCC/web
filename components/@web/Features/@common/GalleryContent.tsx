@@ -10,6 +10,9 @@ import RatingButton from "./RatingButton";
 import ReportButton from "./ReportButton";
 import ShareButton from "./ShareButton";
 import FeaturesList from "../Estate/FeaturesList";
+import { ArrowBack, ArrowForward, ArrowForwardIos, ExpandCircleDown } from "@mui/icons-material";
+import { Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): KeenSliderPlugin {
   return (slider) => {
@@ -111,6 +114,8 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
     setTimeout(adaptSize, 2500);
   }, [isFullscreen, isFullContent]);
 
+  const router = useRouter();
+
   return (
     <>
       <div className="relative flex flex-col items-center justify-center overflow-hidden">
@@ -134,6 +139,17 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                   </div>
                 );
               })}
+            </div>
+            <div className="absolute right-4 top-4 block rounded-full text-gray-300 md:hidden">
+              <Button
+                //
+                onPress={() => router.back()}
+                isIconOnly
+                radius="full"
+                className="bg-transparent text-gray-300"
+              >
+                <ExpandCircleDown style={{ fontSize: 48, rotate: "-90deg", cursor: "pointer" }} />
+              </Button>
             </div>
             {headerSubTitle?.type === "estate" && !!headerSubTitle?.code && <div className="absolute bottom-3 left-3 block rounded-full bg-gray-300 px-2 py-1 font-bold text-gray-700 md:hidden">{headerSubTitle.code}</div>}
             {items.length > 1 && loaded && instanceRef.current && (

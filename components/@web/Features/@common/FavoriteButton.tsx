@@ -36,7 +36,7 @@ const FavoriteButton = ({ isFav, size = 28 }: { isFav: boolean; size?: number })
 
   if (isFavorite) {
     return (
-      <Tooltip title="حذف از لیست" placement="top" arrow={false}>
+      <Tooltip title="حذف از علاقه مندی ها" placement="top" arrow={false}>
         <div
           //
           role="remove-from-favorites"
@@ -49,7 +49,7 @@ const FavoriteButton = ({ isFav, size = 28 }: { isFav: boolean; size?: number })
     );
   }
   return (
-    <Tooltip title="افزودن به لیست" placement="top" arrow={false}>
+    <Tooltip title="افزودن به علاقه مندی ها" placement="top" arrow={false}>
       <div
         //
         role="add-to-favorites"

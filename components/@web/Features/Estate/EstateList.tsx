@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Empty, Tooltip } from "antd";
 import { LoadingWithoutBg } from "@/components/Loading";
@@ -12,6 +12,9 @@ import EstateSearchFilteringBox from "./EstateSearchFilteringBox";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Divider, List, Skeleton } from "antd";
 import { Visibility, Call, FavoriteBorderOutlined } from "@mui/icons-material";
+import { ReservationModal } from "./ReservationModal";
+import { toast } from "@/lib/toast";
+import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 
 const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) => {
   const { searchPage } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -79,8 +82,15 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
               scrollableTarget="mainScroll"
             >
               <div className="grid grid-cols-1 gap-4 min-[580px]:grid-cols-2 md:grid-cols-1">
-                {dataList.map((post, idx) => {
-                  return <EstateCard key={post._id} data={post} tools={<PropertyTools />} />;
+                {dataList.map((property, idx) => {
+                  return (
+                    <EstateCard
+                      //
+                      key={property._id}
+                      data={property}
+                      tools={(data) => <PropertyTools data={data} />}
+                    />
+                  );
                 })}
               </div>
             </InfiniteScroll>
@@ -93,14 +103,31 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
 
 export default EstateList;
 
-const PropertyTools = () => {
+const PropertyTools = ({ data }: { data: WebEstate }) => {
+  const router = useRouter();
+  const { showLoginModal, setShowLoginModal, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
+
+  const [openReserveModal, setReserveModal] = useState(false);
+  const api = useAxiosAuth();
+  const addToFavorite = async () => {
+    if (!isLogin) {
+      setShowLoginModal(true);
+      return;
+    }
+    try {
+      await api.post(`/estate/favorite/${data._id}`);
+      toast.success("در لیست مورد علاقه ها قرار گرفت");
+    } catch (error) {
+      //
+    }
+  };
   return (
     <>
       <Tooltip title="مشاهده" placement="top" arrow={false}>
         <div
           //
           role="view"
-          // onClick={onSubmit}
+          onClick={() => router.push(`/property/${data.slug}`)}
           className="flex h-fit w-fit cursor-pointer items-center justify-center justify-self-center text-green-500"
         >
           <Visibility style={{ fontSize: 28 }} />
@@ -110,17 +137,24 @@ const PropertyTools = () => {
         <div
           //
           role="reservation"
-          // onClick={onSubmit}
+          onClick={() => setReserveModal(true)}
           className="flex h-fit w-fit cursor-pointer items-center justify-center justify-self-center text-blue-500"
         >
           <Call style={{ fontSize: 28 }} />
         </div>
       </Tooltip>
-      <Tooltip title="افزودن به لیست" placement="top" arrow={false}>
+      <ReservationModal
+        //
+        isOpen={openReserveModal}
+        setOpen={setReserveModal}
+        office={data.office}
+        createdBy={data.createdBy}
+      />
+      <Tooltip title="افزودن به علاقه مندی ها" placement="top" arrow={false}>
         <div
           //
           role="add-to-favorites"
-          // onClick={onSubmit}
+          onClick={addToFavorite}
           className="flex h-fit w-fit cursor-pointer items-center justify-center justify-self-center text-red-500"
         >
           <FavoriteBorderOutlined style={{ fontSize: 28 }} />
