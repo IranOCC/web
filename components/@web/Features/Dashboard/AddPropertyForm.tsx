@@ -15,7 +15,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { handleFieldsError } from "@/lib/axios";
 
 export default function AddPropertyForm() {
-  const [category, setCategory] = useState<Key>("")
+  const [category, setCategory] = useState<Key>("");
   const [isOpenResult, setOpenResult] = useState(false);
 
   //
@@ -34,25 +34,25 @@ export default function AddPropertyForm() {
 
   const api = useAxiosAuth();
   const onSubmit = async (data: EstateFormData) => {
-    data.totalPrice = parseInt((data.totalPrice as string).replaceAll(",",""))
-    data.area = parseInt(data.area as string)
-    data.price = Math.round(data.totalPrice / data.area)
+    data.totalPrice = parseInt((data.totalPrice as string).replaceAll(",", ""));
+    data.area = parseInt(data.area as string);
+    data.price = Math.round(data.totalPrice / data.area);
     console.log(data);
     setOpenResult(true);
     try {
       await api.post(`/estate`, data);
-      setTimeout(() => window.location.href = "/dashboard", 2000);
+      setTimeout(() => (window.location.href = "/dashboard"), 2000);
     } catch (error) {
       console.log("Error", error);
       handleFieldsError(error, setError);
       setError("root", { message: "خطایی وجود دارد" });
-      setTimeout(() => window.location.href = "/dashboard", 2000);
+      setTimeout(() => (window.location.href = "/dashboard"), 2000);
     }
   };
 
   return (
-    <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid w-full grid-cols-1 gap-3 px-4 py-5 lg:grid-cols-2">
+    <form className="w-full px-4" onSubmit={handleSubmit(onSubmit)}>
+      <div className="grid w-full grid-cols-1 gap-3 py-5 lg:grid-cols-2">
         <SwitchTabs
           //
           className="col-span-full"

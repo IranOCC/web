@@ -58,7 +58,7 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
 
   return (
     <>
-      <div className="sticky top-0 z-20 bg-gray-200 py-4 font-bold md:bg-white">{!!itemsCount ? `${itemsCount} مورد یافت شد` : dataLoading ? `در حال دریافت...` : `چیزی یافت نشد`}</div>
+      <div className="sticky top-[-1px] z-20 bg-gray-200 py-4 font-bold md:bg-white">{!!itemsCount ? `${itemsCount} مورد یافت شد` : dataLoading ? `در حال دریافت...` : `چیزی یافت نشد`}</div>
       <div className="flex w-full flex-col gap-2 self-center">
         <EstateSearchFilteringBox
           //

@@ -100,7 +100,7 @@ const FeaturesList = ({ data, isEstateCard = false }: { data: WebEstate; isEstat
   }
 
   return (
-    <div className={"group relative grid h-28 w-full justify-center rounded-2xl text-gray-700" + (isEstateCard ? " esCard bg-transparent" : " bg-gray-200")}>
+    <div className={"group relative grid h-28 w-full justify-center rounded-2xl text-gray-700" + (isEstateCard ? " esCard bg-transparent md:justify-start" : " bg-gray-200")}>
       <div ref={featuresRef} className="keen-slider flex h-full !w-auto flex-row items-center rounded-2xl bg-gray-200 group-[.esCard]:bg-transparent">
         {featuresItems.map(({ title, value, icon }, idx) => {
           return (
