@@ -41,8 +41,8 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
   } = form;
 
   const getAddress = (data: any) => {
-    setValue("province", new Set([data.province]) as any);
-    setValue("city", new Set([data.city || data.county]) as any);
+    //setValue("province", new Set([data.province]) as any);
+    //setValue("city", new Set([data.city || data.county]) as any);
     setValue("district", data.district);
     setValue("quarter", data.neighbourhood || data.primary);
     setValue("alley", data.last);
@@ -269,7 +269,7 @@ const LocationProvince = ({ form, setProvince }: { form: UseFormReturn<EstateFor
             onSelectionChange={(v: Selection) => {
               setProvince(v);
             }}
-            selectedKeys={field.value}
+            //selectedKeys={field.value}
             {...field}
             isRequired
             errorMessage={errors.province?.message}
@@ -341,7 +341,7 @@ const LocationCity = ({ form, province }: { form: UseFormReturn<EstateFormData, 
             selectionMode="single"
             variant="faded"
             classNames={{ value: "text-right", errorMessage: "text-right", spinner: "right-auto left-3", selectorIcon: "left-3 right-auto" }}
-            selectedKeys={field.value}
+            //selectedKeys={field.value}
             {...field}
             isRequired
             errorMessage={errors.city?.message}
