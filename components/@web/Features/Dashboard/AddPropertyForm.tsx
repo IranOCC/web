@@ -1,20 +1,18 @@
 "use client";
 
-import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
-import { Key, useContext, useEffect, useState } from "react";
-import { Input, Tabs, Tab, Textarea, Button, Switch, Spinner, Card, CardBody, Select, SelectItem, SelectedItems, Chip, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/react";
+import { Key, useState } from "react";
+import { Input, Textarea, Button, Switch, Spinner, Card, CardBody, Select, SelectItem, SelectedItems, Chip, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 import { NumericFormat } from "react-number-format";
-import useAxiosAuth from "@/hooks/useAxiosAuth";
-import { SelectDataType } from "@/types/interfaces";
 import { EstateFormData } from "@/types/formsData";
 import { Controller, UseFormReturn, useForm } from "react-hook-form";
 import React from "react";
-import { useInfiniteScroll } from "@nextui-org/use-infinite-scroll";
-import { usePokemonList } from "@/hooks/useGetList";
 import { SwitchTabs } from "./Components/SwitchTabs";
 import { ImageGallery } from "./Components/ImageGallery";
 import { SelectFeatures } from "./Components/SelectFeatures";
 import { LocationChoose } from "./Components/LocationChoose";
+import { Check } from "@mui/icons-material";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
+import { handleFieldsError } from "@/lib/axios";
 
 export default function AddPropertyForm() {
   const [category, setCategory] = useState<Key>("");
@@ -33,8 +31,18 @@ export default function AddPropertyForm() {
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = form;
 
+  const api = useAxiosAuth();
   const onSubmit = async (data: EstateFormData) => {
     console.log(data);
+    try {
+      await api.post(`/estate`, data);
+      setTimeout(() => (window.location.href = "/dashboard"), 2000);
+    } catch (error) {
+      console.log("Error", error);
+      handleFieldsError(error, setError);
+      setError("root", { message: "خطایی وجود دارد" });
+      setTimeout(() => (window.location.href = "/dashboard"), 2000);
+    }
   };
 
   return (
@@ -230,12 +238,65 @@ export default function AddPropertyForm() {
               type="submit"
               color="secondary"
               variant="shadow"
+              isLoading={isLoading || isSubmitting || isValidating}
+              disabled={isSubmitted}
             >
               ثبت
             </Button>
           </>
         )}
       </div>
+      <Modal
+        //
+        backdrop="blur"
+        isOpen={isLoading || isSubmitting || isValidating || isSubmitted || isSubmitSuccessful}
+        isDismissable={false}
+        isKeyboardDismissDisabled={true}
+        hideCloseButton
+        className="z-[102]"
+        placement="center"
+        classNames={{ wrapper: "z-[102]", backdrop: "z-[102]", closeButton: "right-auto left-1" }}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalBody>
+                <div className="flex w-full flex-col items-center justify-center gap-2 py-5">
+                  {!isSubmitted && (
+                    <Spinner
+                      //
+                      size="lg"
+                      classNames={{ label: "text-sm" }}
+                      label="در حال پردازش ..."
+                      color="secondary"
+                    />
+                  )}
+                  {isSubmitted && isSubmitSuccessful && (
+                    <>
+                      <div className="text-color-500 flex flex-col items-center justify-center gap-2 rounded-md bg-green-100 p-2 text-green-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-10 w-10" fill="currentColor">
+                          <path d="M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z"></path>
+                        </svg>
+                      </div>
+                      <span className="text-center">ملک شما با موفقیت ثبت شد و پس از تایید منتشر خواهد شد</span>
+                    </>
+                  )}
+                  {isSubmitted && !isSubmitSuccessful && (
+                    <>
+                      <div className="text-color-500 flex flex-col items-center justify-center gap-2 rounded-md bg-red-100 p-2 text-red-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-10 w-10" fill="currentColor">
+                          <path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"></path>
+                        </svg>
+                      </div>
+                      <span className="text-center">متاسفانه ثبت ملک با خطا مواجه شد</span>
+                    </>
+                  )}
+                </div>
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </form>
   );
 }
