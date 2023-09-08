@@ -225,8 +225,8 @@ const FieldComponent = (props: FieldComponentType) => {
                         <div className="absolute flex h-full w-full items-center justify-center bg-black/40 opacity-0 transition-opacity hover:opacity-100">
                           {/*  */}
                           {!isMain && (
-                            <div onClick={() => indexFileControl?.field.onChange(item)} className="w-auto rounded border border-yellow-300 bg-white px-1 text-yellow-300">
-                              شاخص شود؟
+                            <div onClick={() => indexFileControl?.field.onChange(item)} className="w-auto truncate rounded border border-yellow-300 bg-white px-1 text-xs text-yellow-300">
+                              شاخص؟
                             </div>
                           )}
                           {/*  */}

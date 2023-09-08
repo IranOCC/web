@@ -415,6 +415,9 @@ export type WebEstate = {
     createdBy: User;
 
     isFavorite?: boolean;
+
+    isConfirmed?: boolean;
+    isRejected?: boolean;
 };
 
 

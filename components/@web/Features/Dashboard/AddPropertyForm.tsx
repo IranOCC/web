@@ -37,6 +37,7 @@ export default function AddPropertyForm() {
     data.totalPrice = parseInt((data.totalPrice as string).replaceAll(",", ""));
     data.area = parseInt(data.area as string);
     data.price = Math.round(data.totalPrice / data.area);
+    data.features = (data.features + "")?.split(",");
     console.log(data);
     setOpenResult(true);
     try {
@@ -218,7 +219,7 @@ export default function AddPropertyForm() {
               </CardBody>
             </Card>
             <Card>
-              <CardBody className="grid w-full grid-cols-1 gap-3 lg:grid-cols-2">
+              <CardBody className="grid w-full grid-cols-1 content-center gap-3 lg:grid-cols-2">
                 <Villa form={form} category={category} />
                 <Apartment form={form} category={category} />
                 <Commercial form={form} category={category} />

@@ -41,7 +41,7 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
   } = form;
 
   const getAddress = (data: any) => {
-    //setValue("province", new Set([data.province]) as any);
+    setValue("province", data.province);
     //setValue("city", new Set([data.city || data.county]) as any);
     setValue("district", data.district);
     setValue("quarter", data.neighbourhood || data.primary);
