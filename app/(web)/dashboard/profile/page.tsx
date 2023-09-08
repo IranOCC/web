@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import { Key, useContext, useEffect, useState } from "react";
-import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Chip, Input, Tab, Tabs } from "@nextui-org/react";
+import { Avatar, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Chip, Input, Tab, Tabs } from "@nextui-org/react";
 import { signOut } from "next-auth/react";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import { MyProfileFormData } from "@/types/formsData";
@@ -144,136 +144,154 @@ const UserInfo = ({ user }: { user: User }) => {
   }, []);
 
   return (
-    <CardBody>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <LogoUploader
-          //
-          control={control}
-          name="avatar"
-          uploaderField="image"
-          uploadPath="storage/user/avatar"
-          body={
-            {
-              // relatedToID: user?._id,
+    <>
+      <CardBody>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <LogoUploader
+            //
+            control={control}
+            name="avatar"
+            uploaderField="image"
+            uploadPath="storage/user/avatar"
+            body={
+              {
+                // relatedToID: user?._id,
+              }
             }
-          }
-          label="آپلود آواتار"
-          error={errors.avatar?.message}
-          loading={isSubmitting}
-          containerClassName="col-span-full"
-          noSpace
-        />
-        <Controller
-          control={control}
-          name="firstName"
-          render={({ field }) => {
-            return (
-              <Input
-                //
-                className="col-span-1"
-                type="text"
-                variant="faded"
-                label="نام"
-                {...field}
-                isRequired
-                classNames={{ errorMessage: "text-right" }}
-                errorMessage={errors.firstName?.message}
-                validationState={!!errors.firstName?.message ? "invalid" : "valid"}
-              />
-            );
-          }}
-          rules={{
-            required: {
-              value: true,
-              message: "نام را وارد کنید",
-            },
-          }}
-        />
-        <Controller
-          control={control}
-          name="lastName"
-          render={({ field }) => {
-            return (
-              <Input
-                //
-                className="col-span-1"
-                type="text"
-                variant="faded"
-                label="نام خانوادگی"
-                {...field}
-                isRequired
-                classNames={{ errorMessage: "text-right" }}
-                errorMessage={errors.lastName?.message}
-                validationState={!!errors.lastName?.message ? "invalid" : "valid"}
-              />
-            );
-          }}
-          rules={{
-            required: {
-              value: true,
-              message: "نام خانوادگی را وارد کنید",
-            },
-          }}
-        />
-        <Controller
-          control={control}
-          name="nationalCode"
-          render={({ field }) => {
-            return (
-              <PatternFormat
-                //
-                format="##########"
-                customInput={Input}
-                className="col-span-1"
-                type="text"
-                variant="faded"
-                label="کد ملی"
-                dir="ltr"
-                {...field}
-                // isRequired
-                classNames={{ errorMessage: "text-right" }}
-                errorMessage={errors.nationalCode?.message}
-                validationState={!!errors.nationalCode?.message ? "invalid" : "valid"}
-              />
-            );
-          }}
-          rules={{
-            required: {
-              value: true,
-              message: "کد ملی را وارد کنید",
-            },
-          }}
-        />
-        <Controller
-          control={control}
-          name="birthday"
-          render={({ field }) => {
-            return (
-              <PatternFormat
-                //
-                format="####/##/##"
-                customInput={Input}
-                className="col-span-1"
-                type="text"
-                variant="faded"
-                label="تاریخ تولد"
-                dir="ltr"
-                {...field}
-                // isRequired
-                classNames={{ errorMessage: "text-right" }}
-                errorMessage={errors.birthday?.message}
-                validationState={!!errors.birthday?.message ? "invalid" : "valid"}
-              />
-            );
-          }}
-          rules={{
-            required: {
-              value: true,
-              message: "تاریخ تولد را وارد کنید",
-            },
-          }}
-        />
-      </div>
-    </CardBody>
+            label="آپلود آواتار"
+            error={errors.avatar?.message}
+            loading={isSubmitting}
+            containerClassName="col-span-full"
+            noSpace
+          />
+          <Controller
+            control={control}
+            name="firstName"
+            render={({ field }) => {
+              return (
+                <Input
+                  //
+                  className="col-span-1"
+                  type="text"
+                  variant="faded"
+                  label="نام"
+                  {...field}
+                  isRequired
+                  classNames={{ errorMessage: "text-right" }}
+                  errorMessage={errors.firstName?.message}
+                  validationState={!!errors.firstName?.message ? "invalid" : "valid"}
+                />
+              );
+            }}
+            rules={{
+              required: {
+                value: true,
+                message: "نام را وارد کنید",
+              },
+            }}
+          />
+          <Controller
+            control={control}
+            name="lastName"
+            render={({ field }) => {
+              return (
+                <Input
+                  //
+                  className="col-span-1"
+                  type="text"
+                  variant="faded"
+                  label="نام خانوادگی"
+                  {...field}
+                  isRequired
+                  classNames={{ errorMessage: "text-right" }}
+                  errorMessage={errors.lastName?.message}
+                  validationState={!!errors.lastName?.message ? "invalid" : "valid"}
+                />
+              );
+            }}
+            rules={{
+              required: {
+                value: true,
+                message: "نام خانوادگی را وارد کنید",
+              },
+            }}
+          />
+          <Controller
+            control={control}
+            name="nationalCode"
+            render={({ field }) => {
+              return (
+                <PatternFormat
+                  //
+                  format="##########"
+                  customInput={Input}
+                  className="col-span-1"
+                  type="text"
+                  variant="faded"
+                  label="کد ملی"
+                  dir="ltr"
+                  {...field}
+                  // isRequired
+                  classNames={{ errorMessage: "text-right" }}
+                  errorMessage={errors.nationalCode?.message}
+                  validationState={!!errors.nationalCode?.message ? "invalid" : "valid"}
+                />
+              );
+            }}
+            rules={{
+              required: {
+                value: true,
+                message: "کد ملی را وارد کنید",
+              },
+            }}
+          />
+          <Controller
+            control={control}
+            name="birthday"
+            render={({ field }) => {
+              return (
+                <PatternFormat
+                  //
+                  format="####/##/##"
+                  customInput={Input}
+                  className="col-span-1"
+                  type="text"
+                  variant="faded"
+                  label="تاریخ تولد"
+                  dir="ltr"
+                  {...field}
+                  // isRequired
+                  classNames={{ errorMessage: "text-right" }}
+                  errorMessage={errors.birthday?.message}
+                  validationState={!!errors.birthday?.message ? "invalid" : "valid"}
+                />
+              );
+            }}
+            rules={{
+              required: {
+                value: true,
+                message: "تاریخ تولد را وارد کنید",
+              },
+            }}
+          />
+        </div>
+      </CardBody>
+      <CardFooter className="flex flex-row gap-2">
+        <Button
+          //
+          disabled
+          color="default"
+        >
+          ریست
+        </Button>
+        <Button
+          //
+          disabled
+          color="secondary"
+        >
+          ویرایش
+        </Button>
+      </CardFooter>
+    </>
   );
 };
