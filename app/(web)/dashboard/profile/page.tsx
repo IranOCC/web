@@ -18,10 +18,10 @@ export default function Page() {
     dashboardPage();
   }, []);
 
+  const [selectedTab, setSelectedTab] = useState<Key>("info");
+
   const { user } = useContext(CurrentUserContext) as CurrentUserContextType;
   if (!user) return null;
-
-  const [selectedTab, setSelectedTab] = useState<Key>("info");
 
   return (
     <div className="flex h-auto min-h-full flex-col items-center justify-start bg-gray-200 pb-16 md:bg-transparent md:pb-4">
