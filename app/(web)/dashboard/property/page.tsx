@@ -210,16 +210,6 @@ const PropertyTools = ({ data }: { data: WebEstate }) => {
 
   return (
     <>
-      <Tooltip title="مشاهده" placement="top" arrow={false}>
-        <div
-          //
-          role="view"
-          onClick={() => router.push(`/property/${data.slug}`)}
-          className="flex h-fit w-fit cursor-pointer items-center justify-center justify-self-center text-white"
-        >
-          <Visibility style={{ fontSize: 28 }} />
-        </div>
-      </Tooltip>
       <Tooltip title="جزئیات" placement="top" arrow={false}>
         <div
           //

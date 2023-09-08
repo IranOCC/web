@@ -52,7 +52,7 @@ export default function AddPropertyForm() {
   };
 
   return (
-    <form className="w-full px-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="w-full max-w-4xl px-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid w-full grid-cols-1 gap-3 py-5 lg:grid-cols-2">
         <SwitchTabs
           //
