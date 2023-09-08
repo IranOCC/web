@@ -86,7 +86,7 @@ export default function Page() {
                   <div className="flex items-center gap-2">
                     <SelectAll />
                     <span>همه</span>
-                    <b>(5)</b>
+                    {/* <b>(0)</b> */}
                   </div>
                 }
               />
@@ -96,7 +96,7 @@ export default function Page() {
                   <div className="flex items-center gap-2">
                     <AccessTime />
                     <span>در انتظار</span>
-                    <b>(5)</b>
+                    {/* <b>(0)</b> */}
                   </div>
                 }
               />
@@ -106,7 +106,7 @@ export default function Page() {
                   <div className="flex items-center gap-2">
                     <Check />
                     <span>تایید شده</span>
-                    <b>(5)</b>
+                    {/* <b>(0)</b> */}
                   </div>
                 }
               />
@@ -116,57 +116,11 @@ export default function Page() {
                   <div className="flex items-center gap-2">
                     <Close />
                     <span>رد شده</span>
-                    <b>(5)</b>
+                    {/* <b>(0)</b> */}
                   </div>
                 }
               />
             </Tabs>
-            // <Tabs>
-            //   <Tab>در انتظار</Tab>
-            //   <Tab>تایید شده</Tab>
-            //   <Tab>رد شده</Tab>
-            // </Tabs>
-            // <ScrollShadow
-            //   //
-            //   hideScrollBar
-            //   size={0}
-            //   orientation="horizontal"
-            //   className="sticky top-[55px] z-20 flex w-full gap-2 bg-gray-200 py-2 md:bg-white"
-            // >
-            //   <Chip
-            //     //
-            //     startContent={<AccessTime />}
-            //     endContent={<b>(5)</b>}
-            //     variant="faded"
-            //     color="warning"
-            //     size="lg"
-            //     classNames={{ content: "whitespace-nowrap" }}
-            //   >
-            //     در انتظار
-            //   </Chip>
-            //   <Chip
-            //     //
-            //     startContent={<Check />}
-            //     endContent={<b>(5)</b>}
-            //     variant="faded"
-            //     color="success"
-            //     size="lg"
-            //     classNames={{ content: "whitespace-nowrap" }}
-            //   >
-            //     تایید شده
-            //   </Chip>
-            //   <Chip
-            //     //
-            //     startContent={<Close />}
-            //     endContent={<b>(5)</b>}
-            //     variant="faded"
-            //     color="danger"
-            //     size="lg"
-            //     classNames={{ content: "whitespace-nowrap" }}
-            //   >
-            //     رد شده
-            //   </Chip>
-            // </ScrollShadow>
           )}
           <div className="flex flex-col gap-4">
             {!dataLoading && !dataList?.length && <Empty description="چیزی پیدا نشد :(" />}

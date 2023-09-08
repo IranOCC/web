@@ -42,12 +42,12 @@ export default function AddPropertyForm() {
     setOpenResult(true);
     try {
       await api.post(`/estate`, data);
-      setTimeout(() => (window.location.href = "/dashboard"), 2000);
+      setTimeout(() => (window.location.href = "/dashboard/property"), 2000);
     } catch (error) {
       console.log("Error", error);
       handleFieldsError(error, setError);
       setError("root", { message: "خطایی وجود دارد" });
-      setTimeout(() => (window.location.href = "/dashboard"), 2000);
+      setTimeout(() => (window.location.href = "/dashboard/property"), 2000);
     }
   };
 
