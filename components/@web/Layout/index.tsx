@@ -36,7 +36,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
     >
       <GoogleAnalytics trackPageViews />
       <div className="flex h-full w-full flex-col justify-center p-0 md:flex-row md:p-5">
-        <div className={"relative flex h-full w-full flex-row overflow-hidden bg-gray-200 transition-all duration-1000 md:max-w-screen-2xl md:rounded-2xl md:bg-white" + (isFullscreen ? " md:!max-w-full" : "")}>
+        <div className={"relative flex h-full w-full flex-row overflow-hidden bg-gray-200 transition-all duration-[2s] md:max-w-screen-2xl md:rounded-2xl md:bg-white" + (isFullscreen ? " md:!max-w-full" : "")}>
           <div className={"z-[101] flex h-full w-full flex-row shadow-[-6px_0px_20px_2px_#00000040] transition-all duration-1000 md:rounded-e-2xl" + (background ? " " + background : "")}>
             <WebSideBar />
             <div className="flex flex-1 flex-col">
@@ -118,7 +118,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
           </div>
 
           {/* SIDEBAR:::: only show upper xl size */}
-          <div className={"relative h-full w-0 transition-all duration-1000 xl:flex" + (!isFullContent && !!sidebar ? (sidebar?.small ? " xl:w-[32rem]" : " xl:w-[32rem] 2xl:w-[64rem]") : "")}>
+          <div className={"relative h-full w-0 transition-all duration-[2s] xl:flex" + (!isFullContent && !!sidebar ? (sidebar?.small ? " xl:w-[32rem]" : " xl:w-[32rem] 2xl:w-[64rem]") : "")}>
             <div className="absolute end-4 top-4 z-[100]">
               <div
                 //
