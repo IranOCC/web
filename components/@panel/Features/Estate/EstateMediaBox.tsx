@@ -21,7 +21,7 @@ export default function EstateMediaBox({ form, loading, props }: AddEditComponen
 
   useEffect(() => {
     register("gallery");
-    register("image");
+    register("image", { required: "لطفا تصویر را وارد کنید" });
   }, []);
 
   const { checkingData } = props;
@@ -39,6 +39,7 @@ export default function EstateMediaBox({ form, loading, props }: AddEditComponen
             uploadPath="estate"
             uploaderField="image"
             indexFileName="image"
+            error={errors.image?.message}
             noSpace
             fromLibrary
             showFilesList
