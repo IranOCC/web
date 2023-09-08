@@ -228,8 +228,9 @@ const UserInfo = ({ user }: { user: User }) => {
                 type="text"
                 variant="faded"
                 label="کد ملی"
+                dir="ltr"
                 {...field}
-                isRequired
+                // isRequired
                 classNames={{ errorMessage: "text-right" }}
                 errorMessage={errors.nationalCode?.message}
                 validationState={!!errors.nationalCode?.message ? "invalid" : "valid"}
@@ -256,8 +257,9 @@ const UserInfo = ({ user }: { user: User }) => {
                 type="text"
                 variant="faded"
                 label="تاریخ تولد"
+                dir="ltr"
                 {...field}
-                isRequired
+                // isRequired
                 classNames={{ errorMessage: "text-right" }}
                 errorMessage={errors.birthday?.message}
                 validationState={!!errors.birthday?.message ? "invalid" : "valid"}
