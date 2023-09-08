@@ -12,7 +12,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { handleFieldsError } from "@/lib/axios";
 import { toast } from "@/lib/toast";
 import { MyProfileFormData, UserFormData } from "@/types/formsData";
-import { StorageFile, Phone, Email } from "@/types/interfaces";
+import { StorageFile, Phone, Email, User } from "@/types/interfaces";
 import { signOut } from "next-auth/react";
 import { useContext, useEffect, useState } from "react";
 import { UseFormReturn, useForm } from "react-hook-form";
@@ -33,9 +33,9 @@ export default function Page() {
     formState: { errors, isLoading, isSubmitting, isValidating, isSubmitted, isSubmitSuccessful },
   } = form;
 
-  const setInitialData = (data: MyProfileFormData) => {
-    setValue("firstName", data.firstName);
-    setValue("lastName", data.lastName);
+  const setInitialData = (data: User) => {
+    setValue("firstName", data?.firstName || "");
+    setValue("lastName", data?.lastName || "");
     setValue("avatar", data.avatar as StorageFile);
     //
     setValue("phone", data.phone as Phone);
@@ -64,7 +64,7 @@ export default function Page() {
     register("firstName", { required: "نام را وارد کنید" });
     register("lastName", { required: "نام خانوادگی را وارد کنید" });
     register("avatar");
-    if (!!user) setInitialData(user as MyProfileFormData);
+    if (!!user) setInitialData(user);
   }, [user]);
 
   const onSubmit = async (data: MyProfileFormData) => {

@@ -49,6 +49,9 @@ export interface User {
 
     active: boolean;
     verified: boolean;
+
+    nationalCode?: string;
+    birthday?: string;
 }
 
 

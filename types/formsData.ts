@@ -38,6 +38,8 @@ export type MyProfileFormData = {
     firstName: string;
     lastName: string;
     avatar?: StorageFile | string;
+    nationalCode?: string;
+    birthday?: string;
     // 
     phone?: Phone | string;
     email?: Email | string;
