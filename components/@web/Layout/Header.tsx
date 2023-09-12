@@ -80,7 +80,7 @@ const WebHeader = () => {
             <div
               //
               onClick={!sidebar ? toggleFullscreen : toggleFullContent}
-              className={"hidden h-full cursor-pointer items-center justify-center rounded-lg bg-white p-2 text-gray-500 shadow-[0px_0px_22px_0px_rgba(0,0,0,0.25)]" + (!sidebar ? " 2xl:flex" : " xl:flex")}
+              className={"hidden h-full cursor-pointer items-center justify-center rounded-3xl bg-white p-2 text-gray-500 shadow-[0px_0px_22px_0px_rgba(0,0,0,0.25)]" + (!sidebar ? " 2xl:flex" : " xl:flex")}
             >
               {!sidebar && isFullscreen && <FullscreenExitIcon />}
               {!sidebar && !isFullscreen && <FullscreenIcon />}

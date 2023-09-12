@@ -182,17 +182,15 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
                 noSpace
               />
             </div>
-            {!!createdBy?.avatar && (
-              <div className="flex justify-center">
-                <Avatar
-                  //
-                  src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (createdBy?.avatar as StorageFile)?.path}
-                  className="h-20 w-20"
-                  showFallback
-                  name={(createdBy?.firstName + " " + createdBy?.lastName).trim()}
-                />
-              </div>
-            )}
+            <div className="flex items-center justify-center">
+              <Avatar
+                //
+                src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (createdBy?.avatar as StorageFile)?.path}
+                className="h-20 w-20"
+                showFallback
+                name={(createdBy?.firstName + " " + createdBy?.lastName).trim()}
+              />
+            </div>
           </div>
         </div>
       </div>

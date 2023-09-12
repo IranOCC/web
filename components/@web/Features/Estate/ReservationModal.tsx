@@ -11,7 +11,7 @@ import { Call, FavoriteBorderOutlined, Visibility } from "@mui/icons-material";
 import { Tooltip } from "antd";
 import { WebButton } from "../../Button";
 
-export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpen: boolean; setOpen: (a: boolean) => void; office: Office; createdBy: User }) => {
+export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpen: boolean; setOpen: (a: boolean) => void; office?: Office; createdBy?: User }) => {
   return (
     <Modal
       //

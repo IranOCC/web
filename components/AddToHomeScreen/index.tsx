@@ -3,13 +3,13 @@ import { setCookie, getCookie } from "cookies-next";
 import dynamic from "next/dynamic";
 
 const ModuleLoading = () => <p className="animate-bounce font-bold text-white">Loading...</p>;
-// const AddToIosSafari = dynamic(() => import("./AddToIosSafari"), { loading: () => <ModuleLoading /> });
+const AddToIosSafari = dynamic(() => import("./AddToIosSafari"), { loading: () => <ModuleLoading /> });
 const AddToMobileChrome = dynamic(() => import("./AddToMobileChrome"), { loading: () => <ModuleLoading /> });
-// const AddToMobileFirefox = dynamic(() => import("./AddToMobileFirefox"), { loading: () => <ModuleLoading /> });
-// const AddToMobileFirefoxIos = dynamic(() => import("./AddToMobileFirefoxIos"), { loading: () => <ModuleLoading /> });
-// const AddToMobileChromeIos = dynamic(() => import("./AddToMobileChromeIos"), { loading: () => <ModuleLoading /> });
-// const AddToSamsung = dynamic(() => import("./AddToSamsung"), { loading: () => <ModuleLoading /> });
-// const AddToOtherBrowser = dynamic(() => import("./AddToOtherBrowser"), { loading: () => <ModuleLoading /> });
+const AddToMobileFirefox = dynamic(() => import("./AddToMobileFirefox"), { loading: () => <ModuleLoading /> });
+const AddToMobileFirefoxIos = dynamic(() => import("./AddToMobileFirefoxIos"), { loading: () => <ModuleLoading /> });
+const AddToMobileChromeIos = dynamic(() => import("./AddToMobileChromeIos"), { loading: () => <ModuleLoading /> });
+const AddToSamsung = dynamic(() => import("./AddToSamsung"), { loading: () => <ModuleLoading /> });
+const AddToOtherBrowser = dynamic(() => import("./AddToOtherBrowser"), { loading: () => <ModuleLoading /> });
 
 import useUserAgent from "@/hooks/useUserAgent";
 
@@ -62,13 +62,13 @@ export default function AddToHomeScreen() {
     <>
       {
         {
-          safari: <AddToMobileChrome closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
+          safari: <AddToIosSafari closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
           chrome: <AddToMobileChrome closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
-          firefox: <AddToMobileChrome closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
-          firefoxIos: <AddToMobileChrome closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
-          chromeIos: <AddToMobileChrome closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
-          samsung: <AddToMobileChrome closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
-          other: <AddToMobileChrome closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
+          firefox: <AddToMobileFirefox closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
+          firefoxIos: <AddToMobileFirefoxIos closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
+          chromeIos: <AddToMobileChromeIos closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
+          samsung: <AddToSamsung closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
+          other: <AddToOtherBrowser closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
           "": <></>,
         }[displayPrompt]
       }
@@ -79,7 +79,7 @@ export default function AddToHomeScreen() {
     <>
       {displayPrompt !== "" ? (
         <>
-          <div className="fixed bottom-0 left-0 right-0 top-0 z-50 bg-black/70" onClick={closePrompt}>
+          <div className="fixed bottom-0 left-0 right-0 top-0 z-[102] bg-black/70" onClick={closePrompt}>
             <Prompt />
           </div>
         </>

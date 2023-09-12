@@ -11,6 +11,7 @@ import RolesConflictModal from "../Modals/RolesConflictModal";
 import Loading from "../Loading";
 import LoginModal from "../Modals/LoginModal";
 import { NextUIProvider } from "@nextui-org/react";
+import AddToHomeScreen from "../AddToHomeScreen";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { darkMode } = useContext(ThemeContext) as ThemeContextType;
@@ -41,6 +42,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
         <CompleteProfileModal />
         <RolesConflictModal />
         <LoginModal />
+        <AddToHomeScreen />
       </NextUIProvider>
     </body>
   );

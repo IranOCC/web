@@ -373,24 +373,24 @@ export type WebEstate = {
     title: string;
     content?: string;
     excerpt?: string;
-    slug: string;
+    slug?: string;
 
     image: StorageFile;
-    gallery: StorageFile[];
+    gallery?: StorageFile[];
 
 
 
-    pinned: boolean;
-    publishedAt: Date;
+    pinned?: boolean;
+    publishedAt?: Date;
 
     tags?: string[];
 
 
     code?: string;
     category: EstateCategory;
-    type: EstateType;
-    documentType: EstateDocumentType;
-    features: EstateFeature[] | null;
+    type?: EstateType;
+    documentType?: EstateDocumentType;
+    features?: EstateFeature[] | null;
 
     area: number;
 
@@ -412,10 +412,10 @@ export type WebEstate = {
     district: string;
 
 
-    owner: User;
+    owner?: User;
 
-    office: Office;
-    createdBy: User;
+    office?: Office;
+    createdBy?: User;
 
     isFavorite?: boolean;
 
