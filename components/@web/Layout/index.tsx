@@ -17,6 +17,7 @@ import ReportButton from "../Features/@common/ReportButton";
 import RatingButton from "../Features/@common/RatingButton";
 import ContactUsModal from "@/components/Modals/ContactUsModal";
 import { GoogleAnalytics } from "nextjs-google-analytics";
+import { ExitToAppSharp } from "@mui/icons-material";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -25,7 +26,7 @@ const getDynamicComponent = (path: string) =>
   });
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
-  const { isFullscreen, isFullContent, toggleFullscreen, background, sidebar, headerTitle, headerSubTitle } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { isFullscreen, isFullContent, isOpenDetail, toggleOpenDetail, toggleFullscreen, background, sidebar, headerTitle, headerSubTitle } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   const SideBarComponent = !!sidebar ? getDynamicComponent(sidebar.component) : undefined;
   return (
@@ -131,6 +132,26 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
             </div>
             {!!SideBarComponent && (
               <div className="absolute -start-6 h-full w-[calc(100%+1.5rem)] overflow-hidden">
+                <div className="sidebar-component h-full w-full overflow-hidden">
+                  <SideBarComponent {...(sidebar?.props || {})} />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* SIDEBAR:::: only show lower xl size */}
+          <div className={"absolute z-[103] flex h-full w-full bg-background transition-all duration-[2s] xl:hidden" + (!sidebar ? " hidden" : "") + (!isOpenDetail ? " translate-x-full" : "")}>
+            <div className="absolute end-4 top-4 z-10">
+              <div
+                //
+                onClick={toggleOpenDetail}
+                className="flex h-full cursor-pointer items-center justify-center rounded-3xl bg-white p-2 text-gray-500 shadow-[0px_0px_22px_0px_rgba(0,0,0,0.25)] 2xl:hidden"
+              >
+                <ExitToAppSharp />
+              </div>
+            </div>
+            {!!SideBarComponent && (
+              <div className="relative h-full w-full overflow-hidden">
                 <div className="sidebar-component h-full w-full overflow-hidden">
                   <SideBarComponent {...(sidebar?.props || {})} />
                 </div>

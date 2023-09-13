@@ -107,7 +107,7 @@ const MapEstate = () => {
         hash
       >
         {/* zoom */}
-        <Mapir.ZoomControl position="bottom-right" />
+        <Mapir.ZoomControl position="bottom-left" />
         <Mapir.Cluster zoomOnClick ClusterMarkerFactory={clusterMarker}>
           {nearPoints.map(({ coordinates, id }: { coordinates: number[]; id: string }, key: number) => (
             <Mapir.Marker
@@ -119,7 +119,7 @@ const MapEstate = () => {
             />
           ))}
         </Mapir.Cluster>
-        <div className={`absolute top-0  w-full bg-black/5 pl-0 pr-[1.5rem] empty:hidden ${fontFamily?.className}`}>
+        <div className={`absolute top-0 w-full bg-black/5 px-0 empty:hidden xl:pr-[1.5rem] ${fontFamily?.className}`}>
           <div className="relative h-full w-full px-[4.5rem] py-4 empty:hidden">
             {!mapCoordinates && (
               <div className="relative flex h-full w-full items-center justify-center bg-black/30 py-2.5 font-bold text-white">

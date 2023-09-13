@@ -10,7 +10,7 @@ import RatingButton from "./RatingButton";
 import ReportButton from "./ReportButton";
 import ShareButton from "./ShareButton";
 import FeaturesList from "../Estate/FeaturesList";
-import { ArrowBack, ArrowForward, ArrowForwardIos, ExpandCircleDown } from "@mui/icons-material";
+import { ArrowBack, ArrowForward, ArrowForwardIos, ExpandCircleDown, KeyboardArrowLeft, LocationOn } from "@mui/icons-material";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
@@ -56,7 +56,7 @@ const AdaptiveHeight: KeenSliderPlugin = (slider) => {
 };
 
 const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: string; estateData?: WebEstate }) => {
-  const { isFullscreen, isFullContent, headerTitle, headerSubTitle } = useContext(WebPreviewContext) as WebPreviewContextType;
+  const { isFullscreen, isFullContent, headerTitle, headerSubTitle, toggleOpenDetail } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -140,17 +140,31 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                 );
               })}
             </div>
-            <div className="absolute right-4 top-4 block rounded-full text-gray-300 md:hidden">
+
+            <div className="absolute left-4 top-4 block rounded-full md:hidden">
               <Button
                 //
                 onPress={() => router.back()}
                 isIconOnly
                 radius="full"
-                className="bg-transparent text-gray-300"
+                className="bg-transparent text-white/70 transition-colors hover:text-white"
               >
-                <ExpandCircleDown style={{ fontSize: 48, rotate: "-90deg", cursor: "pointer" }} />
+                <KeyboardArrowLeft style={{ fontSize: 44, cursor: "pointer" }} />
               </Button>
             </div>
+            {headerSubTitle?.type === "estate" && (
+              <div className="absolute right-4 top-4 block rounded-full md:hidden">
+                <Button
+                  //
+                  onPress={() => toggleOpenDetail()}
+                  isIconOnly
+                  radius="full"
+                  className="bg-transparent text-white/70 transition-colors hover:text-white"
+                >
+                  <LocationOn style={{ fontSize: 44, cursor: "pointer" }} />
+                </Button>
+              </div>
+            )}
             {headerSubTitle?.type === "estate" && !!headerSubTitle?.code && <div className="absolute bottom-3 left-3 block rounded-full bg-gray-300 px-2 py-1 font-bold text-gray-700 md:hidden">{headerSubTitle.code}</div>}
             {items.length > 1 && loaded && instanceRef.current && (
               <>

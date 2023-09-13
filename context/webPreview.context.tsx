@@ -32,6 +32,9 @@ export type WebPreviewContextType = {
   isFullContent: boolean;
   toggleFullContent: () => void;
 
+  isOpenDetail: boolean;
+  toggleOpenDetail: () => void;
+
   contactModalOpen: boolean;
   setContactModalOpen: (n: boolean) => void;
 
@@ -76,12 +79,17 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const [relatedToID, setRelatedToID] = React.useState<string | undefined>(undefined);
   const [mapCoordinates, setMapCoordinates] = React.useState<[number, number]>();
   const [contactModalOpen, setContactModalOpen] = React.useState<boolean>(false);
+  const [isOpenDetail, setOpenDetail] = React.useState<boolean>(false);
+
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
   const toggleFullContent = () => {
     setFullContent((prev) => !prev);
+  };
+  const toggleOpenDetail = () => {
+    setOpenDetail((prev) => !prev);
   };
 
   // singlePost
@@ -273,6 +281,9 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
         setContactModalOpen,
 
         mapCoordinates,
+
+        isOpenDetail,
+        toggleOpenDetail,
       }}
     >
       {children}
