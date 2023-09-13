@@ -15,7 +15,7 @@ export default function AddToSamsung(props: Props) {
   const { closePrompt, doNotShowAgain } = props;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 h-[80%] px-4 pb-12 text-white">
+    <div className="fixed bottom-0 left-0 right-0 z-[102] h-[80%] px-4 pb-12 text-white">
       <div className="relative flex h-full flex-col items-center justify-around rounded-xl bg-primary p-4 text-center">
         <button className="absolute right-0 top-0 p-3" onClick={closePrompt}>
           <FaTimes className="text-2xl" />

@@ -8,12 +8,11 @@ const AddToMobileChrome = dynamic(() => import("./AddToMobileChrome"), { loading
 const AddToMobileFirefox = dynamic(() => import("./AddToMobileFirefox"), { loading: () => <ModuleLoading /> });
 const AddToMobileFirefoxIos = dynamic(() => import("./AddToMobileFirefoxIos"), { loading: () => <ModuleLoading /> });
 const AddToMobileChromeIos = dynamic(() => import("./AddToMobileChromeIos"), { loading: () => <ModuleLoading /> });
-const AddToSamsung = dynamic(() => import("./AddToSamsung"), { loading: () => <ModuleLoading /> });
 const AddToOtherBrowser = dynamic(() => import("./AddToOtherBrowser"), { loading: () => <ModuleLoading /> });
 
 import useUserAgent from "@/hooks/useUserAgent";
 
-type AddToHomeScreenPromptType = "safari" | "chrome" | "firefox" | "other" | "firefoxIos" | "chromeIos" | "samsung" | "";
+type AddToHomeScreenPromptType = "safari" | "chrome" | "firefox" | "other" | "firefoxIos" | "chromeIos" | "";
 const COOKIE_NAME = "addToHomeScreenPrompt";
 
 export default function AddToHomeScreen() {
@@ -48,8 +47,6 @@ export default function AddToHomeScreen() {
           setDisplayPrompt("firefoxIos");
         } else if (userAgent === "ChromeiOS") {
           setDisplayPrompt("chromeIos");
-        } else if (userAgent === "SamsungBrowser") {
-          setDisplayPrompt("samsung");
         } else {
           setDisplayPrompt("other");
         }
@@ -63,11 +60,10 @@ export default function AddToHomeScreen() {
       {
         {
           safari: <AddToIosSafari closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
-          chrome: <AddToMobileChrome closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
+          chrome: <AddToOtherBrowser closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
           firefox: <AddToMobileFirefox closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
           firefoxIos: <AddToMobileFirefoxIos closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
           chromeIos: <AddToMobileChromeIos closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
-          samsung: <AddToSamsung closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
           other: <AddToOtherBrowser closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
           "": <></>,
         }[displayPrompt]
@@ -75,15 +71,5 @@ export default function AddToHomeScreen() {
     </>
   );
 
-  return (
-    <>
-      {displayPrompt !== "" ? (
-        <>
-          <Prompt />
-        </>
-      ) : (
-        <></>
-      )}
-    </>
-  );
+  return displayPrompt !== "" ? <Prompt /> : null;
 }

@@ -1,7 +1,5 @@
 import React from "react";
 
-import { FaTimes } from "react-icons/fa";
-import { MdAddToHomeScreen } from "react-icons/md";
 import { Button, Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import { InstallMobile, KeyboardDoubleArrowUp, MoreVert } from "@mui/icons-material";
 
@@ -20,7 +18,7 @@ export default function AddToMobileChrome(props: Props) {
       isOpen={true}
       onClose={closePrompt}
       className="z-[102]"
-      placement="bottom"
+      placement="center"
       classNames={{ wrapper: "z-[102]", backdrop: "z-[102]", closeButton: "right-auto left-1" }}
       title="نصب ایران اکازیون"
     >
@@ -32,13 +30,13 @@ export default function AddToMobileChrome(props: Props) {
           <div className="flex flex-col gap-1 text-sm text-gray-500">
             <div className="flex flex-wrap items-center gap-1">
               <p>بر روی</p>
-              <MoreVert />
+              <MoreVert className="text-blue-600" />
               <p>کلیک کنید</p>
             </div>
             <div className="flex flex-wrap items-center gap-1">
               <p>به پایین اسکرول کنید و</p>
               <div dir="ltr" className="flex items-center justify-between gap-2 rounded-lg bg-gray-50 p-1 text-gray-900">
-                <InstallMobile />
+                <InstallMobile className="text-blue-600" />
                 <p>Install app</p>
               </div>
               را بزنید
