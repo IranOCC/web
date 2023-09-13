@@ -26,7 +26,7 @@ export default function AddToMobileChrome(props: Props) {
       <ModalContent>
         <ModalHeader>نصب ایران اکازیون</ModalHeader>
         <ModalBody>
-          <p className="">برای کسب تجربه بهتر و جذاب تر به شما پیشنهاد می کنیم نرم افزار ایران اکازیون را بر روی دستگاه خود نصب کنید!</p>
+          <p className="text-justify">برای کسب تجربه بهتر و جذاب تر به شما پیشنهاد می کنیم نرم افزار ایران اکازیون را بر روی دستگاه خود نصب کنید!</p>
           <div className="flex flex-col gap-1 text-sm text-gray-500">
             <div className="flex flex-wrap items-center gap-1">
               <p>بر روی</p>

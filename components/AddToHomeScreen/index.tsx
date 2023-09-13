@@ -65,7 +65,7 @@ export default function AddToHomeScreen() {
           firefoxIos: <AddToMobileFirefoxIos closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
           chromeIos: <AddToMobileChromeIos closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
           other: <AddToOtherBrowser closePrompt={closePrompt} doNotShowAgain={doNotShowAgain} />,
-          "": <></>,
+          "": null,
         }[displayPrompt]
       }
     </>
