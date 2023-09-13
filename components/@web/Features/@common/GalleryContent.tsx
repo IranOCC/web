@@ -147,7 +147,8 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                 onPress={() => router.back()}
                 isIconOnly
                 radius="full"
-                className="bg-transparent text-white/70 transition-colors hover:text-white"
+                size="lg"
+                className="text-white"
               >
                 <KeyboardArrowLeft style={{ fontSize: 44, cursor: "pointer" }} />
               </Button>
@@ -159,7 +160,9 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                   onPress={() => toggleOpenDetail()}
                   isIconOnly
                   radius="full"
-                  className="bg-transparent text-white/70 transition-colors hover:text-white"
+                  size="lg"
+                  color="warning"
+                  className="text-white"
                 >
                   <LocationOn style={{ fontSize: 44, cursor: "pointer" }} />
                 </Button>
