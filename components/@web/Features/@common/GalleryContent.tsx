@@ -10,7 +10,7 @@ import RatingButton from "./RatingButton";
 import ReportButton from "./ReportButton";
 import ShareButton from "./ShareButton";
 import FeaturesList from "../Estate/FeaturesList";
-import { ArrowBack, ArrowForward, ArrowForwardIos, ExpandCircleDown, KeyboardArrowLeft, LocationOn } from "@mui/icons-material";
+import { ArrowBackIosNew, LocationOn } from "@mui/icons-material";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
@@ -150,7 +150,7 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                 size="lg"
                 className="text-white"
               >
-                <KeyboardArrowLeft style={{ fontSize: 44, cursor: "pointer" }} />
+                <ArrowBackIosNew style={{ fontSize: 44, cursor: "pointer" }} />
               </Button>
             </div>
             {headerSubTitle?.type === "estate" && (
