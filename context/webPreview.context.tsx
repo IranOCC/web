@@ -52,12 +52,14 @@ export type WebPreviewContextType = {
 
   singlePost: (id: string, title: string, categories: string[], author: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
   singlePage: (id: string, title: string, publishedAt: Date, rateScore: number, userRate?: number) => void;
-  singleEstate: (id: string, title: string, category: string, province: string, city: string, district: string, code?: string) => void;
+  singleEstate: (id: string, title: string, category: string, province: string, city: string, district: string, code?: string, location?: [number, number]) => void;
   errorPage: () => void;
   searchPage: () => void;
   blogPage: () => void;
   internalPage: () => void;
   dashboardPage: () => void;
+
+  mapCoordinates?: [number, number];
 };
 
 export const WebPreviewContext = React.createContext<WebPreviewContextType | null>(null);
@@ -72,7 +74,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const [headerSubTitle, setHeaderSubTitle] = React.useState<SubTitleType | undefined>(undefined);
   const [relatedTo, setRelatedTo] = React.useState<RelatedTo | undefined>(undefined);
   const [relatedToID, setRelatedToID] = React.useState<string | undefined>(undefined);
-
+  const [mapCoordinates, setMapCoordinates] = React.useState<[number, number]>();
   const [contactModalOpen, setContactModalOpen] = React.useState<boolean>(false);
 
   const toggleFullscreen = () => {
@@ -113,6 +115,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
       rateScore,
       userRate,
     });
+    setMapCoordinates(undefined);
   };
   // singlePost
   const singlePage = (id: string, title: string, publishedAt: Date) => {
@@ -135,9 +138,10 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
       sharing: true,
       report: true,
     });
+    setMapCoordinates(undefined);
   };
   // singleEstate
-  const singleEstate = (id: string, title: string, category: string, province: string, city: string, district: string, code?: string) => {
+  const singleEstate = (id: string, title: string, category: string, province: string, city: string, district: string, code?: string, location?: [number, number]) => {
     setBackground("bg-white");
     setHeaderTitle(title);
     setRelatedTo(RelatedTo.Property);
@@ -159,6 +163,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
       code,
       location: [province, city, district].join(" - "),
     });
+    setMapCoordinates(!!location ? [location[1], location[0]] : undefined);
   };
   // errorPage
   const errorPage = () => {
@@ -170,6 +175,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setFullContent(true);
     setSidebar(undefined);
     setHeaderSubTitle(undefined);
+    setMapCoordinates(undefined);
   };
   // searchPage
   const searchPage = () => {
@@ -180,13 +186,13 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setBreadCrump(undefined);
     setFullContent(false);
     setSidebar(undefined);
-
     // setSidebar({
     //   small: false,
     //   props: {},
     //   component: "Features/Estate/MapEstate",
     // });
     setHeaderSubTitle(undefined);
+    setMapCoordinates(undefined);
   };
 
   // internalPage
@@ -199,6 +205,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setFullContent(false);
     setSidebar(undefined);
     setHeaderSubTitle(undefined);
+    setMapCoordinates(undefined);
   };
 
   // blogPage
@@ -211,6 +218,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
     setFullContent(false);
     setSidebar(undefined);
     setHeaderSubTitle(undefined);
+    setMapCoordinates(undefined);
   };
 
   // singlePost
@@ -229,6 +237,7 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
       component: "Features/Dashboard/DashboardSideBar",
     });
     setHeaderSubTitle(undefined);
+    setMapCoordinates(undefined);
   };
 
   return (
@@ -262,6 +271,8 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
         //
         contactModalOpen,
         setContactModalOpen,
+
+        mapCoordinates,
       }}
     >
       {children}

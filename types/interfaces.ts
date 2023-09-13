@@ -373,7 +373,7 @@ export type WebEstate = {
     title: string;
     content?: string;
     excerpt?: string;
-    slug?: string;
+    slug: string;
 
     image: StorageFile;
     gallery?: StorageFile[];
@@ -410,6 +410,7 @@ export type WebEstate = {
     province: string;
     city: string;
     district: string;
+    location?: [number, number] | string;
 
 
     owner?: User;

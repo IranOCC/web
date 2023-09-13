@@ -56,13 +56,16 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
     unitsCount,
     floor,
     withOldBuilding,
+    location,
 
     isFavorite,
   } = data;
   const { singleEstate } = useContext(WebPreviewContext) as WebPreviewContextType;
 
   useEffect(() => {
-    singleEstate(_id, title, category.title, province, city, district, code);
+    console.log(data, "data");
+
+    singleEstate(_id, title, category.title, province, city, district, code, location as [number, number]);
   }, []);
 
   const [openReserveModal, setReserveModal] = useState(false);

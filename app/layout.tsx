@@ -43,7 +43,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <MuiProvider style={{ fontFamily: IRANSansX.style }}>
         <AuthProvider>
           <WebInfoProvider initial={webInfo}>
-            <ThemeProvider initial={{ dark: false }}>
+            <ThemeProvider initial={{ dark: false, fontFamily: IRANSansX }}>
               <LoadingProvider initial={{ loading: true }}>
                 <CurrentUserProvider>
                   <html className={IRANSansX.className}>
