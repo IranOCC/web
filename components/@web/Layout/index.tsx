@@ -140,7 +140,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
           </div>
 
           {/* SIDEBAR:::: only show lower xl size */}
-          <div className={"absolute z-[103] flex h-full w-full bg-background transition-all duration-[2s] xl:hidden" + (!sidebar ? " hidden" : "") + (!isOpenDetail ? " translate-x-full" : "")}>
+          <div className={"absolute z-[103] flex h-full w-full translate-x-full bg-background transition-all duration-[2s] xl:hidden" + (!sidebar ? " hidden" : "") + (isOpenDetail ? " translate-x-0" : "")}>
             <div className="absolute end-4 top-4 z-10">
               <div
                 //
