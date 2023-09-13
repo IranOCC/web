@@ -22,11 +22,11 @@ const ContactUsModal = () => {
       <div dir="ltr" className="flex flex-col items-start">
         <Link href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold outline-none transition-colors hover:text-secondary">
           <ContactIcon />
-          <span>۰۱۱-۵۴۰۰</span>
+          <span>011-5400</span>
         </Link>
         <Link href="tel:0912 190 6047" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold outline-none transition-colors hover:text-secondary">
           <ContactIcon />
-          <span>۰۹۱۲ ۱۹۰ ۶۰۴۷</span>
+          <span>0912 190 6047</span>
         </Link>
       </div>
     </Modal>

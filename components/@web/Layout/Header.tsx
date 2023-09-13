@@ -102,7 +102,7 @@ const WebHeader = () => {
               <ContactIcon />
             </div>
             {/* <Link href="tel:0115400" className="flex flex-row justify-center gap-1 p-1 text-sm">
-              <span>۰۱۱-۵۴۰۰</span>
+              <span>011-5400</span>
             </Link> */}
           </div>
         </div>

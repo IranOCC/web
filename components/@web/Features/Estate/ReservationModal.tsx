@@ -24,7 +24,7 @@ export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpe
     >
       <ModalContent>
         <ModalBody className="py-6">
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {!createdBy && (
               <span className="truncate">
                 {/*  */}
@@ -33,7 +33,7 @@ export const ReservationModal = ({ isOpen, setOpen, office, createdBy }: { isOpe
             )}
             {!!createdBy && (
               <>
-                <div className="flex w-full flex-col items-center justify-center text-center">
+                <div className="flex w-full flex-col items-center justify-center gap-1 text-center">
                   <Avatar
                     //
                     src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + (createdBy?.avatar as StorageFile)?.path}

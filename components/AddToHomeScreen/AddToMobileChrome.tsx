@@ -1,9 +1,9 @@
 import React from "react";
 
 import { FaTimes } from "react-icons/fa";
-import { HiDotsVertical } from "react-icons/hi";
 import { MdAddToHomeScreen } from "react-icons/md";
-import { ImArrowUp } from "react-icons/im";
+import { Button, Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
+import { InstallMobile, KeyboardDoubleArrowUp, MoreVert } from "@mui/icons-material";
 
 interface Props {
   closePrompt: () => void;
@@ -14,29 +14,42 @@ export default function AddToMobileChrome(props: Props) {
   const { closePrompt, doNotShowAgain } = props;
 
   return (
-    <div className="fixed left-0 right-0 top-0 z-50 h-[60%] px-4 pt-12 text-white">
-      <ImArrowUp className="absolute right-[10px] top-[10px] z-10 animate-bounce text-4xl text-indigo-700" />
-      <div className="relative flex h-full flex-col items-center justify-around rounded-xl bg-primary p-4 text-center">
-        <button className="absolute right-0 top-0 p-3" onClick={closePrompt}>
-          <FaTimes className="text-2xl" />
-        </button>
-        <p className="text-lg">For the best experience, we recommend installing the Valley Trader app to your home screen!</p>
-        <div className="flex items-center gap-2 text-lg">
-          <p>Click the</p>
-          <HiDotsVertical className="text-4xl" />
-          <p>icon</p>
-        </div>
-        <div className="flex w-full flex-col items-center gap-2 px-4 text-lg">
-          <p>Scroll down and then click:</p>
-          <div className="bg-zinc-50 text-zinc-900 flex w-full items-center justify-between rounded-lg px-4 py-2">
-            <MdAddToHomeScreen className="text-2xl" />
-            <p>Add to Home Screen</p>
+    <Modal
+      //
+      backdrop="blur"
+      isOpen={true}
+      onClose={closePrompt}
+      className="z-[102]"
+      placement="bottom"
+      classNames={{ wrapper: "z-[102]", backdrop: "z-[102]", closeButton: "right-auto left-1" }}
+      title="نصب ایران اکازیون"
+    >
+      <KeyboardDoubleArrowUp fontSize="large" className="absolute right-[10px] top-[10px] z-[103] animate-bounce text-secondary" />
+      <ModalContent>
+        <ModalHeader>نصب ایران اکازیون</ModalHeader>
+        <ModalBody>
+          <p className="">برای کسب تجربه بهتر و جذاب تر به شما پیشنهاد می کنیم نرم افزار ایران اکازیون را بر روی دستگاه خود نصب کنید!</p>
+          <div className="flex flex-col gap-1 text-sm text-gray-500">
+            <div className="flex flex-wrap items-center gap-1">
+              <p>بر روی</p>
+              <MoreVert />
+              <p>کلیک کنید</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-1">
+              <p>به پایین اسکرول کنید و</p>
+              <div dir="ltr" className="flex items-center justify-between gap-2 rounded-lg bg-gray-50 p-1 text-gray-900">
+                <InstallMobile />
+                <p>Install app</p>
+              </div>
+              را بزنید
+            </div>
+            <div className="flex flex-wrap items-center gap-1">
+              <p>مراحل نصب را ادامه دهید</p>
+            </div>
           </div>
-        </div>
-        <button className="border-2 p-1" onClick={doNotShowAgain}>
-          Don&apos;t show again
-        </button>
-      </div>
-    </div>
+          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   );
 }

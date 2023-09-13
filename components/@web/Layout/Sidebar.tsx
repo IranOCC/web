@@ -79,7 +79,7 @@ const WebSideBar = () => {
           <h2 className="text-lg font-bold">املاک اکازیون</h2>
         </Link>
         <div onClick={() => setContactModalOpen(true)} className="flex cursor-pointer flex-row justify-center gap-1 p-1 text-lg font-bold transition-colors hover:text-secondary ">
-          <span>۰۱۱-۵۴۰۰</span>
+          <span>011-5400</span>
           <ContactIcon />
         </div>
       </div>
