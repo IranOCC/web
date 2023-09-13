@@ -93,6 +93,7 @@ export default function Page() {
     setValue("buildingArea", data.buildingArea);
     setValue("unitsCount", data.unitsCount);
     setValue("floor", data.floor);
+    setValue("floorsCount", data.floorsCount);
     setValue("withOldBuilding", data.withOldBuilding);
     setValue("features", data.features);
 
@@ -152,9 +153,9 @@ export default function Page() {
         }}
       />
       <AddEditEstateCheckModal
-      // 
-       set={setCheckingData} 
-       />
+        //
+        set={setCheckingData}
+      />
     </>
   );
 }
