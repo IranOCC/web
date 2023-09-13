@@ -36,7 +36,15 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
     const value = parseInt(val.replaceAll(",", ""));
     const area = parseInt(getValues("area")?.toString()?.replaceAll(",", "") || "0");
     const price = parseInt(getValues("price")?.toString()?.replaceAll(",", "") || "0");
-    const data = parseInt((f === "area" ? value * price : value * area).toString());
+    const data = parseInt((f === "area" ? price * value : value * area).toString());
+    setValue("totalPrice", data || 0, { shouldValidate: true });
+  };
+
+  const calculatePrice = (val: string, f: "area" | "totalPrice") => {
+    const value = parseInt(val.replaceAll(",", ""));
+    const area = parseInt(getValues("area")?.toString()?.replaceAll(",", "") || "0");
+    const totalPrice = parseInt(getValues("totalPrice")?.toString()?.replaceAll(",", "") || "0");
+    const data = parseInt((f === "area" ? totalPrice / value : value / area).toString());
     setValue("totalPrice", data || 0, { shouldValidate: true });
   };
 
@@ -101,7 +109,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             error={errors.area?.message}
             loading={isSubmitting}
             noSpace
-            onKeyUp={(e: any) => calculateTotalPrice(e.target.value, "area")}
+            onKeyUp={(e: any) => calculatePrice(e.target.value, "area")}
             defaultValue={checkingData?.area?.default}
             disabled={checkingData?.area?.disabled}
             containerClassName={!!checkingData?.area?.hidden ? "hidden" : ""}
@@ -141,6 +149,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             error={errors.totalPrice?.message}
             loading={isSubmitting}
             noSpace
+            onKeyUp={(e: any) => calculatePrice(e.target.value, "totalPrice")}
             defaultValue={checkingData?.totalPrice?.default}
             disabled={checkingData?.totalPrice?.disabled}
             containerClassName={["col-span-full", !!checkingData?.totalPrice?.hidden ? "hidden" : ""].join(" ")}
