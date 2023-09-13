@@ -150,7 +150,7 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                 size="lg"
                 className="text-white"
               >
-                <ArrowBackIosNew style={{ fontSize: 44, cursor: "pointer" }} />
+                <ArrowBackIosNew style={{ fontSize: 32 }} />
               </Button>
             </div>
             {headerSubTitle?.type === "estate" && (
@@ -161,10 +161,10 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                   isIconOnly
                   radius="full"
                   size="lg"
-                  color="warning"
+                  color="secondary"
                   className="text-white"
                 >
-                  <LocationOn style={{ fontSize: 44, cursor: "pointer" }} />
+                  <LocationOn style={{ fontSize: 32 }} />
                 </Button>
               </div>
             )}

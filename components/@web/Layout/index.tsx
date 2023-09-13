@@ -59,10 +59,10 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                           isIconOnly
                           radius="full"
                           size="sm"
-                          color="warning"
+                          color="secondary"
                           className="text-white"
                         >
-                          <LocationOn style={{ cursor: "pointer" }} />
+                          <LocationOn />
                         </Button>
                       </h6>
                     )}
