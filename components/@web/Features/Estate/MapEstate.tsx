@@ -48,7 +48,7 @@ const MapEstate = () => {
   const { mapCoordinates } = useContext(WebPreviewContext) as WebPreviewContextType;
   const { fontFamily } = useContext(ThemeContext) as ThemeContextType;
 
-  const [center, setCenter] = useState(mapCoordinates ? [+mapCoordinates[0], +mapCoordinates[1]] : [36.699735, 51.196246]);
+  const [center, setCenter] = useState(mapCoordinates ? [+mapCoordinates[0], +mapCoordinates[1]] : [51.196246, 36.699735]);
 
   const onShowPopup = async (id: string, coordinates: number[]) => {
     setSelectedMarker({ id, coordinates, loading: true });
