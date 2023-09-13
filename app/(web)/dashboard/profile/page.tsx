@@ -21,12 +21,13 @@ export default function Page() {
   }, []);
 
   const [selectedTab, setSelectedTab] = useState<Key>("info");
-
+  
+  const router = useRouter();
+  
   const { user } = useContext(CurrentUserContext) as CurrentUserContextType;
   if (!user) return null;
 
-  const router = useRouter();
-
+  
   return (
     <div className="flex h-auto min-h-full flex-col items-center justify-start bg-gray-200 pb-16 md:bg-transparent md:pb-4">
       <div className="sticky top-[-1px] z-20 flex w-full flex-row gap-2 self-start bg-gray-200 px-4 py-3 md:bg-white">
