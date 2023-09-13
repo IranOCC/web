@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import { useContext, useEffect } from "react";
-import { Card, CardBody } from "@nextui-org/react";
+import { Button, Card, CardBody } from "@nextui-org/react";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { ArrowForwardIos } from "@mui/icons-material";
 
 export default function Page() {
   const { dashboardPage } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -12,9 +14,19 @@ export default function Page() {
     dashboardPage();
   }, []);
 
+  const router = useRouter();
+
   return (
     <div className="flex h-auto min-h-full flex-col items-center justify-between bg-gray-200 pb-16 md:bg-transparent md:pb-4">
-      <div className="sticky top-[-1px] z-20 flex w-full flex-col gap-2 self-start bg-gray-200 px-4 py-3 md:bg-white">
+      <div className="sticky top-[-1px] z-20 flex w-full flex-row gap-2 self-start bg-gray-200 px-4 py-3 md:bg-white">
+        <Button
+          //
+          isIconOnly
+          size="sm"
+          onPress={() => router.back()}
+        >
+          <ArrowForwardIos />
+        </Button>
         <h1 className="relative flex w-fit justify-center pb-1 text-lg font-bold after:absolute after:bottom-0 after:h-1 after:w-[calc(100%-30px)] after:rounded-md after:bg-secondary after:content-['']">
           داشبورد من
           {/*  */}

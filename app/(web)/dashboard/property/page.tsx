@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import { useContext, useEffect, useState } from "react";
-import { Card, CardBody, Chip, ScrollShadow, Tab, Tabs } from "@nextui-org/react";
+import { Button, Card, CardBody, Chip, ScrollShadow, Tab, Tabs } from "@nextui-org/react";
 import { signOut } from "next-auth/react";
 import { Empty, Tooltip } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -12,7 +12,7 @@ import { WebEstate } from "@/types/interfaces";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { LoadingWithoutBg } from "@/components/Loading";
 import EstateCard from "@/components/@web/Features/Estate/EstateCard";
-import { AccessTime, Call, Check, Close, FavoriteBorderOutlined, Info, InfoOutlined, Pending, SelectAll, Visibility } from "@mui/icons-material";
+import { AccessTime, ArrowForwardIos, Call, Check, Close, FavoriteBorderOutlined, Info, InfoOutlined, Pending, SelectAll, Visibility } from "@mui/icons-material";
 import { ReservationModal } from "@/components/@web/Features/Estate/ReservationModal";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import { toast } from "@/lib/toast";
@@ -61,10 +61,20 @@ export default function Page() {
     if (!!current[0]) getData();
   }, [current]);
 
+  const router = useRouter();
+
   return (
     <>
       <div className="flex h-auto min-h-full flex-col bg-gray-200 pb-16 md:bg-transparent md:pb-4">
-        <div className="sticky top-[-1px] z-20 flex w-full flex-col gap-2 self-start bg-gray-200 px-4 py-3 md:bg-white">
+        <div className="sticky top-[-1px] z-20 flex w-full flex-row gap-2 self-start bg-gray-200 px-4 py-3 md:bg-white">
+          <Button
+            //
+            isIconOnly
+            size="sm"
+            onPress={() => router.back()}
+          >
+            <ArrowForwardIos />
+          </Button>
           <h1 className="relative flex w-fit justify-center pb-1 text-lg font-bold after:absolute after:bottom-0 after:h-1 after:w-[calc(100%-30px)] after:rounded-md after:bg-secondary after:content-['']">
             املاک من
             {/*  */}

@@ -11,6 +11,8 @@ import { Controller, useForm } from "react-hook-form";
 import { Phone, StorageFile, User } from "@/types/interfaces";
 import LogoUploader from "@/components/Uploader/LogoUploader";
 import { PatternFormat } from "react-number-format";
+import { useRouter } from "next/navigation";
+import { ArrowForwardIos } from "@mui/icons-material";
 
 export default function Page() {
   const { dashboardPage } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -23,9 +25,19 @@ export default function Page() {
   const { user } = useContext(CurrentUserContext) as CurrentUserContextType;
   if (!user) return null;
 
+  const router = useRouter();
+
   return (
     <div className="flex h-auto min-h-full flex-col items-center justify-start bg-gray-200 pb-16 md:bg-transparent md:pb-4">
-      <div className="sticky top-[-1px] z-20 flex w-full flex-col gap-2 self-start bg-gray-200 px-4 py-3 md:bg-white">
+      <div className="sticky top-[-1px] z-20 flex w-full flex-row gap-2 self-start bg-gray-200 px-4 py-3 md:bg-white">
+        <Button
+          //
+          isIconOnly
+          size="sm"
+          onPress={() => router.back()}
+        >
+          <ArrowForwardIos />
+        </Button>
         <h1 className="relative flex w-fit justify-center pb-1 text-lg font-bold after:absolute after:bottom-0 after:h-1 after:w-[calc(100%-30px)] after:rounded-md after:bg-secondary after:content-['']">
           پروفایل من
           {/*  */}
