@@ -17,7 +17,8 @@ import ReportButton from "../Features/@common/ReportButton";
 import RatingButton from "../Features/@common/RatingButton";
 import ContactUsModal from "@/components/Modals/ContactUsModal";
 import { GoogleAnalytics } from "nextjs-google-analytics";
-import { ExitToAppSharp } from "@mui/icons-material";
+import { ExitToAppSharp, LocationOn } from "@mui/icons-material";
+import { Button } from "@nextui-org/react";
 
 const getDynamicComponent = (path: string) =>
   dynamic(() => import("@/components/@web/" + path), {
@@ -50,8 +51,19 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
                     {headerSubTitle?.type === "estate" && <h4 className="text-sm font-bold">کد: {headerSubTitle.code || "-"}</h4>}
                     {headerSubTitle?.type === "estate" && (
                       <h6 className="flex items-center gap-1 text-sm font-medium text-gray-600">
-                        <MarkerIcon />
+                        {/* <MarkerIcon /> */}
                         <span className="order-last lg:order-first">{headerSubTitle.location || "-"}</span>
+                        <Button
+                          //
+                          onPress={() => toggleOpenDetail()}
+                          isIconOnly
+                          radius="full"
+                          size="sm"
+                          color="warning"
+                          className="text-white"
+                        >
+                          <LocationOn style={{ cursor: "pointer" }} />
+                        </Button>
                       </h6>
                     )}
                     {headerSubTitle?.type === "blog" && (
