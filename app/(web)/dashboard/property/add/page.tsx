@@ -23,6 +23,9 @@ export default function Page() {
           isIconOnly
           size="sm"
           onPress={() => router.back()}
+          className="text-white"
+          radius="md"
+          color="secondary"
         >
           <ArrowForwardIos />
         </Button>
