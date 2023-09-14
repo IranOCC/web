@@ -41,13 +41,13 @@ export type MyProfileFormData = {
     nationalCode?: string;
     birthday?: string;
     // 
-    phone?: Phone | string;
-    email?: Email | string;
-    // 
-    province?: string;
-    city?: string;
-    address?: string;
-    location?: [number, number] | string;
+    // phone?: Phone | string;
+    // email?: Email | string;
+    // // 
+    // province?: string;
+    // city?: string;
+    // address?: string;
+    // location?: [number, number] | string;
 };
 
 

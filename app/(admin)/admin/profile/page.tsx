@@ -37,24 +37,6 @@ export default function Page() {
     setValue("firstName", data?.firstName || "");
     setValue("lastName", data?.lastName || "");
     setValue("avatar", data.avatar as StorageFile);
-    //
-    setValue("phone", data.phone as Phone);
-    setValue("email", data.email as Email);
-    //
-    setValue("province", data.province);
-    setValue("city", data.city);
-    setValue("address", data.address);
-    setValue("location", data.location);
-  };
-
-  const beforeSubmit = (data: MyProfileFormData) => {
-    if (!(data.phone as Phone)?.value) {
-      data.phone = undefined;
-    }
-    if (!(data.email as Email)?.value) {
-      data.email = undefined;
-    }
-    return data;
   };
 
   const [loading, setLoading] = useState(false);
@@ -68,7 +50,6 @@ export default function Page() {
   }, [user]);
 
   const onSubmit = async (data: MyProfileFormData) => {
-    data = beforeSubmit(data);
     try {
       await api.patch("/auth", data);
       toast.success("با موفقیت ویرایش شد");

@@ -119,6 +119,7 @@ const adminRoutes = [
     },
 ]
 
+const dashboardPrefix = "/dashboard";
 
 
 export default withAuth(
@@ -142,8 +143,13 @@ export default withAuth(
                 }
             }
         }
-        // ==> USER
-        // ***
+        // ==> DASHBOARD
+        if (path.startsWith(dashboardPrefix)) {
+            if (path !== "/dashboard/profile") {
+                const redirect = "/dashboard/profile" + "?section=info&error=ابتدا پروفایل خود را تکمیل کنید"
+                return NextResponse.rewrite(new URL(redirect, req.url))
+            }
+        }
     },
     {
         callbacks: {

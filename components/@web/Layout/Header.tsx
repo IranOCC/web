@@ -31,9 +31,9 @@ const WebHeader = () => {
             {isLogin && (
               <div className="flex h-full cursor-pointer items-center justify-center gap-2" onMouseEnter={() => setOpenSubMenu(true)} onMouseLeave={() => setOpenSubMenu(false)}>
                 <div className="relative z-10 h-full">
-                  <span className="flex h-full  items-center justify-center gap-1 px-2 transition-colors">
+                  <span className="flex h-full items-center justify-center gap-1 px-2 transition-colors">
                     <ArrowDownOutlineIcon />
-                    <span>{user?.fullName}</span>
+                    <span className={`min-w-[7rem] ${user?.fullName || "text-red-500"}`}>{user?.fullName || "تکمیل نشده!"}</span>
                   </span>
 
                   <div className={"absolute top-0 -z-10 w-full overflow-hidden rounded-2xl bg-white px-4 pb-2 pt-10 shadow-[0px_0px_19px_0px_rgba(0,0,0,0.25)]" + (openSubMenu ? " block" : " hidden")}>
