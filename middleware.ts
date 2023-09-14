@@ -144,7 +144,7 @@ export default withAuth(
             }
         }
         // ==> DASHBOARD
-        if (path.startsWith(dashboardPrefix)) {
+        if (false && path.startsWith(dashboardPrefix)) {
             if (path !== "/dashboard/profile") {
                 const redirect = "/dashboard/profile" + "?section=info&error=ابتدا پروفایل خود را تکمیل کنید"
                 return NextResponse.rewrite(new URL(redirect, req.url))
