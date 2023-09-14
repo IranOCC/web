@@ -37,6 +37,7 @@ const BlogList = ({ data }: { data?: { items?: WebBlogPost[]; total: number } })
       } else {
         setDataList((d) => [...d, ...data.items]);
       }
+      
       setDataLoading(false);
     } catch (error) {
       setDataLoading(false);
