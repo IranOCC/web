@@ -217,6 +217,7 @@ const UserInfo = ({ user }: { user: User }) => {
                     label="نام"
                     placeholder="عباس"
                     {...field}
+                    isReadOnly={isLoading || isSubmitting || isValidating}
                     isRequired
                     classNames={{ errorMessage: "text-right" }}
                     errorMessage={errors.firstName?.message}
@@ -244,6 +245,7 @@ const UserInfo = ({ user }: { user: User }) => {
                     label="نام خانوادگی"
                     placeholder="غلامی"
                     {...field}
+                    isReadOnly={isLoading || isSubmitting || isValidating}
                     isRequired
                     classNames={{ errorMessage: "text-right" }}
                     errorMessage={errors.lastName?.message}
@@ -274,6 +276,7 @@ const UserInfo = ({ user }: { user: User }) => {
                     placeholder="0910170747"
                     dir="ltr"
                     {...field}
+                    isReadOnly={isLoading || isSubmitting || isValidating}
                     isRequired
                     classNames={{ errorMessage: "text-right" }}
                     errorMessage={errors.nationalCode?.message}
@@ -309,6 +312,7 @@ const UserInfo = ({ user }: { user: User }) => {
                     placeholder="1377/07/21"
                     dir="ltr"
                     {...field}
+                    isReadOnly={isLoading || isSubmitting || isValidating}
                     // isRequired
                     classNames={{ errorMessage: "text-right" }}
                     errorMessage={errors.birthday?.message}
@@ -335,6 +339,7 @@ const UserInfo = ({ user }: { user: User }) => {
             //
             color="default"
             onPress={() => reset()}
+            isDisabled={isLoading || isSubmitting || isValidating}
           >
             ریست
           </Button>
@@ -342,6 +347,7 @@ const UserInfo = ({ user }: { user: User }) => {
             //
             color="secondary"
             type="submit"
+            isLoading={isLoading || isSubmitting || isValidating}
           >
             ویرایش
           </Button>
