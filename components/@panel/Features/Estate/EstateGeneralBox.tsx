@@ -45,7 +45,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
     const area = parseInt(getValues("area")?.toString()?.replaceAll(",", "") || "0");
     const totalPrice = parseInt(getValues("totalPrice")?.toString()?.replaceAll(",", "") || "0");
     const data = parseInt((f === "area" ? totalPrice / value : value / area).toString());
-    setValue("totalPrice", data || 0, { shouldValidate: true });
+    setValue("price", data || 0, { shouldValidate: true });
   };
 
   const { checkingData } = props;
@@ -122,16 +122,16 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
           <Input
             //
             control={control}
-            name="price"
-            label="قیمت هر متر (تومان)"
+            name="totalPrice"
+            label="قیمت کل (تومان)"
             direction="ltr"
-            error={errors.price?.message}
+            error={errors.totalPrice?.message}
             loading={isSubmitting}
             noSpace
-            onKeyUp={(e: any) => calculateTotalPrice(e.target.value, "price")}
-            defaultValue={checkingData?.price?.default}
-            disabled={checkingData?.price?.disabled}
-            containerClassName={!!checkingData?.price?.hidden ? "hidden" : ""}
+            onKeyUp={(e: any) => calculatePrice(e.target.value, "totalPrice")}
+            defaultValue={checkingData?.totalPrice?.default}
+            disabled={checkingData?.totalPrice?.disabled}
+            containerClassName={[!!checkingData?.totalPrice?.hidden ? "hidden" : ""].join(" ")}
             numericFormatProps={{
               allowNegative: false,
               allowLeadingZeros: false,
@@ -143,16 +143,16 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
           <Input
             //
             control={control}
-            name="totalPrice"
-            label="قیمت کل (تومان)"
+            name="price"
+            label="قیمت هر متر (تومان)"
             direction="ltr"
-            error={errors.totalPrice?.message}
+            error={errors.price?.message}
             loading={isSubmitting}
             noSpace
-            onKeyUp={(e: any) => calculatePrice(e.target.value, "totalPrice")}
-            defaultValue={checkingData?.totalPrice?.default}
-            disabled={checkingData?.totalPrice?.disabled}
-            containerClassName={["col-span-full", !!checkingData?.totalPrice?.hidden ? "hidden" : ""].join(" ")}
+            onKeyUp={(e: any) => calculateTotalPrice(e.target.value, "price")}
+            defaultValue={checkingData?.price?.default}
+            disabled={checkingData?.price?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.price?.hidden ? "hidden" : ""].join(" ")}
             numericFormatProps={{
               allowNegative: false,
               allowLeadingZeros: false,
@@ -161,6 +161,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
               thousandSeparator: ",",
             }}
           />
+
           <Input
             //
             control={control}
