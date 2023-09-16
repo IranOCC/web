@@ -12,6 +12,20 @@ export async function fetchWebInfo() {
 
 
 
+export async function fetchMe() {
+    const session = await getServerSession(authOptions);
+    console.log(session, 'session');
+
+    const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/auth", { headers: { "Authorization": `Bearer ${session?.accessToken}` } });
+
+    const data = await res.json();
+
+    console.log(data, 'data');
+
+    return data;
+}
+
+
 export async function fetchBlogList(s?: URLSearchParams) {
     const session = await getServerSession(authOptions);
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog/post?size=10&current=1${!!s ? "&" + s.toString() : ""}`, { headers: { "Authorization": `Bearer ${session?.accessToken}` }, next: { revalidate: 1 } });

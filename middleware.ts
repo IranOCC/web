@@ -2,6 +2,10 @@ import { withAuth } from "next-auth/middleware"
 import { NextResponse } from "next/server"
 import { Session, } from "./types/interfaces"
 import { UserRoles } from "./types/enum"
+import axiosSSR from "./lib/axiosSSR";
+import { fetchMe, fetchWebInfo } from "./lib/ssr.fetch";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./pages/api/auth/[...nextauth]";
 
 const adminPrefix = "/admin";
 const adminRoutes = [
@@ -123,11 +127,24 @@ const dashboardPrefix = "/dashboard";
 
 
 export default withAuth(
-    function middleware(req) {
+    async function middleware(req) {
         const _token = req.nextauth.token as any as Session
         const myRoles = _token.user.roles
         const path = req.nextUrl.pathname
 
+        const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/auth", { headers: { "Authorization": `Bearer ${_token.accessToken}` } });
+        const me = await res.json();
+
+
+        if (!me.firstName && !me.lastName) {
+            // ==> DASHBOARD
+            if (path.startsWith(adminPrefix) || path.startsWith(dashboardPrefix)) {
+                if (path !== "/dashboard/profile") {
+                    const redirect = "/dashboard/profile" + "?section=info&error=ابتدا پروفایل خود را تکمیل کنید"
+                    return NextResponse.rewrite(new URL(redirect, req.url))
+                }
+            }
+        }
         // ==> ADMIN
         if (path.startsWith(adminPrefix)) {
             const redirect = adminPrefix + "?error=شما دسترسی به این صفحه ندارید"
@@ -141,13 +158,6 @@ export default withAuth(
                         return NextResponse.rewrite(new URL(redirect, req.url))
                     }
                 }
-            }
-        }
-        // ==> DASHBOARD
-        if (false && path.startsWith(dashboardPrefix)) {
-            if (path !== "/dashboard/profile") {
-                const redirect = "/dashboard/profile" + "?section=info&error=ابتدا پروفایل خود را تکمیل کنید"
-                return NextResponse.rewrite(new URL(redirect, req.url))
             }
         }
     },
