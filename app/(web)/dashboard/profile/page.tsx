@@ -17,7 +17,7 @@ import { Alert } from "@mui/material";
 import { handleFieldsError } from "@/lib/axios";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
-import moment from "moment";
+import moment from "jalali-moment";
 
 export default function Page({ searchParams }: any) {
   const { dashboardPage } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -168,11 +168,13 @@ const UserInfo = ({ user }: { user: User }) => {
     setValue("avatar", user!.avatar! as StorageFile);
 
     setValue("nationalCode", user!.nationalCode!);
-    setValue("birthday", user!.birthday!);
+    setValue("birthday", user?.birthday ? moment(user.birthday).format("jYYYY/jMM/jDD") : "");
   }, []);
 
   const api = useAxiosAuth();
   const onSubmit = async (data: MyProfileFormData) => {
+    data.birthday = moment(data.birthday, "jYYYY/jMM/jDD").startOf("day").toISOString();
+    // alert(data.birthday);
     try {
       await api.patch("/auth", data);
       toast.success("با موفقیت ویرایش شد");
@@ -327,6 +329,8 @@ const UserInfo = ({ user }: { user: User }) => {
                     const mom = moment(value, "jYYYY/jMM/jDD");
                     const isValid = mom.isValid();
                     const isBefore = mom.isBefore();
+                    console.log(value?.length, isEnLength, isValid, isBefore);
+
                     if (!isEnLength || !isValid || !isBefore) return "تاریخ نامعتبر است";
                   },
                 },
