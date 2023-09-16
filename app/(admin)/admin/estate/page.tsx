@@ -159,9 +159,13 @@ export default function Page() {
                 key: "confirmPublish",
                 label: (
                   <Link href="#" onClick={() => confirmPublish(id!)}>
-                    تایید ملک و انتشار
+                    تایید و انتشار
                   </Link>
                 ),
+              },
+              {
+                key: "viewProperty",
+                label: <Link href="#">مشاهده ملک</Link>,
               },
             ];
           }}
