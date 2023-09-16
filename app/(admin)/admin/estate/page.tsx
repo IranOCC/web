@@ -31,6 +31,7 @@ const columns: ColumnsType<Estate> = [
     dataIndex: "code",
     responsive: ["sm"],
     render: (code: string) => {
+      if (!code) return "-";
       return (
         <Tag color="orange" key={code}>
           {code}
