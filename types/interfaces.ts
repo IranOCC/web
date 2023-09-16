@@ -422,6 +422,9 @@ export type WebEstate = {
 
     isConfirmed?: boolean;
     isRejected?: boolean;
+
+    dailyRent?: boolean;
+    annualRent?: boolean;
 };
 
 

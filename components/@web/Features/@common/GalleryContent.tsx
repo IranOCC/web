@@ -11,7 +11,7 @@ import ReportButton from "./ReportButton";
 import ShareButton from "./ShareButton";
 import FeaturesList from "../Estate/FeaturesList";
 import { ArrowBackIosNew, LocationOn } from "@mui/icons-material";
-import { Button } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
 function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): KeenSliderPlugin {
@@ -141,7 +141,7 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
               })}
             </div>
 
-            <div className="absolute left-4 top-4 block rounded-full md:hidden">
+            <div className="absolute left-3 top-3 block rounded-full md:hidden">
               <Button
                 //
                 onPress={() => router.back()}
@@ -154,19 +154,37 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
               </Button>
             </div>
             {headerSubTitle?.type === "estate" && (
-              <div className="absolute right-4 top-4 block rounded-full md:hidden">
-                <Button
-                  //
-                  onPress={() => toggleOpenDetail()}
-                  isIconOnly
-                  radius="full"
-                  size="lg"
-                  color="secondary"
-                  className="text-white"
-                >
-                  <LocationOn style={{ fontSize: 32 }} />
-                </Button>
-              </div>
+              <>
+                {(estateData?.dailyRent || estateData?.annualRent) && (
+                  <div className="absolute bottom-3 right-3 block">
+                    <div className="relative flex flex-col gap-1">
+                      {estateData?.dailyRent && (
+                        <Chip variant="shadow" color="secondary">
+                          اجاره روزانه
+                        </Chip>
+                      )}
+                      {estateData?.annualRent && (
+                        <Chip variant="shadow" color="secondary">
+                          اجاره سالانه
+                        </Chip>
+                      )}
+                    </div>
+                  </div>
+                )}
+                <div className="absolute right-3 top-3 block rounded-full md:hidden">
+                  <Button
+                    //
+                    onPress={() => toggleOpenDetail()}
+                    isIconOnly
+                    radius="full"
+                    size="lg"
+                    color="secondary"
+                    className="text-white"
+                  >
+                    <LocationOn style={{ fontSize: 32 }} />
+                  </Button>
+                </div>
+              </>
             )}
             {headerSubTitle?.type === "estate" && !!headerSubTitle?.code && <div className="absolute bottom-3 left-3 block rounded-full bg-gray-300 px-2 py-1 font-bold text-gray-700 md:hidden">{headerSubTitle.code}</div>}
             {items.length > 1 && loaded && instanceRef.current && (
