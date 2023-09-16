@@ -10,6 +10,8 @@ import moment from "jalali-moment";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { toast } from "@/lib/toast";
 import { useState } from "react";
+import { Button, Chip, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
+import { ConfirmRejectModal } from "@/components/@web/Features/Estate/ConfirmRejectModal";
 
 const columns: ColumnsType<Estate> = [
   {
@@ -59,24 +61,44 @@ const columns: ColumnsType<Estate> = [
     },
   },
   {
-    title: "تایید",
+    title: "تایید یا رد",
     dataIndex: "isConfirmed",
     responsive: ["xl"],
-    render: (isConfirmed, { confirmedAt, confirmedBy }) => {
-      if (!isConfirmed)
+    render: (_, { isConfirmed, confirmedAt, confirmedBy, isRejected, rejectedAt, rejectedBy, rejectedReason }) => {
+      if (!isConfirmed && !isRejected) {
         return (
-          <Tag color="red" key="not-confirmed">
-            تایید نشده
-          </Tag>
+          <Chip variant="dot" size="sm" color="warning">
+            در انتظار
+          </Chip>
         );
-      return (
-        <div className="flex flex-col">
-          {!!confirmedBy && <span>{(confirmedBy as User)?.fullName}</span>}
-          {!!confirmedAt && <span>{moment(confirmedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
-        </div>
-      );
+      }
+
+      if (isRejected) {
+        return (
+          <div className="flex flex-col">
+            <Chip variant="dot" size="sm" color="danger">
+              رد شده
+            </Chip>
+            {!!rejectedBy && <span>{(rejectedBy as User)?.fullName}</span>}
+            {!!rejectedAt && <span>{moment(rejectedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
+            {!!rejectedReason && <span>{rejectedReason}</span>}
+          </div>
+        );
+      }
+      if (isConfirmed) {
+        return (
+          <div className="flex flex-col">
+            <Chip variant="dot" size="sm" color="success">
+              تایید شده
+            </Chip>
+            {!!confirmedBy && <span>{(confirmedBy as User)?.fullName}</span>}
+            {!!confirmedAt && <span>{moment(confirmedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>}
+          </div>
+        );
+      }
     },
   },
+
   {
     title: "صاحب ملک",
     dataIndex: ["owner", "fullName"],
@@ -99,30 +121,15 @@ const columns: ColumnsType<Estate> = [
 export default function Page() {
   const [updateTable, setUpdateTable] = useState([false]);
   const [loading, setLoading] = useState(false);
+  const [confirmRejectModal, setConfirmRejectModal] = useState<{ id: string; type: "reject" | "confirm" }>();
 
   const api = useAxiosAuth();
   const confirmPublish = async (id: string) => {
-    setLoading(true);
-    try {
-      await api.patch(`/admin/estate/confirm/${id}`);
-      toast.success("انتشار ملک تایید شد");
-      setUpdateTable([true]);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
+    setConfirmRejectModal({ id, type: "confirm" });
   };
 
   const rejectPublish = async (id: string) => {
-    setLoading(true);
-    try {
-      await api.patch(`/admin/estate/reject/${id}`);
-      toast.success("انتشار ملک رد شد");
-      setUpdateTable([true]);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
+    setConfirmRejectModal({ id, type: "reject" });
   };
 
   return (
@@ -138,24 +145,20 @@ export default function Page() {
           update={updateTable}
           loading={loading}
           extraOperations={(id?: string, record?: any) => {
-            if (record?.isConfirmed) {
-              return [
-                {
-                  key: "rejectPublish",
-                  label: (
-                    <Link href="#" onClick={() => rejectPublish(id!)}>
-                      لغو انتشار
-                    </Link>
-                  ),
-                },
-              ];
-            }
             return [
+              {
+                key: "rejectPublish",
+                label: (
+                  <Link href="#" onClick={() => rejectPublish(id!)}>
+                    رد ملک
+                  </Link>
+                ),
+              },
               {
                 key: "confirmPublish",
                 label: (
                   <Link href="#" onClick={() => confirmPublish(id!)}>
-                    تایید انتشار
+                    تایید ملک و انتشار
                   </Link>
                 ),
               },
@@ -163,6 +166,14 @@ export default function Page() {
           }}
         />
       </div>
+      <ConfirmRejectModal
+        //
+        id={confirmRejectModal?.id}
+        type={confirmRejectModal?.type}
+        isOpen={!!confirmRejectModal}
+        setClose={() => setConfirmRejectModal(undefined)}
+        update={() => setUpdateTable([true])}
+      />
     </>
   );
 }

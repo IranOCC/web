@@ -372,3 +372,12 @@ export type CommentFormData = {
     content: string;
     replyTo: string;
 };
+
+
+
+
+export type RejectFormData = {
+    reason?: string;
+};
+
+

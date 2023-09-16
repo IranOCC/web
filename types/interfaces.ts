@@ -148,9 +148,14 @@ export interface Estate {
     createdAt?: Date;
 
     isConfirmed?: boolean;
-
     confirmedBy?: User | string;
     confirmedAt?: Date;
+
+    isRejected?: boolean;
+    rejectedBy?: User | string;
+    rejectedAt?: Date;
+
+    rejectedReason?: string;
 };
 
 
