@@ -220,6 +220,28 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         disabled={checkingData?.features?.disabled}
         containerClassName={["col-span-full", !!checkingData?.features?.hidden ? "hidden" : ""].join(" ")}
       />
+      <CheckBox //
+        control={control}
+        name="dailyRent"
+        label="اجاره روزانه"
+        error={errors.dailyRent?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.dailyRent?.default}
+        disabled={checkingData?.dailyRent?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.dailyRent?.hidden ? "hidden" : ""].join(" ")}
+      />
+      <CheckBox //
+        control={control}
+        name="annualRent"
+        label="اجاره سالانه"
+        error={errors.annualRent?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.annualRent?.default}
+        disabled={checkingData?.annualRent?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.annualRent?.hidden ? "hidden" : ""].join(" ")}
+      />
     </>
   );
 };
@@ -366,6 +388,28 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         disabled={checkingData?.features?.disabled}
         containerClassName={["col-span-full", !!checkingData?.features?.hidden ? "hidden" : ""].join(" ")}
       />
+      <CheckBox //
+        control={control}
+        name="dailyRent"
+        label="اجاره روزانه"
+        error={errors.dailyRent?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.dailyRent?.default}
+        disabled={checkingData?.dailyRent?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.dailyRent?.hidden ? "hidden" : ""].join(" ")}
+      />
+      <CheckBox //
+        control={control}
+        name="annualRent"
+        label="اجاره سالانه"
+        error={errors.annualRent?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.annualRent?.default}
+        disabled={checkingData?.annualRent?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.annualRent?.hidden ? "hidden" : ""].join(" ")}
+      />
     </>
   );
 };
@@ -425,6 +469,28 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
         defaultValue={checkingData?.floor?.default}
         disabled={checkingData?.floor?.disabled}
         containerClassName={["col-span-full", !!checkingData?.floor?.hidden ? "hidden" : ""].join(" ")}
+      />
+      <CheckBox //
+        control={control}
+        name="dailyRent"
+        label="اجاره روزانه"
+        error={errors.dailyRent?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.dailyRent?.default}
+        disabled={checkingData?.dailyRent?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.dailyRent?.hidden ? "hidden" : ""].join(" ")}
+      />
+      <CheckBox //
+        control={control}
+        name="annualRent"
+        label="اجاره سالانه"
+        error={errors.annualRent?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.annualRent?.default}
+        disabled={checkingData?.annualRent?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.annualRent?.hidden ? "hidden" : ""].join(" ")}
       />
     </>
   );

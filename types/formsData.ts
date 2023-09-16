@@ -179,6 +179,10 @@ export type EstateFormData = {
 
     owner?: User | string;
     office?: Office | string;
+
+    dailyRent?: boolean;
+    annualRent?: boolean;
+
 };
 
 
