@@ -111,7 +111,7 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
           </>
         )}
         {(loading || fetchLoading) && (
-          <div className="absolute left-0 top-0 h-full w-full">
+          <div className="absolute left-0 top-0 z-10 h-full w-full">
             <div className="flex h-full items-center justify-center bg-white/20">{<Spin />}</div>
           </div>
         )}
