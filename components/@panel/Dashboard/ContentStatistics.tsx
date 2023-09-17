@@ -1,50 +1,30 @@
 import { Button, Card, CardFooter, Image, CardHeader, Tabs, Tab } from "@nextui-org/react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, LineChart, Tooltip, ResponsiveContainer, Line, Legend } from "recharts";
 import { Spinner } from "@nextui-org/react";
-import { useState, Key } from "react";
+import { useState, Key, useEffect } from "react";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import { cn } from "@nextui-org/react";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 
 export const PostsStatistics = () => {
   const [loading, setLoading] = useState(false);
   const [period, setPeriod] = useState<Key>("daily");
-  const [data, setData] = useState([
-    {
-      name: "1402/06/05",
-      confirmed: 22,
-      total: 74,
-    },
-    {
-      name: "1402/06/06",
-      confirmed: 33,
-      total: 92,
-    },
-    {
-      name: "1402/06/07",
-      confirmed: 31,
-      total: 82,
-    },
-    {
-      name: "1402/06/08",
-      confirmed: 27,
-      total: 78,
-    },
-    {
-      name: "1402/06/09",
-      confirmed: 24,
-      total: 68,
-    },
-    {
-      name: "1402/06/10",
-      confirmed: 21,
-      total: 75,
-    },
-    {
-      name: "1402/06/11",
-      confirmed: 33,
-      total: 83,
-    },
-  ]);
+  const [data, setData] = useState([]);
+
+  const api = useAxiosAuth();
+  const getData = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/admin/dashboard/posts?period=${period}`);
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, [period]);
 
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
@@ -116,49 +96,28 @@ export const PostsStatistics = () => {
 export const EstatesStatistics = () => {
   const [loading, setLoading] = useState(false);
   const [period, setPeriod] = useState<Key>("daily");
-  const [data, setData] = useState([
-    {
-      name: "1402/06/05",
-      confirmed: 22,
-      total: 74,
-    },
-    {
-      name: "1402/06/06",
-      confirmed: 33,
-      total: 92,
-    },
-    {
-      name: "1402/06/07",
-      confirmed: 31,
-      total: 82,
-    },
-    {
-      name: "1402/06/08",
-      confirmed: 27,
-      total: 78,
-    },
-    {
-      name: "1402/06/09",
-      confirmed: 24,
-      total: 68,
-    },
-    {
-      name: "1402/06/10",
-      confirmed: 21,
-      total: 75,
-    },
-    {
-      name: "1402/06/11",
-      confirmed: 33,
-      total: 83,
-    },
-  ]);
+  const [data, setData] = useState([]);
+
+  const api = useAxiosAuth();
+  const getData = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/admin/dashboard/estates?period=${period}`);
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, [period]);
 
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
       <CardHeader className="relative z-10 flex flex-col items-start gap-2">
         <h4 className="truncate text-base font-bold">آمار ملک ها</h4>
-        <Listbox
+        {/* <Listbox
           aria-label="Detail"
           className="absolute end-3 max-w-[96px] gap-0 divide-y divide-default-300/50 overflow-hidden rounded-medium bg-black/70 p-0 text-white opacity-50 shadow-small transition-all hover:max-w-[180px] hover:opacity-100 dark:divide-default-100/80"
           itemClasses={{
@@ -191,13 +150,14 @@ export const EstatesStatistics = () => {
           >
             تایید شده
           </ListboxItem>
-        </Listbox>
+        </Listbox> */}
       </CardHeader>
       <LineChartMode
         data={data}
         items={[
-          { name: "همه", key: "total", fill: "#0088FE" },
+          { name: "همه", key: "total", fill: "#000000" },
           { name: "تایید شده", key: "confirmed", fill: "#00C49F" },
+          { name: "رد شده", key: "rejected", fill: "#F44336" },
         ]}
       />
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">

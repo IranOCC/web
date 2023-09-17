@@ -51,25 +51,3 @@ export default function Page({ searchParams }: any) {
     </>
   );
 }
-
-//           <div className="rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:col-span-2 lg:col-span-4">
-//             درخواست های بازدید امروز
-//             {/*  */}
-//           </div>
-//           <div className="rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:col-span-2 lg:col-span-4">
-//             درخواست های بازدید دیروز
-//             {/*  */}
-//           </div>
-//           <div className="rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:col-span-2 lg:col-span-4">
-//             درخواست های بازدید ماه
-//             {/*  */}
-//           </div>
-//           <div className="order-2 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg lg:col-span-3">
-//             تعداد کاربر فعال
-//             {/*  */}
-//           </div>
-//           {/* ==== */}
-//           <div className="order-12 rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:col-span-2 lg:col-span-4">
-//             آخرین نظرات
-//             {/*  */}
-//           </div>

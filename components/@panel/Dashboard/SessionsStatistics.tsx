@@ -10,56 +10,19 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 export const SessionsStatistics = () => {
   const [loading, setLoading] = useState(false);
   const [period, setPeriod] = useState<Key>("daily");
-  const [data, setData] = useState([
-    {
-      name: "1402/06/05",
-      google: 22,
-      total: 74,
-    },
-    {
-      name: "1402/06/06",
-      google: 33,
-      total: 92,
-    },
-    {
-      name: "1402/06/07",
-      google: 31,
-      total: 82,
-    },
-    {
-      name: "1402/06/08",
-      google: 27,
-      total: 78,
-    },
-    {
-      name: "1402/06/09",
-      google: 24,
-      total: 68,
-    },
-    {
-      name: "1402/06/10",
-      google: 21,
-      total: 75,
-    },
-    {
-      name: "1402/06/11",
-      google: 33,
-      total: 83,
-    },
-  ]);
+  const [data, setData] = useState([]);
 
   const api = useAxiosAuth();
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/dashboard/session?period=${period}`);
+      const response = await api.get(`/admin/dashboardd/session?period=${period}`);
       setData(response.data);
       setLoading(false);
     } catch (error) {
-      setLoading(false);
+      // setLoading(false);
     }
   };
-
   useEffect(() => {
     getData();
   }, [period]);

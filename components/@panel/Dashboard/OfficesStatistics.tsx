@@ -1,7 +1,8 @@
 import { Button, Card, CardFooter, Image, CardHeader, Tabs, Tab, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Bar, LineChart, Cell, Sector, PieChart, Pie, Tooltip, BarChart, ResponsiveContainer, Line, Legend } from "recharts";
 import { Spinner } from "@nextui-org/react";
-import { Key, useState } from "react";
+import { Key, useEffect, useState } from "react";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 
 export const OfficesPostsStatistics = () => {
   const [loading, setLoading] = useState(false);
@@ -101,58 +102,73 @@ export const OfficesEstatesStatistics = () => {
 
 const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => void; items: any[] }) => {
   const [period, setPeriod] = useState<Key>("daily");
-  const [data, setData] = useState([
-    {
-      name: "1402/06/05",
-      "1": 32,
-      "2": 74,
-      "3": 14,
-      "4": 44,
-    },
-    {
-      name: "1402/06/06",
-      "1": 22,
-      "2": 51,
-      "3": 11,
-      "4": 27,
-    },
-    {
-      name: "1402/06/07",
-      "1": 42,
-      "2": 36,
-      "3": 22,
-      "4": 46,
-    },
-    {
-      name: "1402/06/08",
-      "1": 32,
-      "2": 16,
-      "3": 27,
-      "4": 16,
-    },
-    {
-      name: "1402/06/09",
-      "1": 42,
-      "2": 36,
-      "3": 22,
-      "4": 46,
-    },
-    {
-      name: "1402/06/10",
-      "1": 32,
-      "2": 16,
-      "3": 27,
-      "4": 16,
-    },
-    {
-      name: "1402/06/11",
-      "1": 42,
-      "2": 46,
-      "3": 24,
-      "4": 26,
-    },
-  ]);
+  // const [data, setData] = useState([
+  //   {
+  //     name: "1402/06/05",
+  //     "1": 32,
+  //     "2": 74,
+  //     "3": 14,
+  //     "4": 44,
+  //   },
+  //   {
+  //     name: "1402/06/06",
+  //     "1": 22,
+  //     "2": 51,
+  //     "3": 11,
+  //     "4": 27,
+  //   },
+  //   {
+  //     name: "1402/06/07",
+  //     "1": 42,
+  //     "2": 36,
+  //     "3": 22,
+  //     "4": 46,
+  //   },
+  //   {
+  //     name: "1402/06/08",
+  //     "1": 32,
+  //     "2": 16,
+  //     "3": 27,
+  //     "4": 16,
+  //   },
+  //   {
+  //     name: "1402/06/09",
+  //     "1": 42,
+  //     "2": 36,
+  //     "3": 22,
+  //     "4": 46,
+  //   },
+  //   {
+  //     name: "1402/06/10",
+  //     "1": 32,
+  //     "2": 16,
+  //     "3": 27,
+  //     "4": 16,
+  //   },
+  //   {
+  //     name: "1402/06/11",
+  //     "1": 42,
+  //     "2": 46,
+  //     "3": 24,
+  //     "4": 26,
+  //   },
+  // ]);
+  const [data, setData] = useState([]);
 
+  const api = useAxiosAuth();
+  const getData = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/admin/dashboard/offices?period=${period}`);
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, [period]);
   return (
     <>
       <LineChartMode data={data} items={items} />
@@ -176,28 +192,45 @@ const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => voi
 
 const CountSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => void; items: any[] }) => {
   const [mode, setMode] = useState<Key>("barchart");
-  const [data, setData] = useState([
-    {
-      name: "دفتر یک",
-      total: 6,
-      confirmed: 2,
-    },
-    {
-      name: "دفتر دو",
-      total: 2,
-      confirmed: 2,
-    },
-    {
-      name: "دفتر سه",
-      total: 7,
-      confirmed: 4,
-    },
-    {
-      name: "دفتر چهار",
-      total: 4,
-      confirmed: 3,
-    },
-  ]);
+  // const [data, setData] = useState([
+  //   {
+  //     name: "دفتر یک",
+  //     total: 6,
+  //     confirmed: 2,
+  //   },
+  //   {
+  //     name: "دفتر دو",
+  //     total: 2,
+  //     confirmed: 2,
+  //   },
+  //   {
+  //     name: "دفتر سه",
+  //     total: 7,
+  //     confirmed: 4,
+  //   },
+  //   {
+  //     name: "دفتر چهار",
+  //     total: 4,
+  //     confirmed: 3,
+  //   },
+  // ]);
+
+  const [data, setData] = useState([]);
+
+  const api = useAxiosAuth();
+  const getData = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/admin/dashboard/posts?period=${mode}`);
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, [mode]);
 
   return (
     <>
