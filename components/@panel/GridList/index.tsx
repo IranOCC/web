@@ -36,7 +36,7 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
   const _count = parseInt(searchParams?.get("count") || defaultPageCount?.toString() || "12");
 
   const [totalItemsCount, setTotalItemsCount] = useState(0);
-  const handlePaginationChange = (page: number, page_size: number) => {
+  const handlePaginationChange: any = (page: number, page_size: number) => {
     const $s = new URLSearchParams(searchParams?.toString());
     $s?.set("page", page.toString());
     $s?.set("count", page_size.toString());
@@ -54,8 +54,8 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
     };
     try {
       const response = await api.get(`/admin/${endpoint}`, { params: _params });
-      setDataSource(response.data.items);
-      setTotalItemsCount(response.data.total);
+      setDataSource(response.data?.items || []);
+      setTotalItemsCount(response.data?.total || 0);
       setFetchLoading(false);
     } catch (error) {
       setFetchLoading(false);
