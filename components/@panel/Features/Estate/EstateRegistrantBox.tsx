@@ -103,7 +103,7 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
                 </Alert>
                 {checkingData?.allowConfirm && (
                   <>
-                    <div className="grid grid-cols-1 gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                       <Button
                         //
                         title="رد ملک"
@@ -113,6 +113,16 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
                         variant="outline"
                         size="small"
                         onClick={rejectPublish}
+                      />
+                      <Button
+                        //
+                        title="تایید و انتشار"
+                        type="button"
+                        loading={isSubmitting || isLoading || isValidating || publishLoading}
+                        noSpace
+                        variant="fill"
+                        size="small"
+                        onClick={confirmPublish}
                       />
                     </div>
                     <ConfirmRejectModal
@@ -144,7 +154,17 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
                 </Alert>
                 {checkingData?.allowConfirm && (
                   <>
-                    <div className="grid grid-cols-1 gap-2">
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button
+                        //
+                        title="رد ملک"
+                        type="button"
+                        loading={isSubmitting || isLoading || isValidating || publishLoading}
+                        noSpace
+                        variant="outline"
+                        size="small"
+                        onClick={rejectPublish}
+                      />
                       <Button
                         //
                         title="تایید و انتشار"
