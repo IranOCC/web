@@ -79,7 +79,7 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
   return (
     <>
       <div className="relative">
-        {!dataSource.length && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+        {!dataSource.length && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="چیزی پیدا نشد :(" />}
         {!!dataSource?.length && (
           <>
             <div className="grid grid-cols-2 gap-4 py-2 md:grid-cols-3 lg:grid-cols-3">
