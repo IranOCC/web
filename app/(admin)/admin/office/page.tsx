@@ -31,30 +31,30 @@ const columns: ColumnsType<Office> = [
       return <div className="float-right">{name || "-"}</div>;
     },
   },
-  {
-    title: "شماره",
-    dataIndex: ["phone", "value"],
-    render: (phone: string) => {
-      return (
-        <div dir="ltr" className="float-right">
-          {phone || "-"}
-        </div>
-      );
-    },
-    responsive: ["md"],
-  },
-  {
-    title: "ایمیل",
-    dataIndex: ["email", "value"],
-    render: (email: string) => {
-      return (
-        <div dir="ltr" className="float-right">
-          {email || "-"}
-        </div>
-      );
-    },
-    responsive: ["xxl"],
-  },
+  // {
+  //   title: "شماره",
+  //   dataIndex: ["phone", "value"],
+  //   render: (phone: string) => {
+  //     return (
+  //       <div dir="ltr" className="float-right">
+  //         {phone || "-"}
+  //       </div>
+  //     );
+  //   },
+  //   responsive: ["md"],
+  // },
+  // {
+  //   title: "ایمیل",
+  //   dataIndex: ["email", "value"],
+  //   render: (email: string) => {
+  //     return (
+  //       <div dir="ltr" className="float-right">
+  //         {email || "-"}
+  //       </div>
+  //     );
+  //   },
+  //   responsive: ["xxl"],
+  // },
   {
     title: "اعضا",
     dataIndex: "membersCount",
@@ -64,25 +64,25 @@ const columns: ColumnsType<Office> = [
   {
     title: "املاک تایید شده",
     dataIndex: ["estates", "confirmed"],
-    responsive: ["xxl"],
+    responsive: ["xl"],
     render: (count?: number) => count || 0,
   },
   {
     title: "املاک رد شده",
     dataIndex: ["estates", "rejected"],
-    responsive: ["xxl"],
+    responsive: ["xl"],
     render: (count?: number) => count || 0,
   },
   {
     title: "املاک در انتظار",
     dataIndex: ["estates", "pending"],
-    responsive: ["xxl"],
+    responsive: ["xl"],
     render: (count?: number) => count || 0,
   },
   {
     title: "فعالسازی",
     dataIndex: "active",
-    responsive: ["lg"],
+    responsive: ["xxl"],
     render: (active: boolean) => <span className={"font-bold " + (!!active ? "text-green-500" : "text-red-500")}>{!active ? "غیرفعال" : "فعال"}</span>,
   },
 ];
