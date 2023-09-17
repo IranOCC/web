@@ -54,7 +54,7 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
                 <Alert severity="warning" variant="filled">
                   <AlertTitle>در انتظار بررسی</AlertTitle>
                 </Alert>
-                {detail?.allowConfirm && (
+                {checkingData?.allowConfirm && (
                   <>
                     <div className="grid grid-cols-2 gap-2">
                       <Button
@@ -101,7 +101,7 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
                 <Alert severity="warning" variant="filled">
                   <p>در صورت ویرایش نیاز به تایید مجدد مدیریت جهت انتشار خواهد بود</p>
                 </Alert>
-                {detail?.allowConfirm && (
+                {checkingData?.allowConfirm && (
                   <>
                     <div className="grid grid-cols-1 gap-2">
                       <Button
@@ -142,7 +142,7 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
                 <Alert severity="warning" variant="filled">
                   <p>پس از ویرایش و برطرف نمودن مشکل ملک به حالت در انتظار بررسی رفته و در صورت تایید مدیریت منتشر خواهد شد</p>
                 </Alert>
-                {detail?.allowConfirm && (
+                {checkingData?.allowConfirm && (
                   <>
                     <div className="grid grid-cols-1 gap-2">
                       <Button
