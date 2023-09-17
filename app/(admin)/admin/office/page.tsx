@@ -61,14 +61,22 @@ const columns: ColumnsType<Office> = [
     responsive: ["xl"],
   },
   {
-    title: "املاک",
-    dataIndex: "estatesCount",
+    title: "املاک تایید شده",
+    dataIndex: ["estates", "confirmed"],
     responsive: ["xxl"],
+    default: 0,
   },
   {
-    title: "پست ها",
-    dataIndex: "postsCount",
+    title: "املاک رد شده",
+    dataIndex: ["estates", "rejected"],
     responsive: ["xxl"],
+    default: 0,
+  },
+  {
+    title: "املاک در انتظار",
+    dataIndex: ["estates", "pending"],
+    responsive: ["xxl"],
+    default: 0,
   },
   {
     title: "فعالسازی",
