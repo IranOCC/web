@@ -59,24 +59,25 @@ const columns: ColumnsType<Office> = [
     title: "اعضا",
     dataIndex: "membersCount",
     responsive: ["xl"],
+    render: (count?: number) => count || 0,
   },
   {
     title: "املاک تایید شده",
     dataIndex: ["estates", "confirmed"],
     responsive: ["xxl"],
-    default: 0,
+    render: (count?: number) => count || 0,
   },
   {
     title: "املاک رد شده",
     dataIndex: ["estates", "rejected"],
     responsive: ["xxl"],
-    default: 0,
+    render: (count?: number) => count || 0,
   },
   {
     title: "املاک در انتظار",
     dataIndex: ["estates", "pending"],
     responsive: ["xxl"],
-    default: 0,
+    // default: 0,
   },
   {
     title: "فعالسازی",
