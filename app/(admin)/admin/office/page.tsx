@@ -77,7 +77,7 @@ const columns: ColumnsType<Office> = [
     title: "املاک در انتظار",
     dataIndex: ["estates", "pending"],
     responsive: ["xxl"],
-    // default: 0,
+    render: (count?: number) => count || 0,
   },
   {
     title: "فعالسازی",
