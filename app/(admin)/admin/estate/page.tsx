@@ -132,6 +132,9 @@ export default function Page() {
     setConfirmRejectModal({ id, type: "reject" });
   };
 
+  const viewProperty = async (id: string) => {
+    // setConfirmRejectModal({ id, type: "reject" });
+  };
   return (
     <>
       <div className="p-4 pt-0">
@@ -164,7 +167,11 @@ export default function Page() {
               },
               {
                 key: "viewProperty",
-                label: <Link href="#">مشاهده ملک</Link>,
+                label: (
+                  <Link href="#" onClick={() => viewProperty(id!)}>
+                    مشاهده ملک
+                  </Link>
+                ),
               },
             ];
           }}

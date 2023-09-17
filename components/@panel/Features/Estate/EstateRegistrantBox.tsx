@@ -123,6 +123,7 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
                         variant="fill"
                         size="small"
                         onClick={confirmPublish}
+                        disabled
                       />
                     </div>
                     <ConfirmRejectModal
@@ -164,6 +165,7 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
                         variant="outline"
                         size="small"
                         onClick={rejectPublish}
+                        disabled
                       />
                       <Button
                         //
