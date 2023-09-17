@@ -116,9 +116,13 @@ export default function Page() {
       createdAt: data.createdAt,
 
       isConfirmed: data.isConfirmed,
-
       confirmedBy: data.confirmedBy,
       confirmedAt: data.confirmedAt,
+
+      isRejected: data.isRejected,
+      rejectedBy: data.rejectedBy,
+      rejectedAt: data.rejectedAt,
+      rejectedReason: data.rejectedReason,
     });
   };
 

@@ -10,6 +10,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { Alert, AlertTitle } from "@mui/material";
 import moment from "jalali-moment";
 import { Button } from "../../../Button";
+import { ConfirmRejectModal } from "@/components/@web/Features/Estate/ConfirmRejectModal";
 
 export default function EstateRegistrantBox({ form, loading, props }: AddEditComponentProps) {
   const {
@@ -31,27 +32,14 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
   const [publishLoading, setPublishLoading] = useState(false);
   const { checkingData, detail } = props;
 
-  const api = useAxiosAuth();
+  const [confirmRejectModal, setConfirmRejectModal] = useState<{ id: string; type: "reject" | "confirm" }>();
+
   const confirmPublish = async () => {
-    setPublishLoading(true);
-    try {
-      await api.patch(`/admin/estate/confirm/${detail.ID}`);
-      setPublishLoading(false);
-      window.location.reload();
-    } catch (error) {
-      setPublishLoading(false);
-    }
+    setConfirmRejectModal({ id: detail.ID, type: "confirm" });
   };
 
   const rejectPublish = async () => {
-    setPublishLoading(true);
-    try {
-      await api.patch(`/admin/estate/reject/${detail.ID}`);
-      setPublishLoading(false);
-      window.location.reload();
-    } catch (error) {
-      setPublishLoading(false);
-    }
+    setConfirmRejectModal({ id: detail.ID, type: "reject" });
   };
 
   if (!checkingData) return null;
@@ -61,6 +49,47 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
       <div className="mb-4 grid grid-cols-1 gap-4">
         {!!detail && (
           <>
+            {!detail?.isRejected && !detail?.isConfirmed && (
+              <>
+                <Alert severity="warning" variant="filled">
+                  <AlertTitle>در انتظار بررسی</AlertTitle>
+                </Alert>
+                {detail?.allowConfirm && (
+                  <>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button
+                        //
+                        title="رد ملک"
+                        type="button"
+                        loading={isSubmitting || isLoading || isValidating || publishLoading}
+                        noSpace
+                        variant="outline"
+                        size="small"
+                        onClick={rejectPublish}
+                      />
+                      <Button
+                        //
+                        title="تایید و انتشار"
+                        type="button"
+                        loading={isSubmitting || isLoading || isValidating || publishLoading}
+                        noSpace
+                        variant="fill"
+                        size="small"
+                        onClick={confirmPublish}
+                      />
+                    </div>
+                    <ConfirmRejectModal
+                      //
+                      id={confirmRejectModal?.id}
+                      type={confirmRejectModal?.type}
+                      isOpen={!!confirmRejectModal}
+                      setClose={() => setConfirmRejectModal(undefined)}
+                      update={() => window.location.reload()}
+                    />
+                  </>
+                )}
+              </>
+            )}
             {detail?.isConfirmed && (
               <>
                 <Alert severity="success" variant="filled">
@@ -73,35 +102,69 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
                   <p>در صورت ویرایش نیاز به تایید مجدد مدیریت جهت انتشار خواهد بود</p>
                 </Alert>
                 {detail?.allowConfirm && (
-                  <Button
-                    //
-                    title="لغو انتشار"
-                    type="button"
-                    loading={isSubmitting || isLoading || isValidating || publishLoading}
-                    noSpace
-                    variant="outline"
-                    size="small"
-                    onClick={rejectPublish}
-                  />
+                  <>
+                    <div className="grid grid-cols-1 gap-2">
+                      <Button
+                        //
+                        title="رد ملک"
+                        type="button"
+                        loading={isSubmitting || isLoading || isValidating || publishLoading}
+                        noSpace
+                        variant="outline"
+                        size="small"
+                        onClick={rejectPublish}
+                      />
+                    </div>
+                    <ConfirmRejectModal
+                      //
+                      id={confirmRejectModal?.id}
+                      type={confirmRejectModal?.type}
+                      isOpen={!!confirmRejectModal}
+                      setClose={() => setConfirmRejectModal(undefined)}
+                      update={() => window.location.reload()}
+                    />
+                  </>
                 )}
               </>
             )}
-            {!detail?.isConfirmed && (
+            {detail?.isRejected && (
               <>
+                <Alert severity="error" variant="filled">
+                  <AlertTitle>رد شده</AlertTitle>
+                  <p>
+                    {detail?.rejectedBy?.fullName} - {moment(detail?.rejectedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
+                  </p>
+                  <br />
+                  <p>
+                    <b>دلیل:</b> {detail?.rejectedReason}
+                  </p>
+                </Alert>
                 <Alert severity="warning" variant="filled">
-                  <AlertTitle>تایید نشده</AlertTitle>
-                  <p>فایل هنوز تایید نشده است و تا زمانی که تایید نشود منتشر نخواهد شد</p>
+                  <p>پس از ویرایش و برطرف نمودن مشکل ملک به حالت در انتظار بررسی رفته و در صورت تایید مدیریت منتشر خواهد شد</p>
                 </Alert>
                 {detail?.allowConfirm && (
-                  <Button
-                    //
-                    title="تایید انتشار"
-                    type="button"
-                    loading={isSubmitting || isLoading || isValidating || publishLoading}
-                    noSpace
-                    size="small"
-                    onClick={confirmPublish}
-                  />
+                  <>
+                    <div className="grid grid-cols-1 gap-2">
+                      <Button
+                        //
+                        title="تایید و انتشار"
+                        type="button"
+                        loading={isSubmitting || isLoading || isValidating || publishLoading}
+                        noSpace
+                        variant="fill"
+                        size="small"
+                        onClick={confirmPublish}
+                      />
+                    </div>
+                    <ConfirmRejectModal
+                      //
+                      id={confirmRejectModal?.id}
+                      type={confirmRejectModal?.type}
+                      isOpen={!!confirmRejectModal}
+                      setClose={() => setConfirmRejectModal(undefined)}
+                      update={() => window.location.reload()}
+                    />
+                  </>
                 )}
               </>
             )}
@@ -111,33 +174,24 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
             زمان ایجاد: {moment(detail?.createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
             <br />
             آخرین ویرایش: {moment(detail?.updatedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
+            <hr />
+            <Select
+              //
+              control={control}
+              name="office"
+              error={errors.office?.message}
+              loading={isSubmitting}
+              label="شعبه"
+              placeholder="انتخاب کنید"
+              apiPath="/tools/office/autoComplete"
+              searchable
+              noSpace
+              defaultValue={checkingData?.office?.default}
+              disabled={checkingData?.office?.disabled}
+              containerClassName={!!checkingData?.office?.hidden ? "hidden" : ""}
+            />
           </>
         )}
-        {!detail && (
-          <>
-            <Alert severity="info" variant="filled">
-              <AlertTitle>عدم انتشار قبل از تایید</AlertTitle>
-              <p>این فایل تا هنگامیکه توسط مدیر تایید نشود، منتشر نخواهد شد</p>
-              <p>در صورتی که مدیر هستید، پس از انتشار می توانید آن را تایید کنید</p>
-            </Alert>
-          </>
-        )}
-        <hr />
-        <Select
-          //
-          control={control}
-          name="office"
-          error={errors.office?.message}
-          loading={isSubmitting}
-          label="شعبه"
-          placeholder="انتخاب کنید"
-          apiPath="/tools/office/autoComplete"
-          searchable
-          noSpace
-          defaultValue={checkingData?.office?.default}
-          disabled={checkingData?.office?.disabled}
-          containerClassName={!!checkingData?.office?.hidden ? "hidden" : ""}
-        />
       </div>
     </>
   );

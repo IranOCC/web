@@ -124,7 +124,6 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [confirmRejectModal, setConfirmRejectModal] = useState<{ id: string; type: "reject" | "confirm" }>();
 
-  const api = useAxiosAuth();
   const confirmPublish = async (id: string) => {
     setConfirmRejectModal({ id, type: "confirm" });
   };
