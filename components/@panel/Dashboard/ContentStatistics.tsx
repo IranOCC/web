@@ -8,7 +8,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 
 export const PostsStatistics = () => {
   const [loading, setLoading] = useState(false);
-  const [period, setPeriod] = useState<Key>("daily");
+  const [period, setPeriod] = useState<Key>("monthly");
   const [data, setData] = useState([]);
 
   const api = useAxiosAuth();
@@ -30,46 +30,13 @@ export const PostsStatistics = () => {
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
       <CardHeader className="relative z-10 flex flex-col items-start gap-2">
         <h4 className="truncate text-base font-bold">آمار پست ها</h4>
-        <Listbox
-          aria-label="Detail"
-          className="absolute end-3 max-w-[96px] gap-0 divide-y divide-default-300/50 overflow-hidden rounded-medium bg-black/70 p-0 text-white opacity-50 shadow-small transition-all hover:max-w-[180px] hover:opacity-100 dark:divide-default-100/80"
-          itemClasses={{
-            base: "px-3 first:rounded-t-medium last:rounded-b-medium rounded-none gap-3 h-12 data-[hover=true]:bg-default-100/80",
-          }}
-        >
-          <ListboxItem
-            key="total"
-            endContent={<b className="text-lg">25</b>}
-            startContent={
-              <IconWrapper className="bg-[#FFBB28]/10 text-[#FFBB28]">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                  <path d="M20 22H4C3.44772 22 3 21.5523 3 21V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V21C21 21.5523 20.5523 22 20 22ZM7 6V10H11V6H7ZM7 12V14H17V12H7ZM7 16V18H17V16H7ZM13 7V9H17V7H13Z"></path>
-                </svg>
-              </IconWrapper>
-            }
-          >
-            همه
-          </ListboxItem>
-          <ListboxItem
-            key="confirmed"
-            endContent={<b className="text-lg">10</b>}
-            startContent={
-              <IconWrapper className="bg-[#FF8042]/10 text-[#FF8042]">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                  <path d="M20 22H4C3.44772 22 3 21.5523 3 21V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V21C21 21.5523 20.5523 22 20 22ZM19 20V4H5V20H19ZM7 6H11V10H7V6ZM7 12H17V14H7V12ZM7 16H17V18H7V16ZM13 7H17V9H13V7Z"></path>
-                </svg>
-              </IconWrapper>
-            }
-          >
-            تایید شده
-          </ListboxItem>
-        </Listbox>
       </CardHeader>
       <LineChartMode
         data={data}
         items={[
-          { name: "همه", key: "total", fill: "#FFBB28" },
-          { name: "تایید شده", key: "confirmed", fill: "#FF8042" },
+          { name: "همه", key: "total", fill: "#000000" },
+          { name: "تایید شده", key: "confirmed", fill: "#00C49F" },
+          { name: "رد شده", key: "rejected", fill: "#F44336" },
         ]}
       />
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
@@ -95,7 +62,7 @@ export const PostsStatistics = () => {
 
 export const EstatesStatistics = () => {
   const [loading, setLoading] = useState(false);
-  const [period, setPeriod] = useState<Key>("daily");
+  const [period, setPeriod] = useState<Key>("monthly");
   const [data, setData] = useState([]);
 
   const api = useAxiosAuth();
