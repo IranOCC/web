@@ -38,9 +38,11 @@ export const OfficesPostsStatistics = () => {
       {type === "countseries" && (
         <CountSeriesType
           setLoading={setLoading}
+          endpoint="officePosts"
           items={[
-            { name: "همه", key: "total", fill: "#FFBB28" },
-            { name: "تایید شده", key: "confirmed", fill: "#FF8042" },
+            { name: "همه", key: "total", fill: "#000000" },
+            { name: "تایید شده", key: "confirmed", fill: "#00C49F" },
+            { name: "رد شده", key: "rejected", fill: "#F44336" },
           ]}
         />
       )}
@@ -85,6 +87,7 @@ export const OfficesEstatesStatistics = () => {
       {type === "countseries" && (
         <CountSeriesType
           setLoading={setLoading}
+          endpoint="officeEstates"
           items={[
             { name: "همه", key: "total", fill: "#000000" },
             { name: "تایید شده", key: "confirmed", fill: "#00C49F" },
@@ -191,7 +194,7 @@ const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => voi
   );
 };
 
-const CountSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => void; items: any[] }) => {
+const CountSeriesType = ({ setLoading, items, endpoint }: { setLoading: (b: boolean) => void; items: any[]; endpoint: string }) => {
   const [mode, setMode] = useState<Key>("barchart");
   const [data, setData] = useState([]);
 
@@ -199,7 +202,7 @@ const CountSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => vo
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/dashboard/officeEstates?type=count&mode=${mode}`);
+      const response = await api.get(`/admin/dashboard/${endpoint}?type=count&mode=${mode}`);
       setData(response.data);
       setLoading(false);
     } catch (error) {
