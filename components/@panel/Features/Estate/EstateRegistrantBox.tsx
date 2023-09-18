@@ -196,24 +196,33 @@ export default function EstateRegistrantBox({ form, loading, props }: AddEditCom
             زمان ایجاد: {moment(detail?.createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
             <br />
             آخرین ویرایش: {moment(detail?.updatedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}
-            <hr />
-            <Select
-              //
-              control={control}
-              name="office"
-              error={errors.office?.message}
-              loading={isSubmitting}
-              label="شعبه"
-              placeholder="انتخاب کنید"
-              apiPath="/tools/office/autoComplete"
-              searchable
-              noSpace
-              defaultValue={checkingData?.office?.default}
-              disabled={checkingData?.office?.disabled}
-              containerClassName={!!checkingData?.office?.hidden ? "hidden" : ""}
-            />
           </>
         )}
+        {!detail && (
+          <>
+            <Alert severity="info" variant="filled">
+              <AlertTitle>عدم انتشار قبل از تایید</AlertTitle>
+              <p>این فایل تا هنگامیکه توسط مدیر تایید نشود، منتشر نخواهد شد</p>
+              <p>در صورتی که مدیر هستید، پس از انتشار می توانید آن را تایید کنید</p>
+            </Alert>
+          </>
+        )}
+        <hr />
+        <Select
+          //
+          control={control}
+          name="office"
+          error={errors.office?.message}
+          loading={isSubmitting}
+          label="شعبه"
+          placeholder="انتخاب کنید"
+          apiPath="/tools/office/autoComplete"
+          searchable
+          noSpace
+          defaultValue={checkingData?.office?.default}
+          disabled={checkingData?.office?.disabled}
+          containerClassName={!!checkingData?.office?.hidden ? "hidden" : ""}
+        />
       </div>
     </>
   );

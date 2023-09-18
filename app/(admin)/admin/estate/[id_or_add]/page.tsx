@@ -108,6 +108,9 @@ export default function Page() {
     setValue("owner", data.owner);
     setValue("office", data.office);
 
+    setValue("dailyRent", data.dailyRent);
+    setValue("annualRent", data.annualRent);
+
     setDetail({
       ID: data._id,
       updatedAt: data.updatedAt,

@@ -156,6 +156,9 @@ export interface Estate {
     rejectedAt?: Date;
 
     rejectedReason?: string;
+
+    dailyRent?: boolean;
+    annualRent?: boolean;
 };
 
 

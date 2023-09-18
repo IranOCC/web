@@ -114,6 +114,8 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
     register("roomsCount", { required: "تعداد اتاق الزامی است" });
     register("mastersCount", { required: "تعداد مستر الزامی است" });
     register("features");
+    register("dailyRent");
+    register("annualRent");
   }, []);
 
   const { checkingData } = props;
@@ -266,6 +268,8 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
     register("unitsCount", { required: "تعداد واحدها را وارد کنید" });
     register("floor", { required: "طبقه را وارد کنید" });
     register("features");
+    register("dailyRent");
+    register("annualRent");
   }, []);
 
   const { checkingData } = props;
@@ -430,6 +434,8 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
   useEffect(() => {
     register("buildingArea", { required: "متراژ را وارد کنید" });
     register("floor", { required: "طبقه ملک را وارد کنید" });
+    register("dailyRent");
+    register("annualRent");
   }, []);
 
   const { checkingData } = props;
