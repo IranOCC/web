@@ -131,6 +131,7 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
             bottom: 20,
           }}
         >
+          <Brush dataKey="name" height={30} stroke="#8884d8" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip wrapperClassName="text-right text-sm" />
@@ -138,7 +139,6 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
           {items.map(({ key, name, fill }) => (
             <Line type="monotone" key={key} dataKey={key} name={name} stroke={fill} activeDot={{ r: 6 }} />
           ))}
-          <Brush dataKey="name" height={30} stroke="#8884d8" />
         </LineChart>
       </ResponsiveContainer>
     </div>
