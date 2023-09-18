@@ -27,18 +27,19 @@ export const OfficesPostsStatistics = () => {
       {type === "timeseries" && (
         <TimeSeriesType
           setLoading={setLoading}
-          items={[
-            { name: "دفتر یک", key: "1", fill: "#0088FE" },
-            { name: "دفتر دو", key: "2", fill: "#00C49F" },
-            { name: "دفتر سه", key: "3", fill: "#FFBB28" },
-            { name: "دفتر چهار", key: "4", fill: "#FFBB28" },
-          ]}
+          endpoint="officePostsTimeSeries"
+          // items={[
+          //   { name: "دفتر یک", key: "1", fill: "#0088FE" },
+          //   { name: "دفتر دو", key: "2", fill: "#00C49F" },
+          //   { name: "دفتر سه", key: "3", fill: "#FFBB28" },
+          //   { name: "دفتر چهار", key: "4", fill: "#FFBB28" },
+          // ]}
         />
       )}
       {type === "countseries" && (
         <CountSeriesType
           setLoading={setLoading}
-          endpoint="officePosts"
+          endpoint="officePostsCountSeries"
           items={[
             { name: "همه", key: "total", fill: "#000000" },
             { name: "تایید شده", key: "confirmed", fill: "#00C49F" },
@@ -76,18 +77,19 @@ export const OfficesEstatesStatistics = () => {
       {type === "timeseries" && (
         <TimeSeriesType
           setLoading={setLoading}
-          items={[
-            { name: "دفتر یک", key: "1", fill: "#0088FE" },
-            { name: "دفتر دو", key: "2", fill: "#00C49F" },
-            { name: "دفتر سه", key: "3", fill: "#FFBB28" },
-            { name: "دفتر چهار", key: "4", fill: "#FFBB28" },
-          ]}
+          endpoint="officeEstatesTimeSeries"
+          // items={[
+          //   { name: "دفتر یک", key: "1", fill: "#0088FE" },
+          //   { name: "دفتر دو", key: "2", fill: "#00C49F" },
+          //   { name: "دفتر سه", key: "3", fill: "#FFBB28" },
+          //   { name: "دفتر چهار", key: "4", fill: "#FFBB28" },
+          // ]}
         />
       )}
       {type === "countseries" && (
         <CountSeriesType
           setLoading={setLoading}
-          endpoint="officeEstates"
+          endpoint="officeEstatesCountSeries"
           items={[
             { name: "همه", key: "total", fill: "#000000" },
             { name: "تایید شده", key: "confirmed", fill: "#00C49F" },
@@ -104,7 +106,7 @@ export const OfficesEstatesStatistics = () => {
 
 // =============
 
-const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => void; items: any[] }) => {
+const TimeSeriesType = ({ setLoading, endpoint }: { setLoading: (b: boolean) => void; endpoint: string }) => {
   const [period, setPeriod] = useState<Key>("daily");
   // const [data, setData] = useState([
   //   {
@@ -157,13 +159,13 @@ const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => voi
   //     "4": 26,
   //   },
   // ]);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<{ data: any[]; items: any[] }>({ data: [], items: [] });
 
   const api = useAxiosAuth();
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/dashboard/officeEstates?type=time&period=${period}`);
+      const response = await api.get(`/admin/dashboard/${endpoint}?period=${period}`);
       setData(response.data);
       setLoading(false);
     } catch (error) {
@@ -175,7 +177,7 @@ const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => voi
   }, [period]);
   return (
     <>
-      <LineChartMode data={data} items={items} />
+      <LineChartMode data={data} />
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
           //
@@ -202,7 +204,7 @@ const CountSeriesType = ({ setLoading, items, endpoint }: { setLoading: (b: bool
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/dashboard/${endpoint}?type=count&mode=${mode}`);
+      const response = await api.get(`/admin/dashboard/${endpoint}?mode=${mode}`);
       setData(response.data);
       setLoading(false);
     } catch (error) {
@@ -301,10 +303,10 @@ const PieChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
   };
 
   return (
-    <div dir="ltr" className="grid h-full w-full grid-cols-1 lg:grid-cols-2">
+    <div className="flex h-full w-full overflow-y-hidden">
       {items.map(({ key, name, fill }) => (
-        <div key={key} className="relative flex flex-col items-center justify-center">
-          <ResponsiveContainer width="100%" height={400}>
+        <div dir="ltr" key={key} className="relative flex flex-col items-center justify-center">
+          <ResponsiveContainer width={400} height={400}>
             <PieChart width={400} height={400}>
               <Pie
                 //
@@ -365,14 +367,14 @@ const TableMode = ({ data, items }: { data: any[]; items: any[] }) => {
   );
 };
 
-const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
+const LineChartMode = ({ data }: { data: { data: any[]; items: any[] } }) => {
   return (
     <div dir="ltr" className="w-full">
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           width={500}
           height={300}
-          data={data}
+          data={data.data}
           margin={{
             top: 20,
             right: 30,
@@ -384,8 +386,8 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
           <YAxis />
           <Tooltip wrapperClassName="text-right text-sm" />
           <Legend />
-          {items.map(({ key, name, fill }) => (
-            <Line type="monotone" key={key} dataKey={key} name={name} stroke={fill} activeDot={{ r: 6 }} />
+          {data.items.map(({ _id, name }) => (
+            <Line type="monotone" key={_id} dataKey={_id} name={name} activeDot={{ r: 6 }} />
           ))}
         </LineChart>
       </ResponsiveContainer>
