@@ -86,8 +86,9 @@ export const OfficesEstatesStatistics = () => {
         <CountSeriesType
           setLoading={setLoading}
           items={[
-            { name: "همه", key: "total", fill: "#0088FE" },
+            { name: "همه", key: "total", fill: "#000000" },
             { name: "تایید شده", key: "confirmed", fill: "#00C49F" },
+            { name: "رد شده", key: "rejected", fill: "#F44336" },
           ]}
         />
       )}
@@ -159,7 +160,7 @@ const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => voi
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/dashboard/offices?period=${period}`);
+      const response = await api.get(`/admin/dashboard/officeEstates?type=time&period=${period}`);
       setData(response.data);
       setLoading(false);
     } catch (error) {
@@ -192,36 +193,13 @@ const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => voi
 
 const CountSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => void; items: any[] }) => {
   const [mode, setMode] = useState<Key>("barchart");
-  // const [data, setData] = useState([
-  //   {
-  //     name: "دفتر یک",
-  //     total: 6,
-  //     confirmed: 2,
-  //   },
-  //   {
-  //     name: "دفتر دو",
-  //     total: 2,
-  //     confirmed: 2,
-  //   },
-  //   {
-  //     name: "دفتر سه",
-  //     total: 7,
-  //     confirmed: 4,
-  //   },
-  //   {
-  //     name: "دفتر چهار",
-  //     total: 4,
-  //     confirmed: 3,
-  //   },
-  // ]);
-
   const [data, setData] = useState([]);
 
   const api = useAxiosAuth();
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/dashboard/posts?period=${mode}`);
+      const response = await api.get(`/admin/dashboard/officeEstates?type=count&mode=${mode}`);
       setData(response.data);
       setLoading(false);
     } catch (error) {
