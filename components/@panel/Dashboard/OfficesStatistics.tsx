@@ -7,7 +7,6 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 export const OfficesPostsStatistics = () => {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState<Key>("countseries");
-
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
       <CardHeader className="relative z-10 flex flex-col items-center justify-start gap-2 sm:flex-row">
@@ -26,14 +25,9 @@ export const OfficesPostsStatistics = () => {
       </CardHeader>
       {type === "timeseries" && (
         <TimeSeriesType
+          //
           setLoading={setLoading}
           endpoint="officePostsTimeSeries"
-          // items={[
-          //   { name: "دفتر یک", key: "1", fill: "#0088FE" },
-          //   { name: "دفتر دو", key: "2", fill: "#00C49F" },
-          //   { name: "دفتر سه", key: "3", fill: "#FFBB28" },
-          //   { name: "دفتر چهار", key: "4", fill: "#FFBB28" },
-          // ]}
         />
       )}
       {type === "countseries" && (
@@ -76,14 +70,9 @@ export const OfficesEstatesStatistics = () => {
       </CardHeader>
       {type === "timeseries" && (
         <TimeSeriesType
+          //
           setLoading={setLoading}
           endpoint="officeEstatesTimeSeries"
-          // items={[
-          //   { name: "دفتر یک", key: "1", fill: "#0088FE" },
-          //   { name: "دفتر دو", key: "2", fill: "#00C49F" },
-          //   { name: "دفتر سه", key: "3", fill: "#FFBB28" },
-          //   { name: "دفتر چهار", key: "4", fill: "#FFBB28" },
-          // ]}
         />
       )}
       {type === "countseries" && (
@@ -107,58 +96,7 @@ export const OfficesEstatesStatistics = () => {
 // =============
 
 const TimeSeriesType = ({ setLoading, endpoint }: { setLoading: (b: boolean) => void; endpoint: string }) => {
-  const [period, setPeriod] = useState<Key>("daily");
-  // const [data, setData] = useState([
-  //   {
-  //     name: "1402/06/05",
-  //     "1": 32,
-  //     "2": 74,
-  //     "3": 14,
-  //     "4": 44,
-  //   },
-  //   {
-  //     name: "1402/06/06",
-  //     "1": 22,
-  //     "2": 51,
-  //     "3": 11,
-  //     "4": 27,
-  //   },
-  //   {
-  //     name: "1402/06/07",
-  //     "1": 42,
-  //     "2": 36,
-  //     "3": 22,
-  //     "4": 46,
-  //   },
-  //   {
-  //     name: "1402/06/08",
-  //     "1": 32,
-  //     "2": 16,
-  //     "3": 27,
-  //     "4": 16,
-  //   },
-  //   {
-  //     name: "1402/06/09",
-  //     "1": 42,
-  //     "2": 36,
-  //     "3": 22,
-  //     "4": 46,
-  //   },
-  //   {
-  //     name: "1402/06/10",
-  //     "1": 32,
-  //     "2": 16,
-  //     "3": 27,
-  //     "4": 16,
-  //   },
-  //   {
-  //     name: "1402/06/11",
-  //     "1": 42,
-  //     "2": 46,
-  //     "3": 24,
-  //     "4": 26,
-  //   },
-  // ]);
+  const [period, setPeriod] = useState<Key>("monthly");
   const [data, setData] = useState<{ data: any[]; items: any[] }>({ data: [], items: [] });
 
   const api = useAxiosAuth();
@@ -177,6 +115,7 @@ const TimeSeriesType = ({ setLoading, endpoint }: { setLoading: (b: boolean) => 
   }, [period]);
   return (
     <>
+      {JSON.stringify(data)}
       <LineChartMode data={data} />
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs

@@ -7,7 +7,6 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 export const UsersPostsStatistics = () => {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState<Key>("countseries");
-
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
       <CardHeader className="relative z-10 flex flex-col items-center justify-start gap-2 sm:flex-row">
@@ -26,21 +25,19 @@ export const UsersPostsStatistics = () => {
       </CardHeader>
       {type === "timeseries" && (
         <TimeSeriesType
+          //
           setLoading={setLoading}
-          items={[
-            { name: "رسول احمدی فر", key: "1", fill: "#0088FE" },
-            { name: "محمدرضا حقیقی", key: "2", fill: "#00C49F" },
-            { name: "پرویز حقیقی", key: "3", fill: "#FFBB28" },
-            { name: "راموس پرانوس", key: "4", fill: "#FFBB28" },
-          ]}
+          endpoint="userPostsTimeSeries"
         />
       )}
       {type === "countseries" && (
         <CountSeriesType
           setLoading={setLoading}
+          endpoint="userPostsCountSeries"
           items={[
-            { name: "همه", key: "total", fill: "#FFBB28" },
-            { name: "تایید شده", key: "confirmed", fill: "#FF8042" },
+            { name: "همه", key: "total", fill: "#000000" },
+            { name: "تایید شده", key: "confirmed", fill: "#00C49F" },
+            { name: "رد شده", key: "rejected", fill: "#F44336" },
           ]}
         />
       )}
@@ -52,7 +49,7 @@ export const UsersPostsStatistics = () => {
 };
 
 export const UsersEstatesStatistics = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [type, setType] = useState<Key>("countseries");
 
   return (
@@ -73,21 +70,19 @@ export const UsersEstatesStatistics = () => {
       </CardHeader>
       {type === "timeseries" && (
         <TimeSeriesType
+          //
           setLoading={setLoading}
-          items={[
-            { name: "رسول احمدی فر", key: "1", fill: "#0088FE" },
-            { name: "محمدرضا حقیقی", key: "2", fill: "#00C49F" },
-            { name: "پرویز حقیقی", key: "3", fill: "#FFBB28" },
-            { name: "راموس پرانوس", key: "4", fill: "#FFBB28" },
-          ]}
+          endpoint="userEstatesTimeSeries"
         />
       )}
       {type === "countseries" && (
         <CountSeriesType
           setLoading={setLoading}
+          endpoint="userEstatesCountSeries"
           items={[
-            { name: "همه", key: "total", fill: "#0088FE" },
+            { name: "همه", key: "total", fill: "#000000" },
             { name: "تایید شده", key: "confirmed", fill: "#00C49F" },
+            { name: "رد شده", key: "rejected", fill: "#F44336" },
           ]}
         />
       )}
@@ -100,67 +95,15 @@ export const UsersEstatesStatistics = () => {
 
 // =============
 
-const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => void; items: any[] }) => {
-  const [period, setPeriod] = useState<Key>("daily");
-  // const [data, setData] = useState([
-  //   {
-  //     name: "1402/06/05",
-  //     "1": 32,
-  //     "2": 74,
-  //     "3": 14,
-  //     "4": 44,
-  //   },
-  //   {
-  //     name: "1402/06/06",
-  //     "1": 22,
-  //     "2": 51,
-  //     "3": 11,
-  //     "4": 27,
-  //   },
-  //   {
-  //     name: "1402/06/07",
-  //     "1": 42,
-  //     "2": 36,
-  //     "3": 22,
-  //     "4": 46,
-  //   },
-  //   {
-  //     name: "1402/06/08",
-  //     "1": 32,
-  //     "2": 16,
-  //     "3": 27,
-  //     "4": 16,
-  //   },
-  //   {
-  //     name: "1402/06/09",
-  //     "1": 42,
-  //     "2": 36,
-  //     "3": 22,
-  //     "4": 46,
-  //   },
-  //   {
-  //     name: "1402/06/10",
-  //     "1": 32,
-  //     "2": 16,
-  //     "3": 27,
-  //     "4": 16,
-  //   },
-  //   {
-  //     name: "1402/06/11",
-  //     "1": 42,
-  //     "2": 46,
-  //     "3": 24,
-  //     "4": 26,
-  //   },
-  // ]);
-
-  const [data, setData] = useState([]);
+const TimeSeriesType = ({ setLoading, endpoint }: { setLoading: (b: boolean) => void; endpoint: string }) => {
+  const [period, setPeriod] = useState<Key>("monthly");
+  const [data, setData] = useState<{ data: any[]; items: any[] }>({ data: [], items: [] });
 
   const api = useAxiosAuth();
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/dashboard/users?period=${period}`);
+      const response = await api.get(`/admin/dashboard/${endpoint}?period=${period}`);
       setData(response.data);
       setLoading(false);
     } catch (error) {
@@ -170,10 +113,10 @@ const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => voi
   useEffect(() => {
     getData();
   }, [period]);
-
   return (
     <>
-      <LineChartMode data={data} items={items} />
+      {JSON.stringify(data)}
+      <LineChartMode data={data} />
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
           //
@@ -192,38 +135,15 @@ const TimeSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => voi
   );
 };
 
-const CountSeriesType = ({ setLoading, items }: { setLoading: (b: boolean) => void; items: any[] }) => {
+const CountSeriesType = ({ setLoading, items, endpoint }: { setLoading: (b: boolean) => void; items: any[]; endpoint: string }) => {
   const [mode, setMode] = useState<Key>("barchart");
-  // const [data, setData] = useState([
-  //   {
-  //     name: "رسول احمدی فر",
-  //     total: 6,
-  //     confirmed: 2,
-  //   },
-  //   {
-  //     name: "محمدرضا حقیقی",
-  //     total: 2,
-  //     confirmed: 2,
-  //   },
-  //   {
-  //     name: "پرویز حقیقی",
-  //     total: 7,
-  //     confirmed: 4,
-  //   },
-  //   {
-  //     name: "راموس پرانوس",
-  //     total: 4,
-  //     confirmed: 3,
-  //   },
-  // ]);
-
   const [data, setData] = useState([]);
 
   const api = useAxiosAuth();
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/dashboard/users?period=${mode}`);
+      const response = await api.get(`/admin/dashboard/${endpoint}?mode=${mode}`);
       setData(response.data);
       setLoading(false);
     } catch (error) {
@@ -322,10 +242,10 @@ const PieChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
   };
 
   return (
-    <div dir="ltr" className="grid h-full w-full grid-cols-1 lg:grid-cols-2">
+    <div className="flex h-full w-full overflow-y-hidden">
       {items.map(({ key, name, fill }) => (
-        <div key={key} className="relative flex flex-col items-center justify-center">
-          <ResponsiveContainer width="100%" height={400}>
+        <div dir="ltr" key={key} className="relative flex flex-col items-center justify-center">
+          <ResponsiveContainer width={400} height={400}>
             <PieChart width={400} height={400}>
               <Pie
                 //
@@ -386,14 +306,14 @@ const TableMode = ({ data, items }: { data: any[]; items: any[] }) => {
   );
 };
 
-const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
+const LineChartMode = ({ data }: { data: { data: any[]; items: any[] } }) => {
   return (
     <div dir="ltr" className="w-full">
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           width={500}
           height={300}
-          data={data}
+          data={data.data}
           margin={{
             top: 20,
             right: 30,
@@ -405,8 +325,8 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
           <YAxis />
           <Tooltip wrapperClassName="text-right text-sm" />
           <Legend />
-          {items.map(({ key, name, fill }) => (
-            <Line type="monotone" key={key} dataKey={key} name={name} stroke={fill} activeDot={{ r: 6 }} />
+          {data.items.map(({ _id, name }) => (
+            <Line type="monotone" key={_id} dataKey={_id} name={name} activeDot={{ r: 6 }} />
           ))}
         </LineChart>
       </ResponsiveContainer>
