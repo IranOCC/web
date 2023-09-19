@@ -84,7 +84,7 @@ export default function EditAddPage<F extends FieldValues, T>({ Center, Side = n
   };
 
   useEffect(() => {
-    if (ID) getData();
+    if (ID || SECTION) getData();
   }, []);
 
   const { checkingData } = componentProps;
