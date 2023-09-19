@@ -2,7 +2,7 @@
 
 import { OfficesPostsStatistics, OfficesEstatesStatistics } from "@/components/@panel/Dashboard/OfficesStatistics";
 import { PostsStatistics, EstatesStatistics } from "@/components/@panel/Dashboard/ContentStatistics";
-import { SessionsStatistics } from "@/components/@panel/Dashboard/SessionsStatistics";
+import { VisitorsStatistics } from "@/components/@panel/Dashboard/VisitorsStatistics";
 import { Alert } from "@mui/material";
 import { UsersPostsStatistics, UsersEstatesStatistics } from "@/components/@panel/Dashboard/UsersStatistics";
 import { PostsViewsStatistics } from "@/components/@panel/Dashboard/PostsViewsStatistics";
@@ -20,7 +20,7 @@ export default function Page({ searchParams }: any) {
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
           <div className="col-span-full">
-            <SessionsStatistics />
+            <VisitorsStatistics />
           </div>
           <div className="col-span-full lg:col-span-6">
             <PostsStatistics />
@@ -40,12 +40,14 @@ export default function Page({ searchParams }: any) {
           <div className="col-span-full lg:col-span-6">
             <UsersEstatesStatistics />
           </div>
+          {/* 
           <div className="col-span-full lg:col-span-6">
             <PostsViewsStatistics />
           </div>
           <div className="col-span-full lg:col-span-6">
             <EstatesViewsStatistics />
           </div>
+           */}
         </div>
       </div>
     </>

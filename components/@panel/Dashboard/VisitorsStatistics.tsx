@@ -7,30 +7,30 @@ import { Spinner } from "@nextui-org/react";
 import { useState, Key, useEffect } from "react";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 
-export const SessionsStatistics = () => {
+export const VisitorsStatistics = () => {
   const [loading, setLoading] = useState(false);
-  const [period, setPeriod] = useState<Key>("daily");
+  const [report, setReport] = useState<Key>("daily");
   const [data, setData] = useState([]);
 
   const api = useAxiosAuth();
   const getData = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get(`/admin/dashboardd/session?period=${period}`);
-      setData(response.data);
-      setLoading(false);
-    } catch (error) {
-      // setLoading(false);
-    }
+    // setLoading(true);
+    // try {
+    //   const response = await api.get(`/admin/dashboardd/session?period=${period}`);
+    //   setData(response.data);
+    //   setLoading(false);
+    // } catch (error) {
+    //   // setLoading(false);
+    // }
   };
   useEffect(() => {
     getData();
-  }, [period]);
+  }, [report]);
 
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
       <CardHeader className="relative z-10 flex flex-col items-start gap-2">
-        <h4 className="truncate text-base font-bold">آمار بازدیدها</h4>
+        {/*
         <Listbox
           aria-label="Detail"
           className="absolute end-3 max-w-[96px] gap-0 divide-y divide-default-300/50 overflow-hidden rounded-medium bg-black/70 p-0 text-white opacity-50 shadow-small transition-all hover:max-w-[260px] hover:opacity-100 dark:divide-default-100/80"
@@ -78,26 +78,39 @@ export const SessionsStatistics = () => {
             بازدیدکنندگان امروز
           </ListboxItem>
         </Listbox>
+        */}
       </CardHeader>
+      {/* 
       <LineChartMode
         data={data}
         items={[
           { name: "گوگل'", key: "google", fill: "rgb(243, 18, 96)" },
           { name: "همه", key: "total", fill: "rgb(245, 165, 36)" },
         ]}
-      />
+      /> 
+      */}
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
           //
-          selectedKey={period}
-          onSelectionChange={setPeriod}
+          selectedKey={report}
+          onSelectionChange={setReport}
           color="secondary"
           radius="full"
           size="sm"
+          fullWidth
         >
-          <Tab key="daily" title="روزانه" />
-          <Tab key="weekly" title="هفتگی" />
-          <Tab key="monthly" title="ماهانه" />
+          <Tab key="visitor" title="بازدیدکنندگان" />
+          <Tab key="browser" title="مرورگر" />
+          <Tab key="platform" title="نوع پلتفورم" />
+          <Tab key="language" title="زبان دستگاه" />
+          <Tab key="brand" title="برند دستگاه" />
+          <Tab key="model" title="مدل دستگاه" />
+          <Tab key="mobileModel" title="مدل موبایل" />
+          <Tab key="os" title="سیستم عامل" />
+          <Tab key="resolution" title="رزولیشن" />
+          <Tab key="country" title="کشور" />
+          <Tab key="city" title="شهر" />
+          <Tab key="source" title="منابع ورودی" />
         </Tabs>
       </CardFooter>
       <div className="absolute right-0 top-0 z-20 hidden h-full w-full items-center justify-center bg-white/60 group-[.is-loading]:flex">
