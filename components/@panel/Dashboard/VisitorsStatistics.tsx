@@ -178,6 +178,15 @@ const PieChartMode = ({ data }: { data: any[] }) => {
     );
   };
 
+  let sum = 0;
+  for (let i = 0; i < data.length; i++) {
+    sum += data[i].count;
+  }
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [data]);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
       <div className="grid h-full overflow-y-hidden">
@@ -226,8 +235,8 @@ const PieChartMode = ({ data }: { data: any[] }) => {
           </TableHeader>
           <TableBody>
             {data.map((v, idx) => (
-              <TableRow key={idx} onMouseEnter={(_) => setActiveIndex(idx)} style={{ border: "4px solid transparent", borderColor: activeIndex == idx ? stringToColor(v.name) : "transparent" }}>
-                <TableCell>{v.count}</TableCell>
+              <TableRow key={idx} onMouseEnter={(_) => setActiveIndex(idx)} style={{ borderRight: "8px solid transparent", color: stringToColor(v.name), borderColor: activeIndex == idx ? stringToColor(v.name) : "transparent" }}>
+                <TableCell>%{((v.count / sum) * 100).toFixed(0)}</TableCell>
                 <TableCell>{v.count}</TableCell>
                 <TableCell className="font-bold">{v.name}</TableCell>
               </TableRow>
