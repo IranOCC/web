@@ -1,5 +1,5 @@
 import { Button, Card, CardFooter, Image, CardHeader, Tabs, Tab, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Bar, LineChart, Cell, Sector, PieChart, Pie, Tooltip, BarChart, ResponsiveContainer, Line, Legend } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Bar, LineChart, Cell, Sector, PieChart, Pie, Tooltip, BarChart, ResponsiveContainer, Line, Legend, Brush } from "recharts";
 import { Spinner } from "@nextui-org/react";
 import { Key, useEffect, useState } from "react";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
@@ -115,7 +115,6 @@ const TimeSeriesType = ({ setLoading, endpoint }: { setLoading: (b: boolean) => 
   }, [period]);
   return (
     <>
-      {JSON.stringify(data)}
       <LineChartMode data={data} />
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
@@ -321,6 +320,7 @@ const LineChartMode = ({ data }: { data: { data: any[]; items: any[] } }) => {
             bottom: 20,
           }}
         >
+          <Brush dataKey="name" height={30} stroke="#8884d8" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip wrapperClassName="text-right text-sm" />
