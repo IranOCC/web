@@ -213,44 +213,44 @@ const menuItems: MenuItemType[] = [
       },
     ],
   },
-  {
-    title: "گزارشات",
-    href: "report",
-    icon: <ChartOutlineIcon />,
-    roles: [UserRoles.SuperAdmin],
-    sub: [
-      {
-        title: "آمار کلی",
-        href: "",
-        subtitle: "گزارشات کلی سایت",
-        roles: [UserRoles.SuperAdmin],
-      },
-      {
-        title: "کاربران",
-        href: "user",
-        subtitle: "",
-        roles: [UserRoles.SuperAdmin],
-      },
-      {
-        title: "شعبات",
-        href: "office",
-        subtitle: "",
-        roles: [UserRoles.SuperAdmin],
-      },
-      {
-        title: "املاک",
-        href: "estate",
-        subtitle: "",
-        roles: [UserRoles.SuperAdmin],
-      },
-      {
-        title: "وبلاگ",
-        href: "blog",
-        subtitle: "",
-        roles: [UserRoles.SuperAdmin],
-      },
-    ],
-  },
+  // {
+  //   title: "گزارشات",
+  //   href: "report",
+  //   icon: <ChartOutlineIcon />,
+  //   roles: [UserRoles.SuperAdmin],
+  //   sub: [
+  //     {
+  //       title: "آمار کلی",
+  //       href: "",
+  //       subtitle: "گزارشات کلی سایت",
+  //       roles: [UserRoles.SuperAdmin],
+  //     },
+  //     {
+  //       title: "کاربران",
+  //       href: "user",
+  //       subtitle: "",
+  //       roles: [UserRoles.SuperAdmin],
+  //     },
+  //     {
+  //       title: "شعبات",
+  //       href: "office",
+  //       subtitle: "",
+  //       roles: [UserRoles.SuperAdmin],
+  //     },
+  //     {
+  //       title: "املاک",
+  //       href: "estate",
+  //       subtitle: "",
+  //       roles: [UserRoles.SuperAdmin],
+  //     },
+  //     {
+  //       title: "وبلاگ",
+  //       href: "blog",
+  //       subtitle: "",
+  //       roles: [UserRoles.SuperAdmin],
+  //     },
+  //   ],
+  // },
   {
     title: "تنظیمات",
     href: "setting",
@@ -260,12 +260,6 @@ const menuItems: MenuItemType[] = [
       {
         title: "تنظیمات اولیه",
         href: "initial",
-        subtitle: "",
-        roles: [UserRoles.SuperAdmin],
-      },
-      {
-        title: "تنظیمات فوتر",
-        href: "footer",
         subtitle: "",
         roles: [UserRoles.SuperAdmin],
       },
@@ -393,7 +387,7 @@ const SubMenu = ({ open, title, sub, parentPath }: { open: boolean; title: strin
   const { roles: myRoles } = useContext(CurrentUserContext) as CurrentUserContextType;
 
   return (
-    <div className={"absolute h-full w-64 overflow-y-auto border-l bg-white py-8 shadow-lg transition-all duration-500 start-16 dark:border-gray-700 dark:bg-gray-900 xl:relative xl:!start-0" + (open ? " " : " !-start-48")}>
+    <div className={"absolute start-16 h-full w-64 overflow-y-auto border-l bg-white py-8 shadow-lg transition-all duration-500 dark:border-gray-700 dark:bg-gray-900 xl:relative xl:!start-0" + (open ? " " : " !-start-48")}>
       <h2 className="px-5 text-lg font-medium text-gray-800 dark:text-white">{title}</h2>
       <div className="mt-8 space-y-4">
         {sub

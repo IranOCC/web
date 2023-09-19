@@ -2,14 +2,9 @@
 
 import EditAddPage, { type AddEditComponentProps } from "@/components/@panel/EditAddPage";
 
-
 import { WebInfo } from "@/types/interfaces";
 import { InitialSettingsFormData } from "@/types/formsData";
 import InitialSettingsBox from "@/components/@panel/Features/Setting/InitialSettingsBox";
-
-
-
-
 
 import { useForm } from "react-hook-form";
 
