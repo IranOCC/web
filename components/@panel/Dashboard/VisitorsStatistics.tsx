@@ -83,6 +83,15 @@ export const VisitorsStatistics = () => {
       {report === "visitor" && <LineChartMode data={data} items={[{ name: "کاربران", key: "count", fill: "rgb(245, 165, 36)" }]} />}
       {report === "browser" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
       {report === "platform" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report === "language" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report === "brand" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report === "model" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report === "mobileModel" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report === "os" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report === "resolution" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report === "country" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report === "city" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {/* {report === "source" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />} */}
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
           //
