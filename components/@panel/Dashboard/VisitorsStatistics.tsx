@@ -1,5 +1,5 @@
 import { Button, Card, CardFooter, Image, CardHeader, Tabs, Tab } from "@nextui-org/react";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, LineChart, Tooltip, ResponsiveContainer, Line, Brush } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, LineChart, Tooltip, ResponsiveContainer, Line, Brush, BarChart, Legend, Bar, Sector, PieChart, Pie, Cell } from "recharts";
 import { Select, SelectSection, SelectItem } from "@nextui-org/react";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import { cn } from "@nextui-org/react";
@@ -9,7 +9,7 @@ import useAxiosAuth from "@/hooks/useAxiosAuth";
 
 export const VisitorsStatistics = () => {
   const [loading, setLoading] = useState(false);
-  const [report, setReport] = useState<Key>("daily");
+  const [report, setReport] = useState<Key>("visitor");
   const [data, setData] = useState([]);
 
   const api = useAxiosAuth();
@@ -80,7 +80,22 @@ export const VisitorsStatistics = () => {
         </Listbox>
         */}
       </CardHeader>
-      <LineChartMode data={data} items={[{ name: "کاربران", key: "count", fill: "rgb(245, 165, 36)" }]} />
+      {report === "visitor" && <LineChartMode data={data} items={[{ name: "کاربران", key: "count", fill: "rgb(245, 165, 36)" }]} />}
+      {report === "browser" && (
+        <PieChartMode
+          data={[
+            {
+              name: "Chrome",
+              count: 21,
+            },
+            {
+              name: "Safari",
+              count: 11,
+            },
+          ]}
+          items={[{ key: "count", fill: "#000000" }]}
+        />
+      )}
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
           //
@@ -139,6 +154,102 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
           ))}
         </LineChart>
       </ResponsiveContainer>
+    </div>
+  );
+};
+
+const BarChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
+  return (
+    <div dir="ltr" className="w-full">
+      <ResponsiveContainer width="100%" height={400}>
+        <BarChart
+          width={500}
+          height={300}
+          data={data}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 0,
+            bottom: 20,
+          }}
+        >
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip wrapperClassName="text-right text-sm" />
+          <Legend />
+          {items.map(({ key, name, fill }) => (
+            <Bar key={key} dataKey={key} name={name} fill={fill} />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
+
+const PieChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const renderActiveShape = (props: any) => {
+    const RADIAN = Math.PI / 180;
+    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value, name } = props;
+    const sin = Math.sin(-RADIAN * midAngle);
+    const cos = Math.cos(-RADIAN * midAngle);
+    const sx = cx + (outerRadius + 10) * cos;
+    const sy = cy + (outerRadius + 10) * sin;
+    const mx = cx + (outerRadius + 15) * cos;
+    const my = cy + (outerRadius + 20) * sin;
+    const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+    const ey = my;
+    const textAnchor = cos >= 0 ? "start" : "end";
+
+    return (
+      <g>
+        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+          {payload.name}
+        </text>
+        <Sector cx={cx} cy={cy} innerRadius={innerRadius} outerRadius={outerRadius} startAngle={startAngle} endAngle={endAngle} fill={fill} />
+        <Sector cx={cx} cy={cy} startAngle={startAngle} endAngle={endAngle} innerRadius={outerRadius + 6} outerRadius={outerRadius + 10} fill={fill} />
+        <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+        <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`تعداد: ${value}`}</text>
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
+          {`%${(percent * 100).toFixed(2)}`}
+        </text>
+      </g>
+    );
+  };
+
+  return (
+    <div className="grid h-full w-full overflow-y-hidden">
+      {items.map(({ key, name, fill }) => (
+        <div dir="ltr" key={key} className="relative flex flex-col items-center justify-center">
+          <ResponsiveContainer width={400} height={400}>
+            <PieChart width={400} height={400}>
+              <Pie
+                //
+                data={data}
+                cx="50%"
+                cy="50%"
+                activeIndex={activeIndex}
+                activeShape={renderActiveShape}
+                onMouseEnter={(_, index) => {
+                  setActiveIndex(index);
+                }}
+                outerRadius={70}
+                innerRadius={50}
+                fill="#8884d8"
+                dataKey={key}
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+          {!!name && <span className={`absolute top-80 bg-gray-100 px-4 py-2`}>{name}</span>}
+        </div>
+      ))}
     </div>
   );
 };
