@@ -81,17 +81,8 @@ export const VisitorsStatistics = () => {
         */}
       </CardHeader>
       {report === "visitor" && <LineChartMode data={data} items={[{ name: "کاربران", key: "count", fill: "rgb(245, 165, 36)" }]} />}
-      {report === "browser" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {report === "platform" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {report === "language" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {report === "brand" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {report === "model" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {report === "mobileModel" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {report === "os" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {report === "resolution" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {report === "country" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {report === "city" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {report === "source" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report !== "visitor" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
           //
@@ -154,36 +145,7 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
   );
 };
 
-const BarChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
-  return (
-    <div dir="ltr" className="w-full">
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 0,
-            bottom: 20,
-          }}
-        >
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip wrapperClassName="text-right text-sm" />
-          <Legend />
-          {items.map(({ key, name, fill }) => (
-            <Bar key={key} dataKey={key} name={name} fill={fill} />
-          ))}
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  );
-};
-
 const PieChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
   const [activeIndex, setActiveIndex] = useState(0);
 
   const renderActiveShape = (props: any) => {
@@ -238,7 +200,7 @@ const PieChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
                 dataKey={key}
               >
                 {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={stringToColor(entry.name)} />
                 ))}
               </Pie>
             </PieChart>
@@ -248,4 +210,17 @@ const PieChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
       ))}
     </div>
   );
+};
+
+const stringToColor = (str: string) => {
+  let hash = 0;
+  str.split("").forEach((char) => {
+    hash = char.charCodeAt(0) + ((hash << 5) - hash);
+  });
+  let color = "#";
+  for (let i = 0; i < 3; i++) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += value.toString(16).padStart(2, "0");
+  }
+  return color;
 };
