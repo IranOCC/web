@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import PanelCard from "@/components/@panel/Card";
 import { Select } from "@/components/Select";
+import { Alert } from "@mui/material";
 
 export default function InitialSettingsBox({ form, loading }: { form: any; loading?: boolean }) {
   const {
@@ -28,6 +29,9 @@ export default function InitialSettingsBox({ form, loading }: { form: any; loadi
     <>
       <PanelCard title="تنظیمات اولیه" loading={loading}>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 ">
+          <Alert severity="info" className="col-span-full">
+            برای اعمال این تنظیمات نیاز هست وبسایت ریبلد شود
+          </Alert>
           <Input
             //
             control={control}
