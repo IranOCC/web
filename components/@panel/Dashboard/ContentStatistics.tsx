@@ -135,7 +135,7 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip wrapperClassName="text-right text-sm" />
-          <Legend />
+          {/* <Legend /> */}
           {items.map(({ key, name, fill }) => (
             <Line type="monotone" key={key} dataKey={key} name={name} stroke={fill} activeDot={{ r: 6 }} />
           ))}
