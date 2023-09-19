@@ -81,21 +81,8 @@ export const VisitorsStatistics = () => {
         */}
       </CardHeader>
       {report === "visitor" && <LineChartMode data={data} items={[{ name: "کاربران", key: "count", fill: "rgb(245, 165, 36)" }]} />}
-      {report === "browser" && (
-        <PieChartMode
-          data={[
-            {
-              name: "Chrome",
-              count: 21,
-            },
-            {
-              name: "Safari",
-              count: 11,
-            },
-          ]}
-          items={[{ key: "count", fill: "#000000" }]}
-        />
-      )}
+      {report === "browser" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report === "platform" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
           //
