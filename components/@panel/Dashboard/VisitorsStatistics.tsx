@@ -1,5 +1,5 @@
 import { Button, Card, CardFooter, Image, CardHeader, Tabs, Tab } from "@nextui-org/react";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, LineChart, Tooltip, ResponsiveContainer, Line, Legend } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, LineChart, Tooltip, ResponsiveContainer, Line, Brush } from "recharts";
 import { Select, SelectSection, SelectItem } from "@nextui-org/react";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import { cn } from "@nextui-org/react";
@@ -14,14 +14,14 @@ export const VisitorsStatistics = () => {
 
   const api = useAxiosAuth();
   const getData = async () => {
-    // setLoading(true);
-    // try {
-    //   const response = await api.get(`/admin/dashboardd/session?period=${period}`);
-    //   setData(response.data);
-    //   setLoading(false);
-    // } catch (error) {
-    //   // setLoading(false);
-    // }
+    setLoading(true);
+    try {
+      const response = await api.get(`/admin/dashboard/visitors?report=${report}`);
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      // setLoading(false);
+    }
   };
   useEffect(() => {
     getData();
@@ -80,15 +80,7 @@ export const VisitorsStatistics = () => {
         </Listbox>
         */}
       </CardHeader>
-      {/* 
-      <LineChartMode
-        data={data}
-        items={[
-          { name: "گوگل'", key: "google", fill: "rgb(243, 18, 96)" },
-          { name: "همه", key: "total", fill: "rgb(245, 165, 36)" },
-        ]}
-      /> 
-      */}
+      <LineChartMode data={data} items={[{ name: "کاربران", key: "count", fill: "rgb(245, 165, 36)" }]} />
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
           //
@@ -137,10 +129,11 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
             bottom: 20,
           }}
         >
+          <Brush dataKey="name" height={30} stroke="#8884d8" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip wrapperClassName="text-right text-sm" />
-          <Legend />
+          {/* <Legend /> */}
           {items.map(({ key, name, fill }) => (
             <Line type="monotone" key={key} dataKey={key} name={name} stroke={fill} activeDot={{ r: 6 }} />
           ))}
