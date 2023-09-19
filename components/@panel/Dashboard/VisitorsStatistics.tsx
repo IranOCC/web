@@ -1,4 +1,4 @@
-import { Button, Card, CardFooter, Image, CardHeader, Tabs, Tab } from "@nextui-org/react";
+import { Button, Card, CardFooter, Image, CardHeader, Tabs, Tab, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, LineChart, Tooltip, ResponsiveContainer, Line, Brush, BarChart, Legend, Bar, Sector, PieChart, Pie, Cell } from "recharts";
 import { Select, SelectSection, SelectItem } from "@nextui-org/react";
 import { Listbox, ListboxItem } from "@nextui-org/react";
@@ -81,7 +81,7 @@ export const VisitorsStatistics = () => {
         */}
       </CardHeader>
       {report === "visitor" && <LineChartMode data={data} items={[{ name: "کاربران", key: "count", fill: "rgb(245, 165, 36)" }]} />}
-      {report !== "visitor" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
+      {report !== "visitor" && <PieChartMode data={data} />}
 
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
@@ -145,7 +145,7 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
   );
 };
 
-const PieChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
+const PieChartMode = ({ data }: { data: any[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const renderActiveShape = (props: any) => {
@@ -179,9 +179,9 @@ const PieChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
   };
 
   return (
-    <div className="grid h-full w-full overflow-y-hidden">
-      {items.map(({ key, name, fill }) => (
-        <div dir="ltr" key={key} className="relative flex flex-col items-center justify-center">
+    <div className="grid grid-cols-1 lg:grid-cols-2">
+      <div className="grid h-full overflow-y-hidden">
+        <div dir="ltr" className="relative flex flex-col items-center justify-center">
           <ResponsiveContainer width={400} height={400}>
             <PieChart width={400} height={400}>
               <Pie
@@ -197,7 +197,7 @@ const PieChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
                 outerRadius={70}
                 innerRadius={50}
                 fill="#8884d8"
-                dataKey={key}
+                dataKey="count"
               >
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={stringToColor(entry.name)} />
@@ -205,9 +205,36 @@ const PieChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          {!!name && <span className={`absolute top-80 bg-gray-100 px-4 py-2`}>{name}</span>}
         </div>
-      ))}
+      </div>
+
+      <div dir="ltr" className="flex">
+        <Table
+          classNames={{
+            base: "min-h-[400px] max-h-[400px] justify-center",
+            wrapper: "bg-transparent pt-0",
+            th: "text-center",
+            td: "text-center",
+          }}
+          shadow="none"
+          hideHeader
+        >
+          <TableHeader>
+            <TableColumn>درصد</TableColumn>
+            <TableColumn>تعداد</TableColumn>
+            <TableColumn>عنوان</TableColumn>
+          </TableHeader>
+          <TableBody>
+            {data.map((v, idx) => (
+              <TableRow key={idx} onMouseEnter={(_) => setActiveIndex(idx)} style={{ border: "4px solid transparent", borderColor: activeIndex == idx ? stringToColor(v.name) : "transparent" }}>
+                <TableCell>{v.count}</TableCell>
+                <TableCell>{v.count}</TableCell>
+                <TableCell className="font-bold">{v.name}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };
