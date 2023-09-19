@@ -91,7 +91,7 @@ export const VisitorsStatistics = () => {
       {report === "resolution" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
       {report === "country" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
       {report === "city" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
-      {/* {report === "source" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />} */}
+      {report === "source" && <PieChartMode data={data} items={[{ key: "count", fill: "#000000" }]} />}
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
         <Tabs
           //
