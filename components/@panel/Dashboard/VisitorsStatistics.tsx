@@ -16,7 +16,7 @@ export const VisitorsStatistics = () => {
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/dashboard/visitors?report=${report}`);
+      const response = await api.get(`/admin/dashboard/visitors/${report}`);
       setData(response.data);
       setLoading(false);
     } catch (error) {
