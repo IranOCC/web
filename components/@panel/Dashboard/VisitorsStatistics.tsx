@@ -7,6 +7,7 @@ import { Spinner } from "@nextui-org/react";
 import { useState, Key, useEffect, useMemo } from "react";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import moment from "jalali-moment";
+import { usePrevious } from "@/hooks/usePrevious";
 
 export const VisitorsStatistics = () => {
   const [loading, setLoading] = useState(false);
@@ -54,6 +55,13 @@ export const VisitorsStatistics = () => {
   useEffect(() => {
     getData();
   }, [report, rangeValue]);
+
+  const prevReport = usePrevious(report);
+  useEffect(() => {
+    if (report !== "visitor" && prevReport === "visitor") {
+      setData([]);
+    }
+  }, [report]);
 
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
