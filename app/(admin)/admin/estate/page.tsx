@@ -43,15 +43,45 @@ const columns: ColumnsType<Estate> = [
     title: "دسته ملک",
     dataIndex: ["category", "title"],
     responsive: ["lg"],
+    filters: [
+      {
+        text: "ویلا",
+        value: "villa",
+      },
+      {
+        text: "آپارتمان",
+        value: "rasoul",
+      },
+    ],
   },
   {
     title: "شعبه",
     dataIndex: ["office", "name"],
     responsive: ["lg"],
+    filters: [
+      {
+        text: "شعبه یک",
+        value: "office 1",
+      },
+      {
+        text: "شعبه دو",
+        value: "office2",
+      },
+    ],
   },
   {
     title: "ثبت",
     responsive: ["lg"],
+    filters: [
+      {
+        text: "راموس پرانوس",
+        value: "ramous",
+      },
+      {
+        text: "رسول احمدی فر",
+        value: "rasoul",
+      },
+    ],
     render: (value, { createdAt, createdBy }) => {
       return (
         <div className="flex flex-col">
@@ -65,6 +95,20 @@ const columns: ColumnsType<Estate> = [
     title: "تایید یا رد",
     dataIndex: "isConfirmed",
     responsive: ["xl"],
+    filters: [
+      {
+        text: "تایید شده",
+        value: "confirmed",
+      },
+      {
+        text: "رد شده",
+        value: "rejected",
+      },
+      {
+        text: "در انتظار",
+        value: "pending",
+      },
+    ],
     render: (_, { isConfirmed, confirmedAt, confirmedBy, isRejected, rejectedAt, rejectedBy, rejectedReason }) => {
       if (!isConfirmed && !isRejected) {
         return (
