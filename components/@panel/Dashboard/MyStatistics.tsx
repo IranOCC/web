@@ -59,10 +59,10 @@ export const MyStatistics = () => {
         bg="rgb(245, 165, 36 / 50%)"
         footerBg="rgb(245, 165, 36)"
       />
-      <div className="min-w-[420px]:grid-cols-3 col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4">
+      <div className="col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4 min-[420px]:grid-cols-3">
         <div className="col-span-full text-center text-lg font-bold text-white">
           {/*  */}
-          عملکرد امروز
+          عملکرد امروز من
         </div>
         <ItemBox
           //
@@ -86,10 +86,10 @@ export const MyStatistics = () => {
           footerBg="rgb(243, 18, 96)"
         />
       </div>
-      <div className="min-w-[420px]:grid-cols-3 col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4">
+      <div className="col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4 min-[420px]:grid-cols-3">
         <div className="col-span-full text-center text-lg font-bold text-white">
           {/*  */}
-          عملکرد دیروز
+          عملکرد دیروز من
         </div>
         <ItemBox
           //
@@ -113,10 +113,10 @@ export const MyStatistics = () => {
           footerBg="rgb(243, 18, 96)"
         />
       </div>
-      <div className="min-w-[420px]:grid-cols-3 col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4">
+      <div className="col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4 min-[420px]:grid-cols-3">
         <div className="col-span-full text-center text-lg font-bold text-white">
           {/*  */}
-          عملکرد ماه جاری
+          عملکرد ماه جاری من
         </div>
         <ItemBox
           //
@@ -140,10 +140,10 @@ export const MyStatistics = () => {
           footerBg="rgb(243, 18, 96)"
         />
       </div>
-      <div className="min-w-[420px]:grid-cols-3 col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4">
+      <div className="col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4 min-[420px]:grid-cols-3">
         <div className="col-span-full text-center text-lg font-bold text-white">
           {/*  */}
-          عملکرد ماه پیشین
+          عملکرد ماه پیشین من
         </div>
         <ItemBox
           //
