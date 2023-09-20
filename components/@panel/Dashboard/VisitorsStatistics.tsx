@@ -13,6 +13,7 @@ export const VisitorsStatistics = () => {
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState<Key>("visitor");
   const [rangeDateType, setRangeDateType] = useState<any>(new Set(["yesterday"]));
+  const [timeFrame, setTimeFrame] = useState<any>(new Set(["hourly"]));
   const [data, setData] = useState([]);
 
   const rangeValue = useMemo(() => {
@@ -41,11 +42,31 @@ export const VisitorsStatistics = () => {
     return null;
   }, [rangeValue]);
 
+  const timeFrameValue = useMemo(() => {
+    return Array.from(timeFrame).join(", ");
+  }, [timeFrame]);
+
+  const timeFrameValueTL = useMemo(() => {
+    switch (timeFrameValue) {
+      case "hourly":
+        return "ساعتی";
+      case "daily":
+        return "روزانه";
+      case "weekly":
+        return "هفتگی";
+      case "monthly":
+        return "ماهانه";
+      case "yearly":
+        return "سالانه";
+    }
+    return null;
+  }, [timeFrameValue]);
+
   const api = useAxiosAuth();
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/dashboard/visitors/${report}?range=${rangeValue}`);
+      const response = await api.get(`/admin/dashboard/visitors/${report}?range=${rangeValue}&timeFrame=${timeFrameValue}`);
       setData(response.data);
       setLoading(false);
     } catch (error) {
@@ -167,6 +188,49 @@ export const VisitorsStatistics = () => {
             }
           >
             بازه زمانی
+          </ListboxItem>
+
+          <ListboxItem
+            key="choose-date-range"
+            endContent={
+              <div className="flex items-center gap-1">
+                <Chip color="secondary" variant="solid" className=" overflow-hidden whitespace-nowrap">
+                  {timeFrameValueTL}
+                </Chip>
+                <Dropdown>
+                  <DropdownTrigger>
+                    <Button isIconOnly radius="full" size="sm" variant="flat">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+                        <path d="M21 18V21H19V18H17V16H23V18H21ZM5 18V21H3V18H1V16H7V18H5ZM11 6V3H13V6H15V8H9V6H11ZM11 10H13V21H11V10ZM3 14V3H5V14H3ZM19 14V3H21V14H19Z"></path>
+                      </svg>
+                    </Button>
+                  </DropdownTrigger>
+                  <DropdownMenu
+                    //
+                    aria-label="Choose Time Frame"
+                    disallowEmptySelection
+                    selectionMode="single"
+                    selectedKeys={timeFrame}
+                    onSelectionChange={setTimeFrame}
+                  >
+                    <DropdownItem key="hourly">یک ساعته</DropdownItem>
+                    <DropdownItem key="daily">روزانه</DropdownItem>
+                    <DropdownItem key="weekly">هفتگی</DropdownItem>
+                    <DropdownItem key="monthly">ماهانه</DropdownItem>
+                    <DropdownItem key="yearly">سالانه</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
+            }
+            startContent={
+              <IconWrapper className="bg-danger/10 text-warning">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+                  <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM13 12H17V14H11V7H13V12Z"></path>
+                </svg>
+              </IconWrapper>
+            }
+          >
+            تایم فریم
           </ListboxItem>
         </Listbox>
       </CardHeader>
