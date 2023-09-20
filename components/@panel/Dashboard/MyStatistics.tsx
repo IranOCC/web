@@ -59,8 +59,8 @@ export const MyStatistics = () => {
         bg="rgb(245, 165, 36 / 50%)"
         footerBg="rgb(245, 165, 36)"
       />
-      <div className="col-span-2 grid grid-cols-3 gap-4 rounded-2xl bg-black/30">
-        <div className="col-span-full pt-4 text-center text-lg font-bold text-white">
+      <div className="min-w-[420px]:grid-cols-3 col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4">
+        <div className="col-span-full text-center text-lg font-bold text-white">
           {/*  */}
           عملکرد امروز
         </div>
@@ -86,8 +86,8 @@ export const MyStatistics = () => {
           footerBg="rgb(243, 18, 96)"
         />
       </div>
-      <div className="col-span-2 grid grid-cols-3 gap-4 rounded-2xl bg-black/30">
-        <div className="col-span-full pt-4 text-center text-lg font-bold text-white">
+      <div className="min-w-[420px]:grid-cols-3 col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4">
+        <div className="col-span-full text-center text-lg font-bold text-white">
           {/*  */}
           عملکرد دیروز
         </div>
@@ -113,8 +113,8 @@ export const MyStatistics = () => {
           footerBg="rgb(243, 18, 96)"
         />
       </div>
-      <div className="col-span-2 grid grid-cols-3 gap-4 rounded-2xl bg-black/30">
-        <div className="col-span-full pt-4 text-center text-lg font-bold text-white">
+      <div className="min-w-[420px]:grid-cols-3 col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4">
+        <div className="col-span-full text-center text-lg font-bold text-white">
           {/*  */}
           عملکرد ماه جاری
         </div>
@@ -140,8 +140,8 @@ export const MyStatistics = () => {
           footerBg="rgb(243, 18, 96)"
         />
       </div>
-      <div className="col-span-2 grid grid-cols-3 gap-4 rounded-2xl bg-black/30">
-        <div className="col-span-full pt-4 text-center text-lg font-bold text-white">
+      <div className="min-w-[420px]:grid-cols-3 col-span-2 grid grid-cols-1 gap-4 rounded-2xl bg-black/50 p-4">
+        <div className="col-span-full text-center text-lg font-bold text-white">
           {/*  */}
           عملکرد ماه پیشین
         </div>
