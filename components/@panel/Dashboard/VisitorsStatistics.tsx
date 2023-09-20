@@ -69,7 +69,7 @@ export const VisitorsStatistics = () => {
             key="choose-date-range"
             endContent={
               <div className="flex items-center gap-1">
-                <Chip color="secondary" variant="solid">
+                <Chip color="secondary" variant="solid" className=" overflow-hidden whitespace-nowrap">
                   {rangeValueTL}
                 </Chip>
                 <Dropdown>
