@@ -328,7 +328,7 @@ const LineChartMode = ({ data }: { data: { data: any[]; items: any[] } }) => {
           {data.items.map(({ _id, name }) => (
             <Line
               //
-              type="monotone"
+              type="linear"
               key={_id}
               dataKey={_id}
               name={name}

@@ -170,7 +170,7 @@ export const VisitorsStatistics = () => {
           </ListboxItem>
         </Listbox>
       </CardHeader>
-      {report === "visitor" && <LineChartMode data={data} items={[{ name: "کاربران", key: "count", fill: "rgb(243, 18, 96)" }]} />}
+      {report === "visitor" && <AreaChartMode data={data} items={[{ name: "کاربران", key: "count", fill: "rgb(251, 169, 197)", stroke: "rgb(243, 18, 96)" }]} />}
       {report !== "visitor" && <PieChartMode data={data} />}
 
       <CardFooter className="border-zinc-100/50 z-10 gap-2 border-t-1 bg-black/70">
@@ -206,11 +206,11 @@ export const VisitorsStatistics = () => {
 
 const IconWrapper = ({ children, className }: any) => <div className={cn(className, "flex h-7 w-7 items-center justify-center rounded-small")}>{children}</div>;
 
-const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
+const AreaChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
   return (
     <div dir="ltr" className="w-full">
       <ResponsiveContainer width="100%" height={400}>
-        <LineChart
+        <AreaChart
           width={500}
           height={300}
           data={data}
@@ -226,10 +226,10 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
           <YAxis />
           <Tooltip wrapperClassName="text-right text-sm" />
           {/* <Legend /> */}
-          {items.map(({ key, name, fill }) => (
-            <Line type="monotone" key={key} dataKey={key} name={name} stroke={fill} activeDot={{ r: 6 }} />
+          {items.map(({ key, name, fill, stroke }) => (
+            <Area type="linear" key={key} dataKey={key} name={name} fill={fill} stroke={stroke} activeDot={{ r: 6 }} />
           ))}
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

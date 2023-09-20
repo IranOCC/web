@@ -137,7 +137,7 @@ const LineChartMode = ({ data, items }: { data: any[]; items: any[] }) => {
           <Tooltip wrapperClassName="text-right text-sm" />
           {/* <Legend /> */}
           {items.map(({ key, name, fill }) => (
-            <Line type="monotone" key={key} dataKey={key} name={name} stroke={fill} activeDot={{ r: 6 }} />
+            <Line type="linear" key={key} dataKey={key} name={name} stroke={fill} activeDot={{ r: 6 }} />
           ))}
         </LineChart>
       </ResponsiveContainer>
