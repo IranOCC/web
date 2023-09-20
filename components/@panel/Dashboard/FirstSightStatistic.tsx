@@ -8,6 +8,7 @@ import { useState, Key, useEffect, useMemo } from "react";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import moment from "jalali-moment";
 import { usePrevious } from "@/hooks/usePrevious";
+import CountUp from "react-countup";
 
 export const FirstSightStatistic = () => {
   const [loading, setLoading] = useState(false);
@@ -71,7 +72,9 @@ export const ItemBox = ({ data, title, bg, footerBg }: { data?: number; title: s
       <Card shadow="none" isFooterBlurred isPressable isHoverable className="group w-auto bg-white/80" style={{ background: bg }}>
         <CardHeader className="relative z-10 flex flex-col items-start gap-2"></CardHeader>
         <CardBody>
-          <span className="text-4xl font-bold text-gray-700 lg:text-5xl">{data || 0}</span>
+          <span className="text-4xl font-bold text-gray-700 lg:text-5xl">
+            <CountUp delay={0.5} duration={2} end={data || 0} />
+          </span>
         </CardBody>
         <CardFooter className="z-10 gap-2 bg-secondary" style={{ background: footerBg }}>
           {title}
