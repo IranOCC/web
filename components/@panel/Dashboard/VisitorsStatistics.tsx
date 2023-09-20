@@ -114,14 +114,14 @@ export const VisitorsStatistics = () => {
                     <DropdownItem
                       //
                       key="7daysAgo"
-                      description={`${moment().subtract(8, "jDay").locale("fa").format("DD MMM YYYY")} - ${moment().subtract(1, "jDay").locale("fa").format("DD MMM YYYY")}`}
+                      description={`${moment().subtract(7, "jDay").locale("fa").format("DD MMM YYYY")} - ${moment().locale("fa").format("DD MMM YYYY")}`}
                     >
                       7 روز اخیر
                     </DropdownItem>
                     <DropdownItem
                       //
                       key="thisWeek"
-                      description={`${moment().startOf("week").locale("fa").format("DD MMM YYYY")} - ${moment().endOf("week").locale("fa").format("DD MMM YYYY")}`}
+                      description={`${moment().startOf("week").subtract(1, "jDay").locale("fa").format("DD MMM YYYY")} - ${moment().endOf("week").subtract(1, "jDay").locale("fa").format("DD MMM YYYY")}`}
                     >
                       این هفته
                     </DropdownItem>
@@ -129,14 +129,14 @@ export const VisitorsStatistics = () => {
                       //
                       showDivider
                       key="lastWeek"
-                      description={`${moment().subtract(1, "week").startOf("week").locale("fa").format("DD MMM YYYY")} - ${moment().subtract(1, "week").endOf("week").locale("fa").format("DD MMM YYYY")}`}
+                      description={`${moment().subtract(1, "week").startOf("week").subtract(1, "jDay").locale("fa").format("DD MMM YYYY")} - ${moment().subtract(1, "week").endOf("week").subtract(1, "jDay").locale("fa").format("DD MMM YYYY")}`}
                     >
                       هفته قبل
                     </DropdownItem>
                     <DropdownItem
                       //
                       key="30daysAgo"
-                      description={`${moment().subtract(31, "jDay").locale("fa").format("DD MMM YYYY")} - ${moment().subtract(1, "jDay").locale("fa").format("DD MMM YYYY")}`}
+                      description={`${moment().subtract(30, "jDay").locale("fa").format("DD MMM YYYY")} - ${moment().locale("fa").format("DD MMM YYYY")}`}
                     >
                       30 روز اخیر
                     </DropdownItem>

@@ -5,8 +5,6 @@ import { PostsStatistics, EstatesStatistics } from "@/components/@panel/Dashboar
 import { VisitorsStatistics } from "@/components/@panel/Dashboard/VisitorsStatistics";
 import { Alert } from "@mui/material";
 import { UsersPostsStatistics, UsersEstatesStatistics } from "@/components/@panel/Dashboard/UsersStatistics";
-import { PostsViewsStatistics } from "@/components/@panel/Dashboard/PostsViewsStatistics";
-import { EstatesViewsStatistics } from "@/components/@panel/Dashboard/EstatesViewsStatistics";
 
 export default function Page({ searchParams }: any) {
   const { warning, error, info } = searchParams;
