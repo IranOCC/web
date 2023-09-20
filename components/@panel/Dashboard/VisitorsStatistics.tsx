@@ -75,7 +75,7 @@ export const VisitorsStatistics = () => {
   };
   useEffect(() => {
     getData();
-  }, [report, rangeValue]);
+  }, [report, rangeValue, timeFrameValue]);
 
   const prevReport = usePrevious(report);
   useEffect(() => {
