@@ -168,7 +168,7 @@ export default function Page() {
               {
                 key: "viewProperty",
                 label: (
-                  <Link href="#" onClick={() => viewProperty(id!)}>
+                  <Link href={`/property/${record.slug}`} onClick={() => viewProperty(id!)}>
                     مشاهده ملک
                   </Link>
                 ),

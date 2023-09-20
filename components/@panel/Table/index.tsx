@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ReactNode, useEffect } from "react";
+import React, { useState, ReactNode, useEffect, useRef } from "react";
 import { Dropdown, Empty, Popconfirm, RadioChangeEvent } from "antd";
 import { Form, Radio, Space, Switch, Table } from "antd";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
@@ -19,6 +19,7 @@ import { toast } from "@/lib/toast";
 import Link from "next/link";
 import { Button } from "@/components/Button";
 import SearchIcon from "@/components/Icons/Search";
+import { Timeout } from "react-number-format/types/types";
 
 export type PanelTableProps = {
   headerTitle?: ReactNode;
@@ -115,6 +116,8 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
     if (endpoint) getData();
     // setFirstTry(false);
   }, [_page, _count, _search, _sort, update]);
+
+  const timeoutRef = useRef<Timeout | null>(null);
 
   // ##############################################
   // ====> row Selection
@@ -229,11 +232,17 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
                 type="text"
                 placeholder="جستجو ..."
                 className={`block w-full border-0 border-b border-gray-300 bg-white p-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-gray-300 focus:bg-white focus:ring-0`}
-                value={_search || ""}
-                onChange={(e) => {
-                  const $s = new URLSearchParams(searchParams?.toString());
-                  $s?.set("search", e.target.value);
-                  router.push(pathname + "?" + $s.toString());
+                defaultValue={_search || ""}
+                onKeyDown={(e: any) => {
+                  if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                  }
+                  timeoutRef.current = setTimeout(() => {
+                    const $s = new URLSearchParams(searchParams?.toString());
+                    $s?.set("search", e.target.value);
+                    router.push(pathname + "?" + $s.toString());
+                    timeoutRef.current = null;
+                  }, 1000);
                 }}
               />
               <div className="absolute left-2.5 cursor-pointer text-secondary">
