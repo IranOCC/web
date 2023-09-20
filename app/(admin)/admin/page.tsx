@@ -5,6 +5,7 @@ import { PostsStatistics, EstatesStatistics } from "@/components/@panel/Dashboar
 import { VisitorsStatistics } from "@/components/@panel/Dashboard/VisitorsStatistics";
 import { Alert } from "@mui/material";
 import { UsersPostsStatistics, UsersEstatesStatistics } from "@/components/@panel/Dashboard/UsersStatistics";
+import { MyStatistics } from "@/components/@panel/Dashboard/MyStatistics";
 
 export default function Page({ searchParams }: any) {
   const { warning, error, info } = searchParams;
@@ -17,6 +18,9 @@ export default function Page({ searchParams }: any) {
           {!!info && <Alert severity="info">{info}</Alert>}
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
+          <div className="col-span-full">
+            <MyStatistics />
+          </div>
           <div className="col-span-full">
             <VisitorsStatistics />
           </div>
