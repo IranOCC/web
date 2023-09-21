@@ -118,6 +118,7 @@ export default function Page({ searchParams }: any) {
                     <span>شماره موبایل</span>
                   </div>
                 }
+                disabled
               />
               <Tab
                 key="email"
@@ -126,6 +127,7 @@ export default function Page({ searchParams }: any) {
                     <span>آدرس ایمیل</span>
                   </div>
                 }
+                disabled
               />
               <Tab
                 key="address"
@@ -134,6 +136,7 @@ export default function Page({ searchParams }: any) {
                     <span>موقعیت مکانی</span>
                   </div>
                 }
+                disabled
               />
             </Tabs>
           </CardHeader>
