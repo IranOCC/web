@@ -23,12 +23,24 @@ export default function Page() {
       link: "/property?filter[category]=645cd1754b4819ffd958c95b",
     },
     {
+      title: "هکتاری",
+      link: "/property?filter[category]=645cd1844b4819ffd958c95e",
+    },
+    {
       title: "ساحلی",
       link: "/property?filter[features]=645d0e6298a6fe36672b5738",
     },
     {
-      title: "اجاره",
-      link: "/property?filter[rent]=true",
+      title: "جنگلی",
+      link: "/property?filter[features]=645d0e7598a6fe36672b573c",
+    },
+    {
+      title: "اجاره سالانه",
+      link: "/property?filter[annualRent]=true",
+    },
+    {
+      title: "اجاره شبانه",
+      link: "/property?filter[dailyRent]=true",
     },
     {
       title: "تهاتر",

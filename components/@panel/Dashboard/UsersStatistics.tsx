@@ -135,7 +135,7 @@ const TimeSeriesType = ({ setLoading, endpoint }: { setLoading: (b: boolean) => 
 };
 
 const CountSeriesType = ({ setLoading, items, endpoint }: { setLoading: (b: boolean) => void; items: any[]; endpoint: string }) => {
-  const [mode, setMode] = useState<Key>("barchart");
+  const [mode, setMode] = useState<Key>("table");
   const [data, setData] = useState([]);
 
   const api = useAxiosAuth();
