@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import { toast } from "@/lib/toast";
 import { signOut } from "next-auth/react";
 
+
 const config = {
     baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
     headers: {
@@ -11,6 +12,10 @@ const config = {
     validateStatus: function (status: number) {
         return status >= 200 && status < 400;
     },
+    paramsSerializer: {
+        indexes: null // by default: false
+    }
+
 }
 
 
