@@ -13,6 +13,7 @@ import { LocationChoose } from "./Components/LocationChoose";
 import { Check } from "@mui/icons-material";
 import useAxiosAuth from "@/hooks/useAxiosAuth";
 import { handleFieldsError } from "@/lib/axios";
+import { SelectDocumentType, SelectType } from "./Components/SelectTypeDoc";
 
 export default function AddPropertyForm() {
   const [category, setCategory] = useState<Key>("");
@@ -163,20 +164,30 @@ export default function AddPropertyForm() {
                     },
                   }}
                 />
-                <SwitchTabs
+                {/* <SwitchTabs
                   //
                   placeholder="نوع ملک"
                   endpoint="/tools/estate/type/autoComplete"
                   control={control}
                   name="type"
                   filterApi={{ categories: category }}
+                /> */}
+                <SelectType
+                  //
+                  form={form}
+                  filterApi={{ categories: category }}
                 />
-                <SwitchTabs
+                {/* <SwitchTabs
                   //
                   placeholder="نوع سند"
                   endpoint="/tools/estate/documentType/autoComplete"
                   control={control}
                   name="documentType"
+                  filterApi={{ categories: category }}
+                /> */}
+                <SelectDocumentType
+                  //
+                  form={form}
                   filterApi={{ categories: category }}
                 />
                 <Controller
