@@ -81,7 +81,6 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
   const [contactModalOpen, setContactModalOpen] = React.useState<boolean>(false);
   const [isOpenDetail, setOpenDetail] = React.useState<boolean>(false);
 
-
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
@@ -105,11 +104,12 @@ export const WebPreviewProvider = ({ children, initial }: { children: ReactNode;
       { title: categories[0] },
     ]);
     setFullContent(false);
-    setSidebar({
-      small: true,
-      props: { id },
-      component: "Features/Blog/RelatedBlogs",
-    });
+    setSidebar(undefined);
+    // setSidebar({
+    //   small: true,
+    //   props: { id },
+    //   component: "Features/Blog/RelatedBlogs",
+    // });
     setHeaderSubTitle({
       type: "blog",
       category: categories.join("، "),
