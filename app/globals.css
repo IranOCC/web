@@ -56,3 +56,10 @@ input[type="search"]::-webkit-search-results-decoration {
     padding-right: 0 !important;
     padding-left: 0 !important;
 }
+
+
+.ant-btn-primary {
+    color: #fff;
+    background-color: #ffe600 !important;
+    box-shadow: 0 2px 0 rgba(235, 255, 5, 0.1);
+}

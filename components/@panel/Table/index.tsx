@@ -5,7 +5,7 @@ import { Dropdown, Empty, Popconfirm, RadioChangeEvent } from "antd";
 import { Form, Radio, Space, Switch, Table } from "antd";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import type { ExpandableConfig, TablePaginationConfig, TableRowSelection } from "antd/es/table/interface";
+import type { ExpandableConfig, FilterValue, SorterResult, TablePaginationConfig, TableRowSelection } from "antd/es/table/interface";
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { DragEndEvent } from "@dnd-kit/core";
 import { DndContext } from "@dnd-kit/core";
@@ -68,20 +68,40 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
   const _count = parseInt(searchParams?.get("count") || defaultPageCount?.toString() || "25");
 
   const [totalItemsCount, setTotalItemsCount] = useState(0);
-  const handlePaginationChange = (page: number, page_size: number) => {
+
+  const handleTableChange = (pagination: TablePaginationConfig, filters: Record<string, FilterValue | null>) => {
     const $s = new URLSearchParams(searchParams?.toString());
-    $s?.set("page", page.toString());
-    $s?.set("count", page_size.toString());
+    if (pagination?.current !== undefined) $s?.set("page", pagination?.current?.toString());
+    if (pagination?.pageSize !== undefined) $s?.set("count", pagination?.pageSize?.toString());
+    const fkeys = Object.keys(filters);
+    for (let i = 0; i < Object.keys(filters).length; i++) {
+      const m = filters[fkeys[i]];
+      $s.delete(`filter[${fkeys[i]}]`);
+      if (m !== null) {
+        for (let j = 0; j < m?.length; j++) {
+          $s.append(`filter[${fkeys[i]}]`, m[j].toString());
+        }
+      }
+    }
     router.push(pathname + "?" + $s.toString());
   };
+
   //
   const api = useAxiosAuth();
   const getData = async () => {
     setFetchLoading(true);
+    let _filter: any = {};
+    searchParams?.forEach((value, key) => {
+      if (key.startsWith("filter[")) {
+        if (!!_filter[key]) _filter[key].push(value);
+        else _filter[key] = [value];
+      }
+    });
     const _params = {
       current: _page,
       size: _count,
       search: _search,
+      ..._filter,
       // sort: "created_at",
     };
     try {
@@ -115,7 +135,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
     // get table data
     if (endpoint) getData();
     // setFirstTry(false);
-  }, [_page, _count, _search, _sort, update]);
+  }, [searchParams, update]);
 
   const timeoutRef = useRef<Timeout | null>(null);
 
@@ -284,7 +304,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
     // showSizeChanger: true,
     total: totalItemsCount,
     position: ["bottomCenter"],
-    onChange: handlePaginationChange,
+    // onChange: handlePaginationChange,
     pageSize: _count,
     current: _page,
     pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
@@ -322,7 +342,10 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
               dataSource={dataSource}
               locale={{
                 emptyText: <Empty description="موردی پیدا نشد" />,
+                filterConfirm: "انجام",
+                filterReset: "ریست",
               }}
+              onChange={handleTableChange}
             />
           </SortableContext>
         </DndContext>
@@ -348,7 +371,10 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
       dataSource={dataSource}
       locale={{
         emptyText: <Empty description="موردی پیدا نشد" />,
+        filterConfirm: "انجام",
+        filterReset: "ریست",
       }}
+      onChange={handleTableChange}
     />
   );
 }
