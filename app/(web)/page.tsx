@@ -7,6 +7,10 @@ import Link from "next/link";
 export default function Page() {
   const items = [
     {
+      title: "ویژه",
+      link: "/property?filter[vip]=true",
+    },
+    {
       title: "زمین",
       link: "/property?filter[category]=645cd1554b4819ffd958c958",
     },
