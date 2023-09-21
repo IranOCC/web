@@ -2,7 +2,7 @@ import React from "react";
 
 import { TbShare2 } from "react-icons/tb";
 import { AiOutlinePlusSquare } from "react-icons/ai";
-import { Button, Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { KeyboardDoubleArrowDown } from "@mui/icons-material";
 interface Props {
   closePrompt: () => void;
@@ -46,8 +46,10 @@ export default function AddToIosSafari(props: Props) {
               <p>مراحل نصب را ادامه دهید</p>
             </div>
           </div>
-          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
         </ModalBody>
+        <ModalFooter>
+          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );

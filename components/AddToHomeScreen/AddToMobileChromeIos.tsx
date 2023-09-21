@@ -2,7 +2,7 @@ import React from "react";
 
 import { AiOutlinePlusSquare } from "react-icons/ai";
 import { TbShare2 } from "react-icons/tb";
-import { Button, Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { KeyboardDoubleArrowDown, KeyboardDoubleArrowUp } from "@mui/icons-material";
 
 interface Props {
@@ -47,8 +47,10 @@ export default function AddToMobileChromeIos(props: Props) {
               <p>مراحل نصب را ادامه دهید</p>
             </div>
           </div>
-          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
         </ModalBody>
+        <ModalFooter>
+          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );

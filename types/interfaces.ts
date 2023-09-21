@@ -428,8 +428,17 @@ export type WebEstate = {
 
     isFavorite?: boolean;
 
+    createdAt?: Date;
+
     isConfirmed?: boolean;
+    confirmedBy?: User | string;
+    confirmedAt?: Date;
+
     isRejected?: boolean;
+    rejectedBy?: User | string;
+    rejectedAt?: Date;
+
+    rejectedReason?: string;
 
     dailyRent?: boolean;
     annualRent?: boolean;

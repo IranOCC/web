@@ -16,6 +16,9 @@ import { AccessTime, ArrowForwardIos, Call, Check, Close, FavoriteBorderOutlined
 import { ReservationModal } from "@/components/@web/Features/Estate/ReservationModal";
 import { CurrentUserContext, CurrentUserContextType } from "@/context/currentUser.context";
 import { toast } from "@/lib/toast";
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
+import { Alert, AlertTitle } from "@mui/material";
+import moment from "jalali-moment";
 
 export default function Page() {
   const { dashboardPage } = useContext(WebPreviewContext) as WebPreviewContextType;
@@ -175,18 +178,74 @@ const PropertyTools = ({ data }: { data: WebEstate }) => {
   const router = useRouter();
   const { setShowLoginModal, isLogin } = useContext(CurrentUserContext) as CurrentUserContextType;
 
+  const [openDetailModal, setOpenDetailModal] = useState(false);
   return (
     <>
       <Tooltip title="جزئیات" placement="top" arrow={false}>
         <div
           //
           role="info"
-          // onClick={() => router.push(`/property/${data.slug}`)}
+          onClick={() => setOpenDetailModal(true)}
           className="flex h-fit w-fit cursor-pointer items-center justify-center justify-self-center text-white"
         >
           <InfoOutlined style={{ fontSize: 28 }} />
         </div>
       </Tooltip>
+      <Modal
+        //
+        backdrop="blur"
+        isOpen={openDetailModal}
+        onClose={() => setOpenDetailModal(false)}
+        className="z-[102]"
+        placement="center"
+        classNames={{ wrapper: "z-[102]", backdrop: "z-[102]", closeButton: "right-auto left-1" }}
+        title="جزئیات ملک من"
+      >
+        <ModalContent>
+          <ModalHeader>جزئیات ملک من</ModalHeader>
+          <ModalBody>
+            {/*  */}
+            <div className="flex flex-col">
+              <div className="">
+                <b>زمان ثبت: </b>
+                <span>{moment(data.createdAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>
+              </div>
+              {data.isRejected && (
+                <Alert color="error">
+                  <AlertTitle>رد شده</AlertTitle>
+                  <div className="">
+                    <b>زمان رد: </b>
+                    <span>{moment(data.rejectedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>
+                  </div>
+                  <div className="">
+                    <b>دلیل رد: </b>
+                    <span>{data.rejectedReason}</span>
+                  </div>
+                </Alert>
+              )}
+              {data.isConfirmed && (
+                <Alert color="success">
+                  <AlertTitle>تایید شده</AlertTitle>
+                  <div className="">
+                    <b>زمان تایید: </b>
+                    <span>{moment(data.confirmedAt).locale("fa").format("DD MMM YYYY HH:mm:ss")}</span>
+                  </div>
+                </Alert>
+              )}
+              {!data.isConfirmed && !data.isRejected && (
+                <Alert color="error">
+                  <AlertTitle>در انتظار تایید</AlertTitle>
+                  <div className="">این آگهی هنوز در انتظار تایید یا رد توسط کارشناسان ما می باشد</div>
+                </Alert>
+              )}
+            </div>
+            {/*  */}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={() => setOpenDetailModal(false)}>باشه!</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

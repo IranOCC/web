@@ -3,7 +3,7 @@ import React from "react";
 import { AiOutlinePlusSquare } from "react-icons/ai";
 import { FaBars } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
-import { Button, Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { KeyboardDoubleArrowDown, KeyboardDoubleArrowUp } from "@mui/icons-material";
 interface Props {
   closePrompt: () => void;
@@ -55,8 +55,10 @@ export default function AddToMobileFirefoxIos(props: Props) {
               <p>مراحل نصب را ادامه دهید</p>
             </div>
           </div>
-          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
         </ModalBody>
+        <ModalFooter>
+          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );

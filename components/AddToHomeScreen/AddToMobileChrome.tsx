@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { InstallMobile, KeyboardDoubleArrowUp, MoreVert } from "@mui/icons-material";
 
 interface Props {
@@ -45,8 +45,10 @@ export default function AddToMobileChrome(props: Props) {
               <p>مراحل نصب را ادامه دهید</p>
             </div>
           </div>
-          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
         </ModalBody>
+        <ModalFooter>
+          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );

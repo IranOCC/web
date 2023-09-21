@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { KeyboardDoubleArrowDown, KeyboardDoubleArrowUp } from "@mui/icons-material";
 import useUserAgent from "@/hooks/useUserAgent";
 
@@ -37,8 +37,10 @@ export default function AddToOtherBrowser(props: Props) {
               </pre>
             </div>
           </div>
-          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
         </ModalBody>
+        <ModalFooter>
+          <Button onClick={doNotShowAgain}>هرگز نمایش نده</Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );
