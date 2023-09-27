@@ -329,7 +329,11 @@ export type SearchEstateFormData = {
     totalPrice?: string[];
     price?: string[];
     barter?: boolean;
+    swap?: boolean;
+    special?: boolean;
     // 
+    dailyRent?: boolean;
+    annualRent?: boolean;
 };
 
 

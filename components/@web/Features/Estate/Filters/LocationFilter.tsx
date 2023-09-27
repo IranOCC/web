@@ -8,7 +8,6 @@ import { Controller, UseFormReturn } from "react-hook-form";
 import { Timeout } from "react-number-format/types/types";
 
 export const LocationFilter = ({ form, dataLoading, onSubmit }: any) => {
-  const { control, isSubmitting, handleSubmit } = form;
   const searchParams = useSearchParams();
   return (
     <>

@@ -15,6 +15,11 @@ import { useKeenSlider } from "keen-slider/react";
 import { Button, Modal, ModalBody, ModalContent } from "@nextui-org/react";
 import { LocationCity, LocationProvince } from "../Dashboard/Components/LocationChoose";
 import { LocationFilter } from "./Filters/LocationFilter";
+import { FeaturesFilter } from "./Filters/FeaturesFilter";
+import { DocumentTypeFilter } from "./Filters/DocumentTypeFilter";
+import { CategoryTypeFilter } from "./Filters/CategoryTypeFilter";
+import { RentFilter } from "./Filters/RentFilter";
+import { SpecialFilter } from "./Filters/SpecialFilter";
 
 const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
   const timeoutRef = useRef<Timeout | null>(null);
@@ -42,35 +47,47 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
     if (data.search) $s.set("search", data.search);
     else $s.delete("search");
 
-    //
-    if (data.category) $s.set("filter[category]", data.category);
+    // ===> category
+    if (!!data.category && data.category !== "null") $s.set("filter[category]", data.category);
     else $s.delete("filter[category]");
 
-    //
-    if (!!data.type?.length) {
+    // ===> type
+    if (!!data.type && !!data.type?.length) {
+      // @ts-ignore
+      if (!Array.isArray(data.type)) data.type = (data.type as string).split(",");
       $s.delete("filter[type]");
       for (let i = 0; i < data.type.length; i++) {
         $s.append("filter[type]", data.type[i]);
       }
-    } else $s.delete("filter[type]");
+    } else {
+      $s.delete("filter[type]");
+    }
 
-    //
-    if (!!data.documentType?.length) {
+    // ===> documentType
+    if (!!data.documentType && !!data.documentType?.length) {
+      // @ts-ignore
+      if (!Array.isArray(data.documentType)) data.documentType = (data.documentType as string).split(",");
       $s.delete("filter[documentType]");
       for (let i = 0; i < data.documentType.length; i++) {
         $s.append("filter[documentType]", data.documentType[i]);
       }
-    } else $s.delete("filter[documentType]");
+    } else {
+      $s.delete("filter[documentType]");
+    }
 
-    //
-    if (!!data.features?.length) {
+    // ===> features
+    if (!!data.features && !!data.features?.length) {
+      // @ts-ignore
+      if (!Array.isArray(data.features)) data.features = (data.features as string).split(",");
       $s.delete("filter[features]");
       for (let i = 0; i < data.features.length; i++) {
         $s.append("filter[features]", data.features[i]);
       }
-    } else $s.delete("filter[features]");
+    } else {
+      $s.delete("filter[features]");
+    }
 
-    //
+    // ===> location
     if (!!data.province && data.province !== "null") {
       $s.set("filter[province]", data.province);
       //
@@ -99,6 +116,18 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
       $s.delete("filter[district]");
     }
 
+    // dailyRent
+    if (data.dailyRent) $s.set("filter[dailyRent]", data.dailyRent + "");
+    else $s.delete("filter[dailyRent]");
+    // annualRent
+    if (data.annualRent) $s.set("filter[annualRent]", data.annualRent + "");
+    else $s.delete("filter[annualRent]");
+
+    // special
+    if (data.special) $s.set("filter[special]", data.special + "");
+    else $s.delete("filter[special]");
+
+    // ==============
     if (!!data.area?.length) {
       $s.delete("filter[area]");
       for (let i = 0; i < data.area.length; i++) {
@@ -120,8 +149,13 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
       }
     } else $s.delete("filter[totalPrice]");
 
+    // barter
     if (data.barter) $s.set("filter[barter]", data.barter + "");
     else $s.delete("filter[barter]");
+
+    // swap
+    if (data.swap) $s.set("filter[swap]", data.swap + "");
+    else $s.delete("filter[swap]");
 
     router.push(pathname + "?" + $s.toString());
   };
@@ -307,274 +341,125 @@ const _filters: { title: string; width: string; filters: string[]; Content?: any
     title: "املاک ویژه",
     width: "7.5rem",
     filters: ["special"],
+    Content: SpecialFilter,
   },
-  {
-    //
-    title: "تعیین متراژ",
-    width: "7.5rem",
-    filters: ["area"],
-    Content: ({ form, dataLoading, onSubmit }: any) => {
-      const { control, isSubmitting, handleSubmit } = form;
-      const searchParams = useSearchParams();
-      const timeoutRef = useRef<Timeout | null>(null);
-      return (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <RangeBox
-              //
-              control={control}
-              name="area"
-              label="متراژ کل"
-              valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " متر مربع"}
-              apiPath="/tools/estate/range/area"
-              loading={dataLoading || isSubmitting}
-              onChange={(v) => {
-                if (timeoutRef.current) {
-                  clearTimeout(timeoutRef.current);
-                }
-                timeoutRef.current = setTimeout(() => {
-                  handleSubmit(onSubmit)();
-                  timeoutRef.current = null;
-                }, 1000);
-              }}
-            />
-          </div>
-        </>
-      );
-    },
-  },
-  {
-    //
-    title: "تعیین بازه قیمتی",
-    width: "9rem",
-    filters: ["price", "totalPrice", "barter"],
-    Content: ({ form, dataLoading, onSubmit }: any) => {
-      const { control, isSubmitting, handleSubmit } = form;
-      const searchParams = useSearchParams();
-      const timeoutRef = useRef<Timeout | null>(null);
-      return (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <RangeBox
-              //
-              control={control}
-              name="totalPrice"
-              label="قیمت کل"
-              valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " تومان"}
-              apiPath="/tools/estate/range/totalPrice"
-              loading={dataLoading || isSubmitting}
-              onChange={(v) => {
-                if (timeoutRef.current) {
-                  clearTimeout(timeoutRef.current);
-                }
-                timeoutRef.current = setTimeout(() => {
-                  handleSubmit(onSubmit)();
-                  timeoutRef.current = null;
-                }, 1000);
-              }}
-            />
+  // {
+  //   //
+  //   title: "تعیین متراژ",
+  //   width: "7.5rem",
+  //   filters: ["area"],
+  //   Content: ({ form, dataLoading, onSubmit }: any) => {
+  //     const { control, isSubmitting, handleSubmit } = form;
+  //     const searchParams = useSearchParams();
+  //     const timeoutRef = useRef<Timeout | null>(null);
+  //     return (
+  //       <>
+  //         <div className="flex w-full flex-col gap-2">
+  //           <RangeBox
+  //             //
+  //             control={control}
+  //             name="area"
+  //             label="متراژ کل"
+  //             valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " متر مربع"}
+  //             apiPath="/tools/estate/range/area"
+  //             loading={dataLoading || isSubmitting}
+  //             onChange={(v) => {
+  //               if (timeoutRef.current) {
+  //                 clearTimeout(timeoutRef.current);
+  //               }
+  //               timeoutRef.current = setTimeout(() => {
+  //                 handleSubmit(onSubmit)();
+  //                 timeoutRef.current = null;
+  //               }, 1000);
+  //             }}
+  //           />
+  //         </div>
+  //       </>
+  //     );
+  //   },
+  // },
+  // {
+  //   //
+  //   title: "تعیین بازه قیمتی",
+  //   width: "9rem",
+  //   filters: ["price", "totalPrice", "barter"],
+  //   Content: ({ form, dataLoading, onSubmit }: any) => {
+  //     const { control, isSubmitting, handleSubmit } = form;
+  //     const searchParams = useSearchParams();
+  //     const timeoutRef = useRef<Timeout | null>(null);
+  //     return (
+  //       <>
+  //         <div className="flex w-full flex-col gap-2">
+  //           <RangeBox
+  //             //
+  //             control={control}
+  //             name="totalPrice"
+  //             label="قیمت کل"
+  //             valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " تومان"}
+  //             apiPath="/tools/estate/range/totalPrice"
+  //             loading={dataLoading || isSubmitting}
+  //             onChange={(v) => {
+  //               if (timeoutRef.current) {
+  //                 clearTimeout(timeoutRef.current);
+  //               }
+  //               timeoutRef.current = setTimeout(() => {
+  //                 handleSubmit(onSubmit)();
+  //                 timeoutRef.current = null;
+  //               }, 1000);
+  //             }}
+  //           />
 
-            <CheckBox
-              //
-              control={control}
-              name="barter"
-              label="قابل تهاتر"
-              loading={dataLoading || isSubmitting}
-              onChange={(v) => {
-                handleSubmit(onSubmit)();
-              }}
-            />
-            <CheckBox
-              //
-              control={control}
-              name="swap"
-              label="قابل معاوضه"
-              loading={dataLoading || isSubmitting}
-              onChange={(v) => {
-                handleSubmit(onSubmit)();
-              }}
-            />
-          </div>
-        </>
-      );
-    },
-  },
+  //           <CheckBox
+  //             //
+  //             control={control}
+  //             name="barter"
+  //             label="قابل تهاتر"
+  //             loading={dataLoading || isSubmitting}
+  //             onChange={(v) => {
+  //               handleSubmit(onSubmit)();
+  //             }}
+  //           />
+  //           <CheckBox
+  //             //
+  //             control={control}
+  //             name="swap"
+  //             label="قابل معاوضه"
+  //             loading={dataLoading || isSubmitting}
+  //             onChange={(v) => {
+  //               handleSubmit(onSubmit)();
+  //             }}
+  //           />
+  //         </div>
+  //       </>
+  //     );
+  //   },
+  // },
   {
     //
     title: "اجاره",
     width: "5rem",
     filters: ["dailyRent", "annualRent"],
-    Content: ({ form, dataLoading, onSubmit }: any) => {
-      const { control, isSubmitting, handleSubmit } = form;
-      const searchParams = useSearchParams();
-      const timeoutRef = useRef<Timeout | null>(null);
-      return (
-        <>
-          <div className="flex w-full flex-col gap-1">
-            <CheckBox
-              //
-              control={control}
-              name="dailyRent"
-              label="اجاره شبانه"
-              loading={dataLoading || isSubmitting}
-              onChange={(v) => {
-                handleSubmit(onSubmit)();
-              }}
-            />
-            <CheckBox
-              //
-              control={control}
-              name="annualRent"
-              label="اجاره روزانه"
-              loading={dataLoading || isSubmitting}
-              onChange={(v) => {
-                handleSubmit(onSubmit)();
-              }}
-            />
-          </div>
-        </>
-      );
-    },
+    Content: RentFilter,
   },
   {
     title: "تعیین دسته و نوع",
     width: "9.5rem",
     filters: ["category", "type"],
-    Content: ({ form, dataLoading, onSubmit }: any) => {
-      const { control, isSubmitting, handleSubmit } = form;
-      const searchParams = useSearchParams();
-      const timeoutRef = useRef<Timeout | null>(null);
-      return (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <WebSelect
-              //
-              control={control}
-              name="category"
-              size="small"
-              label="دسته"
-              loading={dataLoading || isSubmitting}
-              apiPath="/tools/estate/category/autoComplete"
-              searchable
-              noSpace
-              onChange={(v) => {
-                handleSubmit(onSubmit)();
-              }}
-              //
-            />
-            <WebSelect
-              //
-              control={control}
-              name="type"
-              size="small"
-              label="نوع"
-              loading={dataLoading || isSubmitting}
-              apiPath="/tools/estate/type/autoComplete"
-              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
-              searchable
-              multiple
-              noSpace
-              showTitle
-              tagsMode
-              onChange={(v) => {
-                if (timeoutRef.current) {
-                  clearTimeout(timeoutRef.current);
-                }
-                timeoutRef.current = setTimeout(() => {
-                  handleSubmit(onSubmit)();
-                  timeoutRef.current = null;
-                }, 1000);
-              }}
-              //
-            />
-          </div>
-        </>
-      );
-    },
+    Content: CategoryTypeFilter,
   },
   {
     //
     title: "تعیین نوع سند",
     width: "8.5rem",
     filters: ["documentType"],
-    Content: ({ form, dataLoading, onSubmit }: any) => {
-      const { control, isSubmitting, handleSubmit } = form;
-      const searchParams = useSearchParams();
-      const timeoutRef = useRef<Timeout | null>(null);
-      return (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <WebSelect
-              //
-              control={control}
-              name="documentType"
-              size="small"
-              label="نوع سند"
-              loading={dataLoading || isSubmitting}
-              apiPath="/tools/estate/documentType/autoComplete"
-              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
-              searchable
-              multiple
-              noSpace
-              showTitle
-              tagsMode
-              onChange={(v) => {
-                if (timeoutRef.current) {
-                  clearTimeout(timeoutRef.current);
-                }
-                timeoutRef.current = setTimeout(() => {
-                  handleSubmit(onSubmit)();
-                  timeoutRef.current = null;
-                }, 1000);
-              }}
-              //
-            />
-          </div>
-        </>
-      );
-    },
+    Content: DocumentTypeFilter,
   },
   {
     //
     title: "تعیین امکانات",
     width: "8.5rem",
     filters: ["features"],
-    Content: ({ form, dataLoading, onSubmit }: any) => {
-      const { control, isSubmitting, handleSubmit } = form;
-      const searchParams = useSearchParams();
-      const timeoutRef = useRef<Timeout | null>(null);
-      return (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <WebSelect
-              //
-              control={control}
-              name="features"
-              size="small"
-              label="امکانات"
-              loading={dataLoading || isSubmitting}
-              apiPath="/tools/estate/feature/autoComplete"
-              filterApi={{ categories: searchParams?.get("filter[category]") || undefined }}
-              searchable
-              multiple
-              noSpace
-              showTitle
-              tagsMode
-              onChange={(v) => {
-                if (timeoutRef.current) {
-                  clearTimeout(timeoutRef.current);
-                }
-                timeoutRef.current = setTimeout(() => {
-                  handleSubmit(onSubmit)();
-                  timeoutRef.current = null;
-                }, 1000);
-              }}
-              //
-            />
-          </div>
-        </>
-      );
-    },
+    Content: FeaturesFilter,
   },
   {
     //
