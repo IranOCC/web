@@ -12,6 +12,9 @@ import { WebSelect } from "../../Select";
 import { CheckBox, RangeBox } from "@/components/Input";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import { useKeenSlider } from "keen-slider/react";
+import { Button, Modal, ModalBody, ModalContent } from "@nextui-org/react";
+import { LocationCity, LocationProvince } from "../Dashboard/Components/LocationChoose";
+import { LocationFilter } from "./Filters/LocationFilter";
 
 const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
   const timeoutRef = useRef<Timeout | null>(null);
@@ -38,9 +41,11 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
     const $s = new URLSearchParams(searchParams?.toString());
     if (data.search) $s.set("search", data.search);
     else $s.delete("search");
+
     //
     if (data.category) $s.set("filter[category]", data.category);
     else $s.delete("filter[category]");
+
     //
     if (!!data.type?.length) {
       $s.delete("filter[type]");
@@ -48,6 +53,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
         $s.append("filter[type]", data.type[i]);
       }
     } else $s.delete("filter[type]");
+
     //
     if (!!data.documentType?.length) {
       $s.delete("filter[documentType]");
@@ -55,6 +61,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
         $s.append("filter[documentType]", data.documentType[i]);
       }
     } else $s.delete("filter[documentType]");
+
     //
     if (!!data.features?.length) {
       $s.delete("filter[features]");
@@ -64,18 +71,33 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
     } else $s.delete("filter[features]");
 
     //
-    if (data.province) $s.set("filter[province]", data.province);
-    else $s.delete("filter[province]");
-    //
-    if (data.city) $s.set("filter[city]", data.city);
-    else $s.delete("filter[city]");
-    //
-    if (!!data.district?.length) {
-      $s.delete("filter[district]");
-      for (let i = 0; i < data.district.length; i++) {
-        $s.append("filter[district]", data.district[i]);
+    if (!!data.province && data.province !== "null") {
+      $s.set("filter[province]", data.province);
+      //
+      if (!!data.city && data.city !== "null") {
+        $s.set("filter[city]", data.city);
+        //
+        if (!!data.district && !!data.district?.length) {
+          // @ts-ignore
+          if (!Array.isArray(data.district)) data.district = (data.district as string).split(",");
+          $s.delete("filter[district]");
+          for (let i = 0; i < data.district.length; i++) {
+            $s.append("filter[district]", data.district[i]);
+          }
+        } else {
+          $s.delete("filter[district]");
+        }
+        //
+      } else {
+        $s.delete("filter[city]");
+        $s.delete("filter[district]");
       }
-    } else $s.delete("filter[district]");
+      //
+    } else {
+      $s.delete("filter[province]");
+      $s.delete("filter[city]");
+      $s.delete("filter[district]");
+    }
 
     if (!!data.area?.length) {
       $s.delete("filter[area]");
@@ -141,7 +163,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
     handleSubmit(onSubmit)();
   };
   const [isOpenFilter, setOpenFilter] = useState<number | null>(null);
-  const CompFilter = isOpenFilter === null ? (p: any) => null : _filters[isOpenFilter].Content;
+  const CompFilter = isOpenFilter === null || !_filters[isOpenFilter]?.Content ? null : _filters[isOpenFilter].Content;
 
   const [filtersRef, filtersInstanceRef] = useKeenSlider<HTMLDivElement>(
     {
@@ -245,21 +267,31 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
           </div>
         </div>
         {/* === */}
-        <div className={"relative transition-all" + (isOpenFilter !== null ? " h-64" : " h-0")}>
-          {isOpenFilter !== null && (
-            <i className="absolute left-1 top-1 cursor-pointer text-sm text-red-600" onClick={() => setOpenFilter(null)}>
-              <Close sx={{ fontSize: 16 }} />
-            </i>
-          )}
-          <div className="flex h-full w-full rounded-lg bg-white/70 p-6 empty:hidden md:bg-gray-100">
-            <CompFilter
-              //
-              form={form}
-              dataLoading={dataLoading}
-              onSubmit={onSubmit}
-            />
-          </div>
-        </div>
+        {CompFilter !== null && (
+          <Modal
+            //
+            backdrop="opaque"
+            isOpen={!!isOpenFilter}
+            onClose={() => setOpenFilter(null)}
+            className="z-[102]"
+            placement="bottom"
+            classNames={{ wrapper: "z-[102]", backdrop: "z-[102]", closeButton: "right-auto left-1" }}
+          >
+            <ModalContent>
+              <ModalBody className="py-6">
+                <div className="flex w-full p-6 empty:hidden">
+                  <CompFilter
+                    //
+                    form={form}
+                    dataLoading={dataLoading}
+                    onSubmit={onSubmit}
+                  />
+                </div>
+                <Button onPress={() => setOpenFilter(null)}>ثبت</Button>
+              </ModalBody>
+            </ModalContent>
+          </Modal>
+        )}
         <div />
       </div>
     </form>
@@ -269,7 +301,141 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
 export default EstateSearchFilteringBox;
 
 // =============> filters
-const _filters = [
+const _filters: { title: string; width: string; filters: string[]; Content?: any }[] = [
+  {
+    //
+    title: "املاک ویژه",
+    width: "7.5rem",
+    filters: ["special"],
+  },
+  {
+    //
+    title: "تعیین متراژ",
+    width: "7.5rem",
+    filters: ["area"],
+    Content: ({ form, dataLoading, onSubmit }: any) => {
+      const { control, isSubmitting, handleSubmit } = form;
+      const searchParams = useSearchParams();
+      const timeoutRef = useRef<Timeout | null>(null);
+      return (
+        <>
+          <div className="flex w-full flex-col gap-2">
+            <RangeBox
+              //
+              control={control}
+              name="area"
+              label="متراژ کل"
+              valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " متر مربع"}
+              apiPath="/tools/estate/range/area"
+              loading={dataLoading || isSubmitting}
+              onChange={(v) => {
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current);
+                }
+                timeoutRef.current = setTimeout(() => {
+                  handleSubmit(onSubmit)();
+                  timeoutRef.current = null;
+                }, 1000);
+              }}
+            />
+          </div>
+        </>
+      );
+    },
+  },
+  {
+    //
+    title: "تعیین بازه قیمتی",
+    width: "9rem",
+    filters: ["price", "totalPrice", "barter"],
+    Content: ({ form, dataLoading, onSubmit }: any) => {
+      const { control, isSubmitting, handleSubmit } = form;
+      const searchParams = useSearchParams();
+      const timeoutRef = useRef<Timeout | null>(null);
+      return (
+        <>
+          <div className="flex w-full flex-col gap-2">
+            <RangeBox
+              //
+              control={control}
+              name="totalPrice"
+              label="قیمت کل"
+              valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " تومان"}
+              apiPath="/tools/estate/range/totalPrice"
+              loading={dataLoading || isSubmitting}
+              onChange={(v) => {
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current);
+                }
+                timeoutRef.current = setTimeout(() => {
+                  handleSubmit(onSubmit)();
+                  timeoutRef.current = null;
+                }, 1000);
+              }}
+            />
+
+            <CheckBox
+              //
+              control={control}
+              name="barter"
+              label="قابل تهاتر"
+              loading={dataLoading || isSubmitting}
+              onChange={(v) => {
+                handleSubmit(onSubmit)();
+              }}
+            />
+            <CheckBox
+              //
+              control={control}
+              name="swap"
+              label="قابل معاوضه"
+              loading={dataLoading || isSubmitting}
+              onChange={(v) => {
+                handleSubmit(onSubmit)();
+              }}
+            />
+          </div>
+        </>
+      );
+    },
+  },
+  {
+    //
+    title: "اجاره",
+    width: "5rem",
+    filters: ["dailyRent", "annualRent"],
+    Content: ({ form, dataLoading, onSubmit }: any) => {
+      const { control, isSubmitting, handleSubmit } = form;
+      const searchParams = useSearchParams();
+      const timeoutRef = useRef<Timeout | null>(null);
+      return (
+        <>
+          <div className="flex w-full flex-col gap-1">
+            <CheckBox
+              //
+              control={control}
+              name="dailyRent"
+              label="اجاره شبانه"
+              loading={dataLoading || isSubmitting}
+              onChange={(v) => {
+                handleSubmit(onSubmit)();
+              }}
+            />
+            <CheckBox
+              //
+              control={control}
+              name="annualRent"
+              label="اجاره روزانه"
+              loading={dataLoading || isSubmitting}
+              onChange={(v) => {
+                handleSubmit(onSubmit)();
+              }}
+            />
+          </div>
+        </>
+      );
+    },
+  },
   {
     title: "تعیین دسته و نوع",
     width: "9.5rem",
@@ -415,157 +581,6 @@ const _filters = [
     title: "تعیین موقعیت مکانی",
     width: "10.5rem",
     filters: ["province", "city", "district"],
-    Content: ({ form, dataLoading, onSubmit }: any) => {
-      const { control, isSubmitting, handleSubmit } = form;
-      const searchParams = useSearchParams();
-      const timeoutRef = useRef<Timeout | null>(null);
-      return (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <WebSelect
-              //
-              control={control}
-              name="province"
-              size="small"
-              label="استان"
-              loading={dataLoading || isSubmitting}
-              apiPath="/tools/estate/autoComplete/province"
-              searchable
-              noSpace
-              onChange={(v) => {
-                handleSubmit(onSubmit)();
-              }}
-              //
-            />
-            {!!searchParams?.get("filter[province]") && (
-              <WebSelect
-                //
-                control={control}
-                name="city"
-                size="small"
-                label="شهر"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/autoComplete/city"
-                filterApi={{ province: searchParams?.get("filter[province]") || undefined }}
-                searchable
-                noSpace
-                onChange={(v) => {
-                  handleSubmit(onSubmit)();
-                }}
-                //
-              />
-            )}
-            {!!searchParams?.get("filter[province]") && !!searchParams?.get("filter[city]") && (
-              <WebSelect
-                //
-                control={control}
-                name="district"
-                size="small"
-                label="منطقه"
-                loading={dataLoading || isSubmitting}
-                apiPath="/tools/estate/autoComplete/district"
-                filterApi={{ province: searchParams?.get("filter[province]") || undefined, city: searchParams?.get("filter[city]") || undefined }}
-                searchable
-                multiple
-                noSpace
-                showTitle
-                tagsMode
-                onChange={(v) => {
-                  if (timeoutRef.current) {
-                    clearTimeout(timeoutRef.current);
-                  }
-                  timeoutRef.current = setTimeout(() => {
-                    handleSubmit(onSubmit)();
-                    timeoutRef.current = null;
-                  }, 1000);
-                }}
-                //
-              />
-            )}
-          </div>
-        </>
-      );
-    },
-  },
-  {
-    //
-    title: "تعیین متراژ",
-    width: "7.5rem",
-    filters: ["area"],
-    Content: ({ form, dataLoading, onSubmit }: any) => {
-      const { control, isSubmitting, handleSubmit } = form;
-      const searchParams = useSearchParams();
-      const timeoutRef = useRef<Timeout | null>(null);
-      return (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <RangeBox
-              //
-              control={control}
-              name="area"
-              label="متراژ کل"
-              valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " متر مربع"}
-              apiPath="/tools/estate/range/area"
-              loading={dataLoading || isSubmitting}
-              onChange={(v) => {
-                if (timeoutRef.current) {
-                  clearTimeout(timeoutRef.current);
-                }
-                timeoutRef.current = setTimeout(() => {
-                  handleSubmit(onSubmit)();
-                  timeoutRef.current = null;
-                }, 1000);
-              }}
-            />
-          </div>
-        </>
-      );
-    },
-  },
-  {
-    //
-    title: "تعیین بازه قیمتی",
-    width: "9rem",
-    filters: ["price", "totalPrice", "barter"],
-    Content: ({ form, dataLoading, onSubmit }: any) => {
-      const { control, isSubmitting, handleSubmit } = form;
-      const searchParams = useSearchParams();
-      const timeoutRef = useRef<Timeout | null>(null);
-      return (
-        <>
-          <div className="flex w-full flex-col gap-2">
-            <RangeBox
-              //
-              control={control}
-              name="totalPrice"
-              label="قیمت کل"
-              valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " تومان"}
-              apiPath="/tools/estate/range/totalPrice"
-              loading={dataLoading || isSubmitting}
-              onChange={(v) => {
-                if (timeoutRef.current) {
-                  clearTimeout(timeoutRef.current);
-                }
-                timeoutRef.current = setTimeout(() => {
-                  handleSubmit(onSubmit)();
-                  timeoutRef.current = null;
-                }, 1000);
-              }}
-            />
-
-            <CheckBox
-              //
-              control={control}
-              name="barter"
-              label="قابل تهاتر"
-              loading={dataLoading || isSubmitting}
-              onChange={(v) => {
-                handleSubmit(onSubmit)();
-              }}
-            />
-          </div>
-        </>
-      );
-    },
+    Content: LocationFilter,
   },
 ];

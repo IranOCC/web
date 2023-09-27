@@ -221,7 +221,7 @@ export const LocationChoose = ({ form }: { form: UseFormReturn<EstateFormData, a
   );
 };
 
-const LocationProvince = ({ form, setProvince }: { form: UseFormReturn<EstateFormData, any, undefined>; setProvince: any }) => {
+export const LocationProvince = ({ form, setProvince }: { form: UseFormReturn<EstateFormData, any, undefined>; setProvince: any }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<SelectDataType[]>([]);
   const api = useAxiosAuth();
@@ -295,7 +295,7 @@ const LocationProvince = ({ form, setProvince }: { form: UseFormReturn<EstateFor
   );
 };
 
-const LocationCity = ({ form, province }: { form: UseFormReturn<EstateFormData, any, undefined>; province?: any }) => {
+export const LocationCity = ({ form, province }: { form: UseFormReturn<EstateFormData, any, undefined>; province?: any }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<SelectDataType[]>([]);
 
