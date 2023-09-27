@@ -20,6 +20,8 @@ import { DocumentTypeFilter } from "./Filters/DocumentTypeFilter";
 import { CategoryTypeFilter } from "./Filters/CategoryTypeFilter";
 import { RentFilter } from "./Filters/RentFilter";
 import { SpecialFilter } from "./Filters/SpecialFilter";
+import { AreaFilter } from "./Filters/AreaFilter";
+import { PriceFilter } from "./Filters/PriceFilter";
 
 const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
   const timeoutRef = useRef<Timeout | null>(null);
@@ -186,6 +188,10 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
     if (!!$totalPrice?.length) setValue("totalPrice", $totalPrice);
     // // // //
     setValue("barter", $s.get("filter[barter]") === "true" || undefined);
+    setValue("swap", $s.get("filter[swap]") === "true" || undefined);
+    setValue("dailyRent", $s.get("filter[dailyRent]") === "true" || undefined);
+    setValue("annualRent", $s.get("filter[annualRent]") === "true" || undefined);
+    setValue("special", $s.get("filter[special]") === "true" || undefined);
   }, []);
 
   const cancelFilter = (idx: number) => {
@@ -235,6 +241,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="sticky top-[55px] z-20 bg-gray-200 md:bg-white">
       <div className="grid grid-cols-1 gap-2">
+        %{isOpenFilter}%
         <WebInput
           //
           name="search"
@@ -305,7 +312,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
           <Modal
             //
             backdrop="opaque"
-            isOpen={!!isOpenFilter}
+            isOpen={isOpenFilter !== null}
             onClose={() => setOpenFilter(null)}
             className="z-[102]"
             placement="bottom"
@@ -343,97 +350,20 @@ const _filters: { title: string; width: string; filters: string[]; Content?: any
     filters: ["special"],
     Content: SpecialFilter,
   },
-  // {
-  //   //
-  //   title: "تعیین متراژ",
-  //   width: "7.5rem",
-  //   filters: ["area"],
-  //   Content: ({ form, dataLoading, onSubmit }: any) => {
-  //     const { control, isSubmitting, handleSubmit } = form;
-  //     const searchParams = useSearchParams();
-  //     const timeoutRef = useRef<Timeout | null>(null);
-  //     return (
-  //       <>
-  //         <div className="flex w-full flex-col gap-2">
-  //           <RangeBox
-  //             //
-  //             control={control}
-  //             name="area"
-  //             label="متراژ کل"
-  //             valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " متر مربع"}
-  //             apiPath="/tools/estate/range/area"
-  //             loading={dataLoading || isSubmitting}
-  //             onChange={(v) => {
-  //               if (timeoutRef.current) {
-  //                 clearTimeout(timeoutRef.current);
-  //               }
-  //               timeoutRef.current = setTimeout(() => {
-  //                 handleSubmit(onSubmit)();
-  //                 timeoutRef.current = null;
-  //               }, 1000);
-  //             }}
-  //           />
-  //         </div>
-  //       </>
-  //     );
-  //   },
-  // },
-  // {
-  //   //
-  //   title: "تعیین بازه قیمتی",
-  //   width: "9rem",
-  //   filters: ["price", "totalPrice", "barter"],
-  //   Content: ({ form, dataLoading, onSubmit }: any) => {
-  //     const { control, isSubmitting, handleSubmit } = form;
-  //     const searchParams = useSearchParams();
-  //     const timeoutRef = useRef<Timeout | null>(null);
-  //     return (
-  //       <>
-  //         <div className="flex w-full flex-col gap-2">
-  //           <RangeBox
-  //             //
-  //             control={control}
-  //             name="totalPrice"
-  //             label="قیمت کل"
-  //             valueLabelFormat={(ex) => ex?.toLocaleString("fa-IR") + " تومان"}
-  //             apiPath="/tools/estate/range/totalPrice"
-  //             loading={dataLoading || isSubmitting}
-  //             onChange={(v) => {
-  //               if (timeoutRef.current) {
-  //                 clearTimeout(timeoutRef.current);
-  //               }
-  //               timeoutRef.current = setTimeout(() => {
-  //                 handleSubmit(onSubmit)();
-  //                 timeoutRef.current = null;
-  //               }, 1000);
-  //             }}
-  //           />
-
-  //           <CheckBox
-  //             //
-  //             control={control}
-  //             name="barter"
-  //             label="قابل تهاتر"
-  //             loading={dataLoading || isSubmitting}
-  //             onChange={(v) => {
-  //               handleSubmit(onSubmit)();
-  //             }}
-  //           />
-  //           <CheckBox
-  //             //
-  //             control={control}
-  //             name="swap"
-  //             label="قابل معاوضه"
-  //             loading={dataLoading || isSubmitting}
-  //             onChange={(v) => {
-  //               handleSubmit(onSubmit)();
-  //             }}
-  //           />
-  //         </div>
-  //       </>
-  //     );
-  //   },
-  // },
+  {
+    //
+    title: "تعیین متراژ",
+    width: "7.5rem",
+    filters: ["area"],
+    Content: AreaFilter,
+  },
+  {
+    //
+    title: "تعیین بازه قیمتی",
+    width: "9rem",
+    filters: ["price", "totalPrice", "barter", "swap"],
+    Content: PriceFilter,
+  },
   {
     //
     title: "اجاره",

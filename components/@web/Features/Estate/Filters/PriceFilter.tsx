@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { Timeout } from "react-number-format/types/types";
 
-export const RentFilter = ({ form, dataLoading, onSubmit }: any) => {
+export const PriceFilter = ({ form, dataLoading, onSubmit }: any) => {
   const timeoutRef = useRef<Timeout | null>(null);
 
   return (
