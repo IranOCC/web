@@ -241,7 +241,6 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="sticky top-[55px] z-20 bg-gray-200 md:bg-white">
       <div className="grid grid-cols-1 gap-2">
-        %{isOpenFilter}%
         <WebInput
           //
           name="search"
@@ -249,7 +248,6 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
           placeholder="کلمه کلیدی خود را تایپ کنید ..."
           submitIcon={
             <i className={"block h-6 w-6 text-gray-400" + (dataLoading ? " animate-spin" : "")} onClick={() => setUpdate([true])}>
-              {/*  */}
               {dataLoading ? <LoadingIcon /> : <Search />}
             </i>
           }
