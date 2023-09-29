@@ -59,7 +59,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
       if (!Array.isArray(data.type)) data.type = (data.type as string).split(",");
       $s.delete("filter[type]");
       for (let i = 0; i < data.type.length; i++) {
-        $s.append("filter[type]", data.type[i]);
+        if (!!data.type[i]) $s.append("filter[type]", data.type[i]);
       }
     } else {
       $s.delete("filter[type]");
@@ -71,7 +71,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
       if (!Array.isArray(data.documentType)) data.documentType = (data.documentType as string).split(",");
       $s.delete("filter[documentType]");
       for (let i = 0; i < data.documentType.length; i++) {
-        $s.append("filter[documentType]", data.documentType[i]);
+        if (!!data.documentType[i]) $s.append("filter[documentType]", data.documentType[i]);
       }
     } else {
       $s.delete("filter[documentType]");
@@ -83,7 +83,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
       if (!Array.isArray(data.features)) data.features = (data.features as string).split(",");
       $s.delete("filter[features]");
       for (let i = 0; i < data.features.length; i++) {
-        $s.append("filter[features]", data.features[i]);
+        if (!!data.features[i]) $s.append("filter[features]", data.features[i]);
       }
     } else {
       $s.delete("filter[features]");
@@ -101,7 +101,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
           if (!Array.isArray(data.district)) data.district = (data.district as string).split(",");
           $s.delete("filter[district]");
           for (let i = 0; i < data.district.length; i++) {
-            $s.append("filter[district]", data.district[i]);
+            if (!!data.district[i]) $s.append("filter[district]", data.district[i]);
           }
         } else {
           $s.delete("filter[district]");
