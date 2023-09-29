@@ -104,6 +104,7 @@ function GridList<T>({ defaultPageCount, ItemComponent, deletable, editable, end
                   current: _page,
                   defaultPageSize: defaultPageCount || 12,
                   defaultCurrent: 1,
+                  responsive: true,
                   pageSizeOptions: ["12", "24", "36", "128", "256", "512"],
                 }}
               />

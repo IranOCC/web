@@ -307,6 +307,7 @@ function PanelTable<T>({ headerTitle, tableToolsList, extraOperations = (id, rec
     // onChange: handlePaginationChange,
     pageSize: _count,
     current: _page,
+    responsive: true,
     pageSizeOptions: ["10", "25", "50", "100", "250", "500"],
   };
 
