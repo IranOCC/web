@@ -324,10 +324,9 @@ export type SearchEstateFormData = {
     city?: string;
     district?: string[];
     // 
-    area?: string[];
-    // 
-    totalPrice?: string[];
-    price?: string[];
+    area?: string;
+    totalPrice?: string;
+    price?: string;
     barter?: boolean;
     swap?: boolean;
     special?: boolean;

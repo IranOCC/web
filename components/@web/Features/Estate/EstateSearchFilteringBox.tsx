@@ -130,26 +130,23 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
     else $s.delete("filter[special]");
 
     // ==============
-    if (!!data.area?.length) {
+    if (!!data.area && data.area !== "null") {
+      $s.set("filter[area]", data.area);
+    } else {
       $s.delete("filter[area]");
-      for (let i = 0; i < data.area.length; i++) {
-        $s.append("filter[area]", data.area[i] + "");
-      }
-    } else $s.delete("filter[area]");
+    }
 
-    if (!!data.price?.length) {
+    if (!!data.price && data.price !== "null") {
+      $s.set("filter[price]", data.price);
+    } else {
       $s.delete("filter[price]");
-      for (let i = 0; i < data.price.length; i++) {
-        $s.append("filter[price]", data.price[i] + "");
-      }
-    } else $s.delete("filter[price]");
+    }
 
-    if (!!data.totalPrice?.length) {
+    if (!!data.totalPrice && data.totalPrice !== "null") {
+      $s.set("filter[totalPrice]", data.totalPrice);
+    } else {
       $s.delete("filter[totalPrice]");
-      for (let i = 0; i < data.totalPrice.length; i++) {
-        $s.append("filter[totalPrice]", data.totalPrice[i] + "");
-      }
-    } else $s.delete("filter[totalPrice]");
+    }
 
     // barter
     if (data.barter) $s.set("filter[barter]", data.barter + "");
@@ -177,16 +174,13 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
     setValue("province", $s.get("filter[province]") || undefined);
     setValue("city", $s.get("filter[city]") || undefined);
     setValue("district", $s.getAll("filter[district]") || []);
+
     // ==
-    const $area = $s.getAll("filter[area]");
-    if (!!$area?.length) setValue("area", $area);
+    setValue("area", $s.get("filter[area]") || undefined);
+    setValue("price", $s.get("filter[price]") || undefined);
+    setValue("totalPrice", $s.get("filter[totalPrice]") || undefined);
 
-    const $price = $s.getAll("filter[price]");
-    if (!!$price?.length) setValue("price", $price);
-
-    const $totalPrice = $s.getAll("filter[totalPrice]");
-    if (!!$totalPrice?.length) setValue("totalPrice", $totalPrice);
-    // // // //
+    //
     setValue("barter", $s.get("filter[barter]") === "true" || undefined);
     setValue("swap", $s.get("filter[swap]") === "true" || undefined);
     setValue("dailyRent", $s.get("filter[dailyRent]") === "true" || undefined);

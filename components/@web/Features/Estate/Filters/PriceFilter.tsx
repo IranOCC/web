@@ -120,7 +120,7 @@ export const TotalPricePeriod = ({ form, onSubmit }: { form: UseFormReturn<Estat
           <Select
             //
             isLoading={loading}
-            items={data}
+            items={[{ value: "null", title: "انتخاب نشده" }, ...data]}
             label="بازه قیمتی"
             placeholder="بازه قیمتی را انتخاب کنید"
             selectionMode="single"

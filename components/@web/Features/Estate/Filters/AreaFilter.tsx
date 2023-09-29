@@ -66,7 +66,7 @@ export const AreaPeriod = ({ form, onSubmit }: { form: UseFormReturn<EstateFormD
           <Select
             //
             isLoading={loading}
-            items={data}
+            items={[{ value: "null", title: "انتخاب نشده" }, ...data]}
             label="بازه متراژ"
             placeholder="بازه متراژ را انتخاب کنید"
             selectionMode="single"
