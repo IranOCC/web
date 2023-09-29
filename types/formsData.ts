@@ -316,13 +316,13 @@ export type SearchEstateFormData = {
     search?: string;
     // 
     category?: string;
-    type?: string[];
-    documentType?: string[];
-    features?: string[];
+    type?: string | string[];
+    documentType?: string | string[];
+    features?: string | string[];
     // 
     province?: string;
     city?: string;
-    district?: string[];
+    district?: string | string[];
     // 
     area?: string;
     totalPrice?: string;

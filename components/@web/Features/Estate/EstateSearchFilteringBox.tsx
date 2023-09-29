@@ -165,15 +165,15 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
     setValue("search", $s.get("search") || undefined);
     // ==
     setValue("category", $s.get("filter[category]") || undefined);
-    setValue("type", $s.getAll("filter[type]") || []);
+    setValue("type", $s.getAll("filter[type]").join(",") || undefined);
     // ==
-    setValue("documentType", $s.getAll("filter[documentType]") || []);
+    setValue("documentType", $s.getAll("filter[documentType]").join(",") || undefined);
     // ==
-    setValue("features", $s.getAll("filter[features]") || []);
+    setValue("features", $s.getAll("filter[features]").join(",") || undefined);
     // ==
     setValue("province", $s.get("filter[province]") || undefined);
     setValue("city", $s.get("filter[city]") || undefined);
-    setValue("district", $s.getAll("filter[district]") || []);
+    setValue("district", $s.getAll("filter[district]").join(",") || undefined);
 
     // ==
     setValue("area", $s.get("filter[area]") || undefined);

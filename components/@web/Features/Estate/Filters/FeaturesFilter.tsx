@@ -1,5 +1,5 @@
 import useAxiosAuth from "@/hooks/useAxiosAuth";
-import { EstateFormData } from "@/types/formsData";
+import { EstateFormData, SearchEstateFormData } from "@/types/formsData";
 import { SelectDataType } from "@/types/interfaces";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useSearchParams } from "next/navigation";
@@ -21,7 +21,7 @@ export const FeaturesFilter = ({ form, dataLoading, onSubmit }: any) => {
   );
 };
 
-export const Features = ({ form, onSubmit }: { form: UseFormReturn<EstateFormData, any, undefined>; onSubmit: any }) => {
+export const Features = ({ form, onSubmit }: { form: UseFormReturn<SearchEstateFormData, any, undefined>; onSubmit: any }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<SelectDataType[]>([]);
   const searchParams = useSearchParams();
@@ -71,7 +71,7 @@ export const Features = ({ form, onSubmit }: { form: UseFormReturn<EstateFormDat
             variant="faded"
             classNames={{ value: "text-right", errorMessage: "text-right", spinner: "right-auto left-3", selectorIcon: "left-3 right-auto" }}
             // multiple
-            // selectedKeys={new Set(field.value) as any}
+            selectedKeys={(field.value as string)?.split(",") as any}
             onSelectionChange={() => {
               if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);
