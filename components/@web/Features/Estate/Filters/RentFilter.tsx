@@ -24,7 +24,7 @@ export const RentFilter = ({ form, dataLoading, onSubmit }: any) => {
                 placeholder="اجاره شبانه"
                 dir="ltr"
                 {...field}
-                value={field.value?.toString() || ""}
+                isSelected={field.value}
                 onValueChange={() => {
                   if (timeoutRef.current) {
                     clearTimeout(timeoutRef.current);
@@ -51,7 +51,7 @@ export const RentFilter = ({ form, dataLoading, onSubmit }: any) => {
                 placeholder="اجاره سالانه"
                 dir="ltr"
                 {...field}
-                value={field.value?.toString() || ""}
+                isSelected={field.value}
                 onValueChange={() => {
                   if (timeoutRef.current) {
                     clearTimeout(timeoutRef.current);
