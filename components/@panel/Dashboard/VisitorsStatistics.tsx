@@ -84,7 +84,7 @@ export const VisitorsStatistics = () => {
     }
   }, [report]);
 
-  const [realtime, setRealtime] = useState(null);
+  const [realtime, setRealtime] = useState<any>();
   const getRealTime = async () => {
     try {
       const response = await api.get(`/admin/dashboard/visitors/realtime`);
