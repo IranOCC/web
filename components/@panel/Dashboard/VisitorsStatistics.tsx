@@ -84,6 +84,20 @@ export const VisitorsStatistics = () => {
     }
   }, [report]);
 
+  const [realtime, setRealtime] = useState(null);
+  const getRealTime = async () => {
+    try {
+      const response = await api.get(`/admin/dashboard/visitors/realtime`);
+      setRealtime(response.data);
+      setTimeout(() => getRealTime, 5000);
+    } catch (error) {
+      getRealTime();
+    }
+  };
+  useEffect(() => {
+    getRealTime();
+  }, []);
+
   return (
     <Card className={"group w-auto bg-white/80" + (loading ? " is-loading" : "")}>
       <CardHeader className="relative z-10 flex flex-col items-start gap-2">
@@ -223,7 +237,7 @@ export const VisitorsStatistics = () => {
               </div>
             }
             startContent={
-              <IconWrapper className="bg-danger/10 text-warning">
+              <IconWrapper className="bg-warning/10 text-warning">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
                   <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM13 12H17V14H11V7H13V12Z"></path>
                 </svg>
@@ -231,6 +245,26 @@ export const VisitorsStatistics = () => {
             }
           >
             تایم فریم
+          </ListboxItem>
+
+          <ListboxItem
+            key="choose-date-range"
+            endContent={
+              <div className="flex items-center gap-1">
+                <Chip color="secondary" variant="solid" className=" overflow-hidden whitespace-nowrap">
+                  {realtime?.onlineUsers || 0}
+                </Chip>
+              </div>
+            }
+            startContent={
+              <IconWrapper className="bg-success/10 text-success">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+                  <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19.4184 17H23.0042V19H19.4184L21.2469 20.8284L19.8326 22.2426L15.59 18L19.8326 13.7574L21.2469 15.1716L19.4184 17Z"></path>
+                </svg>
+              </IconWrapper>
+            }
+          >
+            کاربران آنلاین
           </ListboxItem>
         </Listbox>
       </CardHeader>
