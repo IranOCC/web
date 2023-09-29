@@ -1,5 +1,5 @@
 import EstateList from "@/components/@web/Features/Estate/EstateList";
-import { fetchEstateList } from "@/lib/ssr.fetch";
+// import { fetchEstateList } from "@/lib/ssr.fetch";
 
 type Props = {
   searchParams?: URLSearchParams;
@@ -21,5 +21,5 @@ export default async function Page(params: Props) {
   );
 }
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// export const dynamic = "force-dynamic";
+// export const revalidate = 0;
