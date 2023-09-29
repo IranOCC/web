@@ -69,7 +69,7 @@ export const AreaPeriod = ({ form, onSubmit }: { form: UseFormReturn<EstateFormD
             items={data}
             label="بازه متراژ"
             placeholder="بازه متراژ را انتخاب کنید"
-            selectionMode="multiple"
+            selectionMode="single"
             variant="faded"
             classNames={{ value: "text-right", errorMessage: "text-right", spinner: "right-auto left-3", selectorIcon: "left-3 right-auto" }}
             // multiple

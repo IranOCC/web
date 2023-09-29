@@ -123,7 +123,7 @@ export const TotalPricePeriod = ({ form, onSubmit }: { form: UseFormReturn<Estat
             items={data}
             label="بازه قیمتی"
             placeholder="بازه قیمتی را انتخاب کنید"
-            selectionMode="multiple"
+            selectionMode="single"
             variant="faded"
             classNames={{ value: "text-right", errorMessage: "text-right", spinner: "right-auto left-3", selectorIcon: "left-3 right-auto" }}
             // multiple
