@@ -34,7 +34,7 @@ export const AreaPeriod = ({ form, onSubmit }: { form: UseFormReturn<EstateFormD
     const get = async () => {
       setLoading(true);
       try {
-        const data = await api.get("/tools/estate/area/autoComplete", { params: { filter: { categories: searchParams?.get("filter[category]") || undefined } } });
+        const data = await api.get("/tools/estate/autoComplete/area", { params: { filter: { categories: searchParams?.get("filter[category]") || undefined } } });
         const _items = data.data;
         if (Array.isArray(_items)) setData(_items);
         setLoading(false);

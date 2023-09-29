@@ -88,7 +88,7 @@ export const TotalPricePeriod = ({ form, onSubmit }: { form: UseFormReturn<Estat
     const get = async () => {
       setLoading(true);
       try {
-        const data = await api.get("/tools/estate/totalPrice/autoComplete", { params: { filter: { categories: searchParams?.get("filter[category]") || undefined } } });
+        const data = await api.get("/tools/estate/autoComplete/totalPrice", { params: { filter: { categories: searchParams?.get("filter[category]") || undefined } } });
         const _items = data.data;
         if (Array.isArray(_items)) setData(_items);
         setLoading(false);
