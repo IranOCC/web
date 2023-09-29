@@ -73,7 +73,7 @@ export const AreaPeriod = ({ form, onSubmit }: { form: UseFormReturn<EstateFormD
             variant="faded"
             classNames={{ value: "text-right", errorMessage: "text-right", spinner: "right-auto left-3", selectorIcon: "left-3 right-auto" }}
             // multiple
-            // selectedKeys={new Set(field.value) as any}
+            selectedKeys={new Set([field.value]) as any}
             onSelectionChange={() => {
               if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);
