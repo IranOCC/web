@@ -29,7 +29,7 @@ export const PriceFilter = ({ form, dataLoading, onSubmit }: any) => {
                 placeholder="معاوضه"
                 dir="ltr"
                 {...field}
-                value={field.value?.toString() || ""}
+                isSelected={field.value}
                 onValueChange={() => {
                   if (timeoutRef.current) {
                     clearTimeout(timeoutRef.current);
@@ -56,7 +56,7 @@ export const PriceFilter = ({ form, dataLoading, onSubmit }: any) => {
                 placeholder="تهاتر"
                 dir="ltr"
                 {...field}
-                value={field.value?.toString() || ""}
+                isSelected={field.value}
                 onValueChange={() => {
                   if (timeoutRef.current) {
                     clearTimeout(timeoutRef.current);

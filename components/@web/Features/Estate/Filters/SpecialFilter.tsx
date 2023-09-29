@@ -24,7 +24,7 @@ export const SpecialFilter = ({ form, dataLoading, onSubmit }: any) => {
                 placeholder="املاک ویژه"
                 dir="ltr"
                 {...field}
-                isSelected={field.value || false}
+                isSelected={field.value}
                 onValueChange={() => {
                   if (timeoutRef.current) {
                     clearTimeout(timeoutRef.current);
