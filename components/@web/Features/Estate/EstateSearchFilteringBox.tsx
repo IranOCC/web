@@ -319,7 +319,7 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
                     dataLoading={dataLoading}
                     onSubmit={onSubmit}
                   />
-                  <div className="absolute left-0 top-0 hidden h-full w-full bg-black/30 group-[.isLoading]:block"></div>
+                  <div className="absolute left-0 top-0 hidden h-full w-full group-[.isLoading]:block"></div>
                 </div>
                 <Button onPress={() => setOpenFilter(null)}>ثبت</Button>
               </ModalBody>
