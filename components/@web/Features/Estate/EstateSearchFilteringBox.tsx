@@ -317,14 +317,15 @@ const EstateSearchFilteringBox = ({ dataLoading, setUpdate }: any) => {
             classNames={{ wrapper: "z-[102]", backdrop: "z-[102]", closeButton: "right-auto left-1" }}
           >
             <ModalContent>
-              <ModalBody className="py-6">
-                <div className="flex w-full p-6 empty:hidden">
+              <ModalBody className={"group py-6" + (dataLoading ? " isLoading" : "")}>
+                <div className="relative flex w-full p-6 empty:hidden">
                   <CompFilter
                     //
                     form={form}
                     dataLoading={dataLoading}
                     onSubmit={onSubmit}
                   />
+                  <div className="absolute left-0 top-0 hidden h-full w-full bg-black/30 group-[.isLoading]:block"></div>
                 </div>
                 <Button onPress={() => setOpenFilter(null)}>ثبت</Button>
               </ModalBody>
