@@ -89,7 +89,7 @@ export const VisitorsStatistics = () => {
     try {
       const response = await api.get(`/admin/dashboard/visitors/realtime`);
       setRealtime(response.data);
-      setTimeout(() => getRealTime, 5000);
+      setTimeout(getRealTime, 5000);
     } catch (error) {
       getRealTime();
     }
