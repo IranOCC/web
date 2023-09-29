@@ -115,7 +115,10 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
     register("mastersCount", { required: "تعداد مستر الزامی است" });
     register("features");
     register("dailyRent");
+    register("rentPricePerDay");
     register("annualRent");
+    register("rentPricePerMonth");
+    register("mortgagePrice");
   }, []);
 
   const { checkingData } = props;
@@ -233,6 +236,26 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         disabled={checkingData?.dailyRent?.disabled}
         containerClassName={["col-span-full", !!checkingData?.dailyRent?.hidden ? "hidden" : ""].join(" ")}
       />
+      <Input
+        //
+        control={control}
+        name="rentPricePerDay"
+        label="اجاره هر شب (تومان)"
+        direction="ltr"
+        error={errors.rentPricePerDay?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.rentPricePerDay?.default}
+        disabled={checkingData?.rentPricePerDay?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.rentPricePerDay?.hidden ? "hidden" : ""].join(" ")}
+        numericFormatProps={{
+          allowNegative: false,
+          allowLeadingZeros: false,
+          decimalScale: 0,
+          thousandsGroupStyle: "thousand",
+          thousandSeparator: ",",
+        }}
+      />
       <CheckBox //
         control={control}
         name="annualRent"
@@ -243,6 +266,46 @@ export const EstateFeaturesVillaBox = ({ form, loading, props }: AddEditComponen
         defaultValue={checkingData?.annualRent?.default}
         disabled={checkingData?.annualRent?.disabled}
         containerClassName={["col-span-full", !!checkingData?.annualRent?.hidden ? "hidden" : ""].join(" ")}
+      />
+      <Input
+        //
+        control={control}
+        name="mortgagePrice"
+        label="رهن (تومان)"
+        direction="ltr"
+        error={errors.mortgagePrice?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.mortgagePrice?.default}
+        disabled={checkingData?.mortgagePrice?.disabled}
+        containerClassName={[!!checkingData?.mortgagePrice?.hidden ? "hidden" : ""].join(" ")}
+        numericFormatProps={{
+          allowNegative: false,
+          allowLeadingZeros: false,
+          decimalScale: 0,
+          thousandsGroupStyle: "thousand",
+          thousandSeparator: ",",
+        }}
+      />
+      <Input
+        //
+        control={control}
+        name="rentPricePerMonth"
+        label="اجاره هر ماه (تومان)"
+        direction="ltr"
+        error={errors.rentPricePerMonth?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.rentPricePerMonth?.default}
+        disabled={checkingData?.rentPricePerMonth?.disabled}
+        containerClassName={[!!checkingData?.rentPricePerMonth?.hidden ? "hidden" : ""].join(" ")}
+        numericFormatProps={{
+          allowNegative: false,
+          allowLeadingZeros: false,
+          decimalScale: 0,
+          thousandsGroupStyle: "thousand",
+          thousandSeparator: ",",
+        }}
       />
     </>
   );
@@ -269,7 +332,10 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
     register("floor", { required: "طبقه را وارد کنید" });
     register("features");
     register("dailyRent");
+    register("rentPricePerDay");
     register("annualRent");
+    register("rentPricePerMonth");
+    register("mortgagePrice");
   }, []);
 
   const { checkingData } = props;
@@ -403,6 +469,26 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         disabled={checkingData?.dailyRent?.disabled}
         containerClassName={["col-span-full", !!checkingData?.dailyRent?.hidden ? "hidden" : ""].join(" ")}
       />
+      <Input
+        //
+        control={control}
+        name="rentPricePerDay"
+        label="اجاره هر شب (تومان)"
+        direction="ltr"
+        error={errors.rentPricePerDay?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.rentPricePerDay?.default}
+        disabled={checkingData?.rentPricePerDay?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.rentPricePerDay?.hidden ? "hidden" : ""].join(" ")}
+        numericFormatProps={{
+          allowNegative: false,
+          allowLeadingZeros: false,
+          decimalScale: 0,
+          thousandsGroupStyle: "thousand",
+          thousandSeparator: ",",
+        }}
+      />
       <CheckBox //
         control={control}
         name="annualRent"
@@ -413,6 +499,46 @@ export const EstateFeaturesApartmentBox = ({ form, loading, props }: AddEditComp
         defaultValue={checkingData?.annualRent?.default}
         disabled={checkingData?.annualRent?.disabled}
         containerClassName={["col-span-full", !!checkingData?.annualRent?.hidden ? "hidden" : ""].join(" ")}
+      />
+      <Input
+        //
+        control={control}
+        name="mortgagePrice"
+        label="رهن (تومان)"
+        direction="ltr"
+        error={errors.mortgagePrice?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.mortgagePrice?.default}
+        disabled={checkingData?.mortgagePrice?.disabled}
+        containerClassName={[!!checkingData?.mortgagePrice?.hidden ? "hidden" : ""].join(" ")}
+        numericFormatProps={{
+          allowNegative: false,
+          allowLeadingZeros: false,
+          decimalScale: 0,
+          thousandsGroupStyle: "thousand",
+          thousandSeparator: ",",
+        }}
+      />
+      <Input
+        //
+        control={control}
+        name="rentPricePerMonth"
+        label="اجاره هر ماه (تومان)"
+        direction="ltr"
+        error={errors.rentPricePerMonth?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.rentPricePerMonth?.default}
+        disabled={checkingData?.rentPricePerMonth?.disabled}
+        containerClassName={[!!checkingData?.rentPricePerMonth?.hidden ? "hidden" : ""].join(" ")}
+        numericFormatProps={{
+          allowNegative: false,
+          allowLeadingZeros: false,
+          decimalScale: 0,
+          thousandsGroupStyle: "thousand",
+          thousandSeparator: ",",
+        }}
       />
     </>
   );
@@ -435,7 +561,10 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
     register("buildingArea", { required: "متراژ را وارد کنید" });
     register("floor", { required: "طبقه ملک را وارد کنید" });
     register("dailyRent");
+    register("rentPricePerDay");
     register("annualRent");
+    register("rentPricePerMonth");
+    register("mortgagePrice");
   }, []);
 
   const { checkingData } = props;
@@ -487,6 +616,26 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
         disabled={checkingData?.dailyRent?.disabled}
         containerClassName={["col-span-full", !!checkingData?.dailyRent?.hidden ? "hidden" : ""].join(" ")}
       />
+      <Input
+        //
+        control={control}
+        name="rentPricePerDay"
+        label="اجاره هر شب (تومان)"
+        direction="ltr"
+        error={errors.rentPricePerDay?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.rentPricePerDay?.default}
+        disabled={checkingData?.rentPricePerDay?.disabled}
+        containerClassName={["col-span-full", !!checkingData?.rentPricePerDay?.hidden ? "hidden" : ""].join(" ")}
+        numericFormatProps={{
+          allowNegative: false,
+          allowLeadingZeros: false,
+          decimalScale: 0,
+          thousandsGroupStyle: "thousand",
+          thousandSeparator: ",",
+        }}
+      />
       <CheckBox //
         control={control}
         name="annualRent"
@@ -497,6 +646,46 @@ export const EstateFeaturesCommercialBox = ({ form, loading, props }: AddEditCom
         defaultValue={checkingData?.annualRent?.default}
         disabled={checkingData?.annualRent?.disabled}
         containerClassName={["col-span-full", !!checkingData?.annualRent?.hidden ? "hidden" : ""].join(" ")}
+      />
+      <Input
+        //
+        control={control}
+        name="mortgagePrice"
+        label="رهن (تومان)"
+        direction="ltr"
+        error={errors.mortgagePrice?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.mortgagePrice?.default}
+        disabled={checkingData?.mortgagePrice?.disabled}
+        containerClassName={[!!checkingData?.mortgagePrice?.hidden ? "hidden" : ""].join(" ")}
+        numericFormatProps={{
+          allowNegative: false,
+          allowLeadingZeros: false,
+          decimalScale: 0,
+          thousandsGroupStyle: "thousand",
+          thousandSeparator: ",",
+        }}
+      />
+      <Input
+        //
+        control={control}
+        name="rentPricePerMonth"
+        label="اجاره هر ماه (تومان)"
+        direction="ltr"
+        error={errors.rentPricePerMonth?.message}
+        loading={isSubmitting}
+        noSpace
+        defaultValue={checkingData?.rentPricePerMonth?.default}
+        disabled={checkingData?.rentPricePerMonth?.disabled}
+        containerClassName={[!!checkingData?.rentPricePerMonth?.hidden ? "hidden" : ""].join(" ")}
+        numericFormatProps={{
+          allowNegative: false,
+          allowLeadingZeros: false,
+          decimalScale: 0,
+          thousandsGroupStyle: "thousand",
+          thousandSeparator: ",",
+        }}
       />
     </>
   );

@@ -157,6 +157,8 @@ export type EstateFormData = {
     totalPrice: string | number;
     description?: string;
     canBarter?: boolean;
+    canSwap?: boolean;
+    special?: boolean;
 
 
     constructionYear?: number;
@@ -181,6 +183,9 @@ export type EstateFormData = {
     office?: Office | string;
 
     dailyRent?: boolean;
+    rentPricePerDay: string | number;
+    rentPricePerMonth: string | number;
+    mortgagePrice: string | number;
     annualRent?: boolean;
 
 };
