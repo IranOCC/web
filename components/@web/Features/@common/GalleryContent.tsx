@@ -155,7 +155,7 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
             </div>
             {headerSubTitle?.type === "estate" && (
               <>
-                {(estateData?.dailyRent || estateData?.annualRent) && (
+                {(estateData?.dailyRent || estateData?.annualRent || estateData?.special) && (
                   <div className="absolute bottom-3 right-3 block">
                     <div className="relative flex flex-col gap-1">
                       {estateData?.dailyRent && (
@@ -166,6 +166,11 @@ const GalleryContent = ({ items, id, estateData }: { items?: StorageFile[]; id: 
                       {estateData?.annualRent && (
                         <Chip variant="shadow" color="secondary">
                           اجاره سالانه
+                        </Chip>
+                      )}
+                      {estateData?.special && (
+                        <Chip variant="shadow" color="secondary">
+                          ویژه
                         </Chip>
                       )}
                     </div>

@@ -85,23 +85,6 @@ const EstateCard = ({ data, tools, toolsClassName = "" }: { data: WebEstate; too
           style={{ width: !tools ? "100%" : `calc(100% - ${(pullChange > 100 ? 100 : pullChange || (isOpenTools && 56)) || 12}px)` }}
           className="z-10 w-full overflow-hidden transition-all"
         >
-          {/* <Dropdown backdrop="blur">
-      <DropdownTrigger>
-        <Button 
-          variant="bordered" 
-        >
-          Open Menu
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu variant="faded" aria-label="Static Actions">
-        <DropdownItem key="new">New file</DropdownItem>
-        <DropdownItem key="copy">Copy link</DropdownItem>
-        <DropdownItem key="edit">Edit file</DropdownItem>
-        <DropdownItem key="delete" className="text-danger" color="danger">
-          Delete file
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown> */}
           <Card
             //
             onTouchStart={!tools ? undefined : pullStart}

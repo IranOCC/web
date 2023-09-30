@@ -404,7 +404,7 @@ export type WebEstate = {
     area: number;
 
     canBarter?: boolean;
-
+    canSwap?: boolean;
 
     constructionYear?: number;
     roomsCount?: number;
@@ -443,6 +443,8 @@ export type WebEstate = {
 
     dailyRent?: boolean;
     annualRent?: boolean;
+
+    special?: boolean;
 };
 
 
