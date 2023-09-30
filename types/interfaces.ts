@@ -392,6 +392,7 @@ export type WebEstate = {
     publishedAt?: Date;
 
     tags?: string[];
+    nearPlaces?: string[];
 
 
     code?: string;

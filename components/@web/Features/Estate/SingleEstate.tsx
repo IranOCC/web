@@ -34,6 +34,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
     type,
     documentType,
     features,
+    nearPlaces,
     image,
     gallery,
     pinned,
@@ -109,7 +110,19 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
     </div>
   );
   const tabDe = <div className="" dangerouslySetInnerHTML={{ __html: content || "توضیحاتی درج نشده است" }} />;
-  const tabNe = <div className="">اماکن نزدیک را اینجا میبینید</div>;
+  const tabNe = (
+    <div className="">
+      {!!nearPlaces?.length ? (
+        <ul>
+          {nearPlaces?.map((t, i) => (
+            <li key={i}>{t}</li>
+          ))}
+        </ul>
+      ) : (
+        "مکانی ثبت نشده است"
+      )}
+    </div>
+  );
 
   return (
     <div className="flex h-auto min-h-full flex-col bg-gray-200 pb-16 md:bg-transparent md:px-4 md:pb-4">
