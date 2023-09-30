@@ -146,6 +146,7 @@ export type EstateFormData = {
     publishedAt: Date;
 
     tags?: string[];
+    nearPlaces?: string[];
 
 
     code?: string;

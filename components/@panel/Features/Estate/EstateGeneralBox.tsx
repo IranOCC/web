@@ -31,6 +31,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
     register("description");
     register("canBarter");
     register("canSwap");
+    register("special");
   }, []);
 
   const calculateTotalPrice = (val: string, f: "area" | "price") => {
@@ -186,7 +187,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             noSpace
             defaultValue={checkingData?.canBarter?.default}
             disabled={checkingData?.canBarter?.disabled}
-            containerClassName={["col-span-full", !!checkingData?.canBarter?.hidden ? "hidden" : ""].join(" ")}
+            containerClassName={[!!checkingData?.canBarter?.hidden ? "hidden" : ""].join(" ")}
           />
           <CheckBox //
             control={control}
@@ -197,7 +198,34 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             noSpace
             defaultValue={checkingData?.canSwap?.default}
             disabled={checkingData?.canSwap?.disabled}
-            containerClassName={["col-span-full", !!checkingData?.canSwap?.hidden ? "hidden" : ""].join(" ")}
+            containerClassName={[!!checkingData?.canSwap?.hidden ? "hidden" : ""].join(" ")}
+          />
+          <CheckBox //
+            control={control}
+            name="special"
+            label="ملک ویژه"
+            error={errors.special?.message}
+            loading={isSubmitting}
+            noSpace
+            defaultValue={checkingData?.special?.default}
+            disabled={checkingData?.special?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.special?.hidden ? "hidden" : ""].join(" ")}
+          />
+          <Input
+            //
+            control={control}
+            name="nearPlaces"
+            label="اماکن نزدیک"
+            placeholder="تایپ + اینتر"
+            error={errors.nearPlaces?.message}
+            loading={isSubmitting}
+            multiline
+            lines={3}
+            tagsMode
+            noSpace
+            defaultValue={checkingData?.nearPlaces?.default}
+            disabled={checkingData?.nearPlaces?.disabled}
+            containerClassName={["col-span-full", !!checkingData?.nearPlaces?.hidden ? "hidden" : ""].join(" ")}
           />
         </div>
       </PanelCard>
