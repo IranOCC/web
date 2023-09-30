@@ -43,14 +43,14 @@ const WebSideBar = () => {
       icon: <SearchIconSideBar />,
       title: "جستجوی پیشرفته",
       href: "/property",
-      isActive: () => pathname === "/property" && !searchParams?.get("filter[vip]"),
+      isActive: () => pathname === "/property" && !searchParams?.get("filter[special]"),
     },
     {
       index: 2,
       icon: <VipIconSideBar />,
       title: "املاک ویژه",
-      href: "/property?filter[vip]=true",
-      isActive: () => pathname === "/property" && !!searchParams?.get("filter[vip]"),
+      href: "/property?filter[special]=true",
+      isActive: () => pathname === "/property" && !!searchParams?.get("filter[special]"),
     },
     {
       index: 3,

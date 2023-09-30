@@ -8,7 +8,7 @@ export default function Page() {
   const items = [
     {
       title: "ویژه",
-      link: "/property?filter[vip]=true",
+      link: "/property?filter[special]=true",
     },
     {
       title: "زمین",
