@@ -65,7 +65,7 @@ const LocationChooser = (props: IProps) => {
   return (
     <>
       <div className={"relative z-10 w-full" + (noSpace ? " mb-0" : " mb-6") + " " + containerClassName}>
-        {label && <label className={`mb-1 block text-sm font-light text-gray-500 text-start dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
+        {label && <label className={`mb-1 block text-start text-sm font-light text-gray-500 dark:text-white${labelClass} whitespace-nowrap`}>{label}</label>}
         {(disabled || loading) && <div className="absolute z-20 h-full w-full" />}
         <div className="relative w-full">
           <Controller
@@ -97,7 +97,7 @@ const LocationChooser = (props: IProps) => {
                   <Mapir
                     //
                     Map={Map}
-                    center={center}
+                    center={value || center}
                     zoom={[16]}
                     userLocation
                     className={className + " mb-2 !h-[30rem] !w-full overflow-hidden rounded"}
@@ -132,7 +132,7 @@ const LocationChooser = (props: IProps) => {
             control={control}
           />
         </div>
-        {helperText && <p className={"mt-1 block text-sm font-light text-gray-500 text-start dark:text-white" + labelClass}>{helperText}</p>}
+        {helperText && <p className={"mt-1 block text-start text-sm font-light text-gray-500 dark:text-white" + labelClass}>{helperText}</p>}
       </div>
     </>
   );
