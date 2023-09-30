@@ -55,14 +55,19 @@ export default function Page() {
       //
     }
   };
+
+  const [searchUser, setSearchUser] = useState<string>();
   const getUserList = async () => {
     try {
-      const response = await api.get("/tools/user/autoComplete");
+      const response = await api.get(`/tools/user/autoComplete${!!searchUser ? "?search=" + searchUser : ""}`);
       setUserList(response.data);
     } catch (error) {
       //
     }
   };
+  useEffect(() => {
+    if (!!searchUser) getUserList();
+  }, [searchUser]);
 
   const columns: ColumnsType<Estate> = [
     {
@@ -123,6 +128,11 @@ export default function Page() {
       filters: userList.map(({ title, value }) => {
         return { text: title, value: value };
       }),
+      filterSearch: (input) => {
+        setSearchUser(input);
+
+        return true;
+      },
       onFilterDropdownOpenChange: (open) => open && getUserList(),
       filteredValue: searchParams?.getAll("filter[createdBy]"),
       filterMultiple: true,
