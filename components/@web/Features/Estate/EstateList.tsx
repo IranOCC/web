@@ -145,6 +145,7 @@ const PropertyTools = ({ data }: { data: WebEstate }) => {
       </Tooltip>
       <ReservationModal
         //
+        _id={data._id}
         isOpen={openReserveModal}
         setOpen={setReserveModal}
         office={data.office}
