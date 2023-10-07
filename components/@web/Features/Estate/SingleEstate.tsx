@@ -212,6 +212,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
       </div>
       <ReservationModal
         //
+        _id={_id}
         isOpen={openReserveModal}
         setOpen={setReserveModal}
         office={office}
