@@ -34,7 +34,7 @@ const EstateList = ({ data }: { data: { items?: WebEstate[]; total: number } }) 
   const getData = async () => {
     setDataLoading(true);
     try {
-      const response = await api.get(`/estate?size=10&current=${current[0]}${!!searchParams?.toString() ? `&${searchParams?.toString()}` : ""}`);
+      const response = await api.get(`/estate?size=5&current=${current[0]}${!!searchParams?.toString() ? `&${searchParams?.toString()}` : ""}`);
       const data = response.data as { items: WebEstate[]; total: number };
       if (current[0] === 1) {
         setDataList(data?.items || []);
