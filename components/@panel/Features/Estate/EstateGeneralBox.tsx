@@ -26,8 +26,8 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
     register("type", { required: "نوع را مشخص کنید" });
     register("documentType", { required: "نوع سند را مشخص کنید" });
     register("area", { required: "متراژ کل را مشخص کنید" });
-    register("price", { required: "قیمت هر متر را مشخص کنید" });
-    register("totalPrice", { required: "قیمت کل را مشخص کنید" });
+    register("price", );
+    register("totalPrice", );
     register("description");
     register("canBarter");
     register("canSwap");
