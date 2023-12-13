@@ -52,7 +52,7 @@ export default function Page() {
     },
     {
       title: "معاوضه",
-      link: "/property?filter[change]=true",
+      link: "/property?filter[swap]=true",
     },
   ];
 
