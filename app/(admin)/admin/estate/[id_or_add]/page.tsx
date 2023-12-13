@@ -42,7 +42,8 @@ const Side = (props: AddEditComponentProps) => {
   return (
     <>
       <EstateMediaBox {...props} />
-      <EstateOwnerBox {...props} />
+      {/* not required */}
+      {/*<EstateOwnerBox {...props} />*/}
       <EstateTagsBox {...props} />
       <EstateVisibilityBox {...props} />
     </>
