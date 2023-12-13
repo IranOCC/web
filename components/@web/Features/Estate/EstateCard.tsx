@@ -49,6 +49,8 @@ const EstateCard = ({ data, tools, toolsClassName = "" }: { data: WebEstate; too
     dailyRent,
     annualRent,
     special,
+
+      sold
   } = data;
 
   const [startPoint, setStartPoint] = useState(0);
@@ -110,8 +112,19 @@ const EstateCard = ({ data, tools, toolsClassName = "" }: { data: WebEstate; too
                       title={image.title}
                       width={500}
                       height={200}
-                      className="block max-h-[10rem] w-full rounded-xl object-cover md:h-full md:max-h-[12rem] md:min-h-[12rem] md:max-w-[12rem] lg:max-w-[15rem] xl:max-w-[20rem]"
+                      className={"block max-h-[10rem] w-full rounded-xl object-cover md:h-full md:max-h-[12rem] md:min-h-[12rem] md:max-w-[12rem] lg:max-w-[15rem] xl:max-w-[20rem]" + (sold ? " grayscale" : "")}
                     />
+                  )}
+                  {(!!sold) && (
+                      <div className="absolute right-4 bottom-4 block">
+                        <div className="relative flex flex-col gap-1">
+                          {dailyRent && (
+                              <Chip variant="shadow" color="danger" size="sm">
+                                فروخته شده
+                              </Chip>
+                          )}
+                        </div>
+                      </div>
                   )}
                   {(dailyRent || annualRent) && (
                     <div className="absolute right-4 top-4 block">

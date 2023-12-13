@@ -32,6 +32,7 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
     register("canBarter");
     register("canSwap");
     register("special");
+    register("sold");
   }, []);
 
   const calculateTotalPrice = (val: string, f: "area" | "price") => {
@@ -201,15 +202,26 @@ export default function EstateGeneralBox({ form, loading, props }: AddEditCompon
             containerClassName={[!!checkingData?.canSwap?.hidden ? "hidden" : ""].join(" ")}
           />
           <CheckBox //
-            control={control}
-            name="special"
-            label="ملک ویژه"
-            error={errors.special?.message}
-            loading={isSubmitting}
-            noSpace
-            defaultValue={checkingData?.special?.default}
-            disabled={checkingData?.special?.disabled}
-            containerClassName={["col-span-full", !!checkingData?.special?.hidden ? "hidden" : ""].join(" ")}
+              control={control}
+              name="special"
+              label="ملک ویژه"
+              error={errors.special?.message}
+              loading={isSubmitting}
+              noSpace
+              defaultValue={checkingData?.special?.default}
+              disabled={checkingData?.special?.disabled}
+              containerClassName={[!!checkingData?.special?.hidden ? "hidden" : ""].join(" ")}
+          />
+          <CheckBox //
+              control={control}
+              name="sold"
+              label="فروخته شده"
+              error={errors.sold?.message}
+              loading={isSubmitting}
+              noSpace
+              defaultValue={checkingData?.sold?.default}
+              disabled={checkingData?.sold?.disabled}
+              containerClassName={[!!checkingData?.sold?.hidden ? "hidden" : ""].join(" ")}
           />
           <Input
             //

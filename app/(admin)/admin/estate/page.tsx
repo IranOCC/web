@@ -203,11 +203,11 @@ export default function Page() {
       },
     },
 
-    {
-      title: "صاحب ملک",
-      dataIndex: ["owner", "fullName"],
-      responsive: ["md"],
-    },
+    // {
+    //   title: "صاحب ملک",
+    //   dataIndex: ["owner", "fullName"],
+    //   responsive: ["md"],
+    // },
     {
       title: "وضعیت انتشار",
       dataIndex: "status",

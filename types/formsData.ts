@@ -160,7 +160,7 @@ export type EstateFormData = {
     canBarter?: boolean;
     canSwap?: boolean;
     special?: boolean;
-
+    sold?: boolean;
 
     constructionYear?: number;
     roomsCount?: number;

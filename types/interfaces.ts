@@ -159,7 +159,8 @@ export interface Estate {
 
     dailyRent?: boolean;
     annualRent?: boolean;
-};
+    sold?: boolean;
+}
 
 
 
@@ -445,6 +446,7 @@ export type WebEstate = {
     annualRent?: boolean;
 
     special?: boolean;
+    sold?: boolean;
 };
 
 
