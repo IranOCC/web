@@ -159,6 +159,12 @@ export interface Estate {
 
     dailyRent?: boolean;
     annualRent?: boolean;
+
+    rentPricePerDay: string | number;
+    rentPricePerMonth: string | number;
+    mortgagePrice: string | number;
+
+    special?: boolean;
     sold?: boolean;
 }
 
