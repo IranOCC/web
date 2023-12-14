@@ -31,6 +31,7 @@ export type UserFormData = {
     // 
     verified?: boolean;
     active?: boolean;
+    dontShowPhoneNumber?: boolean;
 };
 
 

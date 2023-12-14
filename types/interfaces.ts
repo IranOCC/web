@@ -49,6 +49,7 @@ export interface User {
 
     active: boolean;
     verified: boolean;
+    dontShowPhoneNumber?: boolean;
 
     nationalCode?: string;
     birthday?: string;
@@ -451,12 +452,12 @@ export type WebEstate = {
     dailyRent?: boolean;
     annualRent?: boolean;
 
-    rentPricePerDay: string | number;
-    rentPricePerMonth: string | number;
-    mortgagePrice: string | number;
+    rentPricePerDay?: string | number;
+    rentPricePerMonth?: string | number;
+    mortgagePrice?: string | number;
 
-    price: string | number;
-    totalPrice: string | number;
+    price?: string | number;
+    totalPrice?: string | number;
 
     special?: boolean;
     sold?: boolean;

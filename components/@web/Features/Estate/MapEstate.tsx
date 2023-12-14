@@ -10,6 +10,7 @@ import NextImage from "next/image";
 import { useRouter } from "next/navigation";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import { ThemeContext, ThemeContextType } from "@/context/theme.context";
+import useAxiosAuth from "@/hooks/useAxiosAuth";
 
 const API_KEY =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ1NTg4YzVkM2I3YjFjYWU0NWE2OWNjZTM4ZjU3ZTdmN2U1Yjg4YTkxNWMwM2JhOTdiYWJlZWI4OWE2NDMxNDg1Nzc4YTYyNGQ0ZDMwMTc5In0.eyJhdWQiOiI5OTk2IiwianRpIjoiZDU1ODhjNWQzYjdiMWNhZTQ1YTY5Y2NlMzhmNTdlN2Y3ZTViODhhOTE1YzAzYmE5N2JhYmVlYjg5YTY0MzE0ODU3NzhhNjI0ZDRkMzAxNzkiLCJpYXQiOjE1OTQyMDM0MzMsIm5iZiI6MTU5NDIwMzQzMywiZXhwIjoxNTk2Nzk1NDMzLCJzdWIiOiIiLCJzY29wZXMiOlsiYmFzaWMiXX0.RfZI-G-vJsKB8AaAXLtoR93ilorPnOWqEkGnap18EVEOoiWsFwuQaxSpNzYrzSbPeskmo68FdWvfrfcS0IaXvtU2rwI3D1udVrUlz5oDD_Z7NJMB-Dm9qY6mWC2OTsaTyTgNJ2ZC2q8ZK1aTdoEWUv27QrAsYEu_thQgTvSIPn0RoSFwMa-MHH6v7ATGTFY8MNdrazi2VdvTSR49REcssAn5iNjxFX7C9XLwltOA3VKTtCjY6MjkeVOhVrc2Bgo1QDukFTNSWGiEX0nSm1xKAs-OIXRKxvmmt9Sm6lcaT_2WbyPVn6Mo3aO7AjjhtxPjQZZk1PKtFwRH4r-JJdY2SA";
@@ -50,48 +51,23 @@ const MapEstate = () => {
 
   const [center, setCenter] = useState(mapCoordinates ? [+mapCoordinates[0], +mapCoordinates[1]] : [51.196246, 36.699735]);
 
+  const api = useAxiosAuth();
   const onShowPopup = async (id: string, coordinates: number[]) => {
     setSelectedMarker({ id, coordinates, loading: true });
-
-    try {
-      setTimeout(() => {
+      try {
+        const response = await api.get(`/estate/${id}`);
+        const data = response.data as  WebEstate;
         setSelectedMarker({
           //
           id,
           coordinates,
           loading: false,
-          data: {
-            _id: "",
-            title: "خرید خانه خوب",
-            slug: "",
-            category: {
-              _id: "",
-              slug: "",
-              title: "ویلا",
-              description: "",
-              icon: "",
-              tags: [],
-              parent: "",
-            },
-            gallery: [],
-            image: {
-              path: "property/I47tXy6CqYoX2KN0.jpeg",
-              _id: "",
-              title: "",
-              alt: "",
-              mimetype: "",
-              filesize: 0,
-              subject: "",
-            },
-            area: 400,
-            province: "خراسان رضوی",
-            city: "مشهد",
-            district: "همین جا",
-          },
-        });
-      }, 2000);
+          data
+        })
     } catch (err) {}
   };
+
+
   return (
     <div className="h-full" dir="ltr">
       <Mapir
@@ -188,7 +164,7 @@ const MapEstate = () => {
                       <p>چیزی پیدا نشد :(</p>
                     </div>
                   )}
-                  {!selectedMarker.loading && !!selectedMarker.data && (
+                  {!selectedMarker?.loading && !!selectedMarker?.data && (
                     <div dir="rtl" className="flex flex-col items-start justify-center gap-1">
                       <Image
                         //
@@ -196,19 +172,19 @@ const MapEstate = () => {
                         width={200}
                         height={200}
                         className="w-44"
-                        src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + selectedMarker.data.image.path}
-                        alt={selectedMarker.data.image.alt}
+                        src={process.env.NEXT_PUBLIC_STORAGE_BASE_URL + "/" + selectedMarker?.data?.image?.path}
+                        alt={selectedMarker?.data?.image?.alt}
                       />
-                      <h3 className="w-full whitespace-pre-wrap text-right font-bold">{selectedMarker.data.title}</h3>
-                      {selectedMarker.data.category && (
+                      <h3 className="w-full whitespace-pre-wrap text-right font-bold">{selectedMarker?.data?.title}</h3>
+                      {selectedMarker?.data?.category && (
                         <h6 className="flex items-center gap-1.5 font-bold">
-                          {!!selectedMarker.data.category?.icon && <i className="h-4 w-4 fill-gray-800" dangerouslySetInnerHTML={{ __html: (selectedMarker.data.category.icon as Icon).content }} />}
-                          <span>{selectedMarker.data.category?.title}</span>
+                          {!!selectedMarker?.data.category?.icon && <i className="h-4 w-4 fill-gray-800" dangerouslySetInnerHTML={{ __html: (selectedMarker?.data?.category?.icon as Icon)?.content }} />}
+                          <span>{selectedMarker?.data?.category?.title}</span>
                         </h6>
                       )}
                       <h5 className="flex items-center gap-1.5">
                         <b>متراژ:</b>
-                        <span>{selectedMarker.data.area} مترمربع</span>
+                        <span>{selectedMarker?.data?.area} مترمربع</span>
                       </h5>
                     </div>
                   )}
@@ -224,4 +200,10 @@ const MapEstate = () => {
 
 export default MapEstate;
 
-const nearPoints: { id: string; coordinates: number[] }[] = [];
+const nearPoints: { id: string; coordinates: number[] }[] = [
+
+  {
+    id: "",
+    coordinates: [33.33333,55.55555]
+  }
+];
