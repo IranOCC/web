@@ -18,6 +18,7 @@ import { WebButton } from "../../Button";
 import Modal from "@/components/Modals";
 import { ReservationModal } from "./ReservationModal";
 import { Avatar } from "@nextui-org/react";
+import moment from "jalali-moment";
 
 const SingleEstate = ({ data }: { data?: WebEstate }) => {
   if (!data) throw Error("PropertyNotFound");
@@ -132,6 +133,7 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
         id={_id}
         estateData={data}
       />
+
       <WebTab
         data={[
           {
@@ -148,6 +150,45 @@ const SingleEstate = ({ data }: { data?: WebEstate }) => {
           },
         ]}
       />
+      {(!data?.sold && !!data?.dailyRent) && (
+          <div className="w-full flex flex-col my-2">
+            <div className="flex gap-x-1">
+              <label className="font-bold">اجاره روزانه:</label>
+              <span>{data?.rentPricePerDay?.toLocaleString()} تومان</span>
+            </div>
+          </div>
+      )}
+      {(!data?.sold && !!data?.annualRent) && (
+          <div className="w-full flex flex-col my-2">
+            <div className="flex gap-x-1">
+              <label className="font-bold">رهن:</label>
+              <span>{data?.mortgagePrice?.toLocaleString()} تومان</span>
+            </div>
+            <div className="flex gap-x-1">
+              <label className="font-bold">اجاره ماهانه:</label>
+              <span>{data?.rentPricePerMonth?.toLocaleString()} تومان</span>
+            </div>
+          </div>
+      )}
+      {(!data?.sold && !data?.dailyRent && !data?.annualRent) && (
+          <div className="w-full flex flex-col my-2">
+            <div className="flex gap-x-1">
+              <label className="font-bold">قیمت هر متر:</label>
+              <span>{data?.price?.toLocaleString()} تومان</span>
+            </div>
+            <div className="flex gap-x-1">
+              <label className="font-bold">قیمت کل:</label>
+              <span>{data?.totalPrice?.toLocaleString()} تومان</span>
+            </div>
+          </div>
+      )}
+      {moment(data?.confirmedAt).isBefore(moment().subtract(6, 'months')) && (
+          <div className="w-full flex flex-col my-2">
+            <div className="flex gap-x-1">
+              <label className="font-bold">جهت استعلام قیمت یا وضعیت ملک با کارشناسان تماس بگیرید.</label>
+            </div>
+          </div>
+      )}
       <div className="flex items-center justify-center rounded-xl bg-gray-200 p-4">
         <div className="flex w-full max-w-full flex-row items-center justify-between gap-2 gap-y-4 overflow-y-hidden md:max-w-2xl">
           {/* icons */}

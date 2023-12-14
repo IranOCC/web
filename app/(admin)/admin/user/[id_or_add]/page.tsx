@@ -68,6 +68,7 @@ export default function Page() {
     //
     setValue("verified", data.verified);
     setValue("active", data.active);
+    setValue("dontShowPhoneNumber", data.dontShowPhoneNumber);
   };
   const beforeSubmit = (data: UserFormData) => {
     if (!(data.phone as Phone)?.value) {

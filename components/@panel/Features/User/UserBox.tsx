@@ -27,6 +27,7 @@ export default function UserBox({ form, loading, props }: AddEditComponentProps)
     register("avatar");
     register("verified");
     register("active");
+    register("dontShowPhoneNumber");
   }, []);
 
   const { checkingData } = props;
@@ -105,15 +106,26 @@ export default function UserBox({ form, loading, props }: AddEditComponentProps)
             containerClassName={!!checkingData?.verified?.hidden ? "hidden" : ""}
           />
           <CheckBox //
-            control={control}
-            name="active"
-            label="فعال"
-            error={errors.active?.message}
-            loading={isSubmitting}
-            noSpace
-            defaultValue={checkingData?.active?.default}
-            disabled={checkingData?.active?.disabled}
-            containerClassName={!!checkingData?.active?.hidden ? "hidden" : ""}
+              control={control}
+              name="active"
+              label="فعال"
+              error={errors.active?.message}
+              loading={isSubmitting}
+              noSpace
+              defaultValue={checkingData?.active?.default}
+              disabled={checkingData?.active?.disabled}
+              containerClassName={!!checkingData?.active?.hidden ? "hidden" : ""}
+          />
+          <CheckBox //
+              control={control}
+              name="dontShowPhoneNumber"
+              label="عدم نمایش اطلاعات در جزئیات فایل ها"
+              error={errors.dontShowPhoneNumber?.message}
+              loading={isSubmitting}
+              noSpace
+              defaultValue={checkingData?.dontShowPhoneNumber?.default}
+              disabled={checkingData?.dontShowPhoneNumber?.disabled}
+              containerClassName={!!checkingData?.dontShowPhoneNumber?.hidden ? "hidden" : ""}
           />
         </div>
       </PanelCard>

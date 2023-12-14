@@ -31,7 +31,8 @@ export const FirstSightStatistic = () => {
 
   return (
     <div className={"relative grid grid-cols-1 gap-4 min-[500px]:grid-cols-2 md:grid-cols-4" + (loading ? " is-loading" : "")}>
-      <ItemBox
+
+        <ItemBox
         //
         title="املاک ثبت شده"
         data={data?.total}

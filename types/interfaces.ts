@@ -445,6 +445,13 @@ export type WebEstate = {
     dailyRent?: boolean;
     annualRent?: boolean;
 
+    rentPricePerDay: string | number;
+    rentPricePerMonth: string | number;
+    mortgagePrice: string | number;
+
+    price: string | number;
+    totalPrice: string | number;
+
     special?: boolean;
     sold?: boolean;
 };

@@ -112,6 +112,13 @@ export default function Page() {
     setValue("dailyRent", data.dailyRent);
     setValue("annualRent", data.annualRent);
 
+    setValue("sold", data.sold);
+    setValue("special", data.special);
+
+    setValue("rentPricePerDay", data.rentPricePerDay);
+    setValue("rentPricePerMonth", data.rentPricePerMonth);
+    setValue("mortgagePrice", data.mortgagePrice);
+
     setDetail({
       ID: data._id,
       updatedAt: data.updatedAt,
