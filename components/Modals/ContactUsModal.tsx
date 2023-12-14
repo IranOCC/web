@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { WebPreviewContext, WebPreviewContextType } from "@/context/webPreview.context";
 import ContactIcon from "../Icons/web/Contact";
 import Link from "next/link";
-
+import InstagramIcon from '@mui/icons-material/Instagram';
 //
 //
 //
@@ -27,6 +27,14 @@ const ContactUsModal = () => {
         <Link href="tel:0912 190 6047" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold outline-none transition-colors hover:text-secondary">
           <ContactIcon />
           <span>0912 190 6047</span>
+        </Link>
+        <Link href="https://instagram.com/occasion_vip" target="_blank" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold outline-none transition-colors hover:text-secondary">
+          <InstagramIcon />
+          <span>occasion_vip</span>
+        </Link>
+        <Link href="https://instagram.com/amlakoccasion" target="_blank" className="flex flex-row justify-center gap-1 p-1 text-lg font-bold outline-none transition-colors hover:text-secondary">
+          <InstagramIcon />
+          <span>amlakoccasion</span>
         </Link>
       </div>
     </Modal>
